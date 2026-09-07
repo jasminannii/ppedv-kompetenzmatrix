@@ -44,6 +44,23 @@ speisen weiter den Matcher.
 Innendienst (12 Personen) drei Skills fehlen, sind das nicht 36 Menschen. Je
 Team zählt die größte Nennung, die Gesamtzahl ist deren Summe.
 
+### Schritt 4 — Das ppedv-Modell
+
+Eine reine Schau-Seite: der Katalog, wie er ohne Kundendaten aussieht. Der
+vollständige Ring mit sechs Kompetenzwelten und ihren 18 Kernkompetenzen,
+darunter je Welt eine Karte mit den Kernkompetenzen samt Beschreibung, den
+typischen Sätzen aus Kundengesprächen, den Zielgruppen, den Kursen und dem
+Beleg aus der Studienlage.
+
+Ein Klick auf ein Ringsegment hebt die zugehörige Karte hervor und springt
+hin. Die Seite ändert nichts am Kundendatensatz und hat einen eigenen Ring
+mit eigenen Element-IDs — der Arbeitsring in Schritt 2 bleibt unberührt.
+
+Sie ist bewusst **nicht Teil des PDF**: das PDF ist die Angebotsgrundlage für
+den Kunden, der Katalog würde seinen Umfang verdoppeln. Soll er mit hinein,
+genügt es, die Zeile `#s4{display:none!important}` aus dem `@media print`-Block
+zu löschen.
+
 ## Anpassbarkeit (pro Kundengespräch, nicht global)
 
 **Kernkompetenzen sind Vorschläge, keine Vorgaben.** Je Welt sind drei

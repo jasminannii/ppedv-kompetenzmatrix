@@ -168,6 +168,32 @@ details.more .in{padding-top:11px}
 .field textarea{min-height:70px; line-height:1.55}
 .field input:focus,.field textarea:focus{outline:2px solid var(--orange); outline-offset:-1px; background:var(--surface)}
 
+/* Schau-Seite: das ppedv-Modell */
+.catbox{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:10px 10px 14px;
+  box-shadow:var(--shadow); max-width:760px; margin:0 auto 34px}
+.catbox .readout{text-align:center}
+.cseg{cursor:pointer; stroke-linejoin:round; stroke-width:6; transition:filter .18s}
+.cseg:hover{filter:brightness(1.09)}
+.catcards{display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:18px}
+.catcard{border:1px solid var(--line); border-radius:8px; overflow:hidden; background:var(--surface); scroll-margin-top:90px}
+.catcard.lit{box-shadow:0 0 0 3px var(--accent-soft); border-color:var(--orange)}
+.catcard>.h{background:var(--pc); color:#fff; padding:13px 16px}
+.catcard>.h .kw{font-family:var(--mono); font-size:11px; letter-spacing:.13em; opacity:.72; display:block}
+.catcard>.h h4{font-size:17px; margin-top:3px; color:#fff}
+.catcard>.h p{font-size:13px; color:rgba(255,255,255,.8); line-height:1.5; margin-top:6px}
+.cc-b{padding:14px 16px 17px}
+.cc-sec+.cc-sec{margin-top:15px; padding-top:14px; border-top:1px solid var(--line)}
+.cc-sec>.lbl{display:block; margin-bottom:8px}
+.cc-k{margin-bottom:10px; padding-left:12px; border-left:2px solid var(--pc)}
+.cc-k b{display:block; font-size:14.5px; font-weight:600; line-height:1.35}
+.cc-k span{display:block; font-size:13px; color:var(--ink-2); line-height:1.45; margin-top:2px}
+.cc-f{margin-bottom:9px}
+.cc-f i{display:block; font-family:var(--serif); font-style:italic; font-size:13.5px; color:var(--ink-2)}
+.cc-f b{font-size:14px; font-weight:600}
+.cc-tags{display:flex; flex-wrap:wrap; gap:5px}
+.cc-tags span{font-size:12.5px; border:1px solid var(--line-2); border-radius:20px; padding:3px 10px; color:var(--ink-2)}
+.cc-beleg{font-size:12.5px; color:var(--ink-3); line-height:1.55; background:var(--surface-2); border-radius:6px; padding:10px 12px}
+
 /* Legende der zwei Achsen */
 .axes{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line);
   border-radius:8px; overflow:hidden; margin-bottom:22px; max-width:1000px}
@@ -446,6 +472,9 @@ details.more .in{padding-top:11px}
 @media print{
   body{background:#fff}
   .steps,.kartei,.find,.actions,.readout,.need,.no-print{display:none!important}
+  /* Der Katalog ist zum Zeigen im Termin, nicht fürs Kunden-PDF — sonst
+     verdoppelt er dessen Umfang. Zeile löschen, wenn er mitgedruckt werden soll. */
+  #s4{display:none!important}
   .step{display:block!important; padding:0 0 18px; break-inside:auto}
   .phase{break-inside:avoid} .phase>summary .chev{display:none}
   .pbody{display:block!important}
@@ -485,6 +514,7 @@ details.more .in{padding-top:11px}
       <button class="stab" role="tab" data-step="2" aria-selected="true"><span class="n">1</span><span class="t">Bedarf &amp; Kontext</span><span class="c" id="cnt2">0</span></button>
       <button class="stab" role="tab" data-step="1" aria-selected="false"><span class="n">2</span><span class="t">Kompetenzen wählen</span><span class="c" id="cnt1">0</span></button>
       <button class="stab" role="tab" data-step="3" aria-selected="false"><span class="n">3</span><span class="t">Ergebnis &amp; Ablauf</span></button>
+      <button class="stab" role="tab" data-step="4" aria-selected="false"><span class="n">4</span><span class="t">Das ppedv-Modell</span></button>
     </nav>
   </div>
 </header>
@@ -593,6 +623,32 @@ details.more .in{padding-top:11px}
         <div class="terms"><div><b>12</b>Monate Laufzeit</div><div><b>4</b>Termine vor Ort</div><div><b>1</b>Pauschalpreis</div></div>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="step" id="s4">
+  <div class="wrap">
+    <p class="lead">Der Katalog hinter der Matrix: <b>sechs Kompetenzwelten</b>, dazu je drei Kernkompetenzen, die typischen Themen aus Kundengesprächen und die Kurse, aus denen der Lernpfad gebaut wird. Diese Seite ändert nichts &mdash; sie ist zum Zeigen da.</p>
+
+    <div class="catbox">
+      <svg class="ring" viewBox="0 0 900 900" role="img" aria-label="ppedv Kompetenzwelten">
+        <defs id="catDefs"></defs>
+        <g id="cOuter"></g><g id="cInner"></g>
+        <g>
+          <circle cx="450" cy="450" r="222" fill="var(--core)"></circle>
+          <text class="core-co" x="450" y="418" text-anchor="middle" style="fill:var(--ink)">ppedv</text>
+          <text class="core-name" x="450" y="450" text-anchor="middle" style="font-size:19px">Kompetenzwelten</text>
+          <line class="core-rule" x1="374" y1="484" x2="526" y2="484"></line>
+          <text class="core-sub" x="450" y="514" text-anchor="middle" id="catSub"></text>
+          <text class="core-desc" x="450" y="552" text-anchor="middle" style="font-size:13.5px">Sechs Themenfelder, in denen ppedv</text>
+          <text class="core-desc" x="450" y="572" text-anchor="middle" style="font-size:13.5px">Kompetenz aufbaut &mdash; vom Verstehen</text>
+          <text class="core-desc" x="450" y="592" text-anchor="middle" style="font-size:13.5px">bis zum sicheren Betrieb.</text>
+        </g>
+      </svg>
+      <p class="readout">Eine Welt anklicken &mdash; die Karte darunter springt in den Blick.</p>
+    </div>
+
+    <div class="catcards" id="catCards"></div>
   </div>
 </section>
 </main>
@@ -1121,6 +1177,83 @@ hitsEl.addEventListener("click",e=>{
   save(); localFind(); renderCtx();
 });
 
+/* ---------- Schau-Seite: der ppedv-Katalog ----------
+   Eigener Ring mit eigenen Element-IDs. Er zeigt das Modell, wie es ohne
+   Kundendaten aussieht: sechs Welten, je drei Kernkompetenzen. */
+const cOuter=document.getElementById("cOuter"),cInner=document.getElementById("cInner"),
+      catDefs=document.getElementById("catDefs"),catCards=document.getElementById("catCards");
+function buildCatalog(){
+  if(!cOuter) return;
+  const kk=WORLDS.reduce((a,w)=>a+w.komp.length,0);
+  const sub=document.getElementById("catSub");
+  if(sub) sub.textContent=WORLDS.length+" Welten · "+kk+" Kernkompetenzen";
+  WORLDS.forEach((w,i)=>{
+    const a0=-90+i*60,a1=a0+60,mid=a0+30,midN=((mid%360)+360)%360,flip=midN>0&&midN<=180;
+    const p=el("path",{d:ann(O1,O2,a0+GO,a1-GO),class:"cseg","data-cw":w.id,tabindex:"0",role:"button","aria-label":w.title});
+    p.style.fill=w.c; p.style.stroke=w.c;
+    p.appendChild(el("title")).textContent=w.title+" — "+w.lead;
+    cOuter.appendChild(p);
+    const pid="cop"+i;
+    catDefs.appendChild(el("path",{id:pid,d:arc(flip?398:368,a0+GO*0.4,a1-GO*0.4,flip),fill:"none"}));
+    const t=el("text",{class:"olabel","text-anchor":"middle","data-cl":w.id});
+    const tp=el("textPath",{href:"#"+pid,startOffset:"50%"}); tp.setAttribute("xlink:href","#"+pid);
+    tp.textContent=w.title.toUpperCase(); t.appendChild(tp); cOuter.appendChild(t);
+
+    const span=(60-2*GO)/w.komp.length, fit=labelFit(w.komp.length);
+    w.komp.forEach((k,j)=>{
+      const b0=a0+GO+j*span,b1=b0+span,bm=(b0+b1)/2,c0=b0+(j===0?0:GK),c1=b1-(j===w.komp.length-1?0:GK);
+      const sg=el("path",{d:ann(I1,I2,c0,c1),class:"cseg","data-cw":w.id,tabindex:"0",role:"button","aria-label":w.title+": "+k.n});
+      sg.style.fill=`color-mix(in srgb, ${w.c} 20%, var(--surface))`;
+      sg.style.stroke=`color-mix(in srgb, ${w.c} 20%, var(--surface))`;
+      sg.appendChild(el("title")).textContent=k.n+" — "+k.d;
+      cInner.appendChild(sg);
+      const[lx,ly]=px(RC,bm), lt=el("text",{class:"ilabel","text-anchor":"middle",x:lx.toFixed(1),y:"0","data-ly":ly.toFixed(2),"data-a":bm.toFixed(2)});
+      lt.style.fill="var(--k3)";
+      placeLines(lt,k.l,fit);
+      cInner.appendChild(lt);
+    });
+  });
+  catCards.innerHTML=WORLDS.map(w=>`
+    <div class="catcard" id="cc-${w.id}" style="--pc:${w.c}">
+      <div class="h"><span class="kw">${w.kw}</span><h4>${esc(w.title)}</h4><p>${esc(w.lead)}</p></div>
+      <div class="cc-b">
+        <div class="cc-sec"><span class="lbl">Kernkompetenzen</span>
+          ${w.komp.map(k=>`<div class="cc-k"><b>${esc(k.n)}</b><span>${esc(k.d)}</span></div>`).join("")}</div>
+        <div class="cc-sec"><span class="lbl">So klingt es im Gespräch</span>
+          ${w.felder.map(f=>`<div class="cc-f"><i>${esc(f.s)}</i><b>${esc(f.n)}</b> &mdash; ${esc(f.z)}</div>`).join("")}</div>
+        <div class="cc-sec"><span class="lbl">Typische Zielgruppen</span>
+          <div class="cc-tags">${w.ziel.map(z=>`<span>${esc(z)}</span>`).join("")}</div></div>
+        <div class="cc-sec"><span class="lbl">Kurse dafür</span>
+          <div class="cc-tags">${w.bau.map(b=>`<span>${esc(b)}</span>`).join("")}</div></div>
+        <div class="cc-sec"><span class="lbl">Warum das gebraucht wird</span>
+          <p class="cc-beleg">${esc(w.beleg)}</p></div>
+      </div>
+    </div>`).join("");
+  [cOuter,cInner].forEach(g=>g.addEventListener("click",e=>{
+    const t=e.target.closest("[data-cw]"); if(!t) return;
+    const c=document.getElementById("cc-"+t.dataset.cw); if(!c) return;
+    document.querySelectorAll(".catcard.lit").forEach(x=>x.classList.remove("lit"));
+    c.classList.add("lit"); c.scrollIntoView({behavior:"smooth",block:"start"});
+    setTimeout(()=>c.classList.remove("lit"),2200);
+  }));
+}
+/* Außenbeschriftung des Katalogrings auf die Bogenlänge einpassen */
+function fitCat(){
+  WORLDS.forEach((w,i)=>{
+    const pth=document.getElementById("cop"+i), t=cOuter&&cOuter.querySelector(`[data-cl="${w.id}"]`);
+    if(!pth||!t||!t.getComputedTextLength) return;
+    let av=0; try{av=pth.getTotalLength()*0.95}catch(e){return}
+    if(!av) return;
+    let fs=15,g=0; t.style.fontSize=fs+"px"; t.style.letterSpacing="0.075em";
+    let len=t.getComputedTextLength();
+    while(len>av&&fs>11&&g++<40){fs-=0.25; t.style.fontSize=fs+"px"; len=t.getComputedTextLength();}
+    if(len>av) t.style.letterSpacing="0.005em";
+  });
+}
+buildCatalog();
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitCat).catch(()=>{});
+window.addEventListener("resize",()=>{clearTimeout(window._fc); window._fc=setTimeout(fitCat,150);});
+
 /* ---------- Skills anlegen und ändern ---------- */
 function addSkill(text,welt,teams,focus){
   const s=mkSkill(text,welt,teams);
@@ -1558,9 +1691,10 @@ document.addEventListener("paste",e=>{const it=e.clipboardData&&e.clipboardData.
 const tabs=[...document.querySelectorAll(".stab")];
 function goStep(n){
   tabs.forEach(t=>t.setAttribute("aria-selected",t.dataset.step===String(n)));
-  [1,2,3].forEach(i=>document.getElementById("s"+i).classList.toggle("on",i===n));
+  [1,2,3,4].forEach(i=>document.getElementById("s"+i).classList.toggle("on",i===n));
   window.scrollTo({top:0,behavior:"smooth"});
   if(n===1) requestAnimationFrame(fitLabels);
+  if(n===4) requestAnimationFrame(fitCat);
 }
 tabs.forEach(t=>t.addEventListener("click",()=>goStep(+t.dataset.step)));
 function renderCounts(){
