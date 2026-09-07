@@ -1,0 +1,1213 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<title>ppedv Kompetenzmatrix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+
+<style>
+:root{
+  --blue:#2E4879; --orange:#EA8F13;
+  --paper:#EFF1F5; --surface:#FFFFFF; --surface-2:#F5F7FA; --surface-3:#E5E9F0;
+  --ink:#141A24; --ink-2:#465268; --ink-3:#78849A;
+  --line:#D5DCE7; --line-2:#BCC6D6;
+  --accent-soft:#FDF1DD; --accent-ink:#8A5A08;
+  --k1:#1F3358; --k2:#27406B; --k3:#2E4879; --k4:#365A93; --k5:#3E6BA8; --k6:#4A7DB8;
+  --core:#F7F9FC;
+  --shadow:0 1px 2px rgba(20,26,36,.05), 0 10px 30px -14px rgba(46,72,121,.28);
+  --sans:'Archivo','Helvetica Neue',Arial,sans-serif;
+  --serif:'Source Serif 4',Georgia,serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0D1117; --surface:#151B24; --surface-2:#1A212B; --surface-3:#232C39;
+  --ink:#E8ECF3; --ink-2:#A3AEC1; --ink-3:#78849A;
+  --line:#28313E; --line-2:#3A4657; --accent-soft:#2C2110; --accent-ink:#EA8F13;
+  --k1:#3E5C8F; --k2:#46689D; --k3:#5078AE; --k4:#5C88BE; --k5:#6997CB; --k6:#7AA6D6;
+  --core:#121821; --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px -14px rgba(0,0,0,.8);
+}}
+:root[data-theme="dark"]{
+  --paper:#0D1117; --surface:#151B24; --surface-2:#1A212B; --surface-3:#232C39;
+  --ink:#E8ECF3; --ink-2:#A3AEC1; --ink-3:#78849A;
+  --line:#28313E; --line-2:#3A4657; --accent-soft:#2C2110; --accent-ink:#EA8F13;
+  --k1:#3E5C8F; --k2:#46689D; --k3:#5078AE; --k4:#5C88BE; --k5:#6997CB; --k6:#7AA6D6;
+  --core:#121821; --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px -14px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px; margin:0 auto; padding:0 28px}
+h1,h2,h3,h4{margin:0; text-wrap:balance; letter-spacing:-.025em; font-weight:600}
+p{margin:0}
+button{font:inherit; color:inherit; cursor:pointer}
+.lbl{font-family:var(--mono); font-size:11px; font-weight:500; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3)}
+.btn{border:1px solid var(--line-2); background:var(--surface); border-radius:5px; padding:9px 14px; font-size:13.5px; font-weight:500; transition:.15s}
+.btn:hover{background:var(--surface-3); border-color:var(--ink-3)}
+.btn.go{background:var(--blue); border-color:var(--blue); color:#fff}
+.btn.go:hover{background:#24395F}
+.btn.warm{background:var(--orange); border-color:var(--orange); color:#3D2402; font-weight:600}
+.btn.warm:hover{filter:brightness(1.06)}
+.btn[disabled]{opacity:.45; cursor:not-allowed}
+
+/* ---------- Kopf ---------- */
+.top{background:var(--surface); border-bottom:1px solid var(--line)}
+.top-row{display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding:14px 0}
+.mark{font-family:var(--mono); font-weight:600; font-size:13px; color:#fff; background:var(--blue); padding:4px 10px; border-radius:4px}
+.mark i{color:var(--orange); font-style:normal}
+.fuer{font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3)}
+.logo-slot{border:1px dashed var(--line-2); background:var(--surface-2); border-radius:5px; padding:8px 12px;
+  font-size:12.5px; color:var(--ink-3); display:flex; align-items:center; min-height:40px}
+.logo-slot:hover{border-color:var(--orange); color:var(--orange)}
+.logo-slot.set{border:1px solid var(--line); padding:4px 10px; background:var(--surface)}
+.logo-slot img{max-height:30px; max-width:150px; display:block}
+.logo-clear{border:0; background:none; color:var(--ink-3); font-size:19px; line-height:1; padding:4px 6px}
+.logo-clear:hover{color:#B3261E}
+.cust{font:inherit; font-size:16px; font-weight:600; color:var(--ink); background:var(--surface);
+  border:1px solid var(--line-2); border-radius:5px; padding:10px 12px; flex:1 1 260px; min-width:190px; max-width:400px}
+.cust:focus{outline:2px solid var(--orange); outline-offset:-1px}
+.cust::placeholder{color:var(--ink-3); font-weight:400}
+.kartei{display:flex; align-items:center; gap:8px; margin-left:auto; flex-wrap:wrap}
+.fb-sel{font:inherit; font-size:13px; color:var(--ink); background:var(--surface-2); border:1px solid var(--line-2);
+  border-radius:5px; padding:9px 10px; max-width:230px}
+.fb-status{font-family:var(--mono); font-size:11.5px; color:var(--ink-3); flex-basis:100%; text-align:right}
+.fb-status.ok{color:#1E7A45} .fb-status.err{color:#B3261E}
+:root[data-theme="dark"] .fb-status.ok,:root:not([data-theme="light"]) .fb-status.ok{color:#5FCB8C}
+.drop{outline:2px dashed var(--orange); outline-offset:3px}
+
+/* Schritt-Navigation */
+.steps{display:flex; gap:0; border-top:1px solid var(--line)}
+.stab{flex:0 1 auto; background:none; border:0; border-bottom:3px solid transparent; padding:13px 20px 11px;
+  display:flex; align-items:baseline; gap:9px; color:var(--ink-3); transition:.15s}
+.stab:hover{color:var(--ink)}
+.stab .n{font-family:var(--mono); font-size:11px; letter-spacing:.1em}
+.stab .t{font-size:15px; font-weight:600; letter-spacing:-.02em}
+.stab[aria-selected="true"]{color:var(--ink); border-bottom-color:var(--orange)}
+.stab[aria-selected="true"] .n{color:var(--orange)}
+.stab .c{font-family:var(--mono); font-size:11.5px; background:var(--surface-3); color:var(--ink-3); border-radius:20px; padding:2px 8px}
+.stab[aria-selected="true"] .c{background:var(--orange); color:#3D2402; font-weight:600}
+
+.step{display:none; padding:26px 0 56px}
+.step.on{display:block}
+.lead{font-family:var(--serif); font-size:17px; color:var(--ink-2); max-width:70ch; margin-bottom:18px}
+.lead b{color:var(--ink); font-weight:600}
+
+/* ---------- Suche ---------- */
+.find{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:14px 16px; margin-bottom:20px; box-shadow:var(--shadow)}
+.find label{display:block; font-size:14px; font-weight:600; margin-bottom:9px}
+.find-row{display:flex; gap:9px; flex-wrap:wrap}
+#findIn{flex:1 1 400px; font:inherit; font-size:15px; color:var(--ink); background:var(--surface-2);
+  border:1px solid var(--line-2); border-radius:5px; padding:11px 13px; resize:vertical; min-height:46px}
+#findIn:focus{outline:2px solid var(--orange); outline-offset:-1px; background:var(--surface)}
+.find-note{font-family:var(--mono); font-size:11.5px; color:var(--ink-3); margin-top:9px}
+.find-note.err{color:#B3261E}
+.hits{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:10px; margin-top:12px}
+.hits:empty{display:none}
+.hit{border:1px solid var(--line); border-left:3px solid var(--hc); border-radius:6px; background:var(--surface-2);
+  padding:12px 14px; text-align:left; display:flex; flex-direction:column; gap:5px; transition:.14s}
+.hit:hover{border-color:var(--orange); background:var(--accent-soft)}
+.hit .w{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--hc)}
+.hit .n{font-size:15px; font-weight:600; line-height:1.3}
+.hit .s{font-family:var(--serif); font-size:13.5px; color:var(--ink-2); line-height:1.45}
+.hit .a{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--orange); margin-top:2px}
+.hit[data-on="1"]{background:var(--accent-soft); border-color:var(--orange)}
+
+/* ---------- Ring + Panel ---------- */
+.board{display:grid; grid-template-columns:minmax(0,1fr) 400px; gap:30px; align-items:start}
+.ringbox{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:10px 10px 14px; box-shadow:var(--shadow)}
+svg.ring{display:block; width:100%; height:auto}
+.seg{cursor:pointer; stroke-linejoin:round; stroke-width:6; transition:filter .18s}
+.seg:hover{filter:brightness(1.09)}
+.spot{pointer-events:none; transition:opacity .2s}
+.olabel{font-family:var(--sans); font-size:15px; font-weight:600; letter-spacing:.075em; fill:#fff; pointer-events:none; transition:opacity .2s}
+.ilabel{font-family:var(--sans); font-size:12.4px; font-weight:500; pointer-events:none}
+.core-n{font-family:var(--mono); font-size:58px; font-weight:600; letter-spacing:-.04em; fill:var(--ink)}
+.core-sub{font-family:var(--mono); font-size:12.5px; letter-spacing:.13em; fill:var(--ink-3); text-transform:uppercase}
+.core-name{font-family:var(--sans); font-size:17px; font-weight:600; fill:var(--ink)}
+.core-desc{font-family:var(--sans); font-size:14px; fill:var(--ink-2)}
+.core-co{font-family:var(--sans); font-size:25px; font-weight:700; letter-spacing:-.025em; fill:var(--ink)}
+.core-rule{stroke:var(--line); stroke-width:1}
+.readout{padding:12px 12px 0; margin:4px 8px 0; border-top:1px solid var(--line); font-size:13.5px; color:var(--ink-3)}
+.readout b{color:var(--ink)}
+
+.panel{position:sticky; top:16px; background:var(--surface); border:1px solid var(--line); border-radius:8px; box-shadow:var(--shadow); overflow:hidden}
+.ph{padding:16px 18px 15px; background:var(--pc); color:#fff}
+.ph .kw{font-family:var(--mono); font-size:11.5px; letter-spacing:.13em; opacity:.72}
+.ph h2{font-size:20px; margin-top:5px; color:#fff}
+.ph p{font-size:13.5px; margin-top:6px; color:rgba(255,255,255,.8); line-height:1.5}
+.pb{padding:2px 18px 18px}
+.grp{padding:15px 0; border-bottom:1px solid var(--line)}
+.grp:last-child{border-bottom:0}
+.grp-h{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:4px}
+.grp-h .lbl{color:var(--ink-2)}
+.mini{font-family:var(--mono); font-size:11.5px; color:var(--orange); background:none; border:0; padding:0; text-decoration:underline; text-underline-offset:3px}
+.hint{font-size:13px; color:var(--ink-3); line-height:1.45; margin-bottom:9px}
+.row{display:flex; gap:11px; width:100%; text-align:left; background:none; border:0; padding:9px 10px; border-radius:6px; align-items:flex-start; transition:.14s}
+.row:hover{background:var(--surface-2)}
+.row .box{width:18px; height:18px; flex:0 0 18px; border:1.6px solid var(--line-2); border-radius:4px; margin-top:2px; display:grid; place-items:center; transition:.14s}
+.row .box::after{content:""; width:7px; height:4px; border-left:2px solid #3D2402; border-bottom:2px solid #3D2402; transform:rotate(-45deg) translate(0,-1px); opacity:0}
+.row[aria-pressed="true"]{background:var(--accent-soft)}
+.row[aria-pressed="true"] .box{background:var(--orange); border-color:var(--orange)}
+.row[aria-pressed="true"] .box::after{opacity:1}
+.row .n{font-size:14.5px; font-weight:600; line-height:1.35; display:block}
+.row .s{display:block; font-family:var(--serif); font-size:13.5px; color:var(--ink-2); line-height:1.45; margin-top:3px}
+.row .d{font-size:13px; color:var(--ink-3); line-height:1.4; display:block; margin-top:2px}
+.chips{display:flex; flex-wrap:wrap; gap:6px}
+.chip-t{border:1px solid var(--line-2); background:var(--surface); border-radius:20px; padding:6px 13px; font-size:13px; color:var(--ink-2); transition:.14s; line-height:1.3}
+.chip-t:hover{border-color:var(--orange); color:var(--ink)}
+.chip-t[aria-pressed="true"]{background:var(--orange); border-color:var(--orange); color:#3D2402; font-weight:500}
+details.more{border-top:1px solid var(--line); padding-top:13px; margin-top:2px}
+details.more>summary{list-style:none; cursor:pointer; font-family:var(--mono); font-size:11px; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3); display:flex; justify-content:space-between; align-items:center}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::after{content:"+"; font-size:15px; color:var(--ink-3)}
+details.more[open]>summary::after{content:"–"}
+details.more>summary:hover{color:var(--orange)}
+details.more .in{padding-top:11px}
+.beleg{margin:14px 0 0; background:var(--surface-2); border:1px solid var(--line); border-left:3px solid var(--pc); border-radius:6px; padding:11px 13px}
+.beleg .lbl{display:block; margin-bottom:5px; color:var(--ink-2)}
+.beleg p{font-size:13px; color:var(--ink-2); line-height:1.55}
+.komp-row{display:flex; align-items:flex-start; gap:2px}
+.komp-row .row{flex:1 1 auto; min-width:0}
+.kedit{flex:0 0 auto; border:1px solid transparent; background:none; border-radius:5px; padding:8px 9px; margin-top:1px; font-size:13.5px; color:var(--ink-3); line-height:1}
+.kedit:hover{color:var(--orange); border-color:var(--line)}
+.komp-edit{background:var(--surface-2); border:1px solid var(--orange); border-radius:6px; padding:11px 12px; margin:2px 0}
+.komp-edit .elbl{display:block; font-size:12.5px; font-weight:600; color:var(--ink-2); margin-bottom:8px}
+.komp-edit .elbl:last-of-type{margin-bottom:0}
+.komp-edit .elbl input,.komp-edit .elbl textarea{display:block; width:100%; margin-top:4px; font:inherit; font-size:13.5px; color:var(--ink);
+  background:var(--surface); border:1px solid var(--line-2); border-radius:5px; padding:8px 10px; resize:vertical}
+.komp-edit .elbl textarea{min-height:52px; line-height:1.4}
+.komp-edit .elbl input:focus,.komp-edit .elbl textarea:focus{outline:2px solid var(--orange); outline-offset:-1px}
+.ke-row{display:flex; gap:8px; margin-top:10px; flex-wrap:wrap}
+.ke-row .btn{padding:7px 12px; font-size:12.5px}
+
+/* ---------- Kontext ---------- */
+.fields{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px; max-width:1000px}
+.field{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:14px 16px 15px}
+.field.wide{grid-column:1/-1}
+.field label{display:block; font-size:14px; font-weight:600; margin-bottom:8px; line-height:1.4}
+.field input,.field textarea{width:100%; font:inherit; font-size:14.5px; color:var(--ink); background:var(--surface-2);
+  border:1px solid var(--line); border-radius:5px; padding:10px 12px; resize:vertical}
+.field textarea{min-height:70px; line-height:1.55}
+.field input:focus,.field textarea:focus{outline:2px solid var(--orange); outline-offset:-1px; background:var(--surface)}
+
+/* ---------- Ergebnis ---------- */
+.actions{display:flex; gap:9px; flex-wrap:wrap; margin-bottom:22px}
+.cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px}
+.card{border:1px solid var(--line); border-radius:8px; overflow:hidden; background:var(--surface)}
+.card .h{background:var(--pc); color:#fff; padding:11px 15px}
+.card .h .kw{font-family:var(--mono); font-size:11px; letter-spacing:.13em; opacity:.72; display:block}
+.card .h h4{font-size:15.5px; margin-top:3px; color:#fff}
+.card .b{padding:13px 15px 16px}
+.card .sec+.sec{margin-top:12px}
+.card .sec .lbl{display:block; margin-bottom:5px}
+.card ul{margin:0; padding-left:16px; font-size:14px; color:var(--ink-2); line-height:1.5}
+.card .sec.kk ul{list-style:none; padding-left:0}
+.card .sec.kk li{position:relative; padding-left:16px; font-weight:500; color:var(--ink)}
+.card .sec.kk li::before{content:""; position:absolute; left:0; top:7px; width:7px; height:7px; border-radius:2px; background:var(--orange)}
+.empty{border:1px dashed var(--line-2); border-radius:8px; padding:30px; text-align:center; color:var(--ink-3); grid-column:1/-1}
+.block{margin-top:40px}
+.block>h3{font-size:21px; margin-bottom:6px}
+.block>.sub{font-size:14.5px; color:var(--ink-2); margin-bottom:16px; max-width:74ch}
+
+/* Timeline */
+.tl{border:1px solid var(--line); border-radius:8px; background:var(--surface); padding:16px 18px; overflow-x:auto}
+.tl-in{min-width:720px}
+.tl-r{display:grid; grid-template-columns:170px 1fr; gap:14px; align-items:center}
+.tl-r+.tl-r{margin-top:6px}
+.tl-l b{font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--orange); display:block}
+.tl-l span{font-size:13.5px; font-weight:600; display:block; margin-top:2px}
+.tl-head .tl-l{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); text-align:right}
+.tl-w{display:grid; grid-template-columns:repeat(16,1fr); margin-bottom:7px}
+.tl-w i{font-family:var(--mono); font-size:11px; font-style:normal; color:var(--ink-3); text-align:center; border-left:1px solid var(--line); padding:3px 0}
+.tl-t{display:grid; grid-template-columns:repeat(16,1fr); align-items:center; min-height:32px;
+  background-image:repeating-linear-gradient(to right,var(--line) 0 1px,transparent 1px 100%); background-size:calc(100%/16) 100%}
+.bar{height:30px; border-radius:5px; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:0 9px;
+  background:var(--blue); color:#fff; border:0; overflow:hidden; font-family:var(--mono); font-size:11.5px}
+.bar.par{background:color-mix(in srgb,var(--blue) 42%,var(--surface)); color:var(--ink); border:1px dashed var(--blue)}
+.bar .m{font-size:11px; font-weight:600; background:var(--orange); color:#3D2402; padding:2px 7px; border-radius:3px; white-space:nowrap}
+.tl-after{margin-top:11px; padding-top:11px; border-top:1px dashed var(--line)}
+.bar.part{grid-column:1/-1; background:transparent; border:1px solid var(--orange); color:var(--ink)}
+.tl-note{font-family:var(--mono); font-size:11.5px; color:var(--ink-3); margin-top:11px}
+.tl-edit{margin-top:15px; padding-top:13px; border-top:1px dashed var(--line)}
+.tl-num{font:inherit; font-size:13.5px; color:var(--ink); background:var(--surface-2); border:1px solid var(--line-2); border-radius:5px; padding:6px 8px; width:64px}
+.tl-num:focus{outline:2px solid var(--orange); outline-offset:-1px}
+
+/* Phasen */
+.phase{border:1px solid var(--line); border-radius:8px; background:var(--surface); margin-top:9px; overflow:hidden}
+.phase>summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:14px; padding:14px 17px}
+.phase>summary::-webkit-details-marker{display:none}
+.phase>summary:hover{background:var(--surface-2)}
+.phase .pn{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--orange); white-space:nowrap}
+.phase .pt{font-size:16.5px; font-weight:600; flex:1 1 auto}
+.phase .pw{font-family:var(--mono); font-size:12px; color:var(--ink-3); white-space:nowrap}
+.phase .chev{width:11px; height:11px; border-right:1.7px solid var(--ink-3); border-bottom:1.7px solid var(--ink-3); transform:rotate(45deg) translate(-2px,-2px)}
+.phase[open] .chev{transform:rotate(225deg) translate(-3px,-3px)}
+.pbody{padding:2px 17px 18px; border-top:1px solid var(--line)}
+.goal{font-family:var(--serif); font-size:16px; color:var(--ink-2); margin:13px 0 15px; max-width:70ch}
+.pcols{display:grid; grid-template-columns:1.3fr 1fr; gap:24px}
+.pcols ul{margin:6px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:6px}
+.pcols li{font-size:14px; color:var(--ink-2); padding-left:16px; position:relative; line-height:1.5}
+.pcols li::before{content:""; position:absolute; left:0; top:8px; width:5px; height:5px; border-radius:50%; background:var(--line-2)}
+.role{border-left:2px solid var(--line-2); padding-left:12px; margin-top:8px}
+.role.pp{border-left-color:var(--blue)}
+.role .who{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); display:block; margin-bottom:3px}
+.role p{font-size:14px; color:var(--ink-2); line-height:1.5}
+.sync{margin-top:15px; background:var(--accent-soft); border:1px solid rgba(234,143,19,.35); border-radius:6px; padding:12px 14px}
+.sync .lbl{display:block; margin-bottom:6px; color:var(--accent-ink)}
+.sync ul{margin:0; padding-left:16px; font-size:14px; color:var(--ink-2); line-height:1.55}
+.sync li strong{color:var(--ink)}
+.sync .none{font-size:13.5px; color:var(--ink-3); font-style:italic}
+.out{margin-top:14px; padding-top:12px; border-top:1px dashed var(--line); display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+.tag{font-family:var(--mono); font-size:12px; padding:4px 9px; border-radius:4px; background:var(--surface-3); color:var(--ink-2)}
+.tag.m{background:var(--accent-soft); color:var(--accent-ink); font-weight:600; border:1px solid rgba(234,143,19,.4)}
+
+/* Partnerschaft */
+.partner{background:var(--blue); border-radius:8px; padding:24px 26px; color:#fff}
+.partner h3{color:#fff; font-size:20px}
+.partner>p{font-family:var(--serif); font-size:16px; color:rgba(255,255,255,.82); margin-top:9px; max-width:66ch}
+.partner b{color:#fff}
+.qs{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1px; margin-top:20px;
+  background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.16); border-radius:6px; overflow:hidden}
+.q{background:var(--blue); padding:14px 15px 16px}
+.q b{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--orange); display:block}
+.q h4{font-size:14.5px; color:#fff; margin-top:6px; line-height:1.3}
+.q p{font-size:13px; color:rgba(255,255,255,.75); line-height:1.5; margin-top:6px}
+.terms{display:flex; gap:22px; flex-wrap:wrap; margin-top:18px}
+.terms div{font-family:var(--mono); font-size:12px; color:rgba(255,255,255,.72)}
+.terms b{color:var(--orange); font-size:17px; margin-right:6px}
+
+/* Hintergrund */
+.bg{border-top:1px solid var(--line); background:var(--surface); padding:22px 0 34px}
+.bg details{border-bottom:1px solid var(--line)}
+.bg details:last-child{border-bottom:0}
+.bg summary{list-style:none; cursor:pointer; padding:15px 0; font-size:16px; font-weight:600; display:flex; justify-content:space-between; align-items:center}
+.bg summary::-webkit-details-marker{display:none}
+.bg summary::after{content:"+"; font-size:19px; color:var(--ink-3); font-weight:400}
+.bg details[open] summary::after{content:"–"}
+.bg summary:hover{color:var(--orange)}
+.bg .in{padding:0 0 20px}
+.lv{display:grid; grid-template-columns:110px 1fr; gap:12px 18px; font-size:14.5px; align-items:baseline}
+.lv dt{font-weight:600; color:var(--ink)}
+.lv dt em{display:block; font-style:normal; font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--orange); margin-bottom:2px}
+.lv dd{margin:0; color:var(--ink-2); line-height:1.55}
+.lv dd em{font-style:normal; color:var(--accent-ink); font-weight:600}
+.src{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px}
+.src div{background:var(--surface-2); border:1px solid var(--line); border-radius:7px; padding:13px 15px}
+.src b{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--orange); display:block; margin-bottom:5px}
+.src h4{font-size:14.5px}
+.src p{font-size:13.5px; color:var(--ink-2); line-height:1.55; margin-top:6px}
+.src a{font-family:var(--mono); font-size:11.5px; color:var(--ink-3); display:inline-block; margin-top:8px; word-break:break-all}
+.foot{padding:20px 0 34px; font-family:var(--mono); font-size:12.5px; color:var(--ink-3); line-height:1.7}
+.toast{position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(14px); background:var(--blue); color:#fff;
+  font-size:14px; padding:11px 20px; border-radius:6px; opacity:0; pointer-events:none; transition:.22s; z-index:60}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+
+@media (max-width:1100px){.board{grid-template-columns:1fr} .panel{position:static} .pcols{grid-template-columns:1fr}}
+@media (max-width:680px){.wrap{padding:0 16px} .stab{padding:11px 12px} .stab .t{font-size:14px} .lv{grid-template-columns:1fr; gap:4px 0} .lv dd{margin-bottom:10px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff}
+  .steps,.kartei,.find,.actions,.readout,.no-print{display:none!important}
+  .step{display:block!important; padding:0 0 18px; break-inside:auto}
+  .phase{break-inside:avoid} .phase>summary .chev{display:none}
+  .pbody{display:block!important}
+  .card,.tl,.partner,.ringbox{break-inside:avoid; box-shadow:none}
+  .board{grid-template-columns:1fr} .panel{display:none}
+  .tl{overflow:visible} .tl-in{min-width:0} .tl-r{grid-template-columns:100px 1fr}
+  .bar,.tl-w i{font-size:8.5px} .bar .m{font-size:8px; padding:1px 4px}
+  .bg details{display:block} .bg .in{display:block!important}
+  .logo-slot:not(.set){display:none!important}
+  .cust{border:0!important; background:none!important; padding:0!important; font-size:19px!important; color:var(--ink)!important}
+}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="top-row" id="setup">
+      <span class="mark">pped<i>v</i></span><span class="fuer">für</span>
+      <button class="logo-slot" id="logoSlot">Logo wählen</button>
+      <button class="logo-clear" id="logoClear" hidden title="Logo entfernen">&times;</button>
+      <input class="cust" id="custName" placeholder="Unternehmen eintragen">
+      <input type="file" id="logoFile" accept="image/*" hidden>
+      <div class="kartei no-print">
+        <select class="fb-sel" id="fbSel"><option value="">Neue Kartei</option></select>
+        <button class="btn go" id="fbSave">Speichern</button>
+        <button class="btn" id="fbNew">Neu</button>
+        <button class="btn" id="fbDel" disabled>Löschen</button>
+        <span class="fb-status" id="fbStatus"></span>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <nav class="steps" role="tablist">
+      <button class="stab" role="tab" data-step="2" aria-selected="true"><span class="n">1</span><span class="t">Kontext</span><span class="c" id="cnt2">0/6</span></button>
+      <button class="stab" role="tab" data-step="1" aria-selected="false"><span class="n">2</span><span class="t">Kompetenzen wählen</span><span class="c" id="cnt1">0</span></button>
+      <button class="stab" role="tab" data-step="3" aria-selected="false"><span class="n">3</span><span class="t">Ergebnis &amp; Ablauf</span></button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="step" id="s1">
+  <div class="wrap">
+    <p class="lead">Das Ergebnis aus dem Gespräch — klicken Sie direkt in den Ring, um Kompetenzen und Unterkompetenzen zu wählen, feinzujustieren oder zu ergänzen.</p>
+
+    <div class="board">
+      <div class="ringbox">
+        <svg class="ring" viewBox="0 0 900 900" role="application" aria-label="Kompetenzring">
+          <defs id="ringDefs"></defs>
+          <g id="gSpot"></g><g id="gOuter"></g><g id="gInner"></g>
+          <g>
+            <circle cx="450" cy="450" r="222" fill="var(--core)"></circle>
+            <image id="coreLogo" x="310" y="288" width="280" height="80" preserveAspectRatio="xMidYMid meet" style="display:none"></image>
+            <text class="core-co" x="450" y="344" text-anchor="middle" id="coreCo"></text>
+            <text class="core-n" x="450" y="444" text-anchor="middle" id="coreN">0</text>
+            <text class="core-sub" x="450" y="472" text-anchor="middle" id="coreSub">von 18 Kernkompetenzen</text>
+            <line class="core-rule" x1="374" y1="502" x2="526" y2="502"></line>
+            <text class="core-name" x="450" y="532" text-anchor="middle" id="coreName"></text>
+            <text class="core-desc" x="450" y="556" text-anchor="middle" id="cd1"></text>
+            <text class="core-desc" x="450" y="576" text-anchor="middle" id="cd2"></text>
+            <text class="core-desc" x="450" y="596" text-anchor="middle" id="cd3"></text>
+          </g>
+        </svg>
+        <p class="readout" id="readout">Innenring anklicken wählt eine Kompetenz · Außenring öffnet die Kompetenzwelt.</p>
+      </div>
+      <aside class="panel" id="panel"></aside>
+    </div>
+  </div>
+</section>
+
+<section class="step on" id="s2">
+  <div class="wrap">
+    <p class="lead">Gehen Sie das Gespräch hier mit dem Kunden durch: <b>Der Kunde erzählt, was nicht funktioniert</b> — Sie notieren mit oder lassen die KI zuordnen. Dazu die Eckdaten. Alles fließt direkt in die Kompetenzauswahl und den Ablauf ein.</p>
+
+    <div class="find">
+      <label for="findIn">Was sagt der Kunde?</label>
+      <div class="find-row">
+        <textarea id="findIn" rows="1" placeholder="z. B. Angebote dauern zu lange · niemand weiß, welche Zahl stimmt · neue Kollegen finden nichts"></textarea>
+        <button class="btn warm" id="aiGo" hidden>Mit KI zuordnen</button>
+      </div>
+      <p class="find-note" id="findNote">Stichwort genügt für die Sofortsuche.</p>
+      <div class="hits" id="hits"></div>
+    </div>
+
+    <div class="fields" id="fields"></div>
+  </div>
+</section>
+
+<section class="step" id="s3">
+  <div class="wrap">
+    <div class="actions no-print">
+      <button class="btn go" id="btnPrint">Als PDF sichern</button>
+      <button class="btn" id="btnCopy">Als Text kopieren</button>
+    </div>
+    <h3 style="font-size:22px">Ihr Kompetenzmodell</h3>
+    <p class="sub" style="font-size:14.5px;color:var(--ink-2);margin:6px 0 16px">Grundlage für Standortbestimmung, Curriculum und Angebot.</p>
+    <div class="cards" id="cards"></div>
+
+    <div class="block">
+      <h3>Umsetzung &mdash; ab Ihrer Zusage</h3>
+      <p class="sub">Kontext, Kompetenzauswahl und das Angebot gehören noch zum Vertrieb. Woche 1 beginnt mit der Zusage.</p>
+      <div class="tl" id="tl"></div>
+      <div id="phases" style="margin-top:16px"></div>
+    </div>
+
+    <div class="block">
+      <div class="partner">
+        <h3>Danach: ein Termin pro Quartal, ein Jahr fix</h3>
+        <p>Kompetenz verfällt, wenn sie nicht nachgezogen wird. Nach der Einführung bleibt ppedv an Bord &mdash; <b>viermal im Jahr vor Ort</b>. Kein neues Projekt, keine Einzelabrechnung.</p>
+        <div class="qs">
+          <div class="q"><b>Quartal 1</b><h4>Auffrischung und Praxis-Check</h4><p>Was ist hängengeblieben, was eingeschlafen? Offene Fragen aus dem Betrieb.</p></div>
+          <div class="q"><b>Quartal 2</b><h4>Neue Funktionen und Updates</h4><p>Was hat sich bei Microsoft und in der KI geändert &mdash; und was davon zählt für Sie?</p></div>
+          <div class="q"><b>Quartal 3</b><h4>Neue Mitarbeitende und Vertiefung</h4><p>Wer dazugekommen ist, kommt auf Stand. Für alle anderen: Fortgeschrittenenthemen.</p></div>
+          <div class="q"><b>Quartal 4</b><h4>Kompetenz-Check und Jahresplanung</h4><p>Kurzes Re-Assessment, Bericht an die Leitung, Schwerpunkte fürs Folgejahr.</p></div>
+        </div>
+        <div class="terms"><div><b>12</b>Monate Laufzeit</div><div><b>4</b>Termine vor Ort</div><div><b>1</b>Pauschalpreis</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="bg">
+  <div class="wrap">
+    <details>
+      <summary>Wie ist die Matrix aufgebaut?</summary>
+      <div class="in">
+        <dl class="lv">
+          <dt><em>Ebene 1</em>Kompetenzwelt</dt><dd>Das Themenfeld. Sechs Stück, im Außenring. <em>Daten besser nutzen</em></dd>
+          <dt><em>Ebene 2</em>Kernkompetenz</dt><dd>Was Ihre Leute können sollen. Drei pro Welt, im Innenring. <em>Zahlen richtig lesen</em></dd>
+          <dt><em>Ebene 3</em>Skill</dt><dd>Die trainierbare Einzelfähigkeit. Jedes Kundenthema gehört zu genau einem Skill. <em>Dashboards fokussieren</em></dd>
+          <dt><em>Ebene 4</em>Zielgruppe</dt><dd>Wer es lernt &mdash; nach Rolle und nach Abteilung. <em>Analysten &amp; Controller · Finanzen</em></dd>
+          <dt><em>Ebene 5</em>Baustein</dt><dd>Der konkrete Kurs. Daraus entsteht der Lernpfad. <em>Power BI</em></dd>
+        </dl>
+        <p style="font-size:14.5px;color:var(--ink-2);margin-top:16px;line-height:1.6;max-width:80ch"><b>Im Gespräch arbeiten Sie rückwärts:</b> Der Kunde nennt ein Problem, Sie ordnen es einem Skill zu &mdash; Kompetenzwelt und Baustein ergeben sich daraus.</p>
+      </div>
+    </details>
+    <details>
+      <summary>Worauf beruht dieses Kompetenzmodell?</summary>
+      <div class="in">
+        <div class="src">
+          <div><b>Stifterverband · 01/2025</b><h4>KI-Kompetenzen in Unternehmen</h4><p>79 % fehlen grundlegende KI-Kompetenzen, 86 % schöpfen das Potenzial kaum aus. Größte Lücke: Automatisierung von Arbeitsprozessen.</p><a href="https://www.stifterverband.org/sites/default/files/2025-01/ki-kompetenzen_in_deutschen_unternehmen.pdf" target="_blank" rel="noopener">stifterverband.org</a></div>
+          <div><b>Bitkom · 2025</b><h4>Künstliche Intelligenz in Deutschland</h4><p>53 % nennen fehlendes Know-how als größte Hürde, 43 % bieten keine KI-Schulungen, nur 8 % schulen alle. 70 % der Erwerbstätigen ohne KI-Weiterbildung.</p><a href="https://www.bitkom.org/sites/main/files/2026-02/bitkom-studienbericht-ki.pdf" target="_blank" rel="noopener">bitkom.org</a></div>
+          <div><b>EU · seit 02.02.2025</b><h4>AI Act, Artikel 4</h4><p>Anbieter <em>und</em> Betreiber von KI-Systemen müssen ausreichende KI-Kompetenz ihres Personals sicherstellen &mdash; technisch, rechtlich, ethisch. Dokumentation empfohlen.</p><a href="https://www.ihk.de/schleswig-holstein/standortpolitik/sicherheit/ai-act-literacy-ki-schulungspflicht-6434794" target="_blank" rel="noopener">ihk.de</a></div>
+          <div><b>Stifterverband · 12/2025</b><h4>Future Skills 2030</h4><p>Digitale Zukunftskompetenzen: Informationskompetenz, AI Literacy, Digital Literacy, Data Literacy. Technologisch u. a. Cybersecurity und Cloud Operations.</p><a href="https://www.stifterverband.org/sites/default/files/2025-12/future_skills_2030.pdf" target="_blank" rel="noopener">stifterverband.org</a></div>
+          <div><b>WKO · 2025 · Österreich</b><h4>IT-Qualifikationen 2025</h4><p>Gefragt: Datenbanken, Skriptsprachen, Security, Systemadministration &mdash; SQL an erster Stelle. Überfachlich: analytisches Denken, Kommunikation, Teamfähigkeit.</p><a href="https://www.wko.at/oe/information-consulting/unternehmensberatung-buchhaltung-informationstechnologie/studie-it-qualifikationen-2025.pdf" target="_blank" rel="noopener">wko.at</a></div>
+          <div><b>Bitkom &amp; DIHK · 2025</b><h4>Digitalkompetenz und Fachkräfte</h4><p>73 % schulen zu Digitalthemen, nur 11 % flächendeckend. Der DIHK-Fachkräftereport nennt Digitalisierung und KI als Hebel gegen Personalengpässe.</p><a href="https://www.dihk.de/de/newsroom/dihk-legt-fachkraeftereport-2025-2026-vor-159712" target="_blank" rel="noopener">dihk.de</a></div>
+        </div>
+      </div>
+    </details>
+    <p class="foot">ppedv AG · kompetenz@ppedv.de · Inhalte der Kompetenzwelten: ppedv.de/kompetenz<br>Arbeitsdokument für das gemeinsame Gespräch · <span id="today"></span></p>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const WORLDS=[
+ {id:"ki",kw:"KW 1",c:"var(--k1)",title:"KI produktiv einsetzen",
+  lead:"Copilot, ChatGPT, KI-Agenten und Automatisierung sinnvoll in den Arbeitsalltag integrieren",
+  komp:[{n:"KI verstehen und rechtssicher einordnen",d:"Weiß, was ein Sprachmodell leisten kann und was nicht, kennt die Regeln des Hauses und die Pflichten aus dem EU AI Act.",l:["KI verstehen","und einordnen"]},
+        {n:"Wirksam prompten und Ergebnisse prüfen",d:"Formuliert Aufgabe, Kontext und Format so, dass ein brauchbares Ergebnis entsteht — und erkennt, wenn es falsch ist.",l:["Prompten und","Ergebnisse","prüfen"]},
+        {n:"Eigene Arbeitsabläufe mit KI umbauen",d:"Erkennt im eigenen Alltag, welche Schritte KI übernehmen kann, und macht daraus einen wiederholbaren Ablauf.",l:["Abläufe mit","KI umbauen"]}],
+  beleg:"79 % der Unternehmen fehlen grundlegende KI-Kompetenzen, 86 % schöpfen das Potenzial kaum aus (Stifterverband 2025). Seit 02/2025 verpflichtet Art. 4 EU AI Act Betreiber zu nachweisbarer KI-Kompetenz.",
+  felder:[
+    {n:"Informationen verdichten",s:"„Ich lese mich durch 40 Seiten, bevor ich antworten kann.“",z:"Aus langen Dokumenten und Mailverläufen in Minuten eine belastbare Zusammenfassung ziehen.",k:"zusammenfassung protokoll unterlagen recherche dokumente mails lange texte einlesen lesen bericht"},
+    {n:"Texte auf den Punkt bringen",s:"„Jedes Angebot schreibt bei uns jemand von Null.“",z:"Entwürfe für Angebote, Mails und Berichte in der eigenen Tonlage erzeugen — und sicher prüfen.",k:"schreiben formulieren angebot mail newsletter entwurf textbaustein korrektur antwort"},
+    {n:"Entscheidungen vorbereiten",s:"„Wir diskutieren dreimal, bevor wir entscheiden.“",z:"Optionen, Risiken und eine Empfehlung aufbereiten, bevor die Runde zusammenkommt.",k:"entscheidung entscheiden vorlage geschaeftsfuehrung optionen vergleich bewertung gremium"},
+    {n:"Routinearbeit beschleunigen",s:"„Das Gleiche jede Woche, immer von Hand.“",z:"Wiederkehrende Textarbeit an KI abgeben — mit Prüfschritt, nicht blind.",k:"wiederkehrend routine immer gleich manuell zeitfresser standardantwort fleissarbeit tippen"}],
+  ziel:["Mitarbeitende","Fachbereiche","Führungskräfte","IT & AI Enabler"],
+  bau:["AI Driven Training","Microsoft 365 Copilot","Copilot Studio – Agenten","ChatGPT im Arbeitsalltag","Claude im Arbeitsalltag","Prompt Engineering"]},
+
+ {id:"proz",kw:"KW 2",c:"var(--k2)",title:"Prozesse automatisieren",
+  lead:"Wiederkehrende Aufgaben mit Power Automate, Skripten und Workflows effizient automatisieren",
+  komp:[{n:"Automatisierbare Abläufe erkennen und bewerten",d:"Nimmt einen Prozess strukturiert auf und beurteilt Nutzen, Aufwand und Risiko, bevor gebaut wird.",l:["Abläufe","erkennen","und bewerten"]},
+        {n:"Workflows selbst bauen",d:"Setzt einen Ablauf mit Power Automate oder als Skript um — samt Fehlerfällen, Test und Dokumentation.",l:["Workflows","selbst bauen"]},
+        {n:"Automatisierung verantworten",d:"Überwacht, dokumentiert und übergibt so, dass der Ablauf den Urlaub seines Erbauers überlebt.",l:["Betrieb","verantworten"]}],
+  beleg:"Digitalisierung und Automatisierung gelten als zentraler Hebel gegen Personalengpässe (DIHK 2025/26). Über ein Drittel der Unternehmen meldet Lücken bei der Automatisierung von Arbeitsprozessen (Stifterverband 2025).",
+  felder:[
+    {n:"Freigaben beschleunigen",s:"„Der Antrag liegt drei Tage im Postfach.“",z:"Genehmigungen laufen als Workflow mit Erinnerung und Nachweis statt per Mail.",k:"freigabe genehmigung urlaubsantrag urlaub antrag unterschrift abzeichnen workflow liegenbleiben postfach bestellung"},
+    {n:"Daten zwischen Systemen übertragen",s:"„Wir tippen dieselben Zahlen in zwei Systeme.“",z:"Übertragungen laufen automatisch, Doppelerfassung entfällt.",k:"doppelerfassung schnittstelle export import excel abtippen systeme uebertragen crm erp synchron"},
+    {n:"Fristen im Blick behalten",s:"„Wir merken zu spät, dass ein Vertrag ausläuft.“",z:"Termine und Fristen melden sich selbst, bevor sie kritisch werden.",k:"frist termin vertrag kuendigung ablauf erinnerung wiedervorlage verpasst deadline mahnung"},
+    {n:"IT-Aufgaben standardisieren",s:"„Jeder Admin macht es ein bisschen anders.“",z:"Wiederkehrende Aufgaben laufen als geprüftes Skript statt als Handarbeit.",k:"skript powershell admin benutzer anlegen onboarding standard manuell konto einrichten"}],
+  ziel:["Fachbereiche","Prozessverantwortliche","IT- & Plattformteams","Führungskräfte"],
+  bau:["Power Apps & Power Automate","Microsoft Power Platform","Low Code vertiefen","Copilot Studio","PowerShell Grundkurs","PowerShell fortgeschritten","PowerShell mit AI","Python Power-Woche"]},
+
+ {id:"daten",kw:"KW 3",c:"var(--k3)",title:"Daten besser nutzen",
+  lead:"Daten analysieren, visualisieren und fundierte Entscheidungen treffen – mit SQL, Power BI und Fabric",
+  komp:[{n:"Zahlen richtig lesen (Data Literacy)",d:"Erkennt, was eine Kennzahl aussagt, wo sie herkommt und wo sie in die Irre führt — bevor daraus eine Entscheidung wird.",l:["Zahlen","richtig lesen"]},
+        {n:"Analysen prüfbar aufbauen",d:"Modelliert Daten so, dass eine zweite Person dasselbe Ergebnis reproduzieren kann.",l:["Analysen","prüfbar bauen"]},
+        {n:"Mit Daten entscheiden und begründen",d:"Führt von der Zahl zur Entscheidung — adressatengerecht dargestellt und nachvollziehbar begründet.",l:["Mit Daten","entscheiden"]}],
+  beleg:"Data Literacy zählt zu den fünf digitalen Zukunftskompetenzen (Stifterverband, Future Skills 2030). Rund 20 % melden Lücken beim datengetriebenen Entscheiden; Datenbanken und SQL führen die gefragtesten IT-Qualifikationen in Österreich an (WKO 2025).",
+  felder:[
+    {n:"Kennzahlen vereinheitlichen",s:"„Drei Abteilungen, drei Umsatzzahlen.“",z:"Eine verbindliche Definition je Kennzahl, an die sich alle halten.",k:"kennzahl kpi umsatz definition zahlen abweichung berichtswesen controlling unterschiedlich"},
+    {n:"Daten aufbereiten",s:"„Vor jedem Report kommt der Excel-Marathon.“",z:"Rohdaten werden einmal sauber modelliert und danach wiederverwendet.",k:"excel datenqualitaet aufbereiten rohdaten monatsabschluss report datenmodell pivot bereinigen"},
+    {n:"Dashboards fokussieren",s:"„Unser Bericht hat 30 Diagramme, keiner schaut rein.“",z:"Ein Bericht beantwortet genau die Fragen, die zur Entscheidung führen.",k:"dashboard bericht report diagramm auswertung visualisierung liest keiner uebersicht"},
+    {n:"Zugriffe sicher steuern",s:"„Eigentlich sollte nicht jeder alle Zahlen sehen.“",z:"Rollen und Berechtigungen sind geregelt und nachvollziehbar.",k:"berechtigung zugriff rechte vertraulich gehalt sensibel sichtbar datenschutz freigeben"}],
+  ziel:["Fachbereiche","Führungskräfte","Analysten & Controller","Data- & IT-Teams"],
+  bau:["Power BI","Microsoft Fabric","SQL Server","Datenmodelle & DAX","Self-Service-BI","Data Governance & Sicherheit"]},
+
+ {id:"dev",kw:"KW 4",c:"var(--k4)",title:"Softwareentwicklung modernisieren",
+  lead:"Moderne Entwicklung mit .NET, Azure, GitHub Copilot, DevOps und KI-Unterstützung",
+  komp:[{n:"Anforderungen testbar formulieren",d:"Schneidet Anforderungen so, dass vor der ersten Zeile Code klar ist, woran „fertig“ gemessen wird.",l:["Anforderungen","testbar","formulieren"]},
+        {n:"Mit KI entwickeln und Code verantworten",d:"Nutzt Copilot & Co produktiv und bleibt für Qualität, Lizenzlage und Sicherheit des Ergebnisses geradestehen.",l:["Mit KI","entwickeln","und prüfen"]},
+        {n:"Automatisiert testen und sicher ausliefern",d:"Baut Tests und Auslieferung so, dass ein Release ein Vorgang ist und kein Ereignis.",l:["Testen und","sicher","ausliefern"]}],
+  beleg:"AI Engineering und Change Management & AI Leadership zählen zu den technologischen Zukunftskompetenzen (Stifterverband 2030). 53 % nennen fehlendes technisches Know-how als größte KI-Hürde (Bitkom 2025).",
+  felder:[
+    {n:"Anforderungen schärfen",s:"„Am Ende war es doch nicht das, was gemeint war.“",z:"Anforderungen sind früh testbar formuliert — Missverständnisse fallen vor dem Code auf.",k:"anforderung spezifikation lastenheft missverstaendnis fachbereich requirements story pflichtenheft"},
+    {n:"Legacy-Code beherrschbar machen",s:"„An das alte Modul traut sich keiner ran.“",z:"Altsysteme werden Schritt für Schritt verstanden, abgesichert und erneuert.",k:"legacy altsystem alter code wartung refactoring umbauen niemand kennt monolith technische schulden"},
+    {n:"Qualität früher prüfen",s:"„Fehler finden wir erst beim Kunden.“",z:"Automatisierte Tests fangen Fehler vor der Auslieferung ab.",k:"test testing bug fehler qualitaet regression abnahme testfaelle nachbessern"},
+    {n:"Sicher ausliefern",s:"„Ein Release ist bei uns ein halber Feiertag.“",z:"Auslieferung läuft wiederholbar, nachvollziehbar und ohne Bauchweh.",k:"release deployment ausliefern deploy pipeline devops rollout produktiv livegang"}],
+  ziel:["Entwickler","Tech Leads & Architekten","Produkt- & Requirements-Teams","QA & DevOps"],
+  bau:["AI in Requirements Engineering","Vibe Coding","KI in der Softwareentwicklung","Web Development mit AI","C# Einstieg",".NET Softwarearchitektur","ASP.NET Core & Web API","Git und GitHub"]},
+
+ {id:"cloud",kw:"KW 5",c:"var(--k5)",title:"Cloud-Systeme sicher betreiben",
+  lead:"Azure, Microsoft 365, Security und Identitäten sicher verwalten und betreiben",
+  komp:[{n:"Identitäten und Berechtigungen beherrschen",d:"Weiß jederzeit, wer worauf zugreifen darf, und setzt es technisch durch statt per Zuruf.",l:["Identitäten","beherrschen"]},
+        {n:"Angriffe erkennen und abwehren",d:"Erkennt auffälliges Verhalten, priorisiert Alarme und weiß, was im Ernstfall in welcher Reihenfolge zu tun ist.",l:["Angriffe","erkennen und","abwehren"]},
+        {n:"Cloud-Betrieb automatisiert und nachweisbar führen",d:"Baut Umgebungen reproduzierbar aus Skripten und kann den eigenen Sicherheitsstand belegen.",l:["Cloud-Betrieb","automatisiert","führen"]}],
+  beleg:"Cybersecurity ist eine der technologischen Zukunftskompetenzen (Stifterverband 2030); Security zählt zu den Top-IT-Qualifikationen in Österreich (WKO 2025). 48 % nennen Datenschutzanforderungen, 39 % die Sorge um eigene Daten als Bremse (Bitkom 2025).",
+  felder:[
+    {n:"Identitäten schützen",s:"„Wir wissen nicht genau, wer worauf Zugriff hat.“",z:"Rollen, Rechte und Zugriffsregeln sind dokumentiert und technisch durchgesetzt.",k:"zugriff berechtigung passwort mfa entra directory rollen konten admin anmeldung identitaet"},
+    {n:"Betrieb überwachen",s:"„Von Störungen erfahren wir durch Anrufe.“",z:"Probleme melden sich selbst, Alarme sind nach Wichtigkeit sortiert.",k:"monitoring stoerung ausfall alarm verfuegbarkeit meldung ueberwachung langsam performance"},
+    {n:"Wiederherstellung üben",s:"„Backups laufen — ob sie funktionieren, wissen wir nicht.“",z:"Der Ernstfall wurde geprobt, die Wiederanlaufzeit ist bekannt.",k:"backup wiederherstellung notfall ausfall ransomware desaster restore datenverlust ernstfall"},
+    {n:"Standards automatisieren",s:"„Jede neue Umgebung wird von Hand gebaut.“",z:"Umgebungen entstehen reproduzierbar aus Skripten statt aus Erinnerung.",k:"automatisieren skript infrastruktur umgebung aufsetzen provisionierung wiederholbar server"}],
+  ziel:["Cloud-Administratoren","Security-Verantwortliche","Architekten & Plattformteams","IT-Leitung & Service Owner"],
+  bau:["Azure Grundlagen","Azure Administrator Power-Woche","Microsoft Entra ID","Azure Security Technologies","M365 Security Administration","Microsoft Defender","Microsoft Intune"]},
+
+ {id:"zus",kw:"KW 6",c:"var(--k6)",title:"Digitale Zusammenarbeit verbessern",
+  lead:"Microsoft Teams, SharePoint, Copilot und moderne Zusammenarbeit erfolgreich etablieren",
+  komp:[{n:"Informationen auffindbar strukturieren",d:"Legt Information dort ab, wo andere sie ohne Nachfrage finden — Chat, Kanal, Dokument oder Wissensseite bewusst gewählt.",l:["Informationen","auffindbar","strukturieren"]},
+        {n:"Verbindlich zusammenarbeiten",d:"Aus der Besprechung wird eine Entscheidung, aus der Entscheidung eine Aufgabe mit Namen und Datum.",l:["Verbindlich","zusammen-","arbeiten"]},
+        {n:"Neue Arbeitsweisen im Team durchsetzen",d:"Bringt eine neue Routine so ins Team, dass sie auch nach drei Monaten noch gilt.",l:["Neue Routinen","durchsetzen"]}],
+  beleg:"Informations-, Kommunikations- und Kooperationskompetenz zählen zu den grundlegenden Zukunftskompetenzen (Stifterverband 2030). 73 % schulen zu Digitalthemen, aber nur 11 % flächendeckend (Bitkom 2025) — Einführungen scheitern selten am Werkzeug, meist an der Verankerung.",
+  felder:[
+    {n:"Besprechungen wirksam machen",s:"„Wir sitzen den halben Tag in Meetings ohne Ergebnis.“",z:"Jede Besprechung endet mit Entscheidungen und benannten Aufgaben.",k:"meeting besprechung jour fixe protokoll agenda zeitverschwendung teams termin runde"},
+    {n:"Dokumente gemeinsam nutzen",s:"„Angebot_final_v7_neu.docx.“",z:"Eine gültige Fassung, an der alle gemeinsam arbeiten.",k:"version dokument datei ablage sharepoint dateiversionen gemeinsam bearbeiten anhang durcheinander"},
+    {n:"Wissen auffindbar machen",s:"„Das weiß nur die Kollegin — und die ist im Urlaub.“",z:"Wissen liegt dort, wo andere es ohne Nachfragen finden.",k:"wissen suchen finden dokumentation urlaub krank wissenstransfer intranet wiki nachfragen kopf"},
+    {n:"Aufgaben klar übergeben",s:"„Ich dachte, das macht der andere.“",z:"Jede Aufgabe hat einen Namen, ein Datum und einen Status.",k:"aufgabe zustaendigkeit verantwortung todo planner nachverfolgen vergessen uebergabe wer macht"}],
+  ziel:["Mitarbeitende & Fachbereiche","Teamleitungen","Multiplikatoren & Champions","M365-Verantwortliche"],
+  bau:["Microsoft Teams","SharePoint","Microsoft 365 Grundlagen","Microsoft 365 Copilot","Exchange Online"]}
+];
+
+const ABTEILUNGEN=["Vertrieb & Innendienst","Marketing & Kommunikation","HR & Personal","Finanzen & Controlling",
+ "Einkauf & Logistik","Produktion & Technik","Kundenservice & Support","Verwaltung & Assistenz","Projektleitung","Geschäftsführung"];
+
+const PFIELDS=[
+ {k:"teilnehmende",l:"Wie viele Personen sollen teilnehmen?",ph:"z. B. 45"},
+ {k:"rollen",l:"Welche Abteilungen oder Rollen sind betroffen?",ph:"z. B. Innendienst, Controlling, IT-Betrieb"},
+ {k:"start",l:"Wann soll es starten?",ph:"z. B. ab Januar, nach dem Jahresabschluss"},
+ {k:"entscheidung",l:"Wer entscheidet — und bis wann?",ph:"z. B. GF und HR-Leitung, Entscheidung im November"},
+ {k:"anlass",l:"Was funktioniert heute nicht so, wie es soll?",ph:"Der Auslöser: seit wann, wie oft, was kostet es?",area:1,wide:1},
+ {k:"erfolg",l:"Woran merken Sie in sechs Monaten, dass es gewirkt hat?",ph:"Das Erfolgsbild in den Worten des Kunden — so konkret wie möglich.",area:1,wide:1}
+];
+
+const PHASES=[
+ {n:"Phase 1",w:"Woche 1–2",t:"Kick-off und Standortbestimmung",sync:"kk",
+  goal:"Das Projekt startet — und der tatsächliche Kompetenzstand wird erhoben, nicht der vermutete.",
+  steps:["Kick-off mit Leitung und Projektbeteiligten (60 Minuten)","Kurz-Assessment zu den gewählten Kompetenzen, 15–20 Minuten pro Person","3–5 Interviews mit Schlüsselpersonen","Ist-Soll-Delta auswerten und Lerngruppen bilden"],
+  pp:"Erstellt Assessment und Interviewleitfaden, wertet aus und stellt die Ergebnisse vor.",
+  ku:"Benennt die Projektverantwortlichen, liefert Teilnehmerliste und Terminfenster.",
+  out:["Kompetenz-Heatmap","Lerngruppen"],ms:"M1 — Standort abgestimmt"},
+ {n:"Phase 2",w:"Woche 3–4",t:"Lernpfade und Setup",sync:"bau",
+  goal:"Aus dem Delta wird ein konkreter Lernpfad je Rolle — mit Terminen, Trainern und startklarer Umgebung.",
+  steps:["Lernpfade je Lerngruppe aus den gewählten Bausteinen zusammenstellen","Format, Taktung und Termine festlegen, Trainer zuordnen","Lernumgebung und Zugänge einrichten und testen","Kommunikationspaket an die Teilnehmenden versenden"],
+  pp:"Baut die Lernpfade, richtet die Umgebung ein und liefert die Kommunikationsvorlagen.",
+  ku:"Prüft die Termine gegen den Betriebsablauf und versendet die Kommunikation intern.",
+  out:["Lernpfad je Rolle","Terminplan","Startklare Umgebung"],ms:"M2 — Start freigegeben"},
+ {n:"Phase 3",w:"Woche 5–12",t:"Durchführung in Wellen",sync:"ziel",
+  goal:"Die Module laufen — mit Praxisaufgaben aus dem echten Arbeitsalltag, nicht aus dem Lehrbuch.",
+  steps:["Welle 1: Fundament für alle Zielgruppen gemeinsam","Welle 2: rollenspezifische Vertiefung in getrennten Gruppen","Zwischen den Modulen: Praxisaufgaben am eigenen Fall","Feedback nach jedem Baustein, Nachsteuern bei Bedarf"],
+  pp:"Führt die Trainings durch, betreut die Praxisaufgaben und berichtet nach jeder Welle.",
+  ku:"Schützt die Lernzeit im Kalender und benennt reale Fälle als Übungsmaterial.",
+  out:["Durchgeführte Module","Feedback je Welle","Teilnahmebestätigungen"],ms:"M3 — Kernmodule abgeschlossen"},
+ {n:"Phase 4",w:"Woche 8–14",t:"Transfer und eigene Use Cases",sync:"felder",
+  goal:"Gelerntes wird auf echte Aufgaben angewendet — messbar, nicht nur berichtet.",
+  steps:["2–5 konkrete Vorhaben aus dem Arbeitsalltag auswählen","Umsetzung mit begleitendem Coaching statt Frontalunterricht","Spielregeln dokumentieren: Datenschutz, Freigaben, Zuständigkeit","Interne Multiplikatoren aufbauen und mit Material ausstatten"],
+  pp:"Coacht die Umsetzung, prüft die Ergebnisse fachlich und liefert Vorlagen für die Spielregeln.",
+  ku:"Stellt Arbeitszeit bereit, benennt Champions und trifft die Governance-Entscheidungen.",
+  out:["Umgesetzte Use Cases","Spielregeln","Champions"],ms:"M4 — Transfer nachgewiesen"},
+ {n:"Phase 5",w:"Woche 14–16",t:"Wirkungsmessung und Abschluss",sync:"erfolg",
+  goal:"Der Fortschritt ist belegt, das Ergebnis ist an die Leitung übergeben.",
+  steps:["Re-Assessment mit demselben Instrument wie in Phase 1","Vorher-Nachher-Vergleich je Kompetenzfeld","Abschlussbericht mit Empfehlung für die nächsten 12 Monate","Management-Präsentation und Übergabe der Zertifikate"],
+  pp:"Führt das Re-Assessment durch, verfasst den Bericht und präsentiert vor der Leitung.",
+  ku:"Stellt die Teilnahme am Re-Assessment sicher und entscheidet über die Folgeschritte.",
+  out:["Abschlussbericht","Zertifikate","Empfehlung 12 Monate"],ms:"M5 — Projektabschluss"}
+];
+const TLSPAN=[[1,2],[3,4],[5,12],[8,14],[14,16]], TLPAR=[0,0,0,1,0];
+const TLSHORT=["Kick-off & Standort","Lernpfade & Setup","Durchführung","Transfer & Use Cases","Wirkung & Abschluss"];
+
+/* ---------- Zustand ---------- */
+const KEY="ppedv-matrix-v4";
+let state={}, notes="", focusId=WORLDS[0].id, activeId=null, restoredId=null, editKomp=null;
+let profile={name:"",logo:""};
+PFIELDS.forEach(f=>profile[f.k]="");
+profile.tlSpan=PHASES.map(()=>null);
+WORLDS.forEach(w=>state[w.id]={komp:[],felder:[],ziel:[],abt:[],bau:[],kompCustom:{},kompExtra:[]});
+try{const r=localStorage.getItem(KEY); if(r){const p=JSON.parse(r);
+  if(p.state) WORLDS.forEach(w=>{if(p.state[w.id]) state[w.id]=Object.assign({komp:[],felder:[],ziel:[],abt:[],bau:[],kompCustom:{},kompExtra:[]},p.state[w.id]);});
+  if(typeof p.notes==="string") notes=p.notes;
+  if(p.focusId&&WORLDS.some(w=>w.id===p.focusId)) focusId=p.focusId;
+  if(p.profile) profile=Object.assign(profile,p.profile);
+  if(typeof p.activeId==="string") restoredId=p.activeId;
+}}catch(e){}
+if(!Array.isArray(profile.tlSpan)||profile.tlSpan.length!==PHASES.length) profile.tlSpan=PHASES.map(()=>null);
+function tlRange(i){const ov=profile.tlSpan&&profile.tlSpan[i]; return (ov&&ov.length===2)?ov:TLSPAN[i];}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({state,notes,focusId,profile,activeId}))}catch(e){}
+                try{scheduleSave()}catch(e){}};
+const has=(w,c,v)=>state[w][c].indexOf(v)>-1;
+function toggle(w,c,v){const a=state[w][c],i=a.indexOf(v); i>-1?a.splice(i,1):a.push(v); save(); render();}
+const totalIn=w=>allKomp(w).length+w.felder.length+w.ziel.length+ABTEILUNGEN.length+w.bau.length;
+const selIn=w=>{const s=state[w.id]; return s.komp.length+s.felder.length+s.ziel.length+s.abt.length+s.bau.length;};
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+
+/* ---------- Ring ---------- */
+const NS="http://www.w3.org/2000/svg",CX=450,CY=450,RAD=Math.PI/180;
+const O1=348,O2=412,I1=234,I2=336,RC=(I1+I2)/2,GO=1.9,GK=1.1;
+const px=(r,a)=>[CX+r*Math.cos(a*RAD),CY+r*Math.sin(a*RAD)];
+function ann(r1,r2,a0,a1){const[x1,y1]=px(r2,a0),[x2,y2]=px(r2,a1),[x3,y3]=px(r1,a1),[x4,y4]=px(r1,a0);const la=(a1-a0)>180?1:0;
+  return `M${x1.toFixed(2)},${y1.toFixed(2)} A${r2},${r2} 0 ${la} 1 ${x2.toFixed(2)},${y2.toFixed(2)} L${x3.toFixed(2)},${y3.toFixed(2)} A${r1},${r1} 0 ${la} 0 ${x4.toFixed(2)},${y4.toFixed(2)} Z`;}
+function arc(r,a0,a1,rev){const s=rev?a1:a0,e=rev?a0:a1;const[x1,y1]=px(r,s),[x2,y2]=px(r,e);
+  return `M${x1.toFixed(2)},${y1.toFixed(2)} A${r},${r} 0 0 ${rev?0:1} ${x2.toFixed(2)},${y2.toFixed(2)}`;}
+const el=(t,a={})=>{const n=document.createElementNS(NS,t); for(const k in a) n.setAttribute(k,a[k]); return n;};
+const gOuter=document.getElementById("gOuter"),gInner=document.getElementById("gInner"),
+      gSpot=document.getElementById("gSpot"),defs=document.getElementById("ringDefs");
+
+WORLDS.forEach((w,i)=>{
+  const a0=-90+i*60,a1=a0+60,mid=a0+30,midN=((mid%360)+360)%360,flip=midN>0&&midN<=180;
+  const sp=el("path",{d:ann(214,432,a0+0.6,a1-0.6),class:"spot","data-spot":w.id});
+  sp.style.fill=`color-mix(in srgb, ${w.c} 17%, transparent)`; gSpot.appendChild(sp);
+  const p=el("path",{d:ann(O1,O2,a0+GO,a1-GO),class:"seg","data-w":w.id,"data-kind":"world",tabindex:"0",role:"button","aria-label":w.title});
+  p.style.fill=w.c; p.style.stroke=w.c;
+  p.appendChild(el("title")).textContent=w.title+" — "+w.lead;
+  gOuter.appendChild(p);
+  const pid="op"+i;
+  defs.appendChild(el("path",{id:pid,d:arc(flip?398:368,a0+GO*0.4,a1-GO*0.4,flip),fill:"none"}));
+  const t=el("text",{class:"olabel","text-anchor":"middle","data-wlabel":w.id});
+  const tp=el("textPath",{href:"#"+pid,startOffset:"50%"}); tp.setAttribute("xlink:href","#"+pid);
+  tp.textContent=w.title.toUpperCase(); t.appendChild(tp); gOuter.appendChild(t);
+});
+function allKomp(w){ const ex=(state[w.id]&&state[w.id].kompExtra)||[]; return w.komp.concat(ex); }
+function buildInnerForWorld(w){
+  gInner.querySelectorAll(`[data-w="${w.id}"]`).forEach(n=>n.remove());
+  const i=WORLDS.indexOf(w), a0=-90+i*60, list=allKomp(w);
+  const span=(60-2*GO)/list.length;
+  list.forEach((k,j)=>{
+    const b0=a0+GO+j*span,b1=b0+span,bm=(b0+b1)/2,c0=b0+(j===0?0:GK),c1=b1-(j===list.length-1?0:GK);
+    const s=el("path",{d:ann(I1,I2,c0,c1),class:"seg","data-w":w.id,"data-kind":"komp","data-v":k.n,tabindex:"0",role:"button","aria-pressed":has(w.id,"komp",k.n)?"true":"false","aria-label":w.title+": "+kName(w,k)});
+    s.appendChild(el("title")).textContent=kName(w,k)+" — "+kDesc(w,k); gInner.appendChild(s);
+    const[lx,ly]=px(RC,bm), lt=el("text",{class:"ilabel","text-anchor":"middle","data-lbl":w.id+"|"+k.n,x:lx.toFixed(1),y:"0","data-ly":ly.toFixed(2)});
+    const lines=kOverride(w,k)?wrapLabel(kName(w,k)):k.l;
+    const y0=ly-(lines.length-1)*6.6;
+    lines.forEach((line,m)=>{const ts=el("tspan",{x:lx.toFixed(1),y:(y0+m*13.2+4).toFixed(1)}); ts.textContent=line; lt.appendChild(ts);});
+    gInner.appendChild(lt);
+  });
+}
+WORLDS.forEach(w=>buildInnerForWorld(w));
+function addKomp(w,name,desc){
+  name=(name||"").trim(); if(!name) return null;
+  const komp={n:name,d:(desc||"").trim()||"Individuell für dieses Gespräch ergänzt.",l:wrapLabel(name)};
+  if(!state[w.id].kompExtra) state[w.id].kompExtra=[];
+  state[w.id].kompExtra.push(komp);
+  buildInnerForWorld(w);
+  if(!has(w.id,"komp",komp.n)) state[w.id].komp.push(komp.n);
+  save();
+  return komp;
+}
+function fitLabels(){
+  WORLDS.forEach((w,i)=>{
+    const pth=document.getElementById("op"+i), t=gOuter.querySelector(`[data-wlabel="${w.id}"]`);
+    if(!pth||!t||!t.getComputedTextLength) return;
+    let av=0; try{av=pth.getTotalLength()*0.95}catch(e){return}
+    if(!av) return;
+    let fs=15,g=0; t.style.fontSize=fs+"px"; t.style.letterSpacing="0.075em";
+    let len=t.getComputedTextLength();
+    while(len>av&&fs>11&&g++<40){fs-=0.25; t.style.fontSize=fs+"px"; len=t.getComputedTextLength();}
+    if(len>av) t.style.letterSpacing="0.005em";
+  });
+}
+requestAnimationFrame(fitLabels);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitLabels).catch(()=>{});
+window.addEventListener("resize",()=>{clearTimeout(window._ft); window._ft=setTimeout(fitLabels,150);});
+
+/* ---------- Kernkompetenzen ans Kundengespräch anpassen ---------- */
+function kOverride(w,k){ const c=state[w.id]&&state[w.id].kompCustom; return c?c[k.n]:null; }
+function kName(w,k){ const o=kOverride(w,k); return (o&&o.n&&o.n.trim())?o.n.trim():k.n; }
+function kDesc(w,k){ const o=kOverride(w,k); return (o&&typeof o.d==="string"&&o.d.trim())?o.d.trim():k.d; }
+function wrapLabel(text){
+  const words=String(text).trim().split(/\s+/).filter(Boolean);
+  if(!words.length) return [""];
+  const target=15; const lines=[]; let cur="";
+  words.forEach(wd=>{const test=cur?cur+" "+wd:wd;
+    if(!cur||test.length<=target) cur=test; else{lines.push(cur); cur=wd;}});
+  if(cur) lines.push(cur);
+  if(lines.length>4){const head=lines.slice(0,3); let last=lines.slice(3).join(" ");
+    if(last.length>16) last=last.slice(0,15).trimEnd()+"…"; head.push(last); return head;}
+  return lines;
+}
+function updateKompLabel(w,k){
+  const seg=gInner.querySelector(`[data-w="${w.id}"][data-kind="komp"][data-v="${CSS.escape(k.n)}"]`);
+  const disp=kName(w,k), desc=kDesc(w,k);
+  if(seg){ seg.setAttribute("aria-label",w.title+": "+disp);
+    const ti=seg.querySelector("title"); if(ti) ti.textContent=disp+" — "+desc; }
+  const lt=gInner.querySelector(`[data-lbl="${CSS.escape(w.id+"|"+k.n)}"]`);
+  if(lt){
+    const lines=kOverride(w,k)?wrapLabel(disp):k.l, lx=lt.getAttribute("x"), ly=parseFloat(lt.dataset.ly);
+    const y0=ly-(lines.length-1)*6.6;
+    lt.innerHTML="";
+    lines.forEach((line,m)=>{const ts=el("tspan",{x:lx,y:(y0+m*13.2+4).toFixed(1)}); ts.textContent=line; lt.appendChild(ts);});
+  }
+}
+function refreshAllKompLabels(){ WORLDS.forEach(w=>allKomp(w).forEach(k=>updateKompLabel(w,k))); }
+
+/* ---------- Panel ---------- */
+const panel=document.getElementById("panel");
+const chips=(w,cat,arr)=>`<div class="chips">${arr.map(v=>`<button type="button" class="chip-t" data-w="${w.id}" data-cat="${cat}" data-v="${esc(v)}" aria-pressed="${has(w.id,cat,v)}">${esc(v)}</button>`).join("")}</div>`;
+function renderPanel(){
+  const w=WORLDS.find(x=>x.id===focusId), st=state[w.id], allK=st.komp.length===allKomp(w).length;
+  const zg=st.ziel.length+st.abt.length, bs=st.bau.length;
+  panel.style.setProperty("--pc",w.c);
+  panel.innerHTML=`
+   <div class="ph"><span class="kw">${w.kw} · ${selIn(w)} von ${totalIn(w)} gewählt</span>
+     <h2>${esc(w.title)}</h2><p>${esc(w.lead)}</p></div>
+   <div class="pb">
+     <div class="beleg"><span class="lbl">Warum das gebraucht wird</span><p>${esc(w.beleg)}</p></div>
+     <div class="grp">
+       <div class="grp-h"><span class="lbl">Kernkompetenzen</span><button class="mini no-print" id="allK">${allK?"Alle abwählen":"Alle "+allKomp(w).length+" wählen"}</button></div>
+       <p class="hint">Was Ihre Leute können sollen — auch im Innenring anklickbar. Mit ✎ auf die Worte des Kunden anpassen, mit + eine eigene ergänzen.</p>
+       ${allKomp(w).map((k,ki)=>{
+         if(editKomp&&editKomp.w===w.id&&editKomp.i===ki){
+           const cn=kName(w,k), cd=kDesc(w,k), hasOv=!!kOverride(w,k);
+           return `<div class="komp-edit no-print">
+             <label class="elbl">Name<input type="text" id="ke-n" maxlength="80" value="${esc(cn)}"></label>
+             <label class="elbl">Beschreibung<textarea id="ke-d" rows="2" maxlength="220">${esc(cd)}</textarea></label>
+             <div class="ke-row">
+               <button type="button" class="btn go" id="keSave">Übernehmen</button>
+               <button type="button" class="btn" id="keCancel">Abbrechen</button>
+               ${hasOv?`<button type="button" class="btn" id="keReset">Zurücksetzen</button>`:""}
+             </div>
+           </div>`;
+         }
+         return `<div class="komp-row">
+           <button type="button" class="row" data-w="${w.id}" data-cat="komp" data-v="${esc(k.n)}" aria-pressed="${has(w.id,'komp',k.n)}">
+             <span class="box"></span><span><span class="n">${esc(kName(w,k))}</span><span class="d">${esc(kDesc(w,k))}</span></span></button>
+           <button type="button" class="kedit no-print" data-kedit="${ki}" title="Text anpassen">✎</button>
+         </div>`;
+       }).join("")}
+       ${editKomp&&editKomp.w===w.id&&editKomp.i==="new"?`
+       <div class="komp-edit no-print">
+         <label class="elbl">Name<input type="text" id="ke-n" maxlength="80" placeholder="z. B. Wortlaut des Kunden" value=""></label>
+         <label class="elbl">Beschreibung (optional)<textarea id="ke-d" rows="2" maxlength="220" placeholder="Kurz erläutern, was gemeint ist"></textarea></label>
+         <div class="ke-row">
+           <button type="button" class="btn go" id="keSave">Hinzufügen &amp; auswählen</button>
+           <button type="button" class="btn" id="keCancel">Abbrechen</button>
+         </div>
+       </div>`:`<button type="button" class="mini no-print" id="addKompBtn" style="margin-top:8px">+ Eigene Kernkompetenz hinzufügen</button>`}
+     </div>
+     <div class="grp">
+       <div class="grp-h"><span class="lbl">Skills</span></div>
+       <p class="hint">Jedes Kundenthema gehört zu genau einem Skill. Kursiv: wie es im Gespräch klingt.</p>
+       ${w.felder.map(s=>`<button type="button" class="row" data-w="${w.id}" data-cat="felder" data-v="${esc(s.n)}" aria-pressed="${has(w.id,'felder',s.n)}">
+         <span class="box"></span><span><span class="n">${esc(s.n)}</span><span class="s">${esc(s.s)}</span><span class="d">Ziel: ${esc(s.z)}</span></span></button>`).join("")}
+     </div>
+     <details class="more"${zg?" open":""}><summary>Zielgruppen${zg?" · "+zg+" gewählt":""}</summary><div class="in">
+       <p class="hint">Nach Rolle:</p>${chips(w,"ziel",w.ziel)}
+       <p class="hint" style="margin-top:12px">Mitarbeitende in Abteilungen:</p>${chips(w,"abt",ABTEILUNGEN)}
+     </div></details>
+     <details class="more"${bs?" open":""}><summary>Bausteine${bs?" · "+bs+" gewählt":""}</summary><div class="in">
+       <p class="hint">Die Kurse, aus denen ppedv in Phase 2 den Lernpfad baut.</p>${chips(w,"bau",w.bau)}
+     </div></details>
+   </div>`;
+  panel.querySelector("#allK").addEventListener("click",()=>{state[w.id].komp=allK?[]:allKomp(w).map(k=>k.n); save(); render();});
+  panel.querySelectorAll("[data-kedit]").forEach(b=>b.addEventListener("click",e=>{
+    e.stopPropagation(); editKomp={w:w.id,i:+b.dataset.kedit}; renderPanel();
+    const nEl=panel.querySelector("#ke-n"); if(nEl){nEl.focus(); nEl.select();}
+  }));
+  const addKompBtn=panel.querySelector("#addKompBtn");
+  if(addKompBtn) addKompBtn.addEventListener("click",()=>{
+    editKomp={w:w.id,i:"new"}; renderPanel();
+    const nEl=panel.querySelector("#ke-n"); if(nEl) nEl.focus();
+  });
+  const keSave=panel.querySelector("#keSave");
+  if(keSave) keSave.addEventListener("click",()=>{
+    const nv=panel.querySelector("#ke-n").value.trim(), dv=panel.querySelector("#ke-d").value.trim();
+    if(editKomp.i==="new"){
+      if(!nv) return;
+      addKomp(w,nv,dv);
+      editKomp=null; focusId=w.id; render();
+      return;
+    }
+    const k=allKomp(w)[editKomp.i];
+    if(!state[w.id].kompCustom) state[w.id].kompCustom={};
+    if(nv||dv) state[w.id].kompCustom[k.n]={n:nv,d:dv}; else delete state[w.id].kompCustom[k.n];
+    editKomp=null; save(); updateKompLabel(w,k); render();
+  });
+  const keCancel=panel.querySelector("#keCancel");
+  if(keCancel) keCancel.addEventListener("click",()=>{editKomp=null; renderPanel();});
+  const keReset=panel.querySelector("#keReset");
+  if(keReset) keReset.addEventListener("click",()=>{
+    const k=allKomp(w)[editKomp.i];
+    if(state[w.id].kompCustom) delete state[w.id].kompCustom[k.n];
+    editKomp=null; save(); updateKompLabel(w,k); render();
+  });
+}
+panel.addEventListener("click",e=>{const b=e.target.closest("[data-cat]"); if(b) toggle(b.dataset.w,b.dataset.cat,b.dataset.v);});
+
+/* ---------- Ring-Interaktion ---------- */
+const readout=document.getElementById("readout"),DEF="Innenring anklicken wählt eine Kompetenz · Außenring öffnet die Kompetenzwelt.";
+const coreName=document.getElementById("coreName"),cds=[document.getElementById("cd1"),document.getElementById("cd2"),document.getElementById("cd3")];
+function setCore(name,desc){
+  coreName.textContent=name||"";
+  const lines=[]; if(desc){let c="";desc.split(" ").forEach(v=>{if((c+" "+v).trim().length<=40)c=(c+" "+v).trim();else{lines.push(c);c=v;}});if(c)lines.push(c);}
+  cds.forEach((n,i)=>n.textContent=lines[i]||"");
+}
+function coreDefault(){const w=WORLDS.find(x=>x.id===focusId); setCore(w.title,w.lead); coreName.style.fill=w.c;}
+function hoverInfo(t){
+  const w=WORLDS.find(x=>x.id===t.dataset.w); if(!w) return; coreName.style.fill=w.c;
+  if(t.dataset.kind==="world"){readout.innerHTML=`<b>${esc(w.title)}</b> — ${esc(w.lead)}`; setCore(w.title,w.lead);}
+  else{const k=allKomp(w).find(k=>k.n===t.dataset.v); const nm=kName(w,k), ds=kDesc(w,k); readout.innerHTML=`<b>${esc(nm)}</b> — ${esc(ds)}`; setCore(nm,ds);}
+}
+function act(t){ editKomp=null; if(t.dataset.kind==="komp"){focusId=t.dataset.w; toggle(t.dataset.w,"komp",t.dataset.v);} else {focusId=t.dataset.w; save(); render();} }
+[gOuter,gInner].forEach(g=>{
+  g.addEventListener("mouseover",e=>{const t=e.target.closest("path.seg"); if(t) hoverInfo(t);});
+  g.addEventListener("mouseleave",()=>{readout.textContent=DEF; coreDefault();});
+  g.addEventListener("click",e=>{const t=e.target.closest("path.seg"); if(t) act(t);});
+  g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){const t=e.target.closest("path.seg"); if(t){e.preventDefault();act(t);}}});
+});
+
+/* ---------- Suche + KI ---------- */
+const fold=t=>t.toLowerCase().replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss");
+const SKILLS=[]; WORLDS.forEach(w=>w.felder.forEach(s=>SKILLS.push({w,s,nam:fold(s.n),
+  hay:fold(s.n+" "+s.s+" "+s.z+" "+s.k+" "+w.title+" "+w.komp.map(k=>k.n).join(" ")+" "+w.bau.join(" "))})));
+const findIn=document.getElementById("findIn"),hitsEl=document.getElementById("hits"),findNote=document.getElementById("findNote"),aiGo=document.getElementById("aiGo");
+const STOP=new Set(["und","oder","der","die","das","ein","eine","wir","uns","unsere","unser","nicht","ohne","mit","bei","aus","dem","den","ist","sind","hat","haben","kein","keine","alle","immer","noch","aber","auch","sich","dass","man","wie","was","viel","viele","zeit","gut","ergebnis","problem"]);
+function localFind(){
+  const q=fold(findIn.value.trim()).replace(/[„“"»«.,!?;:]/g," ");
+  if(q.length<3){hitsEl.innerHTML=""; return;}
+  const terms=q.split(/\s+/).filter(t=>t.length>3&&!STOP.has(t));
+  if(!terms.length){hitsEl.innerHTML=""; return;}
+  const stem=t=>t.length>6?t.slice(0,Math.max(5,t.length-2)):t;
+  let hits=SKILLS.map(x=>({x,sc:terms.reduce((a,t)=>{const s2=stem(t);
+    if(x.nam.includes(t))return a+4; if(x.hay.includes(t))return a+2;
+    if(x.nam.includes(s2))return a+2; if(x.hay.includes(s2))return a+1; return a;},0)}))
+    .filter(h=>h.sc>0).sort((a,b)=>b.sc-a.sc);
+  const top=hits.length?hits[0].sc:0;
+  hits=hits.filter(h=>h.sc>=Math.max(2,top*0.6)).slice(0,4);
+  renderHits(hits.map(h=>h.x));
+}
+function renderHits(list){
+  if(!list.length){hitsEl.innerHTML=""; return;}
+  hitsEl.innerHTML=list.map(({w,s})=>{
+    const on=has(w.id,"felder",s.n);
+    return `<button type="button" class="hit" style="--hc:${w.c}" data-on="${on?1:0}" data-fw="${w.id}" data-fs="${esc(s.n)}">
+      <span class="w">${w.kw} · ${esc(w.title)}</span><span class="n">${esc(s.n)}</span>
+      <span class="s">${esc(s.s)}</span><span class="a">${on?"✓ im Modell — klicken entfernt":"+ aufnehmen"}</span></button>`;}).join("");
+}
+findIn.addEventListener("input",localFind);
+hitsEl.addEventListener("click",e=>{const b=e.target.closest("[data-fs]"); if(!b||!b.dataset.fs) return;
+  focusId=b.dataset.fw; toggle(b.dataset.fw,"felder",b.dataset.fs);
+  if(b.dataset.ai){ render(); const on=has(b.dataset.fw,"felder",b.dataset.fs); b.dataset.on=on?1:0;
+    const a=b.querySelector(".a"); if(a) a.textContent=on?"✓ Skill im Modell":"+ Skill aufnehmen";
+  } else localFind();
+});
+
+let SAMPLE=null,busy=false;
+async function aiRun(){
+  const text=findIn.value.trim();
+  if(text.length<10){findNote.className="find-note err"; findNote.textContent="Bitte zuerst etwas mitschreiben."; return;}
+  if(busy) return; busy=true; aiGo.disabled=true;
+  findNote.className="find-note"; findNote.textContent="Ordne zu …";
+  const kat=WORLDS.map(w=>`${w.id} = ${w.title}\n  Kernkompetenzen: ${allKomp(w).map(k=>k.n).join(" | ")}\n  Skills: ${w.felder.map(s=>s.n).join(" | ")}`).join("\n");
+  try{
+    const out=await SAMPLE.json(
+`Du unterstützt ein Vertriebsgespräch eines IT-Weiterbildungsanbieters. Unten steht, was der Kunde gesagt hat.
+Zerlege es in einzelne Themen (Painpoints). Ordne JEDES Thema genau einer Kompetenzwelt aus dem Katalog zu.
+Prüfe dann, ob eine der vorhandenen Kernkompetenzen dieser Welt zum Thema passt — wenn ja, nenne sie EXAKT wie im Katalog unter "kompetenzMatch" und lasse "kompetenzNeu" null.
+Passt keine vorhandene Kernkompetenz wirklich gut, schlage stattdessen unter "kompetenzNeu" eine neue, kurze Kernkompetenz in den Worten des Kunden vor (name: max. 6 Wörter, beschreibung: ein Satz) und lasse "kompetenzMatch" null. Nenne niemals beide Felder gleichzeitig.
+Ordne außerdem, falls ein Skill aus dem Katalog dieser Welt gut passt, diesen unter "skill" EXAKT wie im Katalog zu, sonst null.
+Passt gar keine Kompetenzwelt zum Thema, setze weltId und alle anderen Felder auf null.
+
+KATALOG:
+${kat}
+
+MITSCHRIFT:
+${text}
+
+Antworte NUR mit JSON: {"z":[{"thema":"kurzer Satz in Kundenworten","weltId":"<id|null>","kompetenzMatch":"<exakt aus Katalog|null>","kompetenzNeu":{"name":"...","beschreibung":"..."}|null,"skill":"<exakt|null>","warum":"ein Satz"}]}`,
+      {modelTier:"default"});
+    const list=(out&&Array.isArray(out.z))?out.z:[];
+    const created=renderAI(list);
+    findNote.textContent=list.length?`${list.length} Thema${list.length===1?"":"n"} zugeordnet${created?` — ${created} neue Kernkompetenz${created===1?"":"en"} direkt übernommen`:""} — klicken zum Aufnehmen.`:"Kein Thema erkannt.";
+  }catch(e){
+    findNote.className="find-note err";
+    findNote.textContent=e&&e.code==="rate_limited"?"Zu viele Anfragen — bitte kurz warten.":"Zuordnung fehlgeschlagen.";
+  }
+  busy=false; aiGo.disabled=false;
+}
+function renderAI(list){
+  const ok=[]; let createdCount=0;
+  list.forEach(z=>{
+    const w=WORLDS.find(x=>x.id===z.weltId); if(!w) return;
+    let k=z.kompetenzMatch?allKomp(w).find(x=>x.n===z.kompetenzMatch):null;
+    let created=false;
+    if(!k&&z.kompetenzNeu&&z.kompetenzNeu.name){ k=addKomp(w,z.kompetenzNeu.name,z.kompetenzNeu.beschreibung); created=true; createdCount++; }
+    const s=z.skill?w.felder.find(x=>x.n===z.skill):null;
+    if(!k&&!s) return;
+    ok.push({w,s,k,created,thema:z.thema||"",warum:z.warum||""});
+  });
+  if(!ok.length){hitsEl.innerHTML=""; return 0;}
+  focusId=ok[0].w.id;
+  hitsEl.innerHTML=ok.map(({w,s,k,created,thema})=>{
+    const skillOn=s?has(w.id,"felder",s.n):false;
+    return `<button type="button" class="hit" style="--hc:${w.c}" data-ai="1" data-on="${(skillOn||created)?1:0}" data-fw="${w.id}" data-fs="${s?esc(s.n):""}" data-fk="${(k&&!created)?esc(k.n):""}">
+      <span class="s">„${esc(thema)}“</span>
+      <span class="w">${w.kw} · ${esc(w.title)}</span>
+      ${k?`<span class="n">${created?"✓ Neu erstellt &amp; ausgewählt: ":""}${esc(kName(w,k))}</span>`:""}
+      ${s?`<span class="a">${skillOn?"✓ Skill im Modell":"+ Skill aufnehmen"}</span>`:""}
+    </button>`;
+  }).join("");
+  render();
+  return createdCount;
+}
+hitsEl.addEventListener("click",e=>{const b=e.target.closest("[data-fk]"); if(!b) return;
+  if(b.dataset.fk&&!has(b.dataset.fw,"komp",b.dataset.fk)) state[b.dataset.fw].komp.push(b.dataset.fk);});
+aiGo.addEventListener("click",aiRun);
+(async()=>{try{SAMPLE=(window.claude&&window.claude.use)?await window.claude.use("sample"):null}catch(e){SAMPLE=null}
+  if(SAMPLE){aiGo.hidden=false; findNote.textContent="Stichwort genügt für die Sofortsuche — ganze Sätze über „Mit KI zuordnen“.";}})();
+
+/* ---------- Kontext ---------- */
+const fields=document.getElementById("fields");
+fields.innerHTML=PFIELDS.map(f=>`<div class="field${f.wide?" wide":""}"><label for="pf-${f.k}">${esc(f.l)}</label>
+  ${f.area?`<textarea id="pf-${f.k}" data-pf="${f.k}" placeholder="${esc(f.ph)}"></textarea>`:`<input id="pf-${f.k}" data-pf="${f.k}" placeholder="${esc(f.ph)}">`}</div>`).join("")
+  +`<div class="field wide"><label for="pfNotes">Notizen aus dem Gespräch</label><textarea id="pfNotes" placeholder="Alles, was sonst noch wichtig ist."></textarea></div>`;
+PFIELDS.forEach(f=>{const n=fields.querySelector(`[data-pf="${f.k}"]`);
+  n.addEventListener("input",()=>{profile[f.k]=n.value; save(); renderSync(); renderCounts();});});
+const notesEl=document.getElementById("pfNotes");
+notesEl.addEventListener("input",()=>{notes=notesEl.value; save();});
+function syncFields(){PFIELDS.forEach(f=>{const n=fields.querySelector(`[data-pf="${f.k}"]`); if(n) n.value=profile[f.k]||"";}); notesEl.value=notes;}
+
+/* ---------- Ergebnis ---------- */
+function renderCards(){
+  const g=document.getElementById("cards"), act=WORLDS.filter(w=>selIn(w)>0);
+  if(!act.length){g.innerHTML=`<div class="empty">Noch nichts gewählt. Gehen Sie zurück zu Schritt 1 oder 2.</div>`; return;}
+  g.innerHTML=act.map(w=>{const st=state[w.id];
+    const kompLabels=st.komp.map(n=>{const k=allKomp(w).find(x=>x.n===n); return k?kName(w,k):n;});
+    const sec=(l,a,c="")=>a.length?`<div class="sec ${c}"><span class="lbl">${l}</span><ul>${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:"";
+    return `<div class="card" style="--pc:${w.c}"><div class="h"><span class="kw">${w.kw}</span><h4>${esc(w.title)}</h4></div>
+      <div class="b">${sec("Kernkompetenzen",kompLabels,"kk")}${sec("Skills",st.felder)}${sec("Zielgruppen",st.ziel.concat(st.abt))}${sec("Bausteine",st.bau)}</div></div>`;}).join("");
+}
+const pick=c=>{const o=[]; WORLDS.forEach(w=>state[w.id][c].forEach(v=>o.push(v))); return o;};
+function syncHTML(kind){
+  const li=[];
+  if(kind==="kk"){const a=[]; WORLDS.forEach(w=>state[w.id].komp.forEach(n=>{const k=allKomp(w).find(x=>x.n===n); a.push(k?kName(w,k):n);}));
+    if(a.length) li.push(`<li><strong>${a.length===1?"1 Kernkompetenz":a.length+" Kernkompetenzen"}</strong> ${a.length===1?"wird":"werden"} erhoben: ${a.map(esc).join(" · ")}</li>`);
+    if(profile.teilnehmende) li.push(`<li>Assessment für <strong>${esc(profile.teilnehmende)} Teilnehmende</strong>${profile.rollen?` aus ${esc(profile.rollen)}`:""}</li>`);}
+  if(kind==="bau"){const a=pick("bau");
+    if(a.length) li.push(`<li><strong>${a.length===1?"1 Baustein":a.length+" Bausteine"}</strong> ${a.length===1?"bildet":"bilden"} die Lernpfade: ${a.map(esc).join(" · ")}</li>`);
+    if(profile.start) li.push(`<li>Terminplanung auf Ihren Wunschstart: <strong>${esc(profile.start)}</strong></li>`);}
+  if(kind==="ziel"){const a=[...new Set(pick("ziel"))],b=[...new Set(pick("abt"))];
+    if(a.length) li.push(`<li>Lerngruppen nach <strong>Rollen</strong>: ${a.map(esc).join(" · ")}</li>`);
+    if(b.length) li.push(`<li>Beteiligte <strong>Abteilungen</strong>: ${b.map(esc).join(" · ")}</li>`);}
+  if(kind==="felder"){const a=pick("felder");
+    if(a.length) li.push(`<li>Use Cases entlang der gewählten <strong>Skills</strong>: ${a.map(esc).join(" · ")}</li>`);}
+  if(kind==="erfolg"){const a=pick("komp");
+    if(a.length) li.push(`<li>Re-Assessment derselben <strong>${a.length}</strong> Kernkompetenzen wie in Phase 1</li>`);
+    if(profile.erfolg) li.push(`<li>Gemessen gegen Ihr Erfolgsbild: <strong>${esc(profile.erfolg.slice(0,200))}</strong></li>`);
+    if(profile.entscheidung) li.push(`<li>Abschlusspräsentation für: ${esc(profile.entscheidung)}</li>`);}
+  return `<span class="lbl">Aus Ihrer Auswahl</span>`+(li.length?`<ul>${li.join("")}</ul>`
+    :`<p class="none">Sobald Sie in Schritt 1 und 2 ausfüllen, steht hier, was in diese Phase einfließt.</p>`);
+}
+function renderSync(){PHASES.forEach((p,i)=>{const n=document.getElementById("sy"+i); if(n) n.innerHTML=syncHTML(p.sync);});}
+
+function renderTimeline(){
+  document.getElementById("tl").innerHTML=`<div class="tl-in">
+ <div class="tl-r tl-head"><div class="tl-l">ab Zusage &rarr;</div><div class="tl-w">${Array.from({length:16},(_,n)=>`<i>${n+1}</i>`).join("")}</div></div>
+ ${PHASES.map((p,i)=>{const[a,b]=tlRange(i);
+   return `<div class="tl-r"><div class="tl-l"><b>${p.n}</b><span>${TLSHORT[i]}</span></div>
+     <div class="tl-t"><button type="button" class="bar${TLPAR[i]?" par":""}" data-goto="${i}" style="grid-column:${a}/${b+1}">
+       <span>W ${a}–${b}</span><span class="m">${p.ms.split(" ")[0]}</span></button></div></div>`;}).join("")}
+ <div class="tl-r tl-after"><div class="tl-l"><b>Danach</b><span>Jahrespartnerschaft</span></div>
+   <div class="tl-t"><div class="bar part"><span>Ab Projektabschluss · 4 Termine vor Ort · Q1–Q4 · 12 Monate</span><span class="m">Pauschalpreis</span></div></div></div>
+ <p class="tl-note">Woche 1 beginnt mit der Zusage · Phase 4 läuft parallel zu Phase 3 (gestrichelt) · Zeiträume je Phase unten anpassbar</p></div>`;
+}
+renderTimeline();
+document.getElementById("tl").addEventListener("click",e=>{const b=e.target.closest("[data-goto]"); if(!b) return;
+  const d=document.querySelectorAll("#phases details")[+b.dataset.goto]; if(d){d.open=true; d.scrollIntoView({behavior:"smooth",block:"center"});}});
+
+function renderPhases(){
+  const openIdx=[...document.querySelectorAll("#phases details")].map(d=>d.open);
+  document.getElementById("phases").innerHTML=PHASES.map((p,i)=>{
+    const[a,b]=tlRange(i), hasOv=!!(profile.tlSpan&&profile.tlSpan[i]);
+    return `
+ <details class="phase"${openIdx[i]?" open":""}><summary><span class="pn">${p.n}</span><span class="pt">${p.t}</span><span class="pw">Woche ${a}–${b}</span><span class="chev"></span></summary>
+ <div class="pbody"><p class="goal">${p.goal}</p>
+   <div class="pcols">
+     <div><span class="lbl">Schritte</span><ul>${p.steps.map(s=>`<li>${s}</li>`).join("")}</ul></div>
+     <div><span class="lbl">Verantwortung</span>
+       <div class="role pp"><span class="who">ppedv</span><p>${p.pp}</p></div>
+       <div class="role"><span class="who">Kunde</span><p>${p.ku}</p></div></div>
+   </div>
+   <div class="sync" id="sy${i}"></div>
+   <div class="out"><span class="lbl" style="margin-right:4px">Ergebnis</span>${p.out.map(o=>`<span class="tag">${o}</span>`).join("")}<span class="tag m">${p.ms}</span></div>
+   <div class="tl-edit no-print">
+     <span class="lbl">Zeitraum anpassen (Woche ab Zusage)</span>
+     <div style="display:flex; gap:8px; align-items:center; margin-top:8px; flex-wrap:wrap">
+       <input type="number" min="1" max="16" id="tl-start-${i}" value="${a}" class="tl-num">
+       <span style="font-size:13px; color:var(--ink-3)">bis</span>
+       <input type="number" min="1" max="16" id="tl-end-${i}" value="${b}" class="tl-num">
+       <button type="button" class="btn go" data-tlsave="${i}">Übernehmen</button>
+       ${hasOv?`<button type="button" class="btn" data-tlreset="${i}">Zurücksetzen</button>`:""}
+     </div>
+   </div>
+ </div></details>`;}).join("");
+  renderSync();
+}
+renderPhases();
+document.getElementById("phases").addEventListener("click",e=>{
+  const sv=e.target.closest("[data-tlsave]");
+  if(sv){ const i=+sv.dataset.tlsave;
+    const s=+document.getElementById("tl-start-"+i).value, en=+document.getElementById("tl-end-"+i).value;
+    if(!s||!en||en<s) return;
+    profile.tlSpan[i]=[Math.max(1,Math.min(16,s)),Math.max(1,Math.min(16,en))];
+    save(); renderTimeline(); renderPhases(); return;
+  }
+  const rs=e.target.closest("[data-tlreset]");
+  if(rs){ const i=+rs.dataset.tlreset; profile.tlSpan[i]=null; save(); renderTimeline(); renderPhases(); }
+});
+
+/* ---------- Kunde + Logo ---------- */
+const custName=document.getElementById("custName"),logoSlot=document.getElementById("logoSlot"),
+      logoFile=document.getElementById("logoFile"),logoClear=document.getElementById("logoClear"),
+      coreLogo=document.getElementById("coreLogo"),coreCo=document.getElementById("coreCo"),setupBox=document.getElementById("setup");
+function renderCust(){
+  if(document.activeElement!==custName) custName.value=profile.name||"";
+  const nm=(profile.name||"").trim();
+  if(profile.logo){
+    logoSlot.classList.add("set"); logoSlot.innerHTML=`<img src="${profile.logo}" alt="Logo">`; logoClear.hidden=false;
+    coreLogo.setAttribute("href",profile.logo); coreLogo.style.display=""; coreCo.textContent="";
+  }else{
+    logoSlot.classList.remove("set"); logoSlot.textContent="Logo wählen"; logoClear.hidden=true;
+    coreLogo.removeAttribute("href"); coreLogo.style.display="none";
+    coreCo.textContent=nm||"ppedv Kompetenzwelten";
+    coreCo.style.fill=nm?"var(--ink)":"var(--ink-3)"; coreCo.style.fontSize=nm?"25px":"17px";
+  }
+}
+custName.addEventListener("input",()=>{profile.name=custName.value; renderCust(); save();});
+function setLogo(f){
+  if(!f||!/^image\//.test(f.type||"")) return;
+  const rd=new FileReader();
+  rd.onload=()=>{const img=new Image();
+    img.onload=()=>{const max=260,sc=Math.min(1,max/Math.max(img.width||max,img.height||max));
+      const cv=document.createElement("canvas");
+      cv.width=Math.max(1,Math.round((img.width||max)*sc)); cv.height=Math.max(1,Math.round((img.height||max)*sc));
+      const cx=cv.getContext("2d"); cx.drawImage(img,0,0,cv.width,cv.height);
+      let o; try{o=cv.toDataURL("image/png")}catch(e){o=rd.result}
+      if(o.length>130000){try{cx.globalCompositeOperation="destination-over"; cx.fillStyle="#fff"; cx.fillRect(0,0,cv.width,cv.height); o=cv.toDataURL("image/jpeg",0.85);}catch(e){}}
+      profile.logo=o; save(); renderCust();};
+    img.onerror=()=>{profile.logo=rd.result; save(); renderCust();};
+    img.src=rd.result;};
+  rd.readAsDataURL(f);
+}
+logoSlot.addEventListener("click",()=>{try{logoFile.click()}catch(e){}});
+logoClear.addEventListener("click",()=>{profile.logo=""; save(); renderCust();});
+logoFile.addEventListener("change",e=>{const f=e.target.files&&e.target.files[0]; if(f) setLogo(f); logoFile.value="";});
+["dragenter","dragover"].forEach(ev=>setupBox.addEventListener(ev,e=>{e.preventDefault(); setupBox.classList.add("drop");}));
+["dragleave","dragend","drop"].forEach(ev=>setupBox.addEventListener(ev,()=>setupBox.classList.remove("drop")));
+setupBox.addEventListener("drop",e=>{e.preventDefault(); const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0]; if(f) setLogo(f);});
+document.addEventListener("paste",e=>{const it=e.clipboardData&&e.clipboardData.items; if(!it) return;
+  for(const i of it){ if(i.kind==="file"&&/^image\//.test(i.type)){const f=i.getAsFile(); if(f){e.preventDefault(); setLogo(f);} return;} }});
+
+/* ---------- Schritte ---------- */
+const tabs=[...document.querySelectorAll(".stab")];
+function goStep(n){
+  tabs.forEach(t=>t.setAttribute("aria-selected",t.dataset.step===String(n)));
+  [1,2,3].forEach(i=>document.getElementById("s"+i).classList.toggle("on",i===n));
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(n===1) requestAnimationFrame(fitLabels);
+}
+tabs.forEach(t=>t.addEventListener("click",()=>goStep(+t.dataset.step)));
+function renderCounts(){
+  let tot=0,kk=0,allKk=0; WORLDS.forEach(w=>{tot+=selIn(w); kk+=state[w.id].komp.length; allKk+=allKomp(w).length;});
+  document.getElementById("cnt1").textContent=tot;
+  const filled=PFIELDS.filter(f=>(profile[f.k]||"").trim()).length;
+  document.getElementById("cnt2").textContent=filled+"/"+PFIELDS.length;
+  document.getElementById("coreN").textContent=kk;
+  document.getElementById("coreSub").textContent="von "+allKk+" Kernkompetenzen";
+}
+
+/* ---------- Render ---------- */
+function render(){
+  gInner.querySelectorAll("path.seg").forEach(p=>{
+    const on=has(p.dataset.w,"komp",p.dataset.v), wc=WORLDS.find(x=>x.id===p.dataset.w).c;
+    const f=on?"var(--orange)":`color-mix(in srgb, ${wc} 20%, var(--surface))`;
+    p.style.fill=f; p.style.stroke=f; p.setAttribute("aria-pressed",on);
+    const lb=gInner.querySelector(`[data-lbl="${CSS.escape(p.dataset.w+"|"+p.dataset.v)}"]`);
+    if(lb){lb.style.fill=on?"#3D2402":"var(--k3)"; lb.style.fontWeight=on?"600":"500";}
+  });
+  gSpot.querySelectorAll("[data-spot]").forEach(s=>s.style.opacity=s.dataset.spot===focusId?"1":"0");
+  gOuter.querySelectorAll("[data-wlabel]").forEach(t=>t.style.opacity=t.dataset.wlabel===focusId?"1":".85");
+  renderCounts(); coreDefault(); renderPanel(); renderCards(); renderSync();
+}
+
+/* ---------- Karteien ---------- */
+const fbSel=document.getElementById("fbSel"),fbSave=document.getElementById("fbSave"),
+      fbNew=document.getElementById("fbNew"),fbDel=document.getElementById("fbDel"),fbStatus=document.getElementById("fbStatus");
+let DB=null,records=[],autoT=null,dirty=false,mode="local";
+const LKEY="ppedv-karteien-v1";
+const lAll=()=>{try{return JSON.parse(localStorage.getItem(LKEY)||"{}")}catch(e){return{}}};
+const lPut=o=>{try{localStorage.setItem(LKEY,JSON.stringify(o))}catch(e){throw{code:"quota_exceeded"}}};
+const Store={
+  async list(){ if(DB){const s=await DB.collection("kunden").orderBy("updatedAt","desc").limit(200).get();
+    return s.docs.map(d=>Object.assign({id:d.id},d.data()));}
+    const o=lAll(); return Object.keys(o).map(id=>Object.assign({id},o[id])).sort((a,b)=>String(b.updatedAt||"").localeCompare(String(a.updatedAt||"")));},
+  async put(id,b){ if(DB) return DB.doc("kunden/"+id).set(b); const o=lAll(); o[id]=b; lPut(o);},
+  async del(id){ if(DB) return DB.doc("kunden/"+id).delete(); const o=lAll(); delete o[id]; lPut(o);}
+};
+const st=(m,k)=>{fbStatus.className="fb-status"+(k?" "+k:""); fbStatus.textContent=m||"";};
+const hhmm=()=>new Date().toLocaleTimeString("de-AT",{hour:"2-digit",minute:"2-digit"});
+const wo=()=>mode==="db"?"für Ihr Team":"in diesem Browser";
+function errT(e){const c=e&&e.code;
+  return c==="quota_exceeded"?"Speicher voll — alte Karteien löschen."
+    :c==="invalid_argument"?"Kartei zu groß — kleineres Logo verwenden."
+    :c==="resource_exhausted"?"Zu viele Zugriffe — kurz warten.":"Speichern fehlgeschlagen.";}
+const payload=()=>({title:(profile.name||"").trim()||"Ohne Namen",profile:JSON.parse(JSON.stringify(profile)),
+  state:JSON.parse(JSON.stringify(state)),notes,updatedAt:new Date().toISOString()});
+function blank(){WORLDS.forEach(w=>state[w.id]={komp:[],felder:[],ziel:[],abt:[],bau:[],kompCustom:{},kompExtra:[]});
+  profile={name:"",logo:"",tlSpan:PHASES.map(()=>null)}; PFIELDS.forEach(f=>profile[f.k]=""); notes=""; editKomp=null;}
+function applyAll(){renderCust(); syncFields(); refreshAllKompLabels(); renderTimeline(); renderPhases(); render();}
+function renderList(){
+  fbSel.innerHTML=`<option value="">${activeId?"— neue Kartei —":"Neue Kartei"}</option>`+
+    records.map(r=>{const d=r.updatedAt?new Date(r.updatedAt).toLocaleDateString("de-AT",{day:"2-digit",month:"2-digit",year:"2-digit"}):"";
+      return `<option value="${r.id}"${r.id===activeId?" selected":""}>${esc(r.title||"Ohne Namen")}${d?" · "+d:""}</option>`;}).join("");
+  fbSel.value=activeId||""; fbDel.disabled=!activeId;
+}
+async function refreshList(){ try{records=await Store.list()}catch(e){records=[]}
+  if(restoredId&&!activeId&&records.some(r=>r.id===restoredId)) activeId=restoredId;
+  restoredId=null; renderList(); idle();}
+function idle(){ if(dirty) return;
+  st(activeId?"Kartei aktiv · speichert automatisch "+wo():(records.length?`${records.length} Kartei${records.length===1?"":"en"} ${wo()}`:"Noch keine Kartei"));}
+async function saveRec(){
+  const first=!activeId; if(!activeId) activeId="k-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,6);
+  try{ await Store.put(activeId,payload()); dirty=false; save();
+    if(mode!=="db") await refreshList(); else renderList();
+    st((first?"Angelegt · ":"Gespeichert ")+hhmm(),"ok");
+  }catch(e){ if(first) activeId=null; st(errT(e),"err"); }
+}
+function scheduleSave(){ if(!activeId) return; dirty=true; st("Änderungen …");
+  clearTimeout(autoT); autoT=setTimeout(saveRec,1500);}
+fbSave.addEventListener("click",saveRec);
+fbNew.addEventListener("click",()=>{blank(); activeId=null; dirty=false; save(); applyAll(); renderList();
+  st("Neue Kartei — mit „Speichern“ anlegen."); goStep(2); custName.focus();});
+let armed=null;
+fbDel.addEventListener("click",async()=>{
+  if(!activeId) return;
+  if(!armed){fbDel.textContent="Sicher?"; fbDel.style.color="#B3261E";
+    armed=setTimeout(()=>{armed=null; fbDel.textContent="Löschen"; fbDel.style.color="";},4000); return;}
+  clearTimeout(armed); armed=null; fbDel.textContent="Löschen"; fbDel.style.color="";
+  try{ await Store.del(activeId); activeId=null; blank(); dirty=false; save(); applyAll();
+    if(mode!=="db") await refreshList(); else renderList(); st("Gelöscht.","ok");}catch(e){st(errT(e),"err");}
+});
+fbSel.addEventListener("change",()=>{
+  const id=fbSel.value;
+  if(!id){blank(); activeId=null; dirty=false; save(); applyAll(); renderList(); st("Neue Kartei."); return;}
+  const r=records.find(x=>x.id===id); if(!r) return;
+  blank();
+  const p=r.profile||{}; profile.name=p.name||""; profile.logo=p.logo||"";
+  PFIELDS.forEach(f=>profile[f.k]=p[f.k]||"");
+  WORLDS.forEach(w=>{const s=(r.state||{})[w.id]||{};
+    state[w.id]={komp:s.komp||[],felder:s.felder||[],ziel:s.ziel||[],abt:s.abt||[],bau:s.bau||[],kompCustom:s.kompCustom||{},kompExtra:s.kompExtra||[]};});
+  notes=r.notes||""; activeId=r.id; dirty=false; editKomp=null; save(); applyAll(); renderList();
+  st("Geladen: "+(r.title||"Ohne Namen"),"ok");
+});
+(async()=>{ await refreshList();
+  let d=null; try{d=(window.claude&&window.claude.use)?await window.claude.use("db"):null}catch(e){d=null}
+  if(!d) return; DB=d; mode="db";
+  DB.collection("kunden").orderBy("updatedAt","desc").limit(200).onSnapshot(s=>{
+    records=s.docs.map(x=>Object.assign({id:x.id},x.data()));
+    if(restoredId&&!activeId&&records.some(r=>r.id===restoredId)) activeId=restoredId;
+    restoredId=null; renderList(); idle();},e=>st(errT(e),"err"));
+})();
+
+/* ---------- Ausgabe ---------- */
+const toast=m=>{const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show");
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),2200);};
+document.getElementById("btnPrint").addEventListener("click",()=>{
+  document.querySelectorAll("#phases details, .bg details").forEach(d=>d.open=true); window.print();});
+document.getElementById("btnCopy").addEventListener("click",async()=>{
+  const act=WORLDS.filter(w=>selIn(w)>0);
+  if(!act.length){toast("Noch nichts gewählt."); return;}
+  const d=new Date().toLocaleDateString("de-AT",{day:"2-digit",month:"long",year:"numeric"});
+  let t=`KOMPETENZMODELL${profile.name?" — "+profile.name.toUpperCase():""}\nArbeitsstand ${d} · ppedv Kompetenzmatrix\n\n`;
+  const pf=[]; PFIELDS.forEach(f=>{if((profile[f.k]||"").trim()) pf.push(`  ${f.l}\n    ${profile[f.k].trim()}`);});
+  if(pf.length) t+=`KONTEXT\n${pf.join("\n")}\n\n`;
+  act.forEach(w=>{const s=state[w.id]; t+=`${w.kw} — ${w.title.toUpperCase()}\n`;
+    const b=(l,a)=>{if(a.length) t+=`  ${l}:\n`+a.map(x=>`    - ${x}\n`).join("");};
+    const kompLabels=s.komp.map(n=>{const k=allKomp(w).find(x=>x.n===n); return k?kName(w,k):n;});
+    b("Kernkompetenzen",kompLabels); b("Skills",s.felder); b("Zielgruppen",s.ziel.concat(s.abt)); b("Bausteine",s.bau); t+="\n";});
+  if(notes.trim()) t+=`NOTIZEN\n${notes.trim()}\n\n`;
+  t+=`UMSETZUNG — PHASE 1 STARTET MIT DER ZUSAGE\n`+PHASES.map(p=>`  ${p.n} (${p.w}): ${p.t} → ${p.ms}`).join("\n")
+   +`\n\nDANACH — JAHRESPARTNERSCHAFT\n  4 Termine vor Ort, 12 Monate Laufzeit, Pauschalpreis\n`;
+  try{await navigator.clipboard.writeText(t); toast("In die Zwischenablage kopiert.");}
+  catch(e){toast("Kopieren nicht möglich — bitte „Als PDF sichern“.");}
+});
+document.getElementById("today").textContent=new Date().toLocaleDateString("de-AT",{day:"2-digit",month:"long",year:"numeric"});
+renderCust(); syncFields(); refreshAllKompLabels(); render();
+</script>
+
+</body></html>
