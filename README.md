@@ -145,7 +145,7 @@ ist, allein zu genügen.
   Start aus dem alten localStorage-Schlüssel.
 - `normProfile()` normalisiert das Profil bei jedem Laden.
 
-## Drucken: eine Sperre der Plattform
+## Drucken und PDF
 
 Der Artifact-Rahmen läuft mit
 `sandbox="allow-scripts allow-same-origin allow-forms"`. Ohne `allow-modals`
@@ -154,10 +154,20 @@ der Knopf schien einfach nichts zu tun. Popups und Downloads sind ebenso
 gesperrt; `capabilities: {downloads: true}` wird beim Veröffentlichen
 mit 422 abgelehnt, solange „jeder mit dem Link" eingestellt ist.
 
-Die Seite misst das jetzt: schlägt `beforeprint` nicht innerhalb von 700 ms an,
-erscheint statt Schweigen eine Erklärung mit drei Wegen —
-Rechtsklick → „Dieser Frame" → „Frame drucken…" (Chrome/Edge), Freigabe auf
-die Organisation umstellen, oder „Als Text kopieren".
+Die Seite misst das: schlägt `beforeprint` nicht innerhalb von 700 ms an, gibt
+sie stattdessen **eine Datei aus** — über die `downloads`-Capability, die seit
+der Umstellung der Freigabe deklariert ist.
+
+Die Datei ist ein **in sich geschlossenes HTML-Dokument**: derselbe Stand,
+dieselben Stile, ohne die App-Skripte, mit `body.pm-model` beim schmalen Umfang.
+Beim Öffnen springt der Druckdialog von selbst auf — dort „Als PDF sichern".
+Aus dem Rahmen heraus geht Drucken nicht, aus einer lokalen Datei schon.
+
+`input.value` steckt nur in der Eigenschaft, nicht im Markup; die Werte werden
+deshalb vor dem Serialisieren als Attribute gesetzt, sonst wäre der Kundenname
+in der Datei leer.
+
+Dateiname: `Kompetenzmatrix-<Kunde>[-Modell]-<JJJJMMTT>.html`.
 
 **Die Druckausgabe ist auf den Kunden zugeschnitten**, nicht auf den Vertrieb:
 Bedienhinweise (`.lead`, `.hint`, `.need-hint`) fallen weg, das Eckdaten-Formular
@@ -171,9 +181,11 @@ einzelne Datei ohne Abhängigkeiten außer Google Fonts. Auf einem beliebigen
 Webserver — oder auch nur lokal geöffnet — gibt es keinen Sandkasten, und
 Drucken funktioniert nativ.
 
-**Die Freigabe löst es an der Wurzel.** Mit „nur Organisation" lassen sich
-`downloads`, `sample` (KI-Zuordnung) und `db` (team-geteilte Karteien)
-deklarieren — alle drei sind bei öffentlicher Freigabe gesperrt.
+**Wichtig: die Freigabe darf nicht zurück auf „Anyone with the link".** Sobald
+sie das täte, ließe sich `downloads` nicht mehr deklarieren und die
+Dateiausgabe fiele wieder aus. Dieselbe Sperre betrifft `sample` (KI-Zuordnung)
+und `db` (server-seitige Karteien) — beide sind jetzt möglich, aber noch nicht
+deklariert.
 
 ## Noch offen
 

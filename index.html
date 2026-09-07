@@ -1866,19 +1866,65 @@ const toast=m=>{const t=document.getElementById("toast"); t.textContent=m; t.cla
   clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),2200);};
 /* Der Artifact-Rahmen läuft mit sandbox="allow-scripts allow-same-origin allow-forms".
    Ohne allow-modals bleibt window.print() wirkungslos — es wirft nicht einmal.
-   Deshalb: versuchen, das Ergebnis messen, und im Zweifel erklären statt schweigen. */
+   Deshalb: versuchen, das Ergebnis messen, und sonst die Datei ausgeben. */
 const phelp=document.getElementById("phelp");
+let DL=null;
+(async()=>{try{DL=(window.claude&&window.claude.use)?await window.claude.use("downloads"):null}catch(e){DL=null}})();
+
+/* Eine in sich geschlossene Datei: derselbe Stand, dieselben Stile, und beim
+   Öffnen springt der Druckdialog auf. Aus dem Rahmen heraus geht das nicht,
+   aus einer lokalen Datei schon. */
+function standaloneDoc(scope){
+  const clone=document.body.cloneNode(true);
+  /* input.value steckt nur in der Eigenschaft, nicht im Markup — sonst wäre
+     der Kundenname in der Datei leer */
+  const src=[...document.body.querySelectorAll("input,textarea")];
+  [...clone.querySelectorAll("input,textarea")].forEach((n,i)=>{
+    const o=src[i]; if(!o) return;
+    if(n.tagName==="TEXTAREA") n.textContent=o.value; else n.setAttribute("value",o.value);
+  });
+  clone.querySelectorAll("script,datalist,#phelp,.actions,.toast").forEach(n=>n.remove());
+  const css=[...document.querySelectorAll("style")].map(x=>x.textContent).join("\n");
+  const links=[...document.querySelectorAll('link[rel="stylesheet"],link[rel="preconnect"]')].map(l=>l.outerHTML).join("\n");
+  const titel=((profile.name||"").trim()||"Kompetenzmatrix")+" — ppedv Kompetenzmatrix";
+  return `<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(titel)}</title>
+${links}
+<style>${css}</style></head>
+<body class="${scope==="model"?"pm-model":""}">
+${clone.innerHTML}
+<`+`script>addEventListener("load",function(){setTimeout(function(){window.print();},500);});<`+`/script>
+</body></html>`;
+}
+function dateiname(scope){
+  const d=new Date(), p=n=>String(n).padStart(2,"0");
+  const kunde=((profile.name||"").trim()||"Kunde").replace(/[^\wÄÖÜäöüß -]/g,"").replace(/\s+/g,"-");
+  return `Kompetenzmatrix-${kunde}-${scope==="model"?"Modell-":""}${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.html`;
+}
+async function saveDoc(scope){
+  if(!DL){ showPrintHelp(); return; }
+  try{
+    await DL.save({filename:dateiname(scope),data:standaloneDoc(scope)});
+    toast("Datei gesichert — öffnen, dann erscheint der Druckdialog. Dort „Als PDF sichern“.");
+  }catch(e){
+    const c=e&&e.code;
+    if(c==="declined") return;
+    if(c==="rate_limited"){ toast("Ein Dialog ist noch offen — kurz warten."); return; }
+    showPrintHelp();
+  }
+}
 function showPrintHelp(){
   phelp.innerHTML=`<button type="button" class="x" id="phX" title="Schließen">&times;</button>
-    <b>Der Druckdialog lässt sich von hier aus nicht öffnen</b>
-    <p>Diese Seite läuft in einem abgeschirmten Rahmen. Solange die Matrix über „jeder mit
-    dem Link“ geteilt ist, darf sie weder drucken noch Dateien ausgeben — das sperrt die Plattform,
-    nicht die Seite.</p>
+    <b>Weder drucken noch speichern möglich</b>
+    <p>Diese Seite läuft in einem abgeschirmten Rahmen, der den Druckdialog sperrt. Auch die
+    Dateiausgabe steht gerade nicht bereit — sie ist gesperrt, solange die Matrix über
+    „jeder mit dem Link“ geteilt ist.</p>
     <ol>
+      <li><b>Freigabe prüfen:</b> im „Share“-Menü darf <code>General access</code> nicht auf
+        „Anyone with the link“ stehen. Danach die Seite neu laden.</li>
       <li><b>Sofort:</b> Rechtsklick mitten auf die Seite &rarr; <code>Dieser Frame</code> &rarr;
-        <code>Frame drucken…</code> (Chrome, Edge). Dort im Dialog <code>Als PDF sichern</code> wählen.</li>
-      <li><b>Dauerhaft:</b> Freigabe im „Share“-Menü von „jeder mit dem Link“ auf die Organisation
-        umstellen. Dann kann der Knopf hier die PDF direkt ausgeben.</li>
+        <code>Frame drucken…</code> (Chrome, Edge), dort <code>Als PDF sichern</code>.</li>
       <li><b>Ersatzweise:</b> „Als Text kopieren“ funktioniert &mdash; die Zwischenablage ist erlaubt.</li>
     </ol>`;
   phelp.hidden=false;
@@ -1897,7 +1943,7 @@ function doPrint(scope){
   try{ window.print(); }catch(e){}
   setTimeout(()=>{
     window.removeEventListener("beforeprint",mark);
-    if(!fired){ done(); showPrintHelp(); }
+    if(!fired){ done(); saveDoc(scope); }
   },700);
 }
 document.getElementById("btnPrint").addEventListener("click",()=>doPrint("full"));
