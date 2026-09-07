@@ -34,9 +34,21 @@ Kopfzeile rechts summiert laufend mit: *„2 Bereiche · 17 Mitarbeitende ·
 2 von 6 Kompetenzwelten"*. Diese Summe ersetzt die früheren Einzelfragen nach
 Teilnehmerzahl und Rollen — sie ergibt sich jetzt aus der Aufnahme.
 
-Dazu vier Eckdaten-Fragen (Anlass, Erfolgsbild, Start, Entscheidung), das
-Freitextfeld „Was sagt der Kunde?" mit lokaler Stichwortsuche über den
-Skill-Katalog, und ein Notizfeld.
+Dazu vier Eckdaten-Fragen (Anlass, Erfolgsbild, Start, Entscheidung) und ein
+Notizfeld.
+
+**Zuordnung aus dem Gesagten.** Das Feld „Was sagt der Kunde?" und die Frage
+„Was funktioniert heute nicht?" speisen gemeinsam die Zuordnung. Aus dem Text
+entstehen Vorschläge auf zwei Ebenen:
+
+- **Kompetenzwelt** — mit Begründung („passt zu generationsübergreifend,
+  einsetzung"). Ein Klick ordnet die Welt einem erfassten Bereich zu; gibt es
+  noch keinen, legt „+ Als Bereich aufnehmen" einen an, mit dem Satz des Kunden
+  als Notiz.
+- **Skill** — wie bisher, direkt ins Modell aufnehmbar.
+
+Findet der Katalog nichts, bietet die Trefferzeile an, den Satz als **eigene
+Kernkompetenz** anzulegen — vorbelegt mit dem Wortlaut des Kunden.
 
 ### Schritt 2 — Kompetenzen wählen
 
@@ -85,20 +97,29 @@ Kunden. Bestehende Karteien aus der Vorversion werden beim Laden übernommen:
 alte „Rollen"- und „Teilnehmende"-Angaben wandern automatisch in
 Bereichszeilen.
 
-## Bekannte Einschränkung: KI-Zuordnung („Mit KI zuordnen")
+## Wie die Zuordnung funktioniert
 
-Der Button für KI-gestützte Zuordnung ganzer Sätze zu Kompetenzwelt,
-Kernkompetenz und Skill ist im Code vorhanden, aber **aktuell nicht aktiv**:
-Claude Artifacts erlaubt die dafür nötige `sample`-Capability nicht auf
-Artifacts, die öffentlich (jeder mit Link, ohne Login) geteilt sind — und
-das Sales-Team hat keine eigenen Claude-Accounts, braucht also den offenen Link.
+**Ohne KI (immer verfügbar).** Der Matcher arbeitet in drei Stufen, damit
+Kundensprache auf Katalogsprache trifft:
 
-Ersatz bis auf Weiteres: die lokale Stichwortsuche (funktioniert ohne KI)
-plus manuelles Anlegen neuer Kernkompetenzen über den „+"-Button.
+1. **Kurze Fachbegriffe zählen.** „KI", „BI", „SQL", „HR" sind zu kurz für eine
+   Längenschwelle und wurden früher stillschweigend weggefiltert — jetzt stehen
+   sie auf einer Whitelist.
+2. **Komposita werden aufgebrochen.** „Generationsübergreifende" enthält
+   „Generation"; steckt ein Katalogwort im Kundenwort, zählt es.
+3. **Trennschärfe statt Häufigkeit.** Ein Wort, das in vier oder mehr der sechs
+   Welten vorkommt („drei", „liegt"), wird verworfen; ein Wort, das nur eine
+   Welt trifft, zählt doppelt. Sonst gewinnt die Welt mit der längsten Prosa.
 
-Falls sich das ändert (z. B. gemeinsamer Claude-Workspace fürs Team), kann
-die Capability nachträglich aktiviert werden — dazu müsste das Teilen auf
-„nur Organisation" statt „jeder mit Link" umgestellt werden.
+Je Welt liegt zusätzlich eine Stichwortliste (`WKEY`) in Kundensprache —
+Akzeptanz, Berührungsangst, Medienbruch, Bauchgefühl und Ähnliches.
+
+**Mit KI („Mit KI zuordnen").** Die `sample`-Capability ist deklariert, der
+Button erscheint, sobald der Viewer sie bekommt. Voraussetzung ist ein
+angemeldeter Claude-Account beim Betrachter — er bestätigt den ersten Aufruf
+und trägt die Kosten. Wer den öffentlichen Link ohne Login öffnet, sieht den
+Button nicht und arbeitet mit der lokalen Zuordnung oben, die dafür ausgelegt
+ist, allein zu genügen.
 
 ## Technisch
 
@@ -108,6 +129,8 @@ die Capability nachträglich aktiviert werden — dazu müsste das Teilen auf
 - Datenmodell:
   - `WORLDS` — Katalog der 6 Kompetenzwelten mit Kernkompetenzen/Skills
   - `profile.teams[]` — Bedarfsaufnahme: `{name, n, worlds[], note}`
+  - `profile.gesagt` — Mitschrift „Was sagt der Kunde?", Teil der Kartei
+  - `WKEY` / `WHAY` / `WTOK` — Stichwörter und Heuhaufen je Kompetenzwelt
   - `state[weltId].kompExtra[]` — pro Kunde ergänzte Kernkompetenzen
   - `state[weltId].kompCustom{}` — pro Kunde umformulierte Kernkompetenzen
   - `profile.tlWeeks` / `profile.tlSpan[]` / `profile.phTitle[]` — Timeline

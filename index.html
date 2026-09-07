@@ -187,6 +187,18 @@ details.more .in{padding-top:11px}
 .field textarea{min-height:70px; line-height:1.55}
 .field input:focus,.field textarea:focus{outline:2px solid var(--orange); outline-offset:-1px; background:var(--surface)}
 
+/* Treffer auf Welt-Ebene */
+.hit.hw{cursor:default; background:var(--surface); gap:6px}
+.hit.hw:hover{background:var(--surface); border-color:var(--line)}
+.hw-act{display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:7px}
+.hw-lbl{font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); margin-right:2px}
+.tb{border:1px solid var(--line-2); background:var(--surface-2); border-radius:5px; padding:5px 10px; font-size:12.5px; transition:.14s}
+.tb:hover{border-color:var(--orange); color:var(--accent-ink)}
+.tb[aria-pressed="true"]{background:var(--orange); border-color:var(--orange); color:#3D2402; font-weight:600}
+.tb.add,.tb.open{border-style:dashed}
+.nohit{grid-column:1/-1; border:1px dashed var(--line-2); border-radius:6px; padding:14px 16px; font-size:13.5px; color:var(--ink-3)}
+.nohit .mini{font-size:13px}
+
 /* ---------- Bedarfsaufnahme ---------- */
 .need{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:16px 18px 18px; margin-bottom:20px; box-shadow:var(--shadow)}
 .need-h{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap}
@@ -461,11 +473,12 @@ details.more .in{padding-top:11px}
 
     <div class="find">
       <label for="findIn">Was sagt der Kunde?</label>
+      <p class="hint" style="margin:-3px 0 9px">Mitschreiben in seinen Worten — daraus schlägt die Matrix Kompetenzwelten und Skills vor.</p>
       <div class="find-row">
         <textarea id="findIn" rows="1" placeholder="z. B. Angebote dauern zu lange · niemand weiß, welche Zahl stimmt · neue Kollegen finden nichts"></textarea>
         <button class="btn warm" id="aiGo" hidden>Mit KI zuordnen</button>
       </div>
-      <p class="find-note" id="findNote">Stichwort genügt für die Sofortsuche.</p>
+      <p class="find-note" id="findNote">Stichwort genügt. Was hier und bei „Was funktioniert heute nicht?“ steht, wird zugeordnet.</p>
       <div class="hits" id="hits"></div>
     </div>
 
@@ -690,6 +703,7 @@ let state={}, notes="", focusId=WORLDS[0].id, activeId=null, restoredId=null, ed
 let profile={name:"",logo:""};
 PFIELDS.forEach(f=>profile[f.k]="");
 LEGACY_PF.forEach(k=>profile[k]="");
+profile.gesagt="";                       /* Mitschrift „Was sagt der Kunde?“ */
 profile.teams=[];                        /* Bedarf je Bereich: {name,n,worlds[],note} */
 profile.tlSpan=PHASES.map(()=>null);     /* Zeitraum je Phase */
 profile.phTitle=PHASES.map(()=>null);    /* Titel je Phase */
@@ -994,44 +1008,170 @@ function act(t){ editKomp=null; if(t.dataset.kind==="komp"){focusId=t.dataset.w;
 });
 
 /* ---------- Suche + KI ---------- */
+let SAMPLE=null,busy=false;
 const fold=t=>t.toLowerCase().replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss");
-const SKILLS=[]; WORLDS.forEach(w=>w.felder.forEach(s=>SKILLS.push({w,s,nam:fold(s.n),
-  hay:fold(s.n+" "+s.s+" "+s.z+" "+s.k+" "+w.title+" "+w.komp.map(k=>k.n).join(" ")+" "+w.bau.join(" "))})));
+
+/* Stichwörter je Kompetenzwelt. Kundensätze treffen selten die Katalogsprache —
+   hier steht, wie Kunden über die Welt reden. */
+const WKEY={
+ ki:"ki ai kuenstliche intelligenz copilot chatgpt claude gpt sprachmodell llm prompt prompten prompts automatisierung agent agenten "+
+    "generation generationen generationsuebergreifend aeltere aeltere juengere jung alt unerfahren erfahrung einsetzen einsetzung einsatz nutzen anwenden "+
+    "akzeptanz beruehrungsangst skepsis angst unsicher vorbehalte weigern will nicht traut zoegern nachwuchs senioritaet "+
+    "texte schreiben formulieren zusammenfassen recherche halluzination ai act schulungspflicht kompetenzpflicht",
+ proz:"prozess prozesse ablauf ablaeufe automatisieren automatisierung workflow workflows power automate skript skripte powershell python "+
+    "manuell haendisch von hand routine wiederkehrend immer gleich freigabe genehmigung antrag schnittstelle doppelerfassung abtippen "+
+    "formular medienbruch papier durchlaufzeit liegenbleiben nachfassen erinnerung frist",
+ daten:"daten zahlen kennzahl kennzahlen kpi auswertung auswertungen analyse analysen bi power bi sql datenbank excel tabelle report reporting "+
+    "bericht berichte dashboard datenmodell fabric controlling statistik monatsabschluss abschluss pivot datenqualitaet "+
+    "widerspruechlich unterschiedlich bauchgefuehl entscheidungsgrundlage transparenz",
+ dev:"entwicklung entwickler entwicklerinnen code coden programmieren programmierung software applikation anwendung net dotnet csharp azure devops "+
+    "git github test tests testen qualitaet release deployment architektur api schnittstellen requirements anforderungen legacy altsystem "+
+    "wartung refactoring bug fehler technische schulden",
+ cloud:"cloud azure microsoft 365 m365 security sicherheit cybersecurity angriff angriffe hacker phishing ransomware "+
+    "identitaet identitaeten berechtigung berechtigungen zugriff rechte passwort mfa entra intune defender backup wiederherstellung notfall "+
+    "betrieb server infrastruktur monitoring ueberwachung ausfall stoerung datenschutz dsgvo compliance nachweis",
+ zus:"zusammenarbeit kollaboration teams sharepoint onedrive outlook meeting meetings besprechung besprechungen jour fixe protokoll agenda "+
+    "dokument dokumente datei dateien ablage versionen wissen wissenstransfer dokumentation intranet wiki onboarding einarbeitung "+
+    "aufgabe aufgaben planner zustaendigkeit verantwortung uebergabe kommunikation abstimmung silo silos informationsfluss homeoffice hybrid"
+};
+
+/* Kurze Fachbegriffe, die trotz Länge zählen — „KI“ ist zwei Zeichen und war bisher unsichtbar. */
+const SHORT=new Set(["ki","ai","bi","it","hr","gf","erp","crm","sql","api","kpi","m365","git","vpn","mfa"]);
+const STOP=new Set(["und","oder","der","die","das","ein","eine","einen","einem","wir","uns","unsere","unser","ich","sie","ihre","ihr","nicht","ohne","mit","bei","aus","fuer","von","dem","den","des","ist","sind","war","waren","hat","haben","habe","wird","werden","kein","keine","alle","immer","noch","aber","auch","sich","dass","man","wie","was","wer","wenn","dann","viel","viele","zeit","gut","gute","mehr","sehr","zum","zur","auf","ueber","unter","nur","schon","eher","etwas","alles","nichts","ergebnis","problem","probleme","thema","themen","leute","mitarbeiter","mitarbeitende","kollegen","haus","firma","unternehmen",
+ "beim","jedem","jeder","jedes","jede","worauf","wobei","damit","dafuer","daran","darauf","dabei","danach","davon",
+ "liegt","liegen","sitzen","sitzt","steht","stehen","macht","machen","geht","gehen","kommt","kommen","gibt","geben","traut","trauen",
+ "will","wollen","muss","muessen","kann","koennen","soll","sollen","laeuft","laufen","bleibt","bleiben",
+ "zwei","drei","vier","fuenf","sechs","sieben","acht","neun","zehn","halb","halbe","halben","tag","tage","tagen","woche","wochen","monat","monate",
+ "ran","erst","erste","ersten","keiner","jemand","niemand","wieder","eben","ganz","ganze","ganzen","oft","selten","meist","teils"]);
+
+const tok=t=>fold(String(t||"")).replace(/[^a-z0-9]+/g," ").split(/\s+/).filter(Boolean);
+const terms=t=>[...new Set(tok(t).filter(x=>(x.length>3||SHORT.has(x))&&!STOP.has(x)))];
+
+/* Heuhaufen je Welt und je Skill */
+const WHAY={},WTOK={};
+WORLDS.forEach(w=>{
+  WHAY[w.id]=fold([w.title,w.lead,WKEY[w.id]||"",
+    w.komp.map(k=>k.n+" "+k.d).join(" "),
+    w.felder.map(f=>f.n+" "+f.s+" "+f.z+" "+f.k).join(" "),
+    w.bau.join(" ")].join(" ")).replace(/[^a-z0-9]+/g," ");
+  WTOK[w.id]=[...new Set(WHAY[w.id].split(" ").filter(x=>x.length>=5))];
+});
+const SKILLS=[]; WORLDS.forEach(w=>w.felder.forEach(s=>SKILLS.push({w,s,
+  nam:fold(s.n).replace(/[^a-z0-9]+/g," "),
+  hay:fold(s.n+" "+s.s+" "+s.z+" "+s.k).replace(/[^a-z0-9]+/g," ")})));
+
+/* Ein Term zählt, wenn er als ganzes Wort vorkommt, als Wortteil — oder wenn ein
+   Katalogwort in ihm steckt („Generationsübergreifend“ enthält „generation“). */
+function termScore(t,hay,toks){
+  if(hay.indexOf(" "+t+" ")>-1) return 3;
+  if(hay.indexOf(t)>-1) return 2;
+  if(t.length>=8&&toks){ for(const k of toks) if(k.length>=5&&t.indexOf(k)>-1) return 2; }
+  return 0;
+}
+/* Ein Wort, das in fünf von sechs Welten vorkommt („drei“, „liegt“), sagt nichts aus.
+   Trennschärfe zählt: je weniger Welten ein Term trifft, desto schwerer wiegt er. */
+function matchWorlds(tl){
+  const df={}, raw=WORLDS.map(w=>{
+    const per={};
+    tl.forEach(t=>{const v=termScore(t," "+WHAY[w.id]+" ",WTOK[w.id]);
+      if(v){per[t]=v; df[t]=(df[t]||0)+1;}});
+    return {w,per};
+  });
+  return raw.map(({w,per})=>{
+    let sc=0; const why=[];
+    Object.keys(per).forEach(t=>{
+      const d=df[t]; if(d>=4) return;
+      sc+=per[t]*(d===1?2:d===2?1.4:1); why.push({t,d});
+    });
+    why.sort((a,b)=>a.d-b.d);
+    return {w,sc:+sc.toFixed(2),why:why.filter(x=>x.d<=2).map(x=>x.t)};
+  }).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc);
+}
+function matchSkills(tl){
+  return SKILLS.map(x=>{
+    let sc=0;
+    tl.forEach(t=>{ sc+=termScore(t," "+x.nam+" ",null)*2 + termScore(t," "+x.hay+" ",null); });
+    return {x,sc};
+  }).filter(h=>h.sc>0).sort((a,b)=>b.sc-a.sc);
+}
+
 const findIn=document.getElementById("findIn"),hitsEl=document.getElementById("hits"),findNote=document.getElementById("findNote"),aiGo=document.getElementById("aiGo");
-const STOP=new Set(["und","oder","der","die","das","ein","eine","wir","uns","unsere","unser","nicht","ohne","mit","bei","aus","dem","den","ist","sind","hat","haben","kein","keine","alle","immer","noch","aber","auch","sich","dass","man","wie","was","viel","viele","zeit","gut","ergebnis","problem"]);
+/* Alles, was der Kunde sagt: das Suchfeld und die Anlass-Frage. */
+const spokenText=()=>[findIn.value,profile.anlass||""].join(" \n ").trim();
+let lastTerms=[];
 function localFind(){
-  const q=fold(findIn.value.trim()).replace(/[„“"»«.,!?;:]/g," ");
-  if(q.length<3){hitsEl.innerHTML=""; return;}
-  const terms=q.split(/\s+/).filter(t=>t.length>3&&!STOP.has(t));
-  if(!terms.length){hitsEl.innerHTML=""; return;}
-  const stem=t=>t.length>6?t.slice(0,Math.max(5,t.length-2)):t;
-  let hits=SKILLS.map(x=>({x,sc:terms.reduce((a,t)=>{const s2=stem(t);
-    if(x.nam.includes(t))return a+4; if(x.hay.includes(t))return a+2;
-    if(x.nam.includes(s2))return a+2; if(x.hay.includes(s2))return a+1; return a;},0)}))
-    .filter(h=>h.sc>0).sort((a,b)=>b.sc-a.sc);
-  const top=hits.length?hits[0].sc:0;
-  hits=hits.filter(h=>h.sc>=Math.max(2,top*0.6)).slice(0,4);
-  renderHits(hits.map(h=>h.x));
+  const txt=spokenText();
+  const tl=terms(txt); lastTerms=tl;
+  if(txt.trim().length<3||!tl.length){hitsEl.innerHTML=""; noteDefault(); return;}
+  let ws=matchWorlds(tl); const wtop=ws.length?ws[0].sc:0;
+  ws=ws.filter(x=>x.sc>=Math.max(3,wtop*0.45)).slice(0,3);
+  let sk=matchSkills(tl); const top=sk.length?sk[0].sc:0;
+  sk=sk.filter(h=>h.sc>=Math.max(2,top*0.55)).slice(0,4);
+  renderHits(ws,sk.map(h=>h.x),txt);
 }
-function renderHits(list){
-  if(!list.length){hitsEl.innerHTML=""; return;}
-  hitsEl.innerHTML=list.map(({w,s})=>{
-    const on=has(w.id,"felder",s.n);
-    return `<button type="button" class="hit" style="--hc:${w.c}" data-on="${on?1:0}" data-fw="${w.id}" data-fs="${esc(s.n)}">
-      <span class="w">${w.kw} · ${esc(w.title)}</span><span class="n">${esc(s.n)}</span>
-      <span class="s">${esc(s.s)}</span><span class="a">${on?"✓ im Modell — klicken entfernt":"+ aufnehmen"}</span></button>`;}).join("");
+function noteDefault(){
+  findNote.className="find-note";
+  findNote.textContent=SAMPLE?"Stichwort genügt — ganze Sätze über „Mit KI zuordnen“."
+    :"Stichwort genügt. Was hier und bei „Was funktioniert heute nicht?“ steht, wird zugeordnet.";
 }
-findIn.addEventListener("input",localFind);
-hitsEl.addEventListener("click",e=>{const b=e.target.closest("[data-fs]"); if(!b||!b.dataset.fs) return;
+function renderHits(ws,sk,txt){
+  if(!ws.length&&!sk.length){
+    hitsEl.innerHTML=`<div class="nohit">Kein Treffer im Katalog — das ist kein Problem:
+      <button type="button" class="mini" data-newk="">daraus eine eigene Kernkompetenz machen</button></div>`;
+    return;
+  }
+  const ts=teams();
+  hitsEl.innerHTML=
+    ws.map(({w,why})=>{
+      const inTeams=ts.map((t,i)=>`<button type="button" class="tb" data-assign="${i}|${w.id}" aria-pressed="${t.worlds.indexOf(w.id)>-1}">${esc((t.name||"").trim()||"Bereich "+(i+1))}</button>`).join("");
+      return `<div class="hit hw" style="--hc:${w.c}">
+        <span class="w">Kompetenzwelt${why.length?" · passt zu "+why.slice(0,3).map(esc).join(", "):""}</span>
+        <span class="n">${esc(w.title)}</span>
+        <div class="hw-act">${ts.length
+          ? `<span class="hw-lbl">Bereich zuordnen:</span>${inTeams}`
+          : `<button type="button" class="tb add" data-mkteam="${w.id}">+ Als Bereich aufnehmen</button>`}
+          <button type="button" class="tb open" data-open="${w.id}">Welt öffnen</button>
+          <button type="button" class="tb" data-newk="${w.id}">+ eigene Kernkompetenz</button></div>
+      </div>`;}).join("")
+    + sk.map(({w,s})=>{
+      const on=has(w.id,"felder",s.n);
+      return `<button type="button" class="hit" style="--hc:${w.c}" data-on="${on?1:0}" data-fw="${w.id}" data-fs="${esc(s.n)}">
+        <span class="w">Skill · ${w.kw} ${esc(w.title)}</span><span class="n">${esc(s.n)}</span>
+        <span class="s">${esc(s.s)}</span><span class="a">${on?"✓ im Modell — klicken entfernt":"+ aufnehmen"}</span></button>`;}).join("");
+}
+findIn.addEventListener("input",()=>{profile.gesagt=findIn.value; save(); localFind();});
+
+hitsEl.addEventListener("click",e=>{
+  /* Welt einem Bereich zuordnen */
+  const as=e.target.closest("[data-assign]");
+  if(as){ const p=as.dataset.assign.split("|"), t=teams()[+p[0]]; if(!t) return;
+    const j=t.worlds.indexOf(p[1]); j>-1?t.worlds.splice(j,1):t.worlds.push(p[1]);
+    save(); renderNeed(); renderCounts(); renderNeedbar(); renderCards(); renderNeedOut(); renderSync(); localFind(); return; }
+  /* Aus dem Gesagten direkt einen Bereich anlegen */
+  const mk=e.target.closest("[data-mkteam]");
+  if(mk){ teams().push({name:"",n:"",worlds:[mk.dataset.mkteam],note:findIn.value.trim().slice(0,200)});
+    save(); renderNeed(); renderCounts(); renderNeedbar(); renderCards(); renderNeedOut(); renderSync(); localFind();
+    const r=needEl.querySelectorAll(".trow"); if(r.length){const n=r[r.length-1].querySelector(".t-name"); n.focus(); n.scrollIntoView({block:"center"});}
+    return; }
+  const op=e.target.closest("[data-open]");
+  if(op){ focusId=op.dataset.open; editKomp=null; save(); render(); goStep(1); return; }
+  /* Gesagtes als eigene Kernkompetenz übernehmen */
+  const nk=e.target.closest("[data-newk]");
+  if(nk){ const best=matchWorlds(lastTerms)[0];
+    const wid=nk.dataset.newk||(best?best.w.id:focusId);
+    focusId=wid; editKomp={w:wid,i:"new"}; save(); render(); goStep(1);
+    requestAnimationFrame(()=>{const n=panel.querySelector("#ke-n");
+      if(n){n.value=findIn.value.trim().slice(0,80); n.focus(); n.select();}});
+    return; }
+  const b=e.target.closest("[data-fs]"); if(!b||!b.dataset.fs) return;
   focusId=b.dataset.fw; toggle(b.dataset.fw,"felder",b.dataset.fs);
   if(b.dataset.ai){ render(); const on=has(b.dataset.fw,"felder",b.dataset.fs); b.dataset.on=on?1:0;
     const a=b.querySelector(".a"); if(a) a.textContent=on?"✓ Skill im Modell":"+ Skill aufnehmen";
   } else localFind();
 });
 
-let SAMPLE=null,busy=false;
 async function aiRun(){
-  const text=findIn.value.trim();
+  const text=spokenText();
   if(text.length<10){findNote.className="find-note err"; findNote.textContent="Bitte zuerst etwas mitschreiben."; return;}
   if(busy) return; busy=true; aiGo.disabled=true;
   findNote.className="find-note"; findNote.textContent="Ordne zu …";
@@ -1091,7 +1231,8 @@ hitsEl.addEventListener("click",e=>{const b=e.target.closest("[data-fk]"); if(!b
   if(b.dataset.fk&&!has(b.dataset.fw,"komp",b.dataset.fk)) state[b.dataset.fw].komp.push(b.dataset.fk);});
 aiGo.addEventListener("click",aiRun);
 (async()=>{try{SAMPLE=(window.claude&&window.claude.use)?await window.claude.use("sample"):null}catch(e){SAMPLE=null}
-  if(SAMPLE){aiGo.hidden=false; findNote.textContent="Stichwort genügt für die Sofortsuche — ganze Sätze über „Mit KI zuordnen“.";}})();
+  if(SAMPLE) aiGo.hidden=false;
+  noteDefault();})();
 
 /* ---------- Bedarfsaufnahme: wo fehlt was, bei wie vielen ---------- */
 const needEl=document.getElementById("need");
@@ -1126,6 +1267,7 @@ function needChanged(full){
   save();
   if(full) renderNeed(); else needSum();
   renderCounts(); renderNeedbar(); renderPanel(); renderCards(); renderNeedOut(); renderSync();
+  localFind();   /* Trefferkarten zeigen die Bereiche zum Zuordnen — die ändern sich hier */
 }
 needEl.addEventListener("input",e=>{
   const f=e.target.closest("[data-tf]"); if(!f) return;
@@ -1190,10 +1332,12 @@ fields.innerHTML=PFIELDS.map(f=>`<div class="field${f.wide?" wide":""}"><label f
   ${f.area?`<textarea id="pf-${f.k}" data-pf="${f.k}" placeholder="${esc(f.ph)}"></textarea>`:`<input id="pf-${f.k}" data-pf="${f.k}" placeholder="${esc(f.ph)}">`}</div>`).join("")
   +`<div class="field wide"><label for="pfNotes">Notizen aus dem Gespräch</label><textarea id="pfNotes" placeholder="Alles, was sonst noch wichtig ist."></textarea></div>`;
 PFIELDS.forEach(f=>{const n=fields.querySelector(`[data-pf="${f.k}"]`);
-  n.addEventListener("input",()=>{profile[f.k]=n.value; save(); renderSync(); renderCounts();});});
+  n.addEventListener("input",()=>{profile[f.k]=n.value; save(); renderSync(); renderCounts();
+    if(f.k==="anlass") localFind();});});
 const notesEl=document.getElementById("pfNotes");
 notesEl.addEventListener("input",()=>{notes=notesEl.value; save();});
-function syncFields(){PFIELDS.forEach(f=>{const n=fields.querySelector(`[data-pf="${f.k}"]`); if(n) n.value=profile[f.k]||"";}); notesEl.value=notes;}
+function syncFields(){PFIELDS.forEach(f=>{const n=fields.querySelector(`[data-pf="${f.k}"]`); if(n) n.value=profile[f.k]||"";});
+  notesEl.value=notes; findIn.value=profile.gesagt||""; localFind();}
 
 /* ---------- Ergebnis ---------- */
 function renderCards(){
@@ -1399,7 +1543,7 @@ function errT(e){const c=e&&e.code;
 const payload=()=>({title:(profile.name||"").trim()||"Ohne Namen",profile:JSON.parse(JSON.stringify(profile)),
   state:JSON.parse(JSON.stringify(state)),notes,updatedAt:new Date().toISOString()});
 function blank(){WORLDS.forEach(w=>state[w.id]={komp:[],felder:[],ziel:[],abt:[],bau:[],kompCustom:{},kompExtra:[]});
-  profile={name:"",logo:"",teams:[],tlWeeks:16,tlSpan:PHASES.map(()=>null),phTitle:PHASES.map(()=>null)};
+  profile={name:"",logo:"",teams:[],gesagt:"",tlWeeks:16,tlSpan:PHASES.map(()=>null),phTitle:PHASES.map(()=>null)};
   PFIELDS.forEach(f=>profile[f.k]=""); LEGACY_PF.forEach(k=>profile[k]=""); notes=""; editKomp=null;}
 function applyAll(){renderCust(); syncFields(); renderNeed(); refreshAllKompLabels(); renderTimeline(); renderPhases(); render();}
 function renderList(){
@@ -1441,6 +1585,7 @@ fbSel.addEventListener("change",()=>{
   blank();
   const p=r.profile||{}; profile.name=p.name||""; profile.logo=p.logo||"";
   PFIELDS.forEach(f=>profile[f.k]=p[f.k]||""); LEGACY_PF.forEach(k=>profile[k]=p[k]||"");
+  profile.gesagt=p.gesagt||"";
   profile.teams=Array.isArray(p.teams)?JSON.parse(JSON.stringify(p.teams)):[];
   profile.tlSpan=Array.isArray(p.tlSpan)?p.tlSpan.slice():PHASES.map(()=>null);
   profile.phTitle=Array.isArray(p.phTitle)?p.phTitle.slice():PHASES.map(()=>null);
@@ -1480,7 +1625,9 @@ document.getElementById("btnCopy").addEventListener("click",async()=>{
       if((x.note||"").trim()) t+=`    Fehlt: ${x.note.trim()}\n`;});
     t+="\n";
   }
-  const pf=[]; PFIELDS.forEach(f=>{if((profile[f.k]||"").trim()) pf.push(`  ${f.l}\n    ${profile[f.k].trim()}`);});
+  const pf=[];
+  if((profile.gesagt||"").trim()) pf.push(`  Was sagt der Kunde?\n    ${profile.gesagt.trim()}`);
+  PFIELDS.forEach(f=>{if((profile[f.k]||"").trim()) pf.push(`  ${f.l}\n    ${profile[f.k].trim()}`);});
   if(pf.length) t+=`KONTEXT\n${pf.join("\n")}\n\n`;
   act.forEach(w=>{const s=state[w.id]; t+=`${w.kw} — ${w.title.toUpperCase()}\n`;
     const b=(l,a)=>{if(a.length) t+=`  ${l}:\n`+a.map(x=>`    - ${x}\n`).join("");};
