@@ -308,6 +308,10 @@ details.more .in{padding-top:11px}
 .nb i{font-style:normal; font-size:13px; color:var(--ink-2); line-height:1.4}
 .nb em{display:block; font-family:var(--serif); font-style:normal; font-size:12.5px; color:var(--ink-3); line-height:1.4; margin-top:3px}
 .nb-empty{font-family:var(--mono); font-size:11.5px; color:var(--ink-3)}
+.nb-warn{border:1px solid var(--orange); background:var(--accent-soft); border-radius:6px; padding:10px 13px; margin-bottom:11px}
+.nb-warn b{display:block; font-size:13.5px; color:var(--accent-ink)}
+.nb-warn span{display:block; font-family:var(--serif); font-size:13.5px; color:var(--ink); margin-top:3px}
+.nb-warn i{display:block; font-style:normal; font-family:var(--mono); font-size:11px; color:var(--ink-3); margin-top:4px}
 
 /* Bedarf im Panel */
 .pneed{background:var(--accent-soft); border-radius:6px; padding:11px 13px; margin-bottom:14px}
@@ -1006,7 +1010,20 @@ function buildInnerForWorld(w){
     gInner.appendChild(lt);
   });
 }
-const buildInner=()=>WORLDS.forEach(buildInnerForWorld);
+function paintSeg(p){
+  const w=WORLDS.find(x=>x.id===p.dataset.w); if(!w) return;
+  if(p.dataset.kind==="empty"){
+    const e=`color-mix(in srgb, ${w.c} 7%, var(--surface))`;
+    p.style.fill=e; p.style.stroke=e; return;
+  }
+  const sk=skills().find(x=>x.id===p.dataset.v), done=!!(sk&&sTeams(sk).length);
+  const f=done?"var(--orange)":`color-mix(in srgb, ${w.c} 20%, var(--surface))`;
+  p.style.fill=f; p.style.stroke=f;
+  const lb=gInner.querySelector(`[data-lbl="${CSS.escape(p.dataset.v)}"]`);
+  if(lb){lb.style.fill=done?"#3D2402":"var(--k3)"; lb.style.fontWeight=done?"600":"500";}
+}
+const paintInner=()=>gInner.querySelectorAll("path.seg").forEach(paintSeg);
+const buildInner=()=>{WORLDS.forEach(buildInnerForWorld); paintInner();};
 buildInner();
 
 function fitLabels(){
@@ -1502,8 +1519,13 @@ function actSeg(t){
 function renderNeedbar(){
   const box=document.getElementById("needbar"); if(!box) return;
   const act=WORLDS.map(w=>({w,l:skillsFor(w.id)})).filter(x=>x.l.length);
-  if(!act.length){box.innerHTML=`<p class="nb-empty">Noch nichts erfasst — in Schritt 1 anfangen, der Ring füllt sich mit.</p>`; return;}
-  box.innerHTML=`<span class="lbl">Aus Schritt 1 — anklicken öffnet die Kompetenzwelt</span>
+  /* Ein Skill ohne Welt hat kein Ringsegment — sonst verschwände er lautlos */
+  const ohne=named().filter(s=>!s.welt);
+  const warn=ohne.length?`<div class="nb-warn"><b>${nSkill(ohne.length)} ohne Kompetenzwelt</b>
+    <span>${ohne.map(s=>esc(s.text)).join(" · ")}</span>
+    <i>Der Ring zeigt sie erst, wenn in Schritt 1 eine Welt gewählt ist.</i></div>`:"";
+  if(!act.length){box.innerHTML=warn||`<p class="nb-empty">Noch nichts erfasst — in Schritt 1 anfangen, der Ring füllt sich mit.</p>`; return;}
+  box.innerHTML=warn+`<span class="lbl">Aus Schritt 1 — anklicken öffnet die Kompetenzwelt</span>
     <div class="nb-row">${act.map(x=>{
       const ts=teamsFor(x.w.id);
       return `<button type="button" class="nb" style="--wc:${x.w.c}" data-nb="${x.w.id}">
@@ -1731,18 +1753,7 @@ function renderCounts(){
 
 /* ---------- Render ---------- */
 function render(){
-  gInner.querySelectorAll("path.seg").forEach(p=>{
-    const wc=WORLDS.find(x=>x.id===p.dataset.w).c;
-    if(p.dataset.kind==="empty"){
-      p.style.fill=`color-mix(in srgb, ${wc} 7%, var(--surface))`;
-      p.style.stroke=`color-mix(in srgb, ${wc} 7%, var(--surface))`; return;
-    }
-    const s=findSkill(p.dataset.v), done=s&&sTeams(s).length;
-    const f=done?"var(--orange)":`color-mix(in srgb, ${wc} 20%, var(--surface))`;
-    p.style.fill=f; p.style.stroke=f;
-    const lb=gInner.querySelector(`[data-lbl="${CSS.escape(p.dataset.v)}"]`);
-    if(lb){lb.style.fill=done?"#3D2402":"var(--k3)"; lb.style.fontWeight=done?"600":"500";}
-  });
+  paintInner();
   gSpot.querySelectorAll("[data-spot]").forEach(s=>s.style.opacity=s.dataset.spot===focusId?"1":"0");
   gOuter.querySelectorAll("[data-wlabel]").forEach(t=>t.style.opacity=t.dataset.wlabel===focusId?"1":".85");
   renderCounts(); coreDefault(); renderNeedRing(); renderPanel(); renderNeedbar(); renderCtx(); renderCards(); renderNeedOut(); renderSync();
