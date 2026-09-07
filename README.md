@@ -6,6 +6,31 @@ Kompetenzmodell zusammenzustellen — als Grundlage für Schulungskonzept und An
 **Live:** https://claude.ai/code/artifact/d000a0b9-bdc8-4a60-a48a-f2c0e8fd4091
 **Quelle:** `index.html` (einzelne, eigenständige HTML-Datei — kein Build nötig, einfach im Browser öffnen)
 
+## Die zwei Achsen — Begriffe
+
+Das Werkzeug kreuzt zwei Dinge, die nichts miteinander zu tun haben. Wer sie
+verwechselt, verliert sich sofort:
+
+| | **Wer** | **Was** |
+|---|---|---|
+| Einheit | **Team** | **Kompetenzwelt → Kernkompetenz → Skill** |
+| Bedeutung | Eine Gruppe im Haus, mit Kopfzahl | Themenfeld → das Können → die trainierbare Einzelfähigkeit |
+| Beispiel | Vertriebsinnendienst · 12 Personen | Daten besser nutzen → Zahlen richtig lesen → Kennzahlen vereinheitlichen |
+| Erfasst in | Schritt 1 | Schritt 2 |
+
+Ein Team ist nie eine Kompetenz. Das Team ist die Gruppe, die Kompetenz ist das
+Können — die Matrix verbindet beide. Diese Legende steht auch in der Anwendung
+oben in Schritt 1, dauerhaft sichtbar.
+
+**„Für wen"** ist die Verbindung: unter jedem gewählten Skill steht, für welche
+Gruppe er gilt. Die Teams aus Schritt 1 stehen als Chips bereit, freie Zusätze
+(„Schichtführer", „neue Kolleginnen") kommen im Gespräch dazu.
+
+Das Wort „Bereich" kommt bewusst nicht mehr vor: im Deutschen meint es sowohl
+Unternehmensbereich als auch Themenbereich, und genau an dieser Doppeldeutigkeit
+kippte das Verständnis. „Zielgruppe" ist ebenfalls verschwunden — es war ein
+zweiter Name für dasselbe wie ein Team.
+
 ## Die Strategie hinter dem Ablauf
 
 Das Werkzeug führt das Salesgespräch entlang einer einzigen Kette:
@@ -25,12 +50,12 @@ verborgene interne Ansicht. Der Bildschirm ist das gemeinsame Arbeitsdokument.
 
 Kernstück ist die **Bedarfsaufnahme**: eine Zeile je Team oder Abteilung mit
 
-- **Name des Bereichs** (z. B. „Vertriebsinnendienst")
+- **Name des Teams** (z. B. „Vertriebsinnendienst")
 - **Anzahl der Mitarbeitenden**
 - **in welchen Kompetenzwelten es hakt** — die sechs Welten als Auswahl
 - **was genau fehlt**, in den Worten des Kunden
 
-Kopfzeile rechts summiert laufend mit: *„2 Bereiche · 17 Mitarbeitende ·
+Kopfzeile rechts summiert laufend mit: *„2 Teams · 17 Mitarbeitende ·
 2 von 6 Kompetenzwelten"*. Diese Summe ersetzt die früheren Einzelfragen nach
 Teilnehmerzahl und Rollen — sie ergibt sich jetzt aus der Aufnahme.
 
@@ -42,9 +67,12 @@ Notizfeld.
 entstehen Vorschläge auf zwei Ebenen:
 
 - **Kompetenzwelt** — mit Begründung („passt zu generationsübergreifend,
-  einsetzung"). Ein Klick ordnet die Welt einem erfassten Bereich zu; gibt es
-  noch keinen, legt „+ Als Bereich aufnehmen" einen an, mit dem Satz des Kunden
-  als Notiz.
+  einsetzung"). Darunter **„Welche Teams? (mehrere möglich)"**: jedes erfasste
+  Team als Kästchen mit seiner Kopfzahl, beliebig viele ankreuzbar. Bei
+  angekreuzten Teams lässt sich die Anzahl gleich hier eintragen — der Wert ist
+  dieselbe Zahl wie in Schritt 1 und wird in beide Richtungen mitgezogen.
+  Rechts läuft „X Mitarbeitende betroffen" mit. Gibt es noch kein Team, legt
+  „+ Als Team aufnehmen" eins an, mit dem Satz des Kunden als Notiz.
 - **Skill** — ein Klick nimmt ihn ins Modell auf, danach klappt die Karte auf
   für Zielgruppe und Notiz.
 
@@ -54,16 +82,16 @@ Kernkompetenz** anzulegen — vorbelegt mit dem Wortlaut des Kunden.
 ### Schritt 2 — Kompetenzen wählen
 
 Über dem Ring steht die **Bedarfsleiste**: je genannter Kompetenzwelt eine
-Karte mit Bereichen und Kopfzahl, ein Klick springt in die Welt. Im Panel
+Karte mit Teams und Kopfzahl, ein Klick springt in die Welt. Im Panel
 rechts erscheint der Bedarf noch einmal samt Kundenzitat.
 
 Der Kompetenzring zeigt die sechs Kompetenzwelten (außen) mit ihren
 Kernkompetenzen (innen). Auswahl per Klick im Ring oder im Panel.
 
-**Zielgruppe und Notiz je Skill.** Sobald ein Skill aufgenommen ist, klappt
-darunter auf — sowohl in der Trefferkarte als auch im Panel — eine Zeile für
-**Zielgruppe** und eine für **Notiz**. Zielgruppen sind nicht vorgegeben: die
-Bereiche aus Schritt 1 stehen als Chips bereit, alles Weitere wird im Feld
+**„Für wen" und Notiz je Skill.** Sobald ein Skill aufgenommen ist, klappt
+darunter auf — sowohl in der Trefferkarte als auch im Panel — eine Zeile
+**„Für wen"** und eine für **Notiz**. Die Gruppen sind nicht vorgegeben: die
+Teams aus Schritt 1 stehen als Chips bereit, alles Weitere wird im Feld
 „+ weitere" frei eingetragen und steht danach überall zur Verfügung. Die Notiz
 hält fest, was zum Skill sonst noch gesagt wurde (welcher Fall, welche Frist).
 
@@ -73,9 +101,9 @@ ppedv in Phase 2.
 
 ### Schritt 3 — Ergebnis & Ablauf
 
-Tabelle **„Bedarf im Haus"** (Bereich · Personen · Kompetenzwelten · was fehlt,
+Tabelle **„Bedarf im Haus"** (Team · Personen · Kompetenzwelten · was fehlt,
 mit Summenzeile), darunter das Kompetenzmodell als Karten je Welt — jeder Skill
-mit seinen Zielgruppen und der Notiz —, die
+mit seinen Gruppen und der Notiz —, die
 Umsetzungs-Timeline und das Partnerschaftsmodell. Export als PDF
 (Browser-Druckdialog) oder als Text (Zwischenablage) — beides enthält die
 Bedarfsaufnahme und die angepasste Timeline.
@@ -108,7 +136,7 @@ Alle Anpassungen werden pro **Kartei** (Kundendatensatz, oben rechts im Header
 speicherbar) isoliert gespeichert — sie verändern nicht den Katalog für andere
 Kunden. Bestehende Karteien aus der Vorversion werden beim Laden übernommen:
 alte „Rollen"- und „Teilnehmende"-Angaben wandern automatisch in
-Bereichszeilen.
+Teamzeilen.
 
 ## Wie die Zuordnung funktioniert
 
@@ -141,11 +169,11 @@ ist, allein zu genügen.
   Karteien zusätzlich in der Artifact-Datenbank, wenn verfügbar.
 - Datenmodell:
   - `WORLDS` — Katalog der 6 Kompetenzwelten mit Kernkompetenzen/Skills
-  - `profile.teams[]` — Bedarfsaufnahme: `{name, n, worlds[], note}`
+  - `profile.teams[]` — Teams: `{name, n, worlds[], note}`
   - `profile.gesagt` — Mitschrift „Was sagt der Kunde?", Teil der Kartei
   - `WKEY` / `WHAY` / `WTOK` — Stichwörter und Heuhaufen je Kompetenzwelt
-  - `state[weltId].sk{}` — je Skill `{z: [Zielgruppen], n: "Notiz"}`
-  - `profile.ziele[]` — kundeneigene Zielgruppen; der Pool ist
+  - `state[weltId].sk{}` — je Skill `{z: [Gruppen], n: "Notiz"}`
+  - `profile.ziele[]` — eigene Gruppen neben den Teams; der „Für wen"-Pool ist
     `teamNames() ∪ profile.ziele`
   - `state[weltId].kompExtra[]` — pro Kunde ergänzte Kernkompetenzen
   - `state[weltId].kompCustom{}` — pro Kunde umformulierte Kernkompetenzen

@@ -187,7 +187,40 @@ details.more .in{padding-top:11px}
 .field textarea{min-height:70px; line-height:1.55}
 .field input:focus,.field textarea:focus{outline:2px solid var(--orange); outline-offset:-1px; background:var(--surface)}
 
-/* Skill-Detail: Zielgruppe und Notiz */
+/* Team zuordnen: Mehrfachauswahl mit Kopfzahl */
+.tpick{display:inline-flex; align-items:stretch; border:1px solid var(--line-2); border-radius:5px; overflow:hidden; background:var(--surface)}
+.tpick.on{border-color:var(--orange)}
+.tb.tsel{border:0; border-radius:0; background:none; display:inline-flex; align-items:center; gap:7px; padding:5px 10px}
+.tb.tsel:hover{background:var(--surface-3); color:inherit}
+.tck{width:14px; height:14px; flex:0 0 14px; border:1.5px solid var(--line-2); border-radius:3px; display:grid; place-items:center}
+.tck::after{content:""; width:6px; height:3px; border-left:2px solid #3D2402; border-bottom:2px solid #3D2402;
+  transform:rotate(-45deg) translate(0,-1px); opacity:0}
+.tpick.on .tb.tsel{background:var(--orange); color:#3D2402; font-weight:600}
+.tpick.on .tck{background:#fff; border-color:#fff}
+.tpick.on .tck::after{opacity:1}
+.tn{display:grid; place-items:center; min-width:30px; padding:0 7px; font-family:var(--mono); font-size:11.5px;
+  color:var(--ink-3); background:var(--surface-2); border-left:1px solid var(--line)}
+.tnum{width:52px; font:inherit; font-family:var(--mono); font-size:12px; color:var(--ink); background:var(--surface-2);
+  border:0; border-left:1px solid var(--orange); padding:4px 6px; text-align:center}
+.tnum:focus{outline:2px solid var(--orange); outline-offset:-2px; background:var(--surface)}
+.hw-lbl i{font-style:normal; text-transform:none; letter-spacing:0; opacity:.75}
+.tsum{font-family:var(--mono); font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--orange); align-self:center}
+.tsum:empty{display:none}
+
+/* Legende der zwei Achsen */
+.axes{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line);
+  border-radius:8px; overflow:hidden; margin-bottom:22px; max-width:1000px}
+.ax{background:var(--surface); padding:13px 16px 14px}
+.ax-k{font-family:var(--mono); font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:#fff;
+  background:var(--blue); border-radius:3px; padding:2px 7px; display:inline-block; margin-bottom:7px}
+.ax:nth-child(2) .ax-k{background:var(--orange); color:#3D2402}
+.ax b{display:block; font-size:15px; font-weight:600; letter-spacing:-.015em}
+.ax p{font-size:13.5px; color:var(--ink-2); line-height:1.45; margin-top:3px}
+.ax-e{display:block; font-family:var(--serif); font-size:13px; color:var(--ink-3); margin-top:6px}
+.ax-note{grid-column:1/-1; background:var(--surface-2); padding:10px 16px; font-size:13px; color:var(--ink-2)}
+@media (max-width:760px){.axes{grid-template-columns:1fr}}
+
+/* Skill-Detail: „Für wen“ und Notiz */
 .skwrap{border-radius:6px}
 .skwrap.on{background:var(--surface-2); padding-bottom:2px; margin:2px 0 6px}
 .skd{padding:2px 10px 11px; display:flex; flex-direction:column; gap:8px}
@@ -471,7 +504,7 @@ details.more .in{padding-top:11px}
 <main>
 <section class="step" id="s1">
   <div class="wrap">
-    <p class="lead">Jeder Bedarf aus Schritt 1 bekommt hier seine <b>Kompetenzwelt</b> — und darin die Kernkompetenzen, die dazu fehlen. Passt nichts Vorhandenes, legen Sie im Panel rechts mit <b>+</b> eine eigene an, in den Worten des Kunden.</p>
+    <p class="lead">Hier geht es nur um die <b>Was</b>-Achse: jede Kompetenzwelt aus Schritt 1 bekommt die Kernkompetenzen, die dazu fehlen. Passt nichts Vorhandenes, legen Sie im Panel rechts mit <b>+</b> eine eigene an, in den Worten des Kunden. Unter jedem gewählten Skill tragen Sie ein, <b>für wen</b> er gilt.</p>
 
     <div class="needbar no-print" id="needbar"></div>
 
@@ -502,7 +535,19 @@ details.more .in{padding-top:11px}
 
 <section class="step on" id="s2">
   <div class="wrap">
-    <p class="lead">Zwei Fragen tragen das Gespräch: <b>Wo fehlen Kompetenzen — und bei wie vielen Menschen?</b> Bereich für Bereich aufnehmen, dazu die Eckdaten. Alles fließt direkt in die Kompetenzauswahl und den Ablauf ein.</p>
+    <p class="lead">Zwei Fragen tragen das Gespräch: <b>Wo fehlen Kompetenzen — und bei wie vielen Menschen?</b> Team für Team aufnehmen, dazu die Eckdaten. Alles fließt direkt in die Kompetenzauswahl und den Ablauf ein.</p>
+
+    <div class="axes">
+      <div class="ax"><span class="ax-k">Wer</span>
+        <b>Team</b>
+        <p>Eine Gruppe im Haus, mit Kopfzahl. Sie nehmen sie in Schritt 1 auf.</p>
+        <span class="ax-e">Vertriebsinnendienst · 12 Personen</span></div>
+      <div class="ax"><span class="ax-k">Was</span>
+        <b>Kompetenzwelt → Kernkompetenz → Skill</b>
+        <p>Das Themenfeld, darin das Können, darin die trainierbare Einzelfähigkeit.</p>
+        <span class="ax-e">Daten besser nutzen → Zahlen richtig lesen → Kennzahlen vereinheitlichen</span></div>
+      <p class="ax-note">Ein Team ist nie eine Kompetenz. Das Team ist die Gruppe, die Kompetenz ist das Können — die Matrix verbindet beide.</p>
+    </div>
 
     <div class="find">
       <label for="findIn">Was sagt der Kunde?</label>
@@ -571,7 +616,7 @@ details.more .in{padding-top:11px}
           <dt><em>Ebene 1</em>Kompetenzwelt</dt><dd>Das Themenfeld. Sechs Stück, im Außenring. <em>Daten besser nutzen</em></dd>
           <dt><em>Ebene 2</em>Kernkompetenz</dt><dd>Was Ihre Leute können sollen. Im Innenring. Drei Vorschläge je Welt &mdash; umformulierbar, löschbar, beliebig ergänzbar. <em>Zahlen richtig lesen</em></dd>
           <dt><em>Ebene 3</em>Skill</dt><dd>Die trainierbare Einzelfähigkeit. Jedes Kundenthema gehört zu genau einem Skill. <em>Dashboards fokussieren</em></dd>
-          <dt><em>Ebene 4</em>Zielgruppe</dt><dd>Wer genau es lernt. Frei benennbar &mdash; die Bereiche aus Schritt 1 stehen schon bereit, alles andere tragen Sie im Gespräch ein. <em>Innendienst · Schichtführer · neue Kolleginnen</em></dd>
+          <dt><em>Ebene 4</em>Für wen</dt><dd>Wer genau es lernt. Frei benennbar &mdash; die Teams aus Schritt 1 stehen schon bereit, alles andere tragen Sie im Gespräch ein. <em>Innendienst · Schichtführer · neue Kolleginnen</em></dd>
         </dl>
         <p style="font-size:14.5px;color:var(--ink-2);margin-top:16px;line-height:1.6;max-width:80ch"><b>Im Gespräch arbeiten Sie rückwärts:</b> Der Kunde nennt ein Problem, Sie ordnen es einem Skill zu &mdash; Kompetenzwelt und Baustein ergeben sich daraus.</p>
       </div>
@@ -608,7 +653,7 @@ const WORLDS=[
     {n:"Texte auf den Punkt bringen",s:"„Jedes Angebot schreibt bei uns jemand von Null.“",z:"Entwürfe für Angebote, Mails und Berichte in der eigenen Tonlage erzeugen — und sicher prüfen.",k:"schreiben formulieren angebot mail newsletter entwurf textbaustein korrektur antwort"},
     {n:"Entscheidungen vorbereiten",s:"„Wir diskutieren dreimal, bevor wir entscheiden.“",z:"Optionen, Risiken und eine Empfehlung aufbereiten, bevor die Runde zusammenkommt.",k:"entscheidung entscheiden vorlage geschaeftsfuehrung optionen vergleich bewertung gremium"},
     {n:"Routinearbeit beschleunigen",s:"„Das Gleiche jede Woche, immer von Hand.“",z:"Wiederkehrende Textarbeit an KI abgeben — mit Prüfschritt, nicht blind.",k:"wiederkehrend routine immer gleich manuell zeitfresser standardantwort fleissarbeit tippen"}],
-  /* ziel: Vorschlaege fuer die offene Zielgruppen-Eingabe.
+  /* ziel: Vorschlaege fuer die offene „Fuer wen“-Eingabe.
      bau: nicht mehr in der Oberflaeche — die Kursnamen bleiben als Suchmaterial im Heuhaufen. */
   ziel:["Mitarbeitende","Fachbereiche","Führungskräfte","IT & AI Enabler"],
   bau:["AI Driven Training","Microsoft 365 Copilot","Copilot Studio – Agenten","ChatGPT im Arbeitsalltag","Claude im Arbeitsalltag","Prompt Engineering"]},
@@ -690,7 +735,7 @@ const PFIELDS=[
  {k:"start",l:"Wann soll es starten?",ph:"z. B. ab Januar, nach dem Jahresabschluss"},
  {k:"entscheidung",l:"Wer entscheidet — und bis wann?",ph:"z. B. GF und HR-Leitung, Entscheidung im November"}
 ];
-/* Anzahl und Rollen werden nicht mehr gefragt, sondern je Bereich erfasst (profile.teams).
+/* Anzahl und Rollen werden nicht mehr gefragt, sondern je Team erfasst (profile.teams).
    Die alten Schlüssel bleiben nur, um bestehende Karteien zu übernehmen. */
 const LEGACY_PF=["teilnehmende","rollen"];
 
@@ -703,13 +748,13 @@ const PHASES=[
   out:["Kompetenz-Heatmap","Lerngruppen"],ms:"M1 — Standort abgestimmt"},
  {n:"Phase 2",t:"Lernpfade und Setup",sync:"lern",
   goal:"Aus dem Delta wird ein konkreter Lernpfad je Rolle — mit Terminen, Trainern und startklarer Umgebung.",
-  steps:["Lernpfad je Zielgruppe aus den gewählten Skills zusammenstellen","Passende Kurse und Formate vorschlagen, Trainer zuordnen","Taktung und Termine festlegen, Lernumgebung einrichten und testen","Kommunikationspaket an die Teilnehmenden versenden"],
+  steps:["Lernpfad je Lerngruppe aus den gewählten Skills zusammenstellen","Passende Kurse und Formate vorschlagen, Trainer zuordnen","Taktung und Termine festlegen, Lernumgebung einrichten und testen","Kommunikationspaket an die Teilnehmenden versenden"],
   pp:"Wählt die Kurse zu den Skills, baut die Lernpfade, richtet die Umgebung ein und liefert die Kommunikationsvorlagen.",
   ku:"Prüft die Termine gegen den Betriebsablauf und versendet die Kommunikation intern.",
-  out:["Lernpfad je Zielgruppe","Terminplan","Startklare Umgebung"],ms:"M2 — Start freigegeben"},
+  out:["Lernpfad je Lerngruppe","Terminplan","Startklare Umgebung"],ms:"M2 — Start freigegeben"},
  {n:"Phase 3",t:"Durchführung in Wellen",sync:"ziel",
   goal:"Die Module laufen — mit Praxisaufgaben aus dem echten Arbeitsalltag, nicht aus dem Lehrbuch.",
-  steps:["Welle 1: Fundament für alle Zielgruppen gemeinsam","Welle 2: Vertiefung je Zielgruppe in getrennten Gruppen","Zwischen den Modulen: Praxisaufgaben am eigenen Fall","Feedback nach jedem Modul, Nachsteuern bei Bedarf"],
+  steps:["Welle 1: Fundament für alle gemeinsam","Welle 2: Vertiefung je Lerngruppe in getrennten Gruppen","Zwischen den Modulen: Praxisaufgaben am eigenen Fall","Feedback nach jedem Modul, Nachsteuern bei Bedarf"],
   pp:"Führt die Trainings durch, betreut die Praxisaufgaben und berichtet nach jeder Welle.",
   ku:"Schützt die Lernzeit im Kalender und benennt reale Fälle als Übungsmaterial.",
   out:["Durchgeführte Module","Feedback je Welle","Teilnahmebestätigungen"],ms:"M3 — Kernmodule abgeschlossen"},
@@ -736,8 +781,8 @@ let profile={name:"",logo:""};
 PFIELDS.forEach(f=>profile[f.k]="");
 LEGACY_PF.forEach(k=>profile[k]="");
 profile.gesagt="";                       /* Mitschrift „Was sagt der Kunde?“ */
-profile.ziele=[];                        /* offene, kundeneigene Zielgruppen */
-profile.teams=[];                        /* Bedarf je Bereich: {name,n,worlds[],note} */
+profile.ziele=[];                        /* „Für wen“: eigene Gruppen neben den Teams */
+profile.teams=[];                        /* Bedarf je Team: {name,n,worlds[],note} */
 profile.tlSpan=PHASES.map(()=>null);     /* Zeitraum je Phase */
 profile.phTitle=PHASES.map(()=>null);    /* Titel je Phase */
 profile.tlWeeks=16;                      /* Projektdauer in Wochen */
@@ -758,7 +803,7 @@ function normProfile(){
     name:String((t&&t.name)||""), n:(t&&(t.n||t.n===0))?t.n:"",
     worlds:(Array.isArray(t&&t.worlds)?t.worlds:[]).filter(id=>WORLDS.some(w=>w.id===id)),
     note:String((t&&t.note)||"")}));
-  /* Altbestand: „Teilnehmende“ und „Rollen“ in Bereichszeilen überführen */
+  /* Altbestand: „Teilnehmende“ und „Rollen“ in Teamzeilen überführen */
   if(!profile.teams.length){
     const roles=String(profile.rollen||"").split(/[,;·\/]|\bund\b/).map(x=>x.trim()).filter(Boolean);
     const tot=parseInt(profile.teilnehmende,10)||"";
@@ -773,7 +818,7 @@ function tlRange(i){const ov=profile.tlSpan&&profile.tlSpan[i], r=(ov&&ov.length
 function phTitle(i){const o=profile.phTitle&&profile.phTitle[i]; return (o&&o.trim())?o.trim():PHASES[i].t;}
 function phShort(i){const o=profile.phTitle&&profile.phTitle[i]; return (o&&o.trim())?o.trim():TLSHORT[i];}
 
-/* ---------- Bedarf je Bereich ---------- */
+/* ---------- Bedarf je Team ---------- */
 const teams=()=>(Array.isArray(profile.teams)?profile.teams:(profile.teams=[]));
 const tN=t=>parseInt(t&&t.n,10)||0;
 const headcount=()=>teams().reduce((a,t)=>a+tN(t),0);
@@ -781,11 +826,12 @@ const teamsFor=id=>teams().filter(t=>t.worlds.indexOf(id)>-1);
 const headFor=id=>teamsFor(id).reduce((a,t)=>a+tN(t),0);
 const teamNames=()=>teams().map(t=>(t.name||"").trim()).filter(Boolean);
 const teamsUsed=()=>teams().filter(t=>(t.name||"").trim()||tN(t)||t.worlds.length||(t.note||"").trim());
-const nBereich=n=>n+(n===1?" Bereich":" Bereiche");
+const nTeam=n=>n+(n===1?" Team":" Teams");
 
-/* ---------- Zielgruppen und Notizen je Skill ----------
-   Zielgruppen sind nicht mehr vorgegeben: die Bereiche aus Schritt 1 stehen bereit,
-   alles Weitere trägt der Kunde im Gespräch ein. Zugeordnet wird je Skill. */
+/* ---------- „Für wen“ und Notiz je Skill ----------
+   Nicht mehr vorgegeben: die Teams aus Schritt 1 stehen bereit, alles Weitere
+   („Schichtführer“, „neue Kolleginnen“) trägt der Kunde im Gespräch ein.
+   Zugeordnet wird je Skill, nicht je Kompetenzwelt. */
 function skMeta(w,name){
   const st=state[w.id]; if(!st.sk) st.sk={};
   if(!st.sk[name]) st.sk[name]={z:[],n:""};
@@ -805,7 +851,7 @@ function refreshZsug(){
   const d=document.getElementById("zsug"); if(!d) return;
   d.innerHTML=zSuggest().map(z=>`<option value="${esc(z)}">`).join("");
 }
-/* Alle vergebenen Zielgruppen, jeweils mit ihren Skills */
+/* Alle vergebenen Gruppen, jeweils mit ihren Skills — daraus werden die Lerngruppen */
 function zielMap(){
   const m={};
   WORLDS.forEach(w=>state[w.id].felder.forEach(n=>{
@@ -817,16 +863,16 @@ function zielMap(){
 function skDetail(w,name){
   const m=skMeta(w,name), pool=zPool();
   return `<div class="skd">
-    <div class="skd-row"><span class="skd-l">Zielgruppe</span>
+    <div class="skd-row"><span class="skd-l">Für wen</span>
       <div class="zrow">
         ${pool.map(z=>`<button type="button" class="zchip" data-zw="${w.id}" data-zs="${esc(name)}" data-zv="${esc(z)}" aria-pressed="${m.z.indexOf(z)>-1}">${esc(z)}</button>`).join("")}
-        <input class="zadd" list="zsug" placeholder="${pool.length?"+ weitere":"+ Zielgruppe eintragen"}" data-zadd="${w.id}" data-zas="${esc(name)}" maxlength="60">
+        <input class="zadd" list="zsug" placeholder="${pool.length?"+ weitere":"+ Gruppe eintragen"}" data-zadd="${w.id}" data-zas="${esc(name)}" maxlength="60">
       </div></div>
     <div class="skd-row"><span class="skd-l">Notiz</span>
       <input class="snote" value="${esc(m.n)}" maxlength="200" placeholder="Wer genau, welcher Fall, welche Frist?" data-snw="${w.id}" data-sns="${esc(name)}"></div>
   </div>`;
 }
-/* Zielgruppen-Chip, Freitext und Notiz wirken überall gleich */
+/* Chip, Freitext und Notiz wirken überall gleich — Panel wie Trefferliste */
 function skillDelegate(root,rerender){
   root.addEventListener("click",e=>{
     const c=e.target.closest("[data-zv]"); if(!c) return;
@@ -1032,7 +1078,7 @@ function renderPanel(){
      <div class="grp">
        <div class="grp-h"><span class="lbl">Skills</span></div>
        <p class="hint">Jedes Kundenthema gehört zu genau einem Skill. Kursiv: wie es im Gespräch klingt.
-         Sobald ein Skill gewählt ist, tragen Sie darunter Zielgruppe und Notiz ein.</p>
+         Sobald ein Skill gewählt ist, tragen Sie darunter ein, für wen er gilt.</p>
        ${w.felder.map(s=>{const on=has(w.id,'felder',s.n);
          return `<div class="skwrap${on?" on":""}">
            <button type="button" class="row" data-w="${w.id}" data-cat="felder" data-v="${esc(s.n)}" aria-pressed="${on}">
@@ -1220,13 +1266,20 @@ function renderHits(ws,sk,txt){
   const ts=teams();
   hitsEl.innerHTML=
     ws.map(({w,why})=>{
-      const inTeams=ts.map((t,i)=>`<button type="button" class="tb" data-assign="${i}|${w.id}" aria-pressed="${t.worlds.indexOf(w.id)>-1}">${esc((t.name||"").trim()||"Bereich "+(i+1))}</button>`).join("");
+      const inTeams=ts.map((t,i)=>{
+        const on=t.worlds.indexOf(w.id)>-1, nm=(t.name||"").trim()||"Team "+(i+1);
+        return `<span class="tpick${on?" on":""}">
+          <button type="button" class="tb tsel" data-assign="${i}|${w.id}" aria-pressed="${on}"><span class="tck"></span>${esc(nm)}</button>
+          ${on?`<input type="number" class="tnum" min="0" max="9999" value="${esc(t.n===0||t.n?t.n:"")}" placeholder="Anz." title="Mitarbeitende in ${esc(nm)}" data-tnum="${i}">`
+              :`<span class="tn">${tN(t)?tN(t):"–"}</span>`}
+        </span>`;}).join("");
       return `<div class="hit hw" style="--hc:${w.c}">
         <span class="w">Kompetenzwelt${why.length?" · passt zu "+why.slice(0,3).map(esc).join(", "):""}</span>
         <span class="n">${esc(w.title)}</span>
         <div class="hw-act">${ts.length
-          ? `<span class="hw-lbl">Bereich zuordnen:</span>${inTeams}`
-          : `<button type="button" class="tb add" data-mkteam="${w.id}">+ Als Bereich aufnehmen</button>`}
+          ? `<span class="hw-lbl">Welche Teams? <i>mehrere möglich</i></span>${inTeams}
+             <span class="tsum" data-tsum="${w.id}">${headFor(w.id)?headFor(w.id)+" Mitarbeitende betroffen":""}</span>`
+          : `<button type="button" class="tb add" data-mkteam="${w.id}">+ Als Team aufnehmen</button>`}
           <button type="button" class="tb open" data-open="${w.id}">Welt öffnen</button>
           <button type="button" class="tb" data-newk="${w.id}">+ eigene Kernkompetenz</button></div>
       </div>`;}).join("")
@@ -1241,12 +1294,12 @@ function renderHits(ws,sk,txt){
 findIn.addEventListener("input",()=>{profile.gesagt=findIn.value; save(); localFind();});
 
 hitsEl.addEventListener("click",e=>{
-  /* Welt einem Bereich zuordnen */
+  /* Welt einem Team zuordnen */
   const as=e.target.closest("[data-assign]");
   if(as){ const p=as.dataset.assign.split("|"), t=teams()[+p[0]]; if(!t) return;
     const j=t.worlds.indexOf(p[1]); j>-1?t.worlds.splice(j,1):t.worlds.push(p[1]);
     save(); renderNeed(); renderCounts(); renderNeedbar(); renderCards(); renderNeedOut(); renderSync(); localFind(); return; }
-  /* Aus dem Gesagten direkt einen Bereich anlegen */
+  /* Aus dem Gesagten direkt ein Team anlegen */
   const mk=e.target.closest("[data-mkteam]");
   if(mk){ teams().push({name:"",n:"",worlds:[mk.dataset.mkteam],note:findIn.value.trim().slice(0,200)});
     save(); renderNeed(); renderCounts(); renderNeedbar(); renderCards(); renderNeedOut(); renderSync(); localFind();
@@ -1273,6 +1326,17 @@ hitsEl.addEventListener("click",e=>{
   } else localFind();
 });
 skillDelegate(hitsEl,localFind);
+/* Mitarbeiterzahl in der Trefferkarte: Wert wandert in dieselbe Zeile wie in Schritt 1.
+   Kein localFind() hier — das würde die Liste neu bauen und den Fokus verlieren. */
+hitsEl.addEventListener("input",e=>{
+  const f=e.target.closest("[data-tnum]"); if(!f) return;
+  const i=+f.dataset.tnum, t=teams()[i]; if(!t) return;
+  t.n=f.value===""?"":Math.max(0,Math.min(9999,parseInt(f.value,10)||0));
+  save(); needSum(); renderCounts(); renderNeedbar(); renderCards(); renderNeedOut(); renderSync();
+  const mirror=needEl.querySelector(`.trow[data-ti="${i}"] [data-tf="n"]`); if(mirror) mirror.value=t.n;
+  hitsEl.querySelectorAll("[data-tsum]").forEach(el=>{
+    const h=headFor(el.dataset.tsum); el.textContent=h?h+" Mitarbeitende betroffen":"";});
+});
 
 async function aiRun(){
   const text=spokenText();
@@ -1345,7 +1409,7 @@ const needEl=document.getElementById("need");
 function needSummary(){
   const ts=teamsUsed(), h=headcount(), ws=WORLDS.filter(w=>teamsFor(w.id).length).length;
   if(!ts.length) return "noch nichts erfasst";
-  return nBereich(ts.length)+" · "+h+" Mitarbeitende"+(ws?" · "+ws+" von 6 Kompetenzwelten":"");
+  return nTeam(ts.length)+" · "+h+" Mitarbeitende"+(ws?" · "+ws+" von 6 Kompetenzwelten":"");
 }
 function needSum(){const n=needEl.querySelector(".need-sum"); if(n) n.textContent=needSummary();}
 function renderNeed(){
@@ -1358,23 +1422,23 @@ function renderNeed(){
     ${ts.length?ts.map((t,i)=>`
       <div class="trow" data-ti="${i}">
         <div class="trow-top">
-          <input class="t-name" data-tf="name" value="${esc(t.name||"")}" placeholder="Bereich oder Team — z. B. Vertriebsinnendienst" maxlength="70">
+          <input class="t-name" data-tf="name" value="${esc(t.name||"")}" placeholder="Team oder Abteilung — z. B. Vertriebsinnendienst" maxlength="70">
           <input class="t-n" data-tf="n" type="number" min="0" max="9999" value="${esc(t.n===0||t.n?t.n:"")}" placeholder="Personen">
-          <button type="button" class="t-del no-print" data-tdel="${i}" title="Bereich entfernen">&times;</button>
+          <button type="button" class="t-del no-print" data-tdel="${i}" title="Team entfernen">&times;</button>
         </div>
         <span class="t-lbl">In welchen Kompetenzwelten fehlt es?</span>
         <div class="wsel">${WORLDS.map(w=>`<button type="button" class="wchip" style="--wc:${w.c}" data-tw="${i}|${w.id}" aria-pressed="${t.worlds.indexOf(w.id)>-1}">${esc(w.title)}</button>`).join("")}</div>
         <input class="t-note" data-tf="note" value="${esc(t.note||"")}" placeholder="Was genau fehlt? In den Worten des Kunden." maxlength="200">
       </div>`).join("")
-     :`<div class="t-empty">Noch kein Bereich erfasst — fangen Sie dort an, wo es am meisten weh tut.</div>`}
-    <button type="button" class="btn go need-add no-print" id="tAdd">+ Bereich hinzufügen</button>`;
+     :`<div class="t-empty">Noch kein Team erfasst — fangen Sie dort an, wo es am meisten weh tut.</div>`}
+    <button type="button" class="btn go need-add no-print" id="tAdd">+ Team hinzufügen</button>`;
 }
 function needChanged(full){
   save();
   if(full) renderNeed(); else needSum();
-  refreshZsug();  /* Bereichsnamen sind Zielgruppen-Vorschläge */
+  refreshZsug();  /* Teamnamen sind die Vorschläge für „Für wen“ */
   renderCounts(); renderNeedbar(); renderPanel(); renderCards(); renderNeedOut(); renderSync();
-  localFind();   /* Trefferkarten zeigen die Bereiche zum Zuordnen — die ändern sich hier */
+  localFind();   /* Trefferkarten zeigen die Teams zum Zuordnen — die ändern sich hier */
 }
 needEl.addEventListener("input",e=>{
   const f=e.target.closest("[data-tf]"); if(!f) return;
@@ -1407,7 +1471,7 @@ function renderNeedbar(){
   box.innerHTML=`<span class="lbl">Bedarf aus Schritt 1 — anklicken öffnet die Kompetenzwelt</span>
     <div class="nb-row">${act.map(x=>`<button type="button" class="nb" style="--wc:${x.w.c}" data-nb="${x.w.id}">
       <b>${esc(x.w.title)}</b>
-      <span>${nBereich(x.t.length)} · ${headFor(x.w.id)} Mitarbeitende</span>
+      <span>${nTeam(x.t.length)} · ${headFor(x.w.id)} Mitarbeitende</span>
       <i>${x.t.map(t=>esc((t.name||"").trim()||"Ohne Namen")).join(" · ")}</i></button>`).join("")}</div>`;
 }
 document.getElementById("needbar").addEventListener("click",e=>{
@@ -1423,7 +1487,7 @@ function renderNeedOut(){
   g.innerHTML=`<h3 style="font-size:22px">Bedarf im Haus</h3>
     <p class="sub" style="font-size:14.5px;color:var(--ink-2);margin:6px 0 16px">Im Gespräch aufgenommen: ${esc(needSummary())}.</p>
     <div class="ntab">
-      <div class="nt-h"><span>Bereich</span><span>Personen</span><span>Kompetenzwelten</span><span>Was fehlt</span></div>
+      <div class="nt-h"><span>Team</span><span>Personen</span><span>Kompetenzwelten</span><span>Was fehlt</span></div>
       ${ts.map(t=>`<div class="nt-r">
         <span class="nt-n">${esc((t.name||"").trim()||"Ohne Namen")}</span>
         <span class="nt-p">${tN(t)||"—"}</span>
@@ -1469,11 +1533,11 @@ function syncHTML(kind){
     if(h||nm.length) li.push(`<li>Assessment für <strong>${h||"—"} Mitarbeitende</strong>${nm.length?` aus ${nm.map(esc).join(" · ")}`:""}</li>`);}
   if(kind==="lern"){const zm=zielMap(), zs=Object.keys(zm), off=pick("felder").filter(n=>!Object.values(zm).some(a=>a.indexOf(n)>-1));
     zs.forEach(z=>li.push(`<li>Lernpfad <strong>${esc(z)}</strong>: ${[...new Set(zm[z])].map(esc).join(" · ")}</li>`));
-    if(off.length) li.push(`<li>Noch ohne Zielgruppe: ${[...new Set(off)].map(esc).join(" · ")}</li>`);
+    if(off.length) li.push(`<li>Noch ohne Zuordnung „für wen“: ${[...new Set(off)].map(esc).join(" · ")}</li>`);
     if(profile.start) li.push(`<li>Terminplanung auf Ihren Wunschstart: <strong>${esc(profile.start)}</strong></li>`);}
   if(kind==="ziel"){const zs=Object.keys(zielMap()), t=teamsUsed();
-    if(zs.length) li.push(`<li>Lerngruppen nach <strong>Zielgruppe</strong>: ${zs.map(esc).join(" · ")}</li>`);
-    if(t.length) li.push(`<li>Wellen entlang der erfassten Bereiche: ${t.map(x=>esc((x.name||"Ohne Namen").trim()||"Ohne Namen")+(tN(x)?" ("+tN(x)+")":"")).join(" · ")}</li>`);}
+    if(zs.length) li.push(`<li><strong>Lerngruppen</strong>: ${zs.map(esc).join(" · ")}</li>`);
+    if(t.length) li.push(`<li>Wellen entlang der erfassten Teams: ${t.map(x=>esc((x.name||"Ohne Namen").trim()||"Ohne Namen")+(tN(x)?" ("+tN(x)+")":"")).join(" · ")}</li>`);}
   if(kind==="felder"){const a=pick("felder");
     if(a.length) li.push(`<li>Use Cases entlang der gewählten <strong>Skills</strong>: ${a.map(esc).join(" · ")}</li>`);}
   if(kind==="erfolg"){const a=pick("komp");
@@ -1729,7 +1793,7 @@ document.getElementById("btnCopy").addEventListener("click",async()=>{
   let t=`KOMPETENZMODELL${profile.name?" — "+profile.name.toUpperCase():""}\nArbeitsstand ${d} · ppedv Kompetenzmatrix\n\n`;
   const ts=teamsUsed();
   if(ts.length){
-    t+=`BEDARF IM HAUS — ${nBereich(ts.length).toUpperCase()} · ${headcount()} MITARBEITENDE\n`;
+    t+=`BEDARF IM HAUS — ${nTeam(ts.length).toUpperCase()} · ${headcount()} MITARBEITENDE\n`;
     ts.forEach(x=>{
       const wn=x.worlds.map(id=>{const w=WORLDS.find(y=>y.id===id); return w?w.title:"";}).filter(Boolean);
       t+=`  ${(x.name||"").trim()||"Ohne Namen"}${tN(x)?` · ${tN(x)} Mitarbeitende`:""}\n`;
