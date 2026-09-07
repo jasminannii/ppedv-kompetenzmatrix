@@ -17,7 +17,7 @@ Das Werkzeug bildet einen Verkaufstermin ab, nicht einen Fragebogen:
    Vorschlag kommt automatisch aus dem Text.
 3. **Teams dazu.** Wem fehlt der Skill, und wie viele Mitarbeitende betrifft es
    dort? Mehrere Teams je Skill mit eigener Zahl.
-4. **Matrix live zeigen.** Schritt 2 baut sich zeitgleich auf — der Ring ist das
+4. **Matrix live zeigen.** „Eure Kompetenzwelt" baut sich zeitgleich auf — der Ring ist das
    Ergebnis der Erfassung, nicht ein Katalog zum Abhaken. Danach Ergebnis und
    Ablauf durchgehen, Zeitbalken bei Bedarf verschieben.
 5. **PDF sichern, Kartei speichern.**
@@ -55,6 +55,13 @@ Beleg aus der Studienlage.
 Ein Klick auf ein Ringsegment hebt die zugehörige Karte hervor und springt
 hin. Die Seite ändert nichts am Kundendatensatz und hat einen eigenen Ring
 mit eigenen Element-IDs — der Arbeitsring in Schritt 2 bleibt unberührt.
+
+**Übernehmen.** Neben jeder Kernkompetenz und jedem typischen Thema steht
+„+ übernehmen": ein Klick legt daraus einen Skill in der Kompetenzwelt des
+Kunden an, mit der richtigen Welt schon gesetzt. Team und Anzahl ergänzen Sie
+danach in Schritt 1. Bereits übernommene Punkte sind orange als „✓ übernommen"
+markiert und gesperrt — der Abgleich läuft über den Wortlaut, damit nichts
+doppelt in der Matrix landet.
 
 Sie ist bewusst **nicht Teil des PDF**: das PDF ist die Angebotsgrundlage für
 den Kunden, der Katalog würde seinen Umfang verdoppeln. Soll er mit hinein,

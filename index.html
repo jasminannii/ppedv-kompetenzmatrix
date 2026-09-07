@@ -194,6 +194,13 @@ details.more .in{padding-top:11px}
 .cc-tags span{font-size:12.5px; border:1px solid var(--line-2); border-radius:20px; padding:3px 10px; color:var(--ink-2)}
 .cc-beleg{font-size:12.5px; color:var(--ink-3); line-height:1.55; background:var(--surface-2); border-radius:6px; padding:10px 12px}
 
+/* Katalogpunkt übernehmen */
+.cc-take{margin-top:6px; border:1px solid var(--line-2); background:var(--surface); border-radius:5px;
+  padding:4px 10px; font-size:12px; color:var(--ink-2); transition:.14s}
+.cc-take:hover{border-color:var(--orange); background:var(--accent-soft); color:var(--accent-ink)}
+.cc-take.on{border-color:transparent; background:none; color:var(--orange); font-weight:600; padding-left:0; cursor:default}
+.cc-f .cc-take{margin-top:5px}
+
 /* Legende der zwei Achsen */
 .axes{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line);
   border-radius:8px; overflow:hidden; margin-bottom:22px; max-width:1000px}
@@ -512,7 +519,7 @@ details.more .in{padding-top:11px}
   <div class="wrap">
     <nav class="steps" role="tablist">
       <button class="stab" role="tab" data-step="2" aria-selected="true"><span class="n">1</span><span class="t">Bedarf &amp; Kontext</span><span class="c" id="cnt2">0</span></button>
-      <button class="stab" role="tab" data-step="1" aria-selected="false"><span class="n">2</span><span class="t">Kompetenzen wählen</span><span class="c" id="cnt1">0</span></button>
+      <button class="stab" role="tab" data-step="1" aria-selected="false"><span class="n">2</span><span class="t">Eure Kompetenzwelt</span><span class="c" id="cnt1">0</span></button>
       <button class="stab" role="tab" data-step="3" aria-selected="false"><span class="n">3</span><span class="t">Ergebnis &amp; Ablauf</span></button>
       <button class="stab" role="tab" data-step="4" aria-selected="false"><span class="n">4</span><span class="t">Das ppedv-Modell</span></button>
     </nav>
@@ -522,7 +529,7 @@ details.more .in{padding-top:11px}
 <main>
 <section class="step" id="s1">
   <div class="wrap">
-    <p class="lead">Die Seite zum <b>gemeinsamen Durchgehen</b>: der Ring zeigt, was Sie in Schritt 1 erfasst haben — jeder Skill ein Segment, jede betroffene Welt mit ihrer Kopfzahl. Ein Klick auf ein Segment springt zurück zur Zeile, ein Klick auf ein leeres Feld legt dort einen Skill an.</p>
+    <p class="lead">Die Kompetenzwelt <b>dieses Kunden</b>, zum gemeinsamen Durchgehen: jeder Skill aus Schritt 1 ein Segment, jede betroffene Welt mit ihrer Kopfzahl. Ein Klick auf ein Segment springt zurück zur Zeile, ein Klick auf ein leeres Feld legt dort einen Skill an. Weitere Bausteine holen Sie sich unter <b>Das ppedv-Modell</b>.</p>
 
     <div class="needbar" id="needbar"></div>
     <div id="ctxbar"></div>
@@ -628,7 +635,7 @@ details.more .in{padding-top:11px}
 
 <section class="step" id="s4">
   <div class="wrap">
-    <p class="lead">Der Katalog hinter der Matrix: <b>sechs Kompetenzwelten</b>, dazu je drei Kernkompetenzen, die typischen Themen aus Kundengesprächen und die Kurse, aus denen der Lernpfad gebaut wird. Diese Seite ändert nichts &mdash; sie ist zum Zeigen da.</p>
+    <p class="lead">Der Katalog hinter der Matrix: <b>sechs Kompetenzwelten</b>, dazu je drei Kernkompetenzen, die typischen Themen aus Kundengesprächen und die Kurse, aus denen der Lernpfad gebaut wird. Zum Zeigen im Termin &mdash; und mit <b>+ übernehmen</b> holen Sie einen Punkt direkt in die Kompetenzwelt des Kunden.</p>
 
     <div class="catbox">
       <svg class="ring" viewBox="0 0 900 900" role="img" aria-label="ppedv Kompetenzwelten">
@@ -1213,22 +1220,7 @@ function buildCatalog(){
       cInner.appendChild(lt);
     });
   });
-  catCards.innerHTML=WORLDS.map(w=>`
-    <div class="catcard" id="cc-${w.id}" style="--pc:${w.c}">
-      <div class="h"><span class="kw">${w.kw}</span><h4>${esc(w.title)}</h4><p>${esc(w.lead)}</p></div>
-      <div class="cc-b">
-        <div class="cc-sec"><span class="lbl">Kernkompetenzen</span>
-          ${w.komp.map(k=>`<div class="cc-k"><b>${esc(k.n)}</b><span>${esc(k.d)}</span></div>`).join("")}</div>
-        <div class="cc-sec"><span class="lbl">So klingt es im Gespräch</span>
-          ${w.felder.map(f=>`<div class="cc-f"><i>${esc(f.s)}</i><b>${esc(f.n)}</b> &mdash; ${esc(f.z)}</div>`).join("")}</div>
-        <div class="cc-sec"><span class="lbl">Typische Zielgruppen</span>
-          <div class="cc-tags">${w.ziel.map(z=>`<span>${esc(z)}</span>`).join("")}</div></div>
-        <div class="cc-sec"><span class="lbl">Kurse dafür</span>
-          <div class="cc-tags">${w.bau.map(b=>`<span>${esc(b)}</span>`).join("")}</div></div>
-        <div class="cc-sec"><span class="lbl">Warum das gebraucht wird</span>
-          <p class="cc-beleg">${esc(w.beleg)}</p></div>
-      </div>
-    </div>`).join("");
+  renderCatCards();
   [cOuter,cInner].forEach(g=>g.addEventListener("click",e=>{
     const t=e.target.closest("[data-cw]"); if(!t) return;
     const c=document.getElementById("cc-"+t.dataset.cw); if(!c) return;
@@ -1237,6 +1229,37 @@ function buildCatalog(){
     setTimeout(()=>c.classList.remove("lit"),2200);
   }));
 }
+/* Ein Katalogpunkt ist übernommen, wenn ein Skill mit demselben Wortlaut existiert */
+const taken=t=>skills().some(s=>s.text.trim().toLowerCase()===String(t).trim().toLowerCase());
+function takeBtn(w,txt){
+  const on=taken(txt);
+  return `<button type="button" class="cc-take${on?" on":""}" data-take-cat="${esc(w.id)}" data-take-txt="${esc(txt)}"${on?" disabled":""}>${on?"✓ übernommen":"+ übernehmen"}</button>`;
+}
+function renderCatCards(){
+  if(!catCards) return;
+  catCards.innerHTML=WORLDS.map(w=>`
+    <div class="catcard" id="cc-${w.id}" style="--pc:${w.c}">
+      <div class="h"><span class="kw">${w.kw}</span><h4>${esc(w.title)}</h4><p>${esc(w.lead)}</p></div>
+      <div class="cc-b">
+        <div class="cc-sec"><span class="lbl">Kernkompetenzen</span>
+          ${w.komp.map(k=>`<div class="cc-k"><b>${esc(k.n)}</b><span>${esc(k.d)}</span>${takeBtn(w,k.n)}</div>`).join("")}</div>
+        <div class="cc-sec"><span class="lbl">So klingt es im Gespräch</span>
+          ${w.felder.map(f=>`<div class="cc-f"><i>${esc(f.s)}</i><b>${esc(f.n)}</b> &mdash; ${esc(f.z)}${takeBtn(w,f.n)}</div>`).join("")}</div>
+        <div class="cc-sec"><span class="lbl">Typische Zielgruppen</span>
+          <div class="cc-tags">${w.ziel.map(z=>`<span>${esc(z)}</span>`).join("")}</div></div>
+        <div class="cc-sec"><span class="lbl">Kurse dafür</span>
+          <div class="cc-tags">${w.bau.map(b=>`<span>${esc(b)}</span>`).join("")}</div></div>
+        <div class="cc-sec"><span class="lbl">Warum das gebraucht wird</span>
+          <p class="cc-beleg">${esc(w.beleg)}</p></div>
+      </div>
+    </div>`).join("");
+}
+catCards.addEventListener("click",e=>{
+  const b=e.target.closest("[data-take-cat]"); if(!b||b.disabled) return;
+  const txt=b.dataset.takeTxt;
+  addSkill(txt,b.dataset.takeCat,[{name:"",n:""}],false);
+  toast(`„${txt}“ übernommen — Team und Anzahl in Schritt 1 ergänzen.`);
+});
 /* Außenbeschriftung des Katalogrings auf die Bogenlänge einpassen */
 function fitCat(){
   WORLDS.forEach((w,i)=>{
@@ -1314,7 +1337,7 @@ function renderNeed(){
     <div class="need-h"><h3>Was fehlt — und wem?</h3>
       <span class="need-sum">${esc(needSummary())}</span></div>
     <p class="need-hint">Eine Zeile je Thema, in den Worten des Kunden. Die Kompetenzwelt wird vorgeschlagen,
-      die betroffenen Teams tragen Sie mit ihrer Mitarbeiterzahl dazu ein. Daraus baut sich Schritt 2 auf.</p>
+      die betroffenen Teams tragen Sie mit ihrer Mitarbeiterzahl dazu ein. Daraus baut sich „Eure Kompetenzwelt“ auf.</p>
     ${ls.length?ls.map(skillRow).join("")
       :`<div class="t-empty">Noch nichts erfasst — fangen Sie mit dem an, was der Kunde zuerst genannt hat.</div>`}
     <button type="button" class="btn go need-add no-print" id="sAdd">+ Weiteren Skill erfassen</button>`;
@@ -1326,10 +1349,11 @@ function refreshSug(){
 /* Alles neu zeichnen, was von den Skills abhängt */
 function redrawAll(){
   refreshSug(); renderNeed(); buildInner(); render();
+  if(typeof renderCatCards==="function") renderCatCards();
 }
 /* Leichter Durchlauf beim Tippen: keine Neuzeichnung der Eingabefelder */
 function touchSkills(){
-  save(); needSum(); refreshSug(); buildInner(); renderCounts(); coreDefault();
+  save(); needSum(); refreshSug(); buildInner(); renderCatCards(); renderCounts(); coreDefault();
   renderNeedRing(); renderPanel(); renderNeedbar(); renderCtx(); renderCards(); renderNeedOut(); renderSync();
 }
 needEl.addEventListener("input",e=>{
