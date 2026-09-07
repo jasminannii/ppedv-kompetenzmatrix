@@ -45,7 +45,8 @@ entstehen Vorschläge auf zwei Ebenen:
   einsetzung"). Ein Klick ordnet die Welt einem erfassten Bereich zu; gibt es
   noch keinen, legt „+ Als Bereich aufnehmen" einen an, mit dem Satz des Kunden
   als Notiz.
-- **Skill** — wie bisher, direkt ins Modell aufnehmbar.
+- **Skill** — ein Klick nimmt ihn ins Modell auf, danach klappt die Karte auf
+  für Zielgruppe und Notiz.
 
 Findet der Katalog nichts, bietet die Trefferzeile an, den Satz als **eigene
 Kernkompetenz** anzulegen — vorbelegt mit dem Wortlaut des Kunden.
@@ -59,10 +60,22 @@ rechts erscheint der Bedarf noch einmal samt Kundenzitat.
 Der Kompetenzring zeigt die sechs Kompetenzwelten (außen) mit ihren
 Kernkompetenzen (innen). Auswahl per Klick im Ring oder im Panel.
 
+**Zielgruppe und Notiz je Skill.** Sobald ein Skill aufgenommen ist, klappt
+darunter auf — sowohl in der Trefferkarte als auch im Panel — eine Zeile für
+**Zielgruppe** und eine für **Notiz**. Zielgruppen sind nicht vorgegeben: die
+Bereiche aus Schritt 1 stehen als Chips bereit, alles Weitere wird im Feld
+„+ weitere" frei eingetragen und steht danach überall zur Verfügung. Die Notiz
+hält fest, was zum Skill sonst noch gesagt wurde (welcher Fall, welche Frist).
+
+Bausteine (Kurse) gibt es in der Oberfläche nicht mehr — sie machten die
+Auswahl unübersichtlich. Welcher Kurs zu welchem Skill passt, entscheidet
+ppedv in Phase 2.
+
 ### Schritt 3 — Ergebnis & Ablauf
 
 Tabelle **„Bedarf im Haus"** (Bereich · Personen · Kompetenzwelten · was fehlt,
-mit Summenzeile), darunter das Kompetenzmodell als Karten je Welt, die
+mit Summenzeile), darunter das Kompetenzmodell als Karten je Welt — jeder Skill
+mit seinen Zielgruppen und der Notiz —, die
 Umsetzungs-Timeline und das Partnerschaftsmodell. Export als PDF
 (Browser-Druckdialog) oder als Text (Zwischenablage) — beides enthält die
 Bedarfsaufnahme und die angepasste Timeline.
@@ -131,7 +144,14 @@ ist, allein zu genügen.
   - `profile.teams[]` — Bedarfsaufnahme: `{name, n, worlds[], note}`
   - `profile.gesagt` — Mitschrift „Was sagt der Kunde?", Teil der Kartei
   - `WKEY` / `WHAY` / `WTOK` — Stichwörter und Heuhaufen je Kompetenzwelt
+  - `state[weltId].sk{}` — je Skill `{z: [Zielgruppen], n: "Notiz"}`
+  - `profile.ziele[]` — kundeneigene Zielgruppen; der Pool ist
+    `teamNames() ∪ profile.ziele`
   - `state[weltId].kompExtra[]` — pro Kunde ergänzte Kernkompetenzen
   - `state[weltId].kompCustom{}` — pro Kunde umformulierte Kernkompetenzen
   - `profile.tlWeeks` / `profile.tlSpan[]` / `profile.phTitle[]` — Timeline
-- `normProfile()` normalisiert und migriert das Profil beim Laden.
+- `normProfile()` normalisiert und migriert das Profil beim Laden. Karteien aus
+  der Vorversion bringen `ziel`/`abt` je Welt mit; die wandern beim Laden in
+  `profile.ziele`, `bau` entfällt.
+- `WORLDS[].bau` bleibt im Katalog, erscheint aber nirgends mehr in der
+  Oberfläche — die Kursnamen sind gutes Suchmaterial für den Heuhaufen.

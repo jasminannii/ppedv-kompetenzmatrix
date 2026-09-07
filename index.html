@@ -187,6 +187,39 @@ details.more .in{padding-top:11px}
 .field textarea{min-height:70px; line-height:1.55}
 .field input:focus,.field textarea:focus{outline:2px solid var(--orange); outline-offset:-1px; background:var(--surface)}
 
+/* Skill-Detail: Zielgruppe und Notiz */
+.skwrap{border-radius:6px}
+.skwrap.on{background:var(--surface-2); padding-bottom:2px; margin:2px 0 6px}
+.skd{padding:2px 10px 11px; display:flex; flex-direction:column; gap:8px}
+.skd-row{display:flex; align-items:flex-start; gap:9px}
+.skd-l{font-family:var(--mono); font-size:10px; letter-spacing:.11em; text-transform:uppercase; color:var(--ink-3);
+  flex:0 0 66px; padding-top:7px}
+.zrow{display:flex; flex-wrap:wrap; gap:5px; flex:1 1 auto; min-width:0}
+.zchip{border:1px solid var(--line-2); background:var(--surface); border-radius:20px; padding:4px 11px; font-size:12.5px; transition:.14s}
+.zchip:hover{border-color:var(--orange)}
+.zchip[aria-pressed="true"]{background:var(--orange); border-color:var(--orange); color:#3D2402; font-weight:600}
+.zadd{font:inherit; font-size:12.5px; color:var(--ink); background:var(--surface); border:1px dashed var(--line-2);
+  border-radius:20px; padding:4px 11px; width:150px}
+.zadd:focus{outline:2px solid var(--orange); outline-offset:-1px; border-style:solid}
+.snote{flex:1 1 auto; min-width:0; font:inherit; font-family:var(--serif); font-size:13.5px; color:var(--ink);
+  background:var(--surface); border:1px solid var(--line-2); border-radius:5px; padding:6px 10px}
+.snote:focus{outline:2px solid var(--orange); outline-offset:-1px}
+
+/* Skill-Treffer als aufklappbare Karte */
+.hit.hs{padding:0; cursor:default; gap:0}
+.hit.hs:hover{background:var(--surface-2); border-color:var(--line)}
+.hit.hs[data-on="1"]{background:var(--accent-soft); border-color:var(--orange)}
+.hs-t{border:0; background:none; text-align:left; width:100%; padding:12px 14px; display:flex; flex-direction:column; gap:5px; border-radius:6px}
+.hs-t:hover{background:rgba(234,143,19,.07)}
+.hit.hs .skd{padding:0 14px 12px}
+.hit.hs .skd-l{flex-basis:60px}
+
+/* Karten im Ergebnis */
+.card .sec.sk li{margin-bottom:7px}
+.card .sec.sk li:last-child{margin-bottom:0}
+.cz{display:block; font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--accent-ink); margin-top:1px}
+.cn{display:block; font-family:var(--serif); font-size:13px; color:var(--ink-3); line-height:1.4}
+
 /* Treffer auf Welt-Ebene */
 .hit.hw{cursor:default; background:var(--surface); gap:6px}
 .hit.hw:hover{background:var(--surface); border-color:var(--line)}
@@ -538,8 +571,7 @@ details.more .in{padding-top:11px}
           <dt><em>Ebene 1</em>Kompetenzwelt</dt><dd>Das Themenfeld. Sechs Stück, im Außenring. <em>Daten besser nutzen</em></dd>
           <dt><em>Ebene 2</em>Kernkompetenz</dt><dd>Was Ihre Leute können sollen. Im Innenring. Drei Vorschläge je Welt &mdash; umformulierbar, löschbar, beliebig ergänzbar. <em>Zahlen richtig lesen</em></dd>
           <dt><em>Ebene 3</em>Skill</dt><dd>Die trainierbare Einzelfähigkeit. Jedes Kundenthema gehört zu genau einem Skill. <em>Dashboards fokussieren</em></dd>
-          <dt><em>Ebene 4</em>Zielgruppe</dt><dd>Wer es lernt &mdash; nach Rolle und nach Abteilung. <em>Analysten &amp; Controller · Finanzen</em></dd>
-          <dt><em>Ebene 5</em>Baustein</dt><dd>Der konkrete Kurs. Daraus entsteht der Lernpfad. <em>Power BI</em></dd>
+          <dt><em>Ebene 4</em>Zielgruppe</dt><dd>Wer genau es lernt. Frei benennbar &mdash; die Bereiche aus Schritt 1 stehen schon bereit, alles andere tragen Sie im Gespräch ein. <em>Innendienst · Schichtführer · neue Kolleginnen</em></dd>
         </dl>
         <p style="font-size:14.5px;color:var(--ink-2);margin-top:16px;line-height:1.6;max-width:80ch"><b>Im Gespräch arbeiten Sie rückwärts:</b> Der Kunde nennt ein Problem, Sie ordnen es einem Skill zu &mdash; Kompetenzwelt und Baustein ergeben sich daraus.</p>
       </div>
@@ -560,6 +592,7 @@ details.more .in{padding-top:11px}
     <p class="foot">ppedv AG · kompetenz@ppedv.de · Inhalte der Kompetenzwelten: ppedv.de/kompetenz<br>Arbeitsdokument für das gemeinsame Gespräch · <span id="today"></span></p>
   </div>
 </div>
+<datalist id="zsug"></datalist>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -575,6 +608,8 @@ const WORLDS=[
     {n:"Texte auf den Punkt bringen",s:"„Jedes Angebot schreibt bei uns jemand von Null.“",z:"Entwürfe für Angebote, Mails und Berichte in der eigenen Tonlage erzeugen — und sicher prüfen.",k:"schreiben formulieren angebot mail newsletter entwurf textbaustein korrektur antwort"},
     {n:"Entscheidungen vorbereiten",s:"„Wir diskutieren dreimal, bevor wir entscheiden.“",z:"Optionen, Risiken und eine Empfehlung aufbereiten, bevor die Runde zusammenkommt.",k:"entscheidung entscheiden vorlage geschaeftsfuehrung optionen vergleich bewertung gremium"},
     {n:"Routinearbeit beschleunigen",s:"„Das Gleiche jede Woche, immer von Hand.“",z:"Wiederkehrende Textarbeit an KI abgeben — mit Prüfschritt, nicht blind.",k:"wiederkehrend routine immer gleich manuell zeitfresser standardantwort fleissarbeit tippen"}],
+  /* ziel: Vorschlaege fuer die offene Zielgruppen-Eingabe.
+     bau: nicht mehr in der Oberflaeche — die Kursnamen bleiben als Suchmaterial im Heuhaufen. */
   ziel:["Mitarbeitende","Fachbereiche","Führungskräfte","IT & AI Enabler"],
   bau:["AI Driven Training","Microsoft 365 Copilot","Copilot Studio – Agenten","ChatGPT im Arbeitsalltag","Claude im Arbeitsalltag","Prompt Engineering"]},
 
@@ -649,9 +684,6 @@ const WORLDS=[
   bau:["Microsoft Teams","SharePoint","Microsoft 365 Grundlagen","Microsoft 365 Copilot","Exchange Online"]}
 ];
 
-const ABTEILUNGEN=["Vertrieb & Innendienst","Marketing & Kommunikation","HR & Personal","Finanzen & Controlling",
- "Einkauf & Logistik","Produktion & Technik","Kundenservice & Support","Verwaltung & Assistenz","Projektleitung","Geschäftsführung"];
-
 const PFIELDS=[
  {k:"anlass",l:"Was funktioniert heute nicht so, wie es soll?",ph:"Der Auslöser: seit wann, wie oft, was kostet es?",area:1,wide:1},
  {k:"erfolg",l:"Woran merken Sie in sechs Monaten, dass es gewirkt hat?",ph:"Das Erfolgsbild in den Worten des Kunden — so konkret wie möglich.",area:1,wide:1},
@@ -669,15 +701,15 @@ const PHASES=[
   pp:"Erstellt Assessment und Interviewleitfaden, wertet aus und stellt die Ergebnisse vor.",
   ku:"Benennt die Projektverantwortlichen, liefert Teilnehmerliste und Terminfenster.",
   out:["Kompetenz-Heatmap","Lerngruppen"],ms:"M1 — Standort abgestimmt"},
- {n:"Phase 2",t:"Lernpfade und Setup",sync:"bau",
+ {n:"Phase 2",t:"Lernpfade und Setup",sync:"lern",
   goal:"Aus dem Delta wird ein konkreter Lernpfad je Rolle — mit Terminen, Trainern und startklarer Umgebung.",
-  steps:["Lernpfade je Lerngruppe aus den gewählten Bausteinen zusammenstellen","Format, Taktung und Termine festlegen, Trainer zuordnen","Lernumgebung und Zugänge einrichten und testen","Kommunikationspaket an die Teilnehmenden versenden"],
-  pp:"Baut die Lernpfade, richtet die Umgebung ein und liefert die Kommunikationsvorlagen.",
+  steps:["Lernpfad je Zielgruppe aus den gewählten Skills zusammenstellen","Passende Kurse und Formate vorschlagen, Trainer zuordnen","Taktung und Termine festlegen, Lernumgebung einrichten und testen","Kommunikationspaket an die Teilnehmenden versenden"],
+  pp:"Wählt die Kurse zu den Skills, baut die Lernpfade, richtet die Umgebung ein und liefert die Kommunikationsvorlagen.",
   ku:"Prüft die Termine gegen den Betriebsablauf und versendet die Kommunikation intern.",
-  out:["Lernpfad je Rolle","Terminplan","Startklare Umgebung"],ms:"M2 — Start freigegeben"},
+  out:["Lernpfad je Zielgruppe","Terminplan","Startklare Umgebung"],ms:"M2 — Start freigegeben"},
  {n:"Phase 3",t:"Durchführung in Wellen",sync:"ziel",
   goal:"Die Module laufen — mit Praxisaufgaben aus dem echten Arbeitsalltag, nicht aus dem Lehrbuch.",
-  steps:["Welle 1: Fundament für alle Zielgruppen gemeinsam","Welle 2: rollenspezifische Vertiefung in getrennten Gruppen","Zwischen den Modulen: Praxisaufgaben am eigenen Fall","Feedback nach jedem Baustein, Nachsteuern bei Bedarf"],
+  steps:["Welle 1: Fundament für alle Zielgruppen gemeinsam","Welle 2: Vertiefung je Zielgruppe in getrennten Gruppen","Zwischen den Modulen: Praxisaufgaben am eigenen Fall","Feedback nach jedem Modul, Nachsteuern bei Bedarf"],
   pp:"Führt die Trainings durch, betreut die Praxisaufgaben und berichtet nach jeder Welle.",
   ku:"Schützt die Lernzeit im Kalender und benennt reale Fälle als Übungsmaterial.",
   out:["Durchgeführte Module","Feedback je Welle","Teilnahmebestätigungen"],ms:"M3 — Kernmodule abgeschlossen"},
@@ -704,13 +736,14 @@ let profile={name:"",logo:""};
 PFIELDS.forEach(f=>profile[f.k]="");
 LEGACY_PF.forEach(k=>profile[k]="");
 profile.gesagt="";                       /* Mitschrift „Was sagt der Kunde?“ */
+profile.ziele=[];                        /* offene, kundeneigene Zielgruppen */
 profile.teams=[];                        /* Bedarf je Bereich: {name,n,worlds[],note} */
 profile.tlSpan=PHASES.map(()=>null);     /* Zeitraum je Phase */
 profile.phTitle=PHASES.map(()=>null);    /* Titel je Phase */
 profile.tlWeeks=16;                      /* Projektdauer in Wochen */
-WORLDS.forEach(w=>state[w.id]={komp:[],felder:[],ziel:[],abt:[],bau:[],kompCustom:{},kompExtra:[]});
+WORLDS.forEach(w=>state[w.id]={komp:[],felder:[],sk:{},kompCustom:{},kompExtra:[]});
 try{const r=localStorage.getItem(KEY); if(r){const p=JSON.parse(r);
-  if(p.state) WORLDS.forEach(w=>{if(p.state[w.id]) state[w.id]=Object.assign({komp:[],felder:[],ziel:[],abt:[],bau:[],kompCustom:{},kompExtra:[]},p.state[w.id]);});
+  if(p.state) WORLDS.forEach(w=>{if(p.state[w.id]) state[w.id]=Object.assign({komp:[],felder:[],sk:{},kompCustom:{},kompExtra:[]},p.state[w.id]);});
   if(typeof p.notes==="string") notes=p.notes;
   if(p.focusId&&WORLDS.some(w=>w.id===p.focusId)) focusId=p.focusId;
   if(p.profile) profile=Object.assign(profile,p.profile);
@@ -720,6 +753,7 @@ function normProfile(){
   if(!Array.isArray(profile.tlSpan)||profile.tlSpan.length!==PHASES.length) profile.tlSpan=PHASES.map(()=>null);
   if(!Array.isArray(profile.phTitle)||profile.phTitle.length!==PHASES.length) profile.phTitle=PHASES.map(()=>null);
   profile.tlWeeks=Math.max(4,Math.min(52,parseInt(profile.tlWeeks,10)||16));
+  profile.ziele=[...new Set((Array.isArray(profile.ziele)?profile.ziele:[]).map(z=>String(z||"").trim()).filter(Boolean))];
   profile.teams=(Array.isArray(profile.teams)?profile.teams:[]).map(t=>({
     name:String((t&&t.name)||""), n:(t&&(t.n||t.n===0))?t.n:"",
     worlds:(Array.isArray(t&&t.worlds)?t.worlds:[]).filter(id=>WORLDS.some(w=>w.id===id)),
@@ -748,12 +782,79 @@ const headFor=id=>teamsFor(id).reduce((a,t)=>a+tN(t),0);
 const teamNames=()=>teams().map(t=>(t.name||"").trim()).filter(Boolean);
 const teamsUsed=()=>teams().filter(t=>(t.name||"").trim()||tN(t)||t.worlds.length||(t.note||"").trim());
 const nBereich=n=>n+(n===1?" Bereich":" Bereiche");
+
+/* ---------- Zielgruppen und Notizen je Skill ----------
+   Zielgruppen sind nicht mehr vorgegeben: die Bereiche aus Schritt 1 stehen bereit,
+   alles Weitere trägt der Kunde im Gespräch ein. Zugeordnet wird je Skill. */
+function skMeta(w,name){
+  const st=state[w.id]; if(!st.sk) st.sk={};
+  if(!st.sk[name]) st.sk[name]={z:[],n:""};
+  const m=st.sk[name]; if(!Array.isArray(m.z)) m.z=[]; if(typeof m.n!=="string") m.n="";
+  return m;
+}
+const skHas=(w,name)=>{const st=state[w.id]; return (st.sk&&st.sk[name])||null;};
+const zPool=()=>[...new Set(teamNames().concat(profile.ziele||[]))];
+function addZiel(v){
+  v=String(v||"").trim(); if(!v) return "";
+  if(!Array.isArray(profile.ziele)) profile.ziele=[];
+  if(zPool().indexOf(v)<0) profile.ziele.push(v);
+  return v;
+}
+const zSuggest=()=>{const p=zPool(); return [...new Set([].concat(...WORLDS.map(w=>w.ziel)))].filter(z=>p.indexOf(z)<0);};
+function refreshZsug(){
+  const d=document.getElementById("zsug"); if(!d) return;
+  d.innerHTML=zSuggest().map(z=>`<option value="${esc(z)}">`).join("");
+}
+/* Alle vergebenen Zielgruppen, jeweils mit ihren Skills */
+function zielMap(){
+  const m={};
+  WORLDS.forEach(w=>state[w.id].felder.forEach(n=>{
+    const d=skHas(w,n); if(!d) return;
+    d.z.forEach(z=>{(m[z]=m[z]||[]).push(n);});
+  }));
+  return m;
+}
+function skDetail(w,name){
+  const m=skMeta(w,name), pool=zPool();
+  return `<div class="skd">
+    <div class="skd-row"><span class="skd-l">Zielgruppe</span>
+      <div class="zrow">
+        ${pool.map(z=>`<button type="button" class="zchip" data-zw="${w.id}" data-zs="${esc(name)}" data-zv="${esc(z)}" aria-pressed="${m.z.indexOf(z)>-1}">${esc(z)}</button>`).join("")}
+        <input class="zadd" list="zsug" placeholder="${pool.length?"+ weitere":"+ Zielgruppe eintragen"}" data-zadd="${w.id}" data-zas="${esc(name)}" maxlength="60">
+      </div></div>
+    <div class="skd-row"><span class="skd-l">Notiz</span>
+      <input class="snote" value="${esc(m.n)}" maxlength="200" placeholder="Wer genau, welcher Fall, welche Frist?" data-snw="${w.id}" data-sns="${esc(name)}"></div>
+  </div>`;
+}
+/* Zielgruppen-Chip, Freitext und Notiz wirken überall gleich */
+function skillDelegate(root,rerender){
+  root.addEventListener("click",e=>{
+    const c=e.target.closest("[data-zv]"); if(!c) return;
+    e.stopPropagation();
+    const m=skMeta(WORLDS.find(x=>x.id===c.dataset.zw),c.dataset.zs);
+    const i=m.z.indexOf(c.dataset.zv); i>-1?m.z.splice(i,1):m.z.push(c.dataset.zv);
+    c.setAttribute("aria-pressed",i<0); save(); renderCards(); renderSync();
+  });
+  root.addEventListener("keydown",e=>{
+    const a=e.target.closest("[data-zadd]"); if(!a||e.key!=="Enter") return;
+    e.preventDefault();
+    const v=addZiel(a.value); if(!v) return;
+    const m=skMeta(WORLDS.find(x=>x.id===a.dataset.zadd),a.dataset.zas);
+    if(m.z.indexOf(v)<0) m.z.push(v);
+    a.value=""; save(); refreshZsug(); rerender();
+  });
+  root.addEventListener("input",e=>{
+    const n=e.target.closest("[data-snw]"); if(!n) return;
+    skMeta(WORLDS.find(x=>x.id===n.dataset.snw),n.dataset.sns).n=n.value;
+    save(); renderCards(); renderSync();
+  });
+}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({state,notes,focusId,profile,activeId}))}catch(e){}
                 try{scheduleSave()}catch(e){}};
 const has=(w,c,v)=>state[w][c].indexOf(v)>-1;
 function toggle(w,c,v){const a=state[w][c],i=a.indexOf(v); i>-1?a.splice(i,1):a.push(v); save(); render();}
-const totalIn=w=>allKomp(w).length+w.felder.length+w.ziel.length+ABTEILUNGEN.length+w.bau.length;
-const selIn=w=>{const s=state[w.id]; return s.komp.length+s.felder.length+s.ziel.length+s.abt.length+s.bau.length;};
+const totalIn=w=>allKomp(w).length+w.felder.length;
+const selIn=w=>{const s=state[w.id]; return s.komp.length+s.felder.length;};
 const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 
 /* ---------- Ring ---------- */
@@ -882,10 +983,8 @@ function refreshAllKompLabels(){ WORLDS.forEach(w=>allKomp(w).forEach(k=>updateK
 
 /* ---------- Panel ---------- */
 const panel=document.getElementById("panel");
-const chips=(w,cat,arr)=>`<div class="chips">${arr.map(v=>`<button type="button" class="chip-t" data-w="${w.id}" data-cat="${cat}" data-v="${esc(v)}" aria-pressed="${has(w.id,cat,v)}">${esc(v)}</button>`).join("")}</div>`;
 function renderPanel(){
   const w=WORLDS.find(x=>x.id===focusId), st=state[w.id], allK=st.komp.length===allKomp(w).length;
-  const zg=st.ziel.length+st.abt.length, bs=st.bau.length;
   panel.style.setProperty("--pc",w.c);
   panel.innerHTML=`
    <div class="ph"><span class="kw">${w.kw} · ${selIn(w)} von ${totalIn(w)} gewählt</span>
@@ -932,17 +1031,14 @@ function renderPanel(){
      </div>
      <div class="grp">
        <div class="grp-h"><span class="lbl">Skills</span></div>
-       <p class="hint">Jedes Kundenthema gehört zu genau einem Skill. Kursiv: wie es im Gespräch klingt.</p>
-       ${w.felder.map(s=>`<button type="button" class="row" data-w="${w.id}" data-cat="felder" data-v="${esc(s.n)}" aria-pressed="${has(w.id,'felder',s.n)}">
-         <span class="box"></span><span><span class="n">${esc(s.n)}</span><span class="s">${esc(s.s)}</span><span class="d">Ziel: ${esc(s.z)}</span></span></button>`).join("")}
+       <p class="hint">Jedes Kundenthema gehört zu genau einem Skill. Kursiv: wie es im Gespräch klingt.
+         Sobald ein Skill gewählt ist, tragen Sie darunter Zielgruppe und Notiz ein.</p>
+       ${w.felder.map(s=>{const on=has(w.id,'felder',s.n);
+         return `<div class="skwrap${on?" on":""}">
+           <button type="button" class="row" data-w="${w.id}" data-cat="felder" data-v="${esc(s.n)}" aria-pressed="${on}">
+             <span class="box"></span><span><span class="n">${esc(s.n)}</span><span class="s">${esc(s.s)}</span><span class="d">Ziel: ${esc(s.z)}</span></span></button>
+           ${on?skDetail(w,s.n):""}</div>`;}).join("")}
      </div>
-     <details class="more"${zg?" open":""}><summary>Zielgruppen${zg?" · "+zg+" gewählt":""}</summary><div class="in">
-       <p class="hint">Nach Rolle:</p>${chips(w,"ziel",w.ziel)}
-       <p class="hint" style="margin-top:12px">Mitarbeitende in Abteilungen:</p>${chips(w,"abt",ABTEILUNGEN)}
-     </div></details>
-     <details class="more"${bs?" open":""}><summary>Bausteine${bs?" · "+bs+" gewählt":""}</summary><div class="in">
-       <p class="hint">Die Kurse, aus denen ppedv in Phase 2 den Lernpfad baut.</p>${chips(w,"bau",w.bau)}
-     </div></details>
    </div>`;
   panel.querySelector("#allK").addEventListener("click",()=>{state[w.id].komp=allK?[]:allKomp(w).map(k=>k.n); save(); render();});
   panel.querySelectorAll("[data-kdel]").forEach(b=>b.addEventListener("click",e=>{
@@ -984,6 +1080,7 @@ function renderPanel(){
   });
 }
 panel.addEventListener("click",e=>{const b=e.target.closest("[data-cat]"); if(b) toggle(b.dataset.w,b.dataset.cat,b.dataset.v);});
+skillDelegate(panel,renderPanel);
 
 /* ---------- Ring-Interaktion ---------- */
 const readout=document.getElementById("readout"),DEF="Innenring anklicken wählt eine Kompetenz · Außenring öffnet die Kompetenzwelt.";
@@ -1135,9 +1232,11 @@ function renderHits(ws,sk,txt){
       </div>`;}).join("")
     + sk.map(({w,s})=>{
       const on=has(w.id,"felder",s.n);
-      return `<button type="button" class="hit" style="--hc:${w.c}" data-on="${on?1:0}" data-fw="${w.id}" data-fs="${esc(s.n)}">
-        <span class="w">Skill · ${w.kw} ${esc(w.title)}</span><span class="n">${esc(s.n)}</span>
-        <span class="s">${esc(s.s)}</span><span class="a">${on?"✓ im Modell — klicken entfernt":"+ aufnehmen"}</span></button>`;}).join("");
+      return `<div class="hit hs" style="--hc:${w.c}" data-on="${on?1:0}">
+        <button type="button" class="hs-t" data-fw="${w.id}" data-fs="${esc(s.n)}">
+          <span class="w">Skill · ${w.kw} ${esc(w.title)}</span><span class="n">${esc(s.n)}</span>
+          <span class="s">${esc(s.s)}</span><span class="a">${on?"✓ im Modell — klicken entfernt":"+ aufnehmen"}</span></button>
+        ${on?skDetail(w,s.n):""}</div>`;}).join("");
 }
 findIn.addEventListener("input",()=>{profile.gesagt=findIn.value; save(); localFind();});
 
@@ -1165,10 +1264,15 @@ hitsEl.addEventListener("click",e=>{
     return; }
   const b=e.target.closest("[data-fs]"); if(!b||!b.dataset.fs) return;
   focusId=b.dataset.fw; toggle(b.dataset.fw,"felder",b.dataset.fs);
-  if(b.dataset.ai){ render(); const on=has(b.dataset.fw,"felder",b.dataset.fs); b.dataset.on=on?1:0;
+  if(b.dataset.ai){ render();
+    const w=WORLDS.find(x=>x.id===b.dataset.fw), on=has(b.dataset.fw,"felder",b.dataset.fs);
+    const wrap=b.closest(".hit"); wrap.dataset.on=on?1:0;
     const a=b.querySelector(".a"); if(a) a.textContent=on?"✓ Skill im Modell":"+ Skill aufnehmen";
+    const old=wrap.querySelector(".skd"); if(old) old.remove();
+    if(on) wrap.insertAdjacentHTML("beforeend",skDetail(w,b.dataset.fs));
   } else localFind();
 });
+skillDelegate(hitsEl,localFind);
 
 async function aiRun(){
   const text=spokenText();
@@ -1217,18 +1321,20 @@ function renderAI(list){
   focusId=ok[0].w.id;
   hitsEl.innerHTML=ok.map(({w,s,k,created,thema})=>{
     const skillOn=s?has(w.id,"felder",s.n):false;
-    return `<button type="button" class="hit" style="--hc:${w.c}" data-ai="1" data-on="${(skillOn||created)?1:0}" data-fw="${w.id}" data-fs="${s?esc(s.n):""}" data-fk="${(k&&!created)?esc(k.n):""}">
-      <span class="s">„${esc(thema)}“</span>
-      <span class="w">${w.kw} · ${esc(w.title)}</span>
-      ${k?`<span class="n">${created?"✓ Neu erstellt &amp; ausgewählt: ":""}${esc(kName(w,k))}</span>`:""}
-      ${s?`<span class="a">${skillOn?"✓ Skill im Modell":"+ Skill aufnehmen"}</span>`:""}
-    </button>`;
+    return `<div class="hit hs" style="--hc:${w.c}" data-on="${(skillOn||created)?1:0}">
+      <button type="button" class="hs-t" data-ai="1" data-fw="${w.id}" data-fs="${s?esc(s.n):""}" data-fk="${(k&&!created)?esc(k.n):""}">
+        <span class="s">„${esc(thema)}“</span>
+        <span class="w">${w.kw} · ${esc(w.title)}</span>
+        ${k?`<span class="n">${created?"✓ Neu erstellt &amp; ausgewählt: ":""}${esc(kName(w,k))}</span>`:""}
+        ${s?`<span class="a">${skillOn?"✓ Skill im Modell":"+ Skill aufnehmen"}</span>`:""}
+      </button>
+      ${(s&&skillOn)?skDetail(w,s.n):""}</div>`;
   }).join("");
   render();
   return createdCount;
 }
-hitsEl.addEventListener("click",e=>{const b=e.target.closest("[data-fk]"); if(!b) return;
-  if(b.dataset.fk&&!has(b.dataset.fw,"komp",b.dataset.fk)) state[b.dataset.fw].komp.push(b.dataset.fk);});
+hitsEl.addEventListener("click",e=>{const b=e.target.closest("[data-fk]"); if(!b||!b.dataset.fk) return;
+  if(!has(b.dataset.fw,"komp",b.dataset.fk)) state[b.dataset.fw].komp.push(b.dataset.fk);});
 aiGo.addEventListener("click",aiRun);
 (async()=>{try{SAMPLE=(window.claude&&window.claude.use)?await window.claude.use("sample"):null}catch(e){SAMPLE=null}
   if(SAMPLE) aiGo.hidden=false;
@@ -1266,6 +1372,7 @@ function renderNeed(){
 function needChanged(full){
   save();
   if(full) renderNeed(); else needSum();
+  refreshZsug();  /* Bereichsnamen sind Zielgruppen-Vorschläge */
   renderCounts(); renderNeedbar(); renderPanel(); renderCards(); renderNeedOut(); renderSync();
   localFind();   /* Trefferkarten zeigen die Bereiche zum Zuordnen — die ändern sich hier */
 }
@@ -1345,9 +1452,13 @@ function renderCards(){
   if(!act.length){g.innerHTML=`<div class="empty">Noch nichts gewählt. Gehen Sie zurück zu Schritt 1 oder 2.</div>`; return;}
   g.innerHTML=act.map(w=>{const st=state[w.id];
     const kompLabels=st.komp.map(n=>{const k=allKomp(w).find(x=>x.n===n); return k?kName(w,k):n;});
-    const sec=(l,a,c="")=>a.length?`<div class="sec ${c}"><span class="lbl">${l}</span><ul>${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:"";
+    const sec=(l,a,c="")=>a.length?`<div class="sec ${c}"><span class="lbl">${l}</span><ul>${a.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:"";
+    const skills=st.felder.map(n=>{const d=skHas(w,n);
+      const z=(d&&d.z.length)?`<span class="cz">${d.z.map(esc).join(" · ")}</span>`:"";
+      const nt=(d&&d.n.trim())?`<span class="cn">${esc(d.n.trim())}</span>`:"";
+      return esc(n)+z+nt;});
     return `<div class="card" style="--pc:${w.c}"><div class="h"><span class="kw">${w.kw}</span><h4>${esc(w.title)}</h4></div>
-      <div class="b">${sec("Kernkompetenzen",kompLabels,"kk")}${sec("Skills",st.felder)}${sec("Zielgruppen",st.ziel.concat(st.abt))}${sec("Bausteine",st.bau)}</div></div>`;}).join("");
+      <div class="b">${sec("Kernkompetenzen",kompLabels.map(esc),"kk")}${sec("Skills",skills,"sk")}</div></div>`;}).join("");
 }
 const pick=c=>{const o=[]; WORLDS.forEach(w=>state[w.id][c].forEach(v=>o.push(v))); return o;};
 function syncHTML(kind){
@@ -1356,13 +1467,13 @@ function syncHTML(kind){
     if(a.length) li.push(`<li><strong>${a.length===1?"1 Kernkompetenz":a.length+" Kernkompetenzen"}</strong> ${a.length===1?"wird":"werden"} erhoben: ${a.map(esc).join(" · ")}</li>`);
     const h=headcount(), nm=teamNames();
     if(h||nm.length) li.push(`<li>Assessment für <strong>${h||"—"} Mitarbeitende</strong>${nm.length?` aus ${nm.map(esc).join(" · ")}`:""}</li>`);}
-  if(kind==="bau"){const a=pick("bau");
-    if(a.length) li.push(`<li><strong>${a.length===1?"1 Baustein":a.length+" Bausteine"}</strong> ${a.length===1?"bildet":"bilden"} die Lernpfade: ${a.map(esc).join(" · ")}</li>`);
+  if(kind==="lern"){const zm=zielMap(), zs=Object.keys(zm), off=pick("felder").filter(n=>!Object.values(zm).some(a=>a.indexOf(n)>-1));
+    zs.forEach(z=>li.push(`<li>Lernpfad <strong>${esc(z)}</strong>: ${[...new Set(zm[z])].map(esc).join(" · ")}</li>`));
+    if(off.length) li.push(`<li>Noch ohne Zielgruppe: ${[...new Set(off)].map(esc).join(" · ")}</li>`);
     if(profile.start) li.push(`<li>Terminplanung auf Ihren Wunschstart: <strong>${esc(profile.start)}</strong></li>`);}
-  if(kind==="ziel"){const a=[...new Set(pick("ziel"))],b=[...new Set(pick("abt"))],t=teamsUsed();
-    if(t.length) li.push(`<li>Wellen entlang der erfassten Bereiche: ${t.map(x=>esc((x.name||"Ohne Namen").trim()||"Ohne Namen")+(tN(x)?" ("+tN(x)+")":"")).join(" · ")}</li>`);
-    if(a.length) li.push(`<li>Lerngruppen nach <strong>Rollen</strong>: ${a.map(esc).join(" · ")}</li>`);
-    if(b.length) li.push(`<li>Beteiligte <strong>Abteilungen</strong>: ${b.map(esc).join(" · ")}</li>`);}
+  if(kind==="ziel"){const zs=Object.keys(zielMap()), t=teamsUsed();
+    if(zs.length) li.push(`<li>Lerngruppen nach <strong>Zielgruppe</strong>: ${zs.map(esc).join(" · ")}</li>`);
+    if(t.length) li.push(`<li>Wellen entlang der erfassten Bereiche: ${t.map(x=>esc((x.name||"Ohne Namen").trim()||"Ohne Namen")+(tN(x)?" ("+tN(x)+")":"")).join(" · ")}</li>`);}
   if(kind==="felder"){const a=pick("felder");
     if(a.length) li.push(`<li>Use Cases entlang der gewählten <strong>Skills</strong>: ${a.map(esc).join(" · ")}</li>`);}
   if(kind==="erfolg"){const a=pick("komp");
@@ -1542,10 +1653,10 @@ function errT(e){const c=e&&e.code;
     :c==="resource_exhausted"?"Zu viele Zugriffe — kurz warten.":"Speichern fehlgeschlagen.";}
 const payload=()=>({title:(profile.name||"").trim()||"Ohne Namen",profile:JSON.parse(JSON.stringify(profile)),
   state:JSON.parse(JSON.stringify(state)),notes,updatedAt:new Date().toISOString()});
-function blank(){WORLDS.forEach(w=>state[w.id]={komp:[],felder:[],ziel:[],abt:[],bau:[],kompCustom:{},kompExtra:[]});
-  profile={name:"",logo:"",teams:[],gesagt:"",tlWeeks:16,tlSpan:PHASES.map(()=>null),phTitle:PHASES.map(()=>null)};
+function blank(){WORLDS.forEach(w=>state[w.id]={komp:[],felder:[],sk:{},kompCustom:{},kompExtra:[]});
+  profile={name:"",logo:"",teams:[],gesagt:"",ziele:[],tlWeeks:16,tlSpan:PHASES.map(()=>null),phTitle:PHASES.map(()=>null)};
   PFIELDS.forEach(f=>profile[f.k]=""); LEGACY_PF.forEach(k=>profile[k]=""); notes=""; editKomp=null;}
-function applyAll(){renderCust(); syncFields(); renderNeed(); refreshAllKompLabels(); renderTimeline(); renderPhases(); render();}
+function applyAll(){refreshZsug(); renderCust(); syncFields(); renderNeed(); refreshAllKompLabels(); renderTimeline(); renderPhases(); render();}
 function renderList(){
   fbSel.innerHTML=`<option value="">${activeId?"— neue Kartei —":"Neue Kartei"}</option>`+
     records.map(r=>{const d=r.updatedAt?new Date(r.updatedAt).toLocaleDateString("de-AT",{day:"2-digit",month:"2-digit",year:"2-digit"}):"";
@@ -1585,14 +1696,15 @@ fbSel.addEventListener("change",()=>{
   blank();
   const p=r.profile||{}; profile.name=p.name||""; profile.logo=p.logo||"";
   PFIELDS.forEach(f=>profile[f.k]=p[f.k]||""); LEGACY_PF.forEach(k=>profile[k]=p[k]||"");
-  profile.gesagt=p.gesagt||"";
+  profile.gesagt=p.gesagt||""; profile.ziele=Array.isArray(p.ziele)?p.ziele.slice():[];
   profile.teams=Array.isArray(p.teams)?JSON.parse(JSON.stringify(p.teams)):[];
   profile.tlSpan=Array.isArray(p.tlSpan)?p.tlSpan.slice():PHASES.map(()=>null);
   profile.phTitle=Array.isArray(p.phTitle)?p.phTitle.slice():PHASES.map(()=>null);
   profile.tlWeeks=p.tlWeeks||16;
   normProfile();
   WORLDS.forEach(w=>{const s=(r.state||{})[w.id]||{};
-    state[w.id]={komp:s.komp||[],felder:s.felder||[],ziel:s.ziel||[],abt:s.abt||[],bau:s.bau||[],kompCustom:s.kompCustom||{},kompExtra:s.kompExtra||[]};});
+    state[w.id]={komp:s.komp||[],felder:s.felder||[],sk:s.sk||{},kompCustom:s.kompCustom||{},kompExtra:s.kompExtra||[]};
+    (s.ziel||[]).concat(s.abt||[]).forEach(addZiel);});   /* Altbestand: Welt-Zielgruppen in den offenen Pool */
   notes=r.notes||""; activeId=r.id; dirty=false; editKomp=null; save(); applyAll(); renderList();
   st("Geladen: "+(r.title||"Ohne Namen"),"ok");
 });
@@ -1632,7 +1744,12 @@ document.getElementById("btnCopy").addEventListener("click",async()=>{
   act.forEach(w=>{const s=state[w.id]; t+=`${w.kw} — ${w.title.toUpperCase()}\n`;
     const b=(l,a)=>{if(a.length) t+=`  ${l}:\n`+a.map(x=>`    - ${x}\n`).join("");};
     const kompLabels=s.komp.map(n=>{const k=allKomp(w).find(x=>x.n===n); return k?kName(w,k):n;});
-    b("Kernkompetenzen",kompLabels); b("Skills",s.felder); b("Zielgruppen",s.ziel.concat(s.abt)); b("Bausteine",s.bau); t+="\n";});
+    b("Kernkompetenzen",kompLabels);
+    if(s.felder.length){ t+="  Skills:\n";
+      s.felder.forEach(n=>{const d=skHas(w,n);
+        t+=`    - ${n}${(d&&d.z.length)?`  [${d.z.join(" · ")}]`:""}\n`;
+        if(d&&d.n.trim()) t+=`        ${d.n.trim()}\n`;});}
+    t+="\n";});
   if(notes.trim()) t+=`NOTIZEN\n${notes.trim()}\n\n`;
   t+=`UMSETZUNG — PHASE 1 STARTET MIT DER ZUSAGE · ${TLMAX()} WOCHEN\n`
    +PHASES.map((p,i)=>{const[a,b]=tlRange(i); return `  ${p.n} (Woche ${a}–${b}): ${phTitle(i)} → ${p.ms}`;}).join("\n")
@@ -1641,7 +1758,7 @@ document.getElementById("btnCopy").addEventListener("click",async()=>{
   catch(e){toast("Kopieren nicht möglich — bitte „Als PDF sichern“.");}
 });
 document.getElementById("today").textContent=new Date().toLocaleDateString("de-AT",{day:"2-digit",month:"long",year:"numeric"});
-renderCust(); syncFields(); renderNeed(); refreshAllKompLabels(); renderTimeline(); renderPhases(); render();
+refreshZsug(); renderCust(); syncFields(); renderNeed(); refreshAllKompLabels(); renderTimeline(); renderPhases(); render();
 </script>
 
 </body></html>
