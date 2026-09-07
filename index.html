@@ -187,6 +187,85 @@ details.more .in{padding-top:11px}
 .field textarea{min-height:70px; line-height:1.55}
 .field input:focus,.field textarea:focus{outline:2px solid var(--orange); outline-offset:-1px; background:var(--surface)}
 
+/* ---------- Bedarfsaufnahme ---------- */
+.need{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:16px 18px 18px; margin-bottom:20px; box-shadow:var(--shadow)}
+.need-h{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap}
+.need-h h3{font-size:17.5px}
+.need-sum{font-family:var(--mono); font-size:11.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--orange); margin-left:auto; white-space:nowrap}
+.need-hint{font-family:var(--serif); font-size:14.5px; color:var(--ink-2); margin-top:5px; max-width:76ch}
+.trow{border:1px solid var(--line); border-left:3px solid var(--line-2); border-radius:6px; background:var(--surface-2); padding:12px 13px 13px; margin-top:11px; transition:.15s}
+.trow:focus-within{border-left-color:var(--orange)}
+.trow-top{display:flex; gap:9px; flex-wrap:wrap; align-items:center}
+.trow input{font:inherit; font-size:14.5px; color:var(--ink); background:var(--surface); border:1px solid var(--line-2); border-radius:5px; padding:9px 11px}
+.trow input:focus{outline:2px solid var(--orange); outline-offset:-1px}
+.trow .t-name{flex:1 1 240px; min-width:150px; font-weight:600}
+.trow .t-n{width:112px; flex:0 0 auto}
+.trow .t-note{width:100%; margin-top:10px; font-family:var(--serif); font-size:14.5px}
+.t-del{border:0; background:none; color:var(--ink-3); font-size:21px; line-height:1; padding:3px 8px; border-radius:5px}
+.t-del:hover{color:#B3261E; background:var(--surface-3)}
+.t-lbl{font-family:var(--mono); font-size:11px; letter-spacing:.11em; text-transform:uppercase; color:var(--ink-3); display:block; margin:12px 0 7px}
+.wsel{display:flex; gap:6px; flex-wrap:wrap}
+.wchip{border:1px solid var(--line-2); background:var(--surface); border-radius:20px; padding:6px 12px 6px 10px; font-size:13px;
+  display:inline-flex; align-items:center; gap:7px; transition:.14s}
+.wchip::before{content:""; width:9px; height:9px; border-radius:3px; background:var(--wc); opacity:.45; flex:0 0 auto}
+.wchip:hover{border-color:var(--ink-3)}
+.wchip[aria-pressed="true"]{background:var(--accent-soft); border-color:var(--orange); color:var(--accent-ink); font-weight:600}
+.wchip[aria-pressed="true"]::before{opacity:1}
+.t-empty{border:1px dashed var(--line-2); border-radius:6px; padding:20px; text-align:center; color:var(--ink-3); font-size:14px; margin-top:11px}
+.need-add{margin-top:13px}
+
+/* Bedarfs-Leiste in Schritt 2 */
+.needbar{margin-bottom:18px}
+.nb-row{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:9px; margin-top:8px}
+.nb{border:1px solid var(--line); border-left:3px solid var(--wc); border-radius:6px; background:var(--surface); padding:10px 13px;
+  text-align:left; display:flex; flex-direction:column; gap:2px; transition:.14s}
+.nb:hover{border-color:var(--orange); background:var(--accent-soft)}
+.nb b{font-size:14.5px; font-weight:600; line-height:1.3}
+.nb span{font-family:var(--mono); font-size:11px; letter-spacing:.07em; color:var(--orange)}
+.nb i{font-style:normal; font-size:13px; color:var(--ink-2); line-height:1.4}
+.nb-empty{font-family:var(--mono); font-size:11.5px; color:var(--ink-3)}
+
+/* Bedarf im Panel */
+.pneed{background:var(--accent-soft); border-radius:6px; padding:11px 13px; margin-bottom:14px}
+.pneed p{font-size:14px; font-weight:600; color:var(--accent-ink); margin-top:4px}
+.pneed .pn-note{font-family:var(--serif); font-weight:400; font-size:13.5px; color:var(--ink-2); margin-top:5px}
+
+/* Bedarfstabelle im Ergebnis */
+.ntab{border:1px solid var(--line); border-radius:8px; background:var(--surface); overflow:hidden}
+.nt-h,.nt-r{display:grid; grid-template-columns:1.1fr 90px 1.5fr 1.5fr; gap:14px; padding:11px 16px; align-items:start}
+.nt-h{background:var(--surface-2); border-bottom:1px solid var(--line); font-family:var(--mono); font-size:11px;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--ink-3)}
+.nt-r+.nt-r,.nt-h+.nt-r{border-top:1px solid var(--line)}
+.nt-r{font-size:14px; color:var(--ink-2)}
+.nt-n{font-weight:600; color:var(--ink)}
+.nt-p{font-family:var(--mono); font-size:14px; color:var(--ink)}
+.nt-w{display:flex; flex-wrap:wrap; gap:5px}
+.nt-w i{font-style:normal; font-size:12.5px; border:1px solid var(--line-2); border-left:3px solid var(--wc);
+  border-radius:4px; padding:2px 8px; color:var(--ink)}
+.nt-t{font-family:var(--serif); font-size:14px}
+.nt-sum{background:var(--surface-2); font-weight:600; color:var(--ink)}
+.nt-sum span:first-child{font-family:var(--mono); font-size:11px; letter-spacing:.11em; text-transform:uppercase; color:var(--ink-3)}
+@media (max-width:760px){.nt-h{display:none} .nt-r{grid-template-columns:1fr; gap:4px}}
+
+/* Eigene Kernkompetenz */
+.komp-row .kbadge{font-family:var(--mono); font-size:9.5px; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--accent-ink); background:var(--accent-soft); border-radius:3px; padding:1px 5px; margin-left:6px; vertical-align:2px}
+.kdel{border:0; background:none; color:var(--ink-3); font-size:17px; line-height:1; padding:2px 5px; border-radius:4px}
+.kdel:hover{color:#B3261E; background:var(--surface-3)}
+.addk{width:100%; margin-top:10px; border:1px dashed var(--line-2); background:var(--surface-2); border-radius:6px;
+  padding:10px; font-size:13.5px; font-weight:600; color:var(--accent-ink); transition:.14s}
+.addk:hover{border-color:var(--orange); background:var(--accent-soft)}
+
+/* Timeline-Kopf */
+.tl-top{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px}
+.tl-top label{font-size:13.5px; font-weight:600; display:flex; align-items:center; gap:8px}
+.elbl2{display:block; font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--ink-3); margin:10px 0 6px}
+.elbl2 input{display:block; width:100%; max-width:420px; margin-top:6px; font:inherit; font-size:14px; font-family:var(--sans);
+  letter-spacing:normal; text-transform:none; color:var(--ink); background:var(--surface-2); border:1px solid var(--line-2);
+  border-radius:5px; padding:8px 10px}
+.elbl2 input:focus{outline:2px solid var(--orange); outline-offset:-1px}
+
 /* ---------- Ergebnis ---------- */
 .actions{display:flex; gap:9px; flex-wrap:wrap; margin-bottom:22px}
 .cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px}
@@ -304,11 +383,11 @@ details.more .in{padding-top:11px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 @media print{
   body{background:#fff}
-  .steps,.kartei,.find,.actions,.readout,.no-print{display:none!important}
+  .steps,.kartei,.find,.actions,.readout,.need,.no-print{display:none!important}
   .step{display:block!important; padding:0 0 18px; break-inside:auto}
   .phase{break-inside:avoid} .phase>summary .chev{display:none}
   .pbody{display:block!important}
-  .card,.tl,.partner,.ringbox{break-inside:avoid; box-shadow:none}
+  .card,.tl,.partner,.ringbox,.ntab,.nt-r{break-inside:avoid; box-shadow:none}
   .board{grid-template-columns:1fr} .panel{display:none}
   .tl{overflow:visible} .tl-in{min-width:0} .tl-r{grid-template-columns:100px 1fr}
   .bar,.tl-w i{font-size:8.5px} .bar .m{font-size:8px; padding:1px 4px}
@@ -337,7 +416,7 @@ details.more .in{padding-top:11px}
   </div>
   <div class="wrap">
     <nav class="steps" role="tablist">
-      <button class="stab" role="tab" data-step="2" aria-selected="true"><span class="n">1</span><span class="t">Kontext</span><span class="c" id="cnt2">0/6</span></button>
+      <button class="stab" role="tab" data-step="2" aria-selected="true"><span class="n">1</span><span class="t">Bedarf &amp; Kontext</span><span class="c" id="cnt2">0</span></button>
       <button class="stab" role="tab" data-step="1" aria-selected="false"><span class="n">2</span><span class="t">Kompetenzen wählen</span><span class="c" id="cnt1">0</span></button>
       <button class="stab" role="tab" data-step="3" aria-selected="false"><span class="n">3</span><span class="t">Ergebnis &amp; Ablauf</span></button>
     </nav>
@@ -347,7 +426,9 @@ details.more .in{padding-top:11px}
 <main>
 <section class="step" id="s1">
   <div class="wrap">
-    <p class="lead">Das Ergebnis aus dem Gespräch — klicken Sie direkt in den Ring, um Kompetenzen und Unterkompetenzen zu wählen, feinzujustieren oder zu ergänzen.</p>
+    <p class="lead">Jeder Bedarf aus Schritt 1 bekommt hier seine <b>Kompetenzwelt</b> — und darin die Kernkompetenzen, die dazu fehlen. Passt nichts Vorhandenes, legen Sie im Panel rechts mit <b>+</b> eine eigene an, in den Worten des Kunden.</p>
+
+    <div class="needbar no-print" id="needbar"></div>
 
     <div class="board">
       <div class="ringbox">
@@ -376,7 +457,7 @@ details.more .in{padding-top:11px}
 
 <section class="step on" id="s2">
   <div class="wrap">
-    <p class="lead">Gehen Sie das Gespräch hier mit dem Kunden durch: <b>Der Kunde erzählt, was nicht funktioniert</b> — Sie notieren mit oder lassen die KI zuordnen. Dazu die Eckdaten. Alles fließt direkt in die Kompetenzauswahl und den Ablauf ein.</p>
+    <p class="lead">Zwei Fragen tragen das Gespräch: <b>Wo fehlen Kompetenzen — und bei wie vielen Menschen?</b> Bereich für Bereich aufnehmen, dazu die Eckdaten. Alles fließt direkt in die Kompetenzauswahl und den Ablauf ein.</p>
 
     <div class="find">
       <label for="findIn">Was sagt der Kunde?</label>
@@ -388,6 +469,8 @@ details.more .in{padding-top:11px}
       <div class="hits" id="hits"></div>
     </div>
 
+    <div class="need" id="need"></div>
+
     <div class="fields" id="fields"></div>
   </div>
 </section>
@@ -398,13 +481,20 @@ details.more .in{padding-top:11px}
       <button class="btn go" id="btnPrint">Als PDF sichern</button>
       <button class="btn" id="btnCopy">Als Text kopieren</button>
     </div>
-    <h3 style="font-size:22px">Ihr Kompetenzmodell</h3>
+    <div id="needOut"></div>
+
+    <h3 style="font-size:22px;margin-top:34px">Ihr Kompetenzmodell</h3>
     <p class="sub" style="font-size:14.5px;color:var(--ink-2);margin:6px 0 16px">Grundlage für Standortbestimmung, Curriculum und Angebot.</p>
     <div class="cards" id="cards"></div>
 
     <div class="block">
       <h3>Umsetzung &mdash; ab Ihrer Zusage</h3>
-      <p class="sub">Kontext, Kompetenzauswahl und das Angebot gehören noch zum Vertrieb. Woche 1 beginnt mit der Zusage.</p>
+      <p class="sub">Kontext, Kompetenzauswahl und das Angebot gehören noch zum Vertrieb. Woche 1 beginnt mit der Zusage. Dauer, Zeiträume und Phasentitel lassen sich frei auf den Kunden einstellen.</p>
+      <div class="tl-top no-print">
+        <label for="tlWeeks">Projektdauer <input type="number" class="tl-num" id="tlWeeks" min="4" max="52" value="16"> Wochen</label>
+        <button type="button" class="btn" id="tlWeeksReset">Zurücksetzen</button>
+        <span class="lbl" id="tlWeeksNote"></span>
+      </div>
       <div class="tl" id="tl"></div>
       <div id="phases" style="margin-top:16px"></div>
     </div>
@@ -433,7 +523,7 @@ details.more .in{padding-top:11px}
       <div class="in">
         <dl class="lv">
           <dt><em>Ebene 1</em>Kompetenzwelt</dt><dd>Das Themenfeld. Sechs Stück, im Außenring. <em>Daten besser nutzen</em></dd>
-          <dt><em>Ebene 2</em>Kernkompetenz</dt><dd>Was Ihre Leute können sollen. Drei pro Welt, im Innenring. <em>Zahlen richtig lesen</em></dd>
+          <dt><em>Ebene 2</em>Kernkompetenz</dt><dd>Was Ihre Leute können sollen. Im Innenring. Drei Vorschläge je Welt &mdash; umformulierbar, löschbar, beliebig ergänzbar. <em>Zahlen richtig lesen</em></dd>
           <dt><em>Ebene 3</em>Skill</dt><dd>Die trainierbare Einzelfähigkeit. Jedes Kundenthema gehört zu genau einem Skill. <em>Dashboards fokussieren</em></dd>
           <dt><em>Ebene 4</em>Zielgruppe</dt><dd>Wer es lernt &mdash; nach Rolle und nach Abteilung. <em>Analysten &amp; Controller · Finanzen</em></dd>
           <dt><em>Ebene 5</em>Baustein</dt><dd>Der konkrete Kurs. Daraus entsteht der Lernpfad. <em>Power BI</em></dd>
@@ -550,40 +640,41 @@ const ABTEILUNGEN=["Vertrieb & Innendienst","Marketing & Kommunikation","HR & Pe
  "Einkauf & Logistik","Produktion & Technik","Kundenservice & Support","Verwaltung & Assistenz","Projektleitung","Geschäftsführung"];
 
 const PFIELDS=[
- {k:"teilnehmende",l:"Wie viele Personen sollen teilnehmen?",ph:"z. B. 45"},
- {k:"rollen",l:"Welche Abteilungen oder Rollen sind betroffen?",ph:"z. B. Innendienst, Controlling, IT-Betrieb"},
- {k:"start",l:"Wann soll es starten?",ph:"z. B. ab Januar, nach dem Jahresabschluss"},
- {k:"entscheidung",l:"Wer entscheidet — und bis wann?",ph:"z. B. GF und HR-Leitung, Entscheidung im November"},
  {k:"anlass",l:"Was funktioniert heute nicht so, wie es soll?",ph:"Der Auslöser: seit wann, wie oft, was kostet es?",area:1,wide:1},
- {k:"erfolg",l:"Woran merken Sie in sechs Monaten, dass es gewirkt hat?",ph:"Das Erfolgsbild in den Worten des Kunden — so konkret wie möglich.",area:1,wide:1}
+ {k:"erfolg",l:"Woran merken Sie in sechs Monaten, dass es gewirkt hat?",ph:"Das Erfolgsbild in den Worten des Kunden — so konkret wie möglich.",area:1,wide:1},
+ {k:"start",l:"Wann soll es starten?",ph:"z. B. ab Januar, nach dem Jahresabschluss"},
+ {k:"entscheidung",l:"Wer entscheidet — und bis wann?",ph:"z. B. GF und HR-Leitung, Entscheidung im November"}
 ];
+/* Anzahl und Rollen werden nicht mehr gefragt, sondern je Bereich erfasst (profile.teams).
+   Die alten Schlüssel bleiben nur, um bestehende Karteien zu übernehmen. */
+const LEGACY_PF=["teilnehmende","rollen"];
 
 const PHASES=[
- {n:"Phase 1",w:"Woche 1–2",t:"Kick-off und Standortbestimmung",sync:"kk",
+ {n:"Phase 1",t:"Kick-off und Standortbestimmung",sync:"kk",
   goal:"Das Projekt startet — und der tatsächliche Kompetenzstand wird erhoben, nicht der vermutete.",
   steps:["Kick-off mit Leitung und Projektbeteiligten (60 Minuten)","Kurz-Assessment zu den gewählten Kompetenzen, 15–20 Minuten pro Person","3–5 Interviews mit Schlüsselpersonen","Ist-Soll-Delta auswerten und Lerngruppen bilden"],
   pp:"Erstellt Assessment und Interviewleitfaden, wertet aus und stellt die Ergebnisse vor.",
   ku:"Benennt die Projektverantwortlichen, liefert Teilnehmerliste und Terminfenster.",
   out:["Kompetenz-Heatmap","Lerngruppen"],ms:"M1 — Standort abgestimmt"},
- {n:"Phase 2",w:"Woche 3–4",t:"Lernpfade und Setup",sync:"bau",
+ {n:"Phase 2",t:"Lernpfade und Setup",sync:"bau",
   goal:"Aus dem Delta wird ein konkreter Lernpfad je Rolle — mit Terminen, Trainern und startklarer Umgebung.",
   steps:["Lernpfade je Lerngruppe aus den gewählten Bausteinen zusammenstellen","Format, Taktung und Termine festlegen, Trainer zuordnen","Lernumgebung und Zugänge einrichten und testen","Kommunikationspaket an die Teilnehmenden versenden"],
   pp:"Baut die Lernpfade, richtet die Umgebung ein und liefert die Kommunikationsvorlagen.",
   ku:"Prüft die Termine gegen den Betriebsablauf und versendet die Kommunikation intern.",
   out:["Lernpfad je Rolle","Terminplan","Startklare Umgebung"],ms:"M2 — Start freigegeben"},
- {n:"Phase 3",w:"Woche 5–12",t:"Durchführung in Wellen",sync:"ziel",
+ {n:"Phase 3",t:"Durchführung in Wellen",sync:"ziel",
   goal:"Die Module laufen — mit Praxisaufgaben aus dem echten Arbeitsalltag, nicht aus dem Lehrbuch.",
   steps:["Welle 1: Fundament für alle Zielgruppen gemeinsam","Welle 2: rollenspezifische Vertiefung in getrennten Gruppen","Zwischen den Modulen: Praxisaufgaben am eigenen Fall","Feedback nach jedem Baustein, Nachsteuern bei Bedarf"],
   pp:"Führt die Trainings durch, betreut die Praxisaufgaben und berichtet nach jeder Welle.",
   ku:"Schützt die Lernzeit im Kalender und benennt reale Fälle als Übungsmaterial.",
   out:["Durchgeführte Module","Feedback je Welle","Teilnahmebestätigungen"],ms:"M3 — Kernmodule abgeschlossen"},
- {n:"Phase 4",w:"Woche 8–14",t:"Transfer und eigene Use Cases",sync:"felder",
+ {n:"Phase 4",t:"Transfer und eigene Use Cases",sync:"felder",
   goal:"Gelerntes wird auf echte Aufgaben angewendet — messbar, nicht nur berichtet.",
   steps:["2–5 konkrete Vorhaben aus dem Arbeitsalltag auswählen","Umsetzung mit begleitendem Coaching statt Frontalunterricht","Spielregeln dokumentieren: Datenschutz, Freigaben, Zuständigkeit","Interne Multiplikatoren aufbauen und mit Material ausstatten"],
   pp:"Coacht die Umsetzung, prüft die Ergebnisse fachlich und liefert Vorlagen für die Spielregeln.",
   ku:"Stellt Arbeitszeit bereit, benennt Champions und trifft die Governance-Entscheidungen.",
   out:["Umgesetzte Use Cases","Spielregeln","Champions"],ms:"M4 — Transfer nachgewiesen"},
- {n:"Phase 5",w:"Woche 14–16",t:"Wirkungsmessung und Abschluss",sync:"erfolg",
+ {n:"Phase 5",t:"Wirkungsmessung und Abschluss",sync:"erfolg",
   goal:"Der Fortschritt ist belegt, das Ergebnis ist an die Leitung übergeben.",
   steps:["Re-Assessment mit demselben Instrument wie in Phase 1","Vorher-Nachher-Vergleich je Kompetenzfeld","Abschlussbericht mit Empfehlung für die nächsten 12 Monate","Management-Präsentation und Übergabe der Zertifikate"],
   pp:"Führt das Re-Assessment durch, verfasst den Bericht und präsentiert vor der Leitung.",
@@ -598,7 +689,11 @@ const KEY="ppedv-matrix-v4";
 let state={}, notes="", focusId=WORLDS[0].id, activeId=null, restoredId=null, editKomp=null;
 let profile={name:"",logo:""};
 PFIELDS.forEach(f=>profile[f.k]="");
-profile.tlSpan=PHASES.map(()=>null);
+LEGACY_PF.forEach(k=>profile[k]="");
+profile.teams=[];                        /* Bedarf je Bereich: {name,n,worlds[],note} */
+profile.tlSpan=PHASES.map(()=>null);     /* Zeitraum je Phase */
+profile.phTitle=PHASES.map(()=>null);    /* Titel je Phase */
+profile.tlWeeks=16;                      /* Projektdauer in Wochen */
 WORLDS.forEach(w=>state[w.id]={komp:[],felder:[],ziel:[],abt:[],bau:[],kompCustom:{},kompExtra:[]});
 try{const r=localStorage.getItem(KEY); if(r){const p=JSON.parse(r);
   if(p.state) WORLDS.forEach(w=>{if(p.state[w.id]) state[w.id]=Object.assign({komp:[],felder:[],ziel:[],abt:[],bau:[],kompCustom:{},kompExtra:[]},p.state[w.id]);});
@@ -607,8 +702,38 @@ try{const r=localStorage.getItem(KEY); if(r){const p=JSON.parse(r);
   if(p.profile) profile=Object.assign(profile,p.profile);
   if(typeof p.activeId==="string") restoredId=p.activeId;
 }}catch(e){}
-if(!Array.isArray(profile.tlSpan)||profile.tlSpan.length!==PHASES.length) profile.tlSpan=PHASES.map(()=>null);
-function tlRange(i){const ov=profile.tlSpan&&profile.tlSpan[i]; return (ov&&ov.length===2)?ov:TLSPAN[i];}
+function normProfile(){
+  if(!Array.isArray(profile.tlSpan)||profile.tlSpan.length!==PHASES.length) profile.tlSpan=PHASES.map(()=>null);
+  if(!Array.isArray(profile.phTitle)||profile.phTitle.length!==PHASES.length) profile.phTitle=PHASES.map(()=>null);
+  profile.tlWeeks=Math.max(4,Math.min(52,parseInt(profile.tlWeeks,10)||16));
+  profile.teams=(Array.isArray(profile.teams)?profile.teams:[]).map(t=>({
+    name:String((t&&t.name)||""), n:(t&&(t.n||t.n===0))?t.n:"",
+    worlds:(Array.isArray(t&&t.worlds)?t.worlds:[]).filter(id=>WORLDS.some(w=>w.id===id)),
+    note:String((t&&t.note)||"")}));
+  /* Altbestand: „Teilnehmende“ und „Rollen“ in Bereichszeilen überführen */
+  if(!profile.teams.length){
+    const roles=String(profile.rollen||"").split(/[,;·\/]|\bund\b/).map(x=>x.trim()).filter(Boolean);
+    const tot=parseInt(profile.teilnehmende,10)||"";
+    if(roles.length) profile.teams=roles.map(r=>({name:r,n:roles.length===1?tot:"",worlds:[],note:""}));
+    else if(tot) profile.teams=[{name:"Gesamtes Haus",n:tot,worlds:[],note:""}];
+  }
+}
+normProfile();
+const TLMAX=()=>Math.max(4,Math.min(52,parseInt(profile.tlWeeks,10)||16));
+function tlRange(i){const ov=profile.tlSpan&&profile.tlSpan[i], r=(ov&&ov.length===2)?ov:TLSPAN[i], m=TLMAX();
+  return [Math.max(1,Math.min(r[0],m)),Math.max(1,Math.min(r[1],m))];}
+function phTitle(i){const o=profile.phTitle&&profile.phTitle[i]; return (o&&o.trim())?o.trim():PHASES[i].t;}
+function phShort(i){const o=profile.phTitle&&profile.phTitle[i]; return (o&&o.trim())?o.trim():TLSHORT[i];}
+
+/* ---------- Bedarf je Bereich ---------- */
+const teams=()=>(Array.isArray(profile.teams)?profile.teams:(profile.teams=[]));
+const tN=t=>parseInt(t&&t.n,10)||0;
+const headcount=()=>teams().reduce((a,t)=>a+tN(t),0);
+const teamsFor=id=>teams().filter(t=>t.worlds.indexOf(id)>-1);
+const headFor=id=>teamsFor(id).reduce((a,t)=>a+tN(t),0);
+const teamNames=()=>teams().map(t=>(t.name||"").trim()).filter(Boolean);
+const teamsUsed=()=>teams().filter(t=>(t.name||"").trim()||tN(t)||t.worlds.length||(t.note||"").trim());
+const nBereich=n=>n+(n===1?" Bereich":" Bereiche");
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({state,notes,focusId,profile,activeId}))}catch(e){}
                 try{scheduleSave()}catch(e){}};
 const has=(w,c,v)=>state[w][c].indexOf(v)>-1;
@@ -644,18 +769,36 @@ WORLDS.forEach((w,i)=>{
   tp.textContent=w.title.toUpperCase(); t.appendChild(tp); gOuter.appendChild(t);
 });
 function allKomp(w){ const ex=(state[w.id]&&state[w.id].kompExtra)||[]; return w.komp.concat(ex); }
+/* Je mehr eigene Kernkompetenzen der Kunde ergänzt, desto schmaler das Segment —
+   Schriftgröße und Zeilenumbruch wachsen mit. */
+function labelFit(n){
+  /* Bis drei Segmente: waagrechte Schrift wie gehabt. Darüber wird das Segment zu schmal —
+     die Schrift dreht sich mit dem Segment und läuft nach außen. */
+  if(n<=3) return {fs:12.4, lh:13.2, tgt:15, max:4, wrap:false, radial:false};
+  const fs=n===4?11:n===5?10.4:n===6?9.8:9.2;
+  return {fs:fs, lh:+(fs*1.18).toFixed(2), tgt:n===4?17:n===5?18:19, max:n<=5?4:3, wrap:true, radial:true};
+}
+function placeLines(lt,lines,fit){
+  const lx=lt.getAttribute("x"), ly=parseFloat(lt.dataset.ly);
+  lt.innerHTML=""; lt.style.fontSize=fit.fs+"px";
+  if(fit.radial){
+    const a=parseFloat(lt.dataset.a), na=((a%360)+360)%360, flip=na>90&&na<270;
+    lt.setAttribute("transform",`rotate(${(flip?a+180:a).toFixed(2)} ${lx} ${ly})`);
+  }else lt.removeAttribute("transform");
+  const y0=ly-(lines.length-1)*fit.lh/2;
+  lines.forEach((line,m)=>{const ts=el("tspan",{x:lx,y:(y0+m*fit.lh+fit.fs/3).toFixed(1)}); ts.textContent=line; lt.appendChild(ts);});
+}
 function buildInnerForWorld(w){
   gInner.querySelectorAll(`[data-w="${w.id}"]`).forEach(n=>n.remove());
-  const i=WORLDS.indexOf(w), a0=-90+i*60, list=allKomp(w);
+  const i=WORLDS.indexOf(w), a0=-90+i*60, list=allKomp(w), fit=labelFit(list.length);
   const span=(60-2*GO)/list.length;
   list.forEach((k,j)=>{
     const b0=a0+GO+j*span,b1=b0+span,bm=(b0+b1)/2,c0=b0+(j===0?0:GK),c1=b1-(j===list.length-1?0:GK);
     const s=el("path",{d:ann(I1,I2,c0,c1),class:"seg","data-w":w.id,"data-kind":"komp","data-v":k.n,tabindex:"0",role:"button","aria-pressed":has(w.id,"komp",k.n)?"true":"false","aria-label":w.title+": "+kName(w,k)});
     s.appendChild(el("title")).textContent=kName(w,k)+" — "+kDesc(w,k); gInner.appendChild(s);
-    const[lx,ly]=px(RC,bm), lt=el("text",{class:"ilabel","text-anchor":"middle","data-lbl":w.id+"|"+k.n,x:lx.toFixed(1),y:"0","data-ly":ly.toFixed(2)});
-    const lines=kOverride(w,k)?wrapLabel(kName(w,k)):k.l;
-    const y0=ly-(lines.length-1)*6.6;
-    lines.forEach((line,m)=>{const ts=el("tspan",{x:lx.toFixed(1),y:(y0+m*13.2+4).toFixed(1)}); ts.textContent=line; lt.appendChild(ts);});
+    /* data-w muss gesetzt sein, sonst räumt der Rebuild oben die alten Beschriftungen nicht weg */
+    const[lx,ly]=px(RC,bm), lt=el("text",{class:"ilabel","text-anchor":"middle","data-w":w.id,"data-lbl":w.id+"|"+k.n,x:lx.toFixed(1),y:"0","data-ly":ly.toFixed(2),"data-n":list.length,"data-a":bm.toFixed(2)});
+    placeLines(lt,(fit.wrap||kOverride(w,k))?wrapLabel(kName(w,k),fit.tgt,fit.max):k.l,fit);
     gInner.appendChild(lt);
   });
 }
@@ -669,6 +812,15 @@ function addKomp(w,name,desc){
   if(!has(w.id,"komp",komp.n)) state[w.id].komp.push(komp.n);
   save();
   return komp;
+}
+const isExtra=(w,k)=>((state[w.id].kompExtra)||[]).some(x=>x.n===k.n);
+function delKomp(w,name){
+  const ex=state[w.id].kompExtra||[], i=ex.findIndex(k=>k.n===name);
+  if(i<0) return;
+  ex.splice(i,1);
+  const j=state[w.id].komp.indexOf(name); if(j>-1) state[w.id].komp.splice(j,1);
+  if(state[w.id].kompCustom) delete state[w.id].kompCustom[name];
+  buildInnerForWorld(w); save(); render();
 }
 function fitLabels(){
   WORLDS.forEach((w,i)=>{
@@ -690,15 +842,15 @@ window.addEventListener("resize",()=>{clearTimeout(window._ft); window._ft=setTi
 function kOverride(w,k){ const c=state[w.id]&&state[w.id].kompCustom; return c?c[k.n]:null; }
 function kName(w,k){ const o=kOverride(w,k); return (o&&o.n&&o.n.trim())?o.n.trim():k.n; }
 function kDesc(w,k){ const o=kOverride(w,k); return (o&&typeof o.d==="string"&&o.d.trim())?o.d.trim():k.d; }
-function wrapLabel(text){
+function wrapLabel(text,target,max){
   const words=String(text).trim().split(/\s+/).filter(Boolean);
   if(!words.length) return [""];
-  const target=15; const lines=[]; let cur="";
+  target=target||15; max=max||4; const lines=[]; let cur="";
   words.forEach(wd=>{const test=cur?cur+" "+wd:wd;
     if(!cur||test.length<=target) cur=test; else{lines.push(cur); cur=wd;}});
   if(cur) lines.push(cur);
-  if(lines.length>4){const head=lines.slice(0,3); let last=lines.slice(3).join(" ");
-    if(last.length>16) last=last.slice(0,15).trimEnd()+"…"; head.push(last); return head;}
+  if(lines.length>max){const head=lines.slice(0,max-1); let last=lines.slice(max-1).join(" ");
+    if(last.length>target+1) last=last.slice(0,target).trimEnd()+"…"; head.push(last); return head;}
   return lines;
 }
 function updateKompLabel(w,k){
@@ -708,10 +860,8 @@ function updateKompLabel(w,k){
     const ti=seg.querySelector("title"); if(ti) ti.textContent=disp+" — "+desc; }
   const lt=gInner.querySelector(`[data-lbl="${CSS.escape(w.id+"|"+k.n)}"]`);
   if(lt){
-    const lines=kOverride(w,k)?wrapLabel(disp):k.l, lx=lt.getAttribute("x"), ly=parseFloat(lt.dataset.ly);
-    const y0=ly-(lines.length-1)*6.6;
-    lt.innerHTML="";
-    lines.forEach((line,m)=>{const ts=el("tspan",{x:lx,y:(y0+m*13.2+4).toFixed(1)}); ts.textContent=line; lt.appendChild(ts);});
+    const fit=labelFit(+lt.dataset.n||allKomp(w).length);
+    placeLines(lt,(fit.wrap||kOverride(w,k))?wrapLabel(disp,fit.tgt,fit.max):k.l,fit);
   }
 }
 function refreshAllKompLabels(){ WORLDS.forEach(w=>allKomp(w).forEach(k=>updateKompLabel(w,k))); }
@@ -727,10 +877,14 @@ function renderPanel(){
    <div class="ph"><span class="kw">${w.kw} · ${selIn(w)} von ${totalIn(w)} gewählt</span>
      <h2>${esc(w.title)}</h2><p>${esc(w.lead)}</p></div>
    <div class="pb">
+     ${(()=>{const tf=teamsFor(w.id); if(!tf.length) return "";
+       return `<div class="pneed"><span class="lbl">Bedarf aus Schritt 1</span>
+         <p>${tf.map(t=>esc((t.name||"Ohne Namen").trim()||"Ohne Namen")+(tN(t)?" · "+tN(t):"")).join(" &nbsp;|&nbsp; ")}${tf.length>1&&headFor(w.id)?" &mdash; zusammen "+headFor(w.id)+" Mitarbeitende":tf.length===1&&headFor(w.id)?" Mitarbeitende":""}</p>
+         ${tf.filter(t=>(t.note||"").trim()).map(t=>`<p class="pn-note">„${esc(t.note.trim())}“</p>`).join("")}</div>`;})()}
      <div class="beleg"><span class="lbl">Warum das gebraucht wird</span><p>${esc(w.beleg)}</p></div>
      <div class="grp">
        <div class="grp-h"><span class="lbl">Kernkompetenzen</span><button class="mini no-print" id="allK">${allK?"Alle abwählen":"Alle "+allKomp(w).length+" wählen"}</button></div>
-       <p class="hint">Was Ihre Leute können sollen — auch im Innenring anklickbar. Mit ✎ auf die Worte des Kunden anpassen, mit + eine eigene ergänzen.</p>
+       <p class="hint">Was Ihre Leute können sollen — auch im Innenring anklickbar. Die drei unten sind Vorschläge: mit ✎ in die Worte des Kunden umschreiben, oder unten eine eigene anlegen.</p>
        ${allKomp(w).map((k,ki)=>{
          if(editKomp&&editKomp.w===w.id&&editKomp.i===ki){
            const cn=kName(w,k), cd=kDesc(w,k), hasOv=!!kOverride(w,k);
@@ -744,10 +898,12 @@ function renderPanel(){
              </div>
            </div>`;
          }
+         const own=isExtra(w,k);
          return `<div class="komp-row">
            <button type="button" class="row" data-w="${w.id}" data-cat="komp" data-v="${esc(k.n)}" aria-pressed="${has(w.id,'komp',k.n)}">
-             <span class="box"></span><span><span class="n">${esc(kName(w,k))}</span><span class="d">${esc(kDesc(w,k))}</span></span></button>
+             <span class="box"></span><span><span class="n">${esc(kName(w,k))}${own?`<span class="kbadge">eigene</span>`:""}</span><span class="d">${esc(kDesc(w,k))}</span></span></button>
            <button type="button" class="kedit no-print" data-kedit="${ki}" title="Text anpassen">✎</button>
+           ${own?`<button type="button" class="kdel no-print" data-kdel="${esc(k.n)}" title="Eigene Kernkompetenz entfernen">&times;</button>`:""}
          </div>`;
        }).join("")}
        ${editKomp&&editKomp.w===w.id&&editKomp.i==="new"?`
@@ -758,7 +914,7 @@ function renderPanel(){
            <button type="button" class="btn go" id="keSave">Hinzufügen &amp; auswählen</button>
            <button type="button" class="btn" id="keCancel">Abbrechen</button>
          </div>
-       </div>`:`<button type="button" class="mini no-print" id="addKompBtn" style="margin-top:8px">+ Eigene Kernkompetenz hinzufügen</button>`}
+       </div>`:`<button type="button" class="addk no-print" id="addKompBtn">+ Eigene Kernkompetenz in „${esc(w.title)}“ anlegen</button>`}
      </div>
      <div class="grp">
        <div class="grp-h"><span class="lbl">Skills</span></div>
@@ -775,6 +931,12 @@ function renderPanel(){
      </div></details>
    </div>`;
   panel.querySelector("#allK").addEventListener("click",()=>{state[w.id].komp=allK?[]:allKomp(w).map(k=>k.n); save(); render();});
+  panel.querySelectorAll("[data-kdel]").forEach(b=>b.addEventListener("click",e=>{
+    e.stopPropagation();
+    if(b.dataset.armed!=="1"){b.dataset.armed="1"; b.textContent="löschen?"; b.style.fontSize="11px"; b.style.color="#B3261E";
+      setTimeout(()=>{if(b.isConnected&&b.dataset.armed==="1"){b.dataset.armed=""; b.innerHTML="&times;"; b.style.fontSize=""; b.style.color="";}},4000); return;}
+    editKomp=null; delKomp(w,b.dataset.kdel);
+  }));
   panel.querySelectorAll("[data-kedit]").forEach(b=>b.addEventListener("click",e=>{
     e.stopPropagation(); editKomp={w:w.id,i:+b.dataset.kedit}; renderPanel();
     const nEl=panel.querySelector("#ke-n"); if(nEl){nEl.focus(); nEl.select();}
@@ -931,6 +1093,97 @@ aiGo.addEventListener("click",aiRun);
 (async()=>{try{SAMPLE=(window.claude&&window.claude.use)?await window.claude.use("sample"):null}catch(e){SAMPLE=null}
   if(SAMPLE){aiGo.hidden=false; findNote.textContent="Stichwort genügt für die Sofortsuche — ganze Sätze über „Mit KI zuordnen“.";}})();
 
+/* ---------- Bedarfsaufnahme: wo fehlt was, bei wie vielen ---------- */
+const needEl=document.getElementById("need");
+function needSummary(){
+  const ts=teamsUsed(), h=headcount(), ws=WORLDS.filter(w=>teamsFor(w.id).length).length;
+  if(!ts.length) return "noch nichts erfasst";
+  return nBereich(ts.length)+" · "+h+" Mitarbeitende"+(ws?" · "+ws+" von 6 Kompetenzwelten":"");
+}
+function needSum(){const n=needEl.querySelector(".need-sum"); if(n) n.textContent=needSummary();}
+function renderNeed(){
+  const ts=teams();
+  needEl.innerHTML=`
+    <div class="need-h"><h3>Wo fehlen Kompetenzen — und bei wie vielen Menschen?</h3>
+      <span class="need-sum">${esc(needSummary())}</span></div>
+    <p class="need-hint">Eine Zeile je Team oder Abteilung: Name, Anzahl der Mitarbeitenden, und in welchen Kompetenzwelten es hakt.
+      Das ist die Grundlage — Schritt 2 füllt diese Welten dann mit Kernkompetenzen.</p>
+    ${ts.length?ts.map((t,i)=>`
+      <div class="trow" data-ti="${i}">
+        <div class="trow-top">
+          <input class="t-name" data-tf="name" value="${esc(t.name||"")}" placeholder="Bereich oder Team — z. B. Vertriebsinnendienst" maxlength="70">
+          <input class="t-n" data-tf="n" type="number" min="0" max="9999" value="${esc(t.n===0||t.n?t.n:"")}" placeholder="Personen">
+          <button type="button" class="t-del no-print" data-tdel="${i}" title="Bereich entfernen">&times;</button>
+        </div>
+        <span class="t-lbl">In welchen Kompetenzwelten fehlt es?</span>
+        <div class="wsel">${WORLDS.map(w=>`<button type="button" class="wchip" style="--wc:${w.c}" data-tw="${i}|${w.id}" aria-pressed="${t.worlds.indexOf(w.id)>-1}">${esc(w.title)}</button>`).join("")}</div>
+        <input class="t-note" data-tf="note" value="${esc(t.note||"")}" placeholder="Was genau fehlt? In den Worten des Kunden." maxlength="200">
+      </div>`).join("")
+     :`<div class="t-empty">Noch kein Bereich erfasst — fangen Sie dort an, wo es am meisten weh tut.</div>`}
+    <button type="button" class="btn go need-add no-print" id="tAdd">+ Bereich hinzufügen</button>`;
+}
+function needChanged(full){
+  save();
+  if(full) renderNeed(); else needSum();
+  renderCounts(); renderNeedbar(); renderPanel(); renderCards(); renderNeedOut(); renderSync();
+}
+needEl.addEventListener("input",e=>{
+  const f=e.target.closest("[data-tf]"); if(!f) return;
+  const row=f.closest("[data-ti]"), t=teams()[+row.dataset.ti]; if(!t) return;
+  t[f.dataset.tf]= f.dataset.tf==="n"
+    ? (f.value===""?"":Math.max(0,Math.min(9999,parseInt(f.value,10)||0)))
+    : f.value;
+  needChanged(false);
+});
+needEl.addEventListener("click",e=>{
+  if(e.target.closest("#tAdd")){
+    teams().push({name:"",n:"",worlds:[],note:""}); needChanged(true);
+    const rows=needEl.querySelectorAll(".trow"); const last=rows[rows.length-1];
+    if(last) last.querySelector(".t-name").focus();
+    return;
+  }
+  const d=e.target.closest("[data-tdel]");
+  if(d){ teams().splice(+d.dataset.tdel,1); needChanged(true); return; }
+  const c=e.target.closest("[data-tw]");
+  if(c){ const p=c.dataset.tw.split("|"), t=teams()[+p[0]]; if(!t) return;
+    const j=t.worlds.indexOf(p[1]); j>-1?t.worlds.splice(j,1):t.worlds.push(p[1]);
+    c.setAttribute("aria-pressed",j<0); needChanged(false); }
+});
+
+/* Bedarfsleiste über dem Ring (Schritt 2) */
+function renderNeedbar(){
+  const box=document.getElementById("needbar"); if(!box) return;
+  const act=WORLDS.map(w=>({w,t:teamsFor(w.id)})).filter(x=>x.t.length);
+  if(!act.length){box.innerHTML=`<p class="nb-empty">Kein Bedarf aus Schritt 1 erfasst — Sie können hier trotzdem frei auswählen.</p>`; return;}
+  box.innerHTML=`<span class="lbl">Bedarf aus Schritt 1 — anklicken öffnet die Kompetenzwelt</span>
+    <div class="nb-row">${act.map(x=>`<button type="button" class="nb" style="--wc:${x.w.c}" data-nb="${x.w.id}">
+      <b>${esc(x.w.title)}</b>
+      <span>${nBereich(x.t.length)} · ${headFor(x.w.id)} Mitarbeitende</span>
+      <i>${x.t.map(t=>esc((t.name||"").trim()||"Ohne Namen")).join(" · ")}</i></button>`).join("")}</div>`;
+}
+document.getElementById("needbar").addEventListener("click",e=>{
+  const b=e.target.closest("[data-nb]"); if(!b) return;
+  focusId=b.dataset.nb; editKomp=null; save(); render();
+  document.querySelector(".board").scrollIntoView({behavior:"smooth",block:"start"});
+});
+
+/* Bedarfstabelle im Ergebnis (Schritt 3) */
+function renderNeedOut(){
+  const g=document.getElementById("needOut"), ts=teamsUsed();
+  if(!ts.length){g.innerHTML=""; return;}
+  g.innerHTML=`<h3 style="font-size:22px">Bedarf im Haus</h3>
+    <p class="sub" style="font-size:14.5px;color:var(--ink-2);margin:6px 0 16px">Im Gespräch aufgenommen: ${esc(needSummary())}.</p>
+    <div class="ntab">
+      <div class="nt-h"><span>Bereich</span><span>Personen</span><span>Kompetenzwelten</span><span>Was fehlt</span></div>
+      ${ts.map(t=>`<div class="nt-r">
+        <span class="nt-n">${esc((t.name||"").trim()||"Ohne Namen")}</span>
+        <span class="nt-p">${tN(t)||"—"}</span>
+        <span class="nt-w">${t.worlds.map(id=>{const w=WORLDS.find(x=>x.id===id); return w?`<i style="--wc:${w.c}">${esc(w.title)}</i>`:"";}).join("")||"—"}</span>
+        <span class="nt-t">${esc((t.note||"").trim())||"—"}</span></div>`).join("")}
+      <div class="nt-r nt-sum"><span>Summe</span><span class="nt-p">${headcount()}</span><span></span><span></span></div>
+    </div>`;
+}
+
 /* ---------- Kontext ---------- */
 const fields=document.getElementById("fields");
 fields.innerHTML=PFIELDS.map(f=>`<div class="field${f.wide?" wide":""}"><label for="pf-${f.k}">${esc(f.l)}</label>
@@ -957,11 +1210,13 @@ function syncHTML(kind){
   const li=[];
   if(kind==="kk"){const a=[]; WORLDS.forEach(w=>state[w.id].komp.forEach(n=>{const k=allKomp(w).find(x=>x.n===n); a.push(k?kName(w,k):n);}));
     if(a.length) li.push(`<li><strong>${a.length===1?"1 Kernkompetenz":a.length+" Kernkompetenzen"}</strong> ${a.length===1?"wird":"werden"} erhoben: ${a.map(esc).join(" · ")}</li>`);
-    if(profile.teilnehmende) li.push(`<li>Assessment für <strong>${esc(profile.teilnehmende)} Teilnehmende</strong>${profile.rollen?` aus ${esc(profile.rollen)}`:""}</li>`);}
+    const h=headcount(), nm=teamNames();
+    if(h||nm.length) li.push(`<li>Assessment für <strong>${h||"—"} Mitarbeitende</strong>${nm.length?` aus ${nm.map(esc).join(" · ")}`:""}</li>`);}
   if(kind==="bau"){const a=pick("bau");
     if(a.length) li.push(`<li><strong>${a.length===1?"1 Baustein":a.length+" Bausteine"}</strong> ${a.length===1?"bildet":"bilden"} die Lernpfade: ${a.map(esc).join(" · ")}</li>`);
     if(profile.start) li.push(`<li>Terminplanung auf Ihren Wunschstart: <strong>${esc(profile.start)}</strong></li>`);}
-  if(kind==="ziel"){const a=[...new Set(pick("ziel"))],b=[...new Set(pick("abt"))];
+  if(kind==="ziel"){const a=[...new Set(pick("ziel"))],b=[...new Set(pick("abt"))],t=teamsUsed();
+    if(t.length) li.push(`<li>Wellen entlang der erfassten Bereiche: ${t.map(x=>esc((x.name||"Ohne Namen").trim()||"Ohne Namen")+(tN(x)?" ("+tN(x)+")":"")).join(" · ")}</li>`);
     if(a.length) li.push(`<li>Lerngruppen nach <strong>Rollen</strong>: ${a.map(esc).join(" · ")}</li>`);
     if(b.length) li.push(`<li>Beteiligte <strong>Abteilungen</strong>: ${b.map(esc).join(" · ")}</li>`);}
   if(kind==="felder"){const a=pick("felder");
@@ -976,26 +1231,38 @@ function syncHTML(kind){
 function renderSync(){PHASES.forEach((p,i)=>{const n=document.getElementById("sy"+i); if(n) n.innerHTML=syncHTML(p.sync);});}
 
 function renderTimeline(){
-  document.getElementById("tl").innerHTML=`<div class="tl-in">
- <div class="tl-r tl-head"><div class="tl-l">ab Zusage &rarr;</div><div class="tl-w">${Array.from({length:16},(_,n)=>`<i>${n+1}</i>`).join("")}</div></div>
+  const M=TLMAX(), gc=`grid-template-columns:repeat(${M},1fr)`;
+  const wIn=document.getElementById("tlWeeks");
+  if(wIn&&document.activeElement!==wIn) wIn.value=M;
+  const note=document.getElementById("tlWeeksNote");
+  if(note) note.textContent=M===16?"Standard: 16 Wochen":"individuell angepasst";
+  document.getElementById("tl").innerHTML=`<div class="tl-in" style="min-width:${Math.max(720,170+M*38)}px">
+ <div class="tl-r tl-head"><div class="tl-l">ab Zusage &rarr;</div><div class="tl-w" style="${gc}">${Array.from({length:M},(_,n)=>`<i>${n+1}</i>`).join("")}</div></div>
  ${PHASES.map((p,i)=>{const[a,b]=tlRange(i);
-   return `<div class="tl-r"><div class="tl-l"><b>${p.n}</b><span>${TLSHORT[i]}</span></div>
-     <div class="tl-t"><button type="button" class="bar${TLPAR[i]?" par":""}" data-goto="${i}" style="grid-column:${a}/${b+1}">
+   return `<div class="tl-r"><div class="tl-l"><b>${p.n}</b><span>${esc(phShort(i))}</span></div>
+     <div class="tl-t" style="${gc}; background-size:calc(100%/${M}) 100%"><button type="button" class="bar${TLPAR[i]?" par":""}" data-goto="${i}" style="grid-column:${a}/${b+1}">
        <span>W ${a}–${b}</span><span class="m">${p.ms.split(" ")[0]}</span></button></div></div>`;}).join("")}
  <div class="tl-r tl-after"><div class="tl-l"><b>Danach</b><span>Jahrespartnerschaft</span></div>
    <div class="tl-t"><div class="bar part"><span>Ab Projektabschluss · 4 Termine vor Ort · Q1–Q4 · 12 Monate</span><span class="m">Pauschalpreis</span></div></div></div>
- <p class="tl-note">Woche 1 beginnt mit der Zusage · Phase 4 läuft parallel zu Phase 3 (gestrichelt) · Zeiträume je Phase unten anpassbar</p></div>`;
+ <p class="tl-note">Woche 1 beginnt mit der Zusage · Phase 4 läuft parallel zu Phase 3 (gestrichelt) · Projektdauer oben, Zeitraum und Titel je Phase unten anpassbar</p></div>`;
 }
 renderTimeline();
+const tlWeeksIn=document.getElementById("tlWeeks");
+tlWeeksIn.addEventListener("change",()=>{
+  profile.tlWeeks=Math.max(4,Math.min(52,parseInt(tlWeeksIn.value,10)||16));
+  tlWeeksIn.value=profile.tlWeeks; save(); renderTimeline(); renderPhases();});
+document.getElementById("tlWeeksReset").addEventListener("click",()=>{
+  profile.tlWeeks=16; profile.tlSpan=PHASES.map(()=>null); profile.phTitle=PHASES.map(()=>null);
+  save(); renderTimeline(); renderPhases();});
 document.getElementById("tl").addEventListener("click",e=>{const b=e.target.closest("[data-goto]"); if(!b) return;
   const d=document.querySelectorAll("#phases details")[+b.dataset.goto]; if(d){d.open=true; d.scrollIntoView({behavior:"smooth",block:"center"});}});
 
 function renderPhases(){
   const openIdx=[...document.querySelectorAll("#phases details")].map(d=>d.open);
   document.getElementById("phases").innerHTML=PHASES.map((p,i)=>{
-    const[a,b]=tlRange(i), hasOv=!!(profile.tlSpan&&profile.tlSpan[i]);
+    const[a,b]=tlRange(i), hasOv=!!(profile.tlSpan&&profile.tlSpan[i]), hasTt=!!(profile.phTitle&&profile.phTitle[i]);
     return `
- <details class="phase"${openIdx[i]?" open":""}><summary><span class="pn">${p.n}</span><span class="pt">${p.t}</span><span class="pw">Woche ${a}–${b}</span><span class="chev"></span></summary>
+ <details class="phase"${openIdx[i]?" open":""}><summary><span class="pn">${p.n}</span><span class="pt">${esc(phTitle(i))}</span><span class="pw">Woche ${a}–${b}</span><span class="chev"></span></summary>
  <div class="pbody"><p class="goal">${p.goal}</p>
    <div class="pcols">
      <div><span class="lbl">Schritte</span><ul>${p.steps.map(s=>`<li>${s}</li>`).join("")}</ul></div>
@@ -1006,13 +1273,15 @@ function renderPhases(){
    <div class="sync" id="sy${i}"></div>
    <div class="out"><span class="lbl" style="margin-right:4px">Ergebnis</span>${p.out.map(o=>`<span class="tag">${o}</span>`).join("")}<span class="tag m">${p.ms}</span></div>
    <div class="tl-edit no-print">
-     <span class="lbl">Zeitraum anpassen (Woche ab Zusage)</span>
+     <span class="lbl">Diese Phase auf den Kunden einstellen</span>
+     <label class="elbl2">Titel dieser Phase<input type="text" maxlength="70" id="ph-t-${i}" value="${esc(phTitle(i))}" placeholder="${esc(p.t)}"></label>
+     <span class="elbl2" style="margin-bottom:0">Zeitraum (Woche ab Zusage)</span>
      <div style="display:flex; gap:8px; align-items:center; margin-top:8px; flex-wrap:wrap">
-       <input type="number" min="1" max="16" id="tl-start-${i}" value="${a}" class="tl-num">
+       <input type="number" min="1" max="${TLMAX()}" id="tl-start-${i}" value="${a}" class="tl-num">
        <span style="font-size:13px; color:var(--ink-3)">bis</span>
-       <input type="number" min="1" max="16" id="tl-end-${i}" value="${b}" class="tl-num">
+       <input type="number" min="1" max="${TLMAX()}" id="tl-end-${i}" value="${b}" class="tl-num">
        <button type="button" class="btn go" data-tlsave="${i}">Übernehmen</button>
-       ${hasOv?`<button type="button" class="btn" data-tlreset="${i}">Zurücksetzen</button>`:""}
+       ${hasOv||hasTt?`<button type="button" class="btn" data-tlreset="${i}">Zurücksetzen</button>`:""}
      </div>
    </div>
  </div></details>`;}).join("");
@@ -1021,14 +1290,15 @@ function renderPhases(){
 renderPhases();
 document.getElementById("phases").addEventListener("click",e=>{
   const sv=e.target.closest("[data-tlsave]");
-  if(sv){ const i=+sv.dataset.tlsave;
+  if(sv){ const i=+sv.dataset.tlsave, M=TLMAX();
+    const tt=(document.getElementById("ph-t-"+i).value||"").trim();
+    profile.phTitle[i]=(tt&&tt!==PHASES[i].t)?tt:null;
     const s=+document.getElementById("tl-start-"+i).value, en=+document.getElementById("tl-end-"+i).value;
-    if(!s||!en||en<s) return;
-    profile.tlSpan[i]=[Math.max(1,Math.min(16,s)),Math.max(1,Math.min(16,en))];
+    if(s&&en&&en>=s) profile.tlSpan[i]=[Math.max(1,Math.min(M,s)),Math.max(1,Math.min(M,en))];
     save(); renderTimeline(); renderPhases(); return;
   }
   const rs=e.target.closest("[data-tlreset]");
-  if(rs){ const i=+rs.dataset.tlreset; profile.tlSpan[i]=null; save(); renderTimeline(); renderPhases(); }
+  if(rs){ const i=+rs.dataset.tlreset; profile.tlSpan[i]=null; profile.phTitle[i]=null; save(); renderTimeline(); renderPhases(); }
 });
 
 /* ---------- Kunde + Logo ---------- */
@@ -1085,8 +1355,8 @@ tabs.forEach(t=>t.addEventListener("click",()=>goStep(+t.dataset.step)));
 function renderCounts(){
   let tot=0,kk=0,allKk=0; WORLDS.forEach(w=>{tot+=selIn(w); kk+=state[w.id].komp.length; allKk+=allKomp(w).length;});
   document.getElementById("cnt1").textContent=tot;
-  const filled=PFIELDS.filter(f=>(profile[f.k]||"").trim()).length;
-  document.getElementById("cnt2").textContent=filled+"/"+PFIELDS.length;
+  const filled=PFIELDS.filter(f=>(profile[f.k]||"").trim()).length, nb=teamsUsed().length;
+  document.getElementById("cnt2").textContent=nb?nb+" · "+headcount():filled+"/"+PFIELDS.length;
   document.getElementById("coreN").textContent=kk;
   document.getElementById("coreSub").textContent="von "+allKk+" Kernkompetenzen";
 }
@@ -1102,7 +1372,7 @@ function render(){
   });
   gSpot.querySelectorAll("[data-spot]").forEach(s=>s.style.opacity=s.dataset.spot===focusId?"1":"0");
   gOuter.querySelectorAll("[data-wlabel]").forEach(t=>t.style.opacity=t.dataset.wlabel===focusId?"1":".85");
-  renderCounts(); coreDefault(); renderPanel(); renderCards(); renderSync();
+  renderCounts(); coreDefault(); renderPanel(); renderNeedbar(); renderCards(); renderNeedOut(); renderSync();
 }
 
 /* ---------- Karteien ---------- */
@@ -1129,8 +1399,9 @@ function errT(e){const c=e&&e.code;
 const payload=()=>({title:(profile.name||"").trim()||"Ohne Namen",profile:JSON.parse(JSON.stringify(profile)),
   state:JSON.parse(JSON.stringify(state)),notes,updatedAt:new Date().toISOString()});
 function blank(){WORLDS.forEach(w=>state[w.id]={komp:[],felder:[],ziel:[],abt:[],bau:[],kompCustom:{},kompExtra:[]});
-  profile={name:"",logo:"",tlSpan:PHASES.map(()=>null)}; PFIELDS.forEach(f=>profile[f.k]=""); notes=""; editKomp=null;}
-function applyAll(){renderCust(); syncFields(); refreshAllKompLabels(); renderTimeline(); renderPhases(); render();}
+  profile={name:"",logo:"",teams:[],tlWeeks:16,tlSpan:PHASES.map(()=>null),phTitle:PHASES.map(()=>null)};
+  PFIELDS.forEach(f=>profile[f.k]=""); LEGACY_PF.forEach(k=>profile[k]=""); notes=""; editKomp=null;}
+function applyAll(){renderCust(); syncFields(); renderNeed(); refreshAllKompLabels(); renderTimeline(); renderPhases(); render();}
 function renderList(){
   fbSel.innerHTML=`<option value="">${activeId?"— neue Kartei —":"Neue Kartei"}</option>`+
     records.map(r=>{const d=r.updatedAt?new Date(r.updatedAt).toLocaleDateString("de-AT",{day:"2-digit",month:"2-digit",year:"2-digit"}):"";
@@ -1169,7 +1440,12 @@ fbSel.addEventListener("change",()=>{
   const r=records.find(x=>x.id===id); if(!r) return;
   blank();
   const p=r.profile||{}; profile.name=p.name||""; profile.logo=p.logo||"";
-  PFIELDS.forEach(f=>profile[f.k]=p[f.k]||"");
+  PFIELDS.forEach(f=>profile[f.k]=p[f.k]||""); LEGACY_PF.forEach(k=>profile[k]=p[k]||"");
+  profile.teams=Array.isArray(p.teams)?JSON.parse(JSON.stringify(p.teams)):[];
+  profile.tlSpan=Array.isArray(p.tlSpan)?p.tlSpan.slice():PHASES.map(()=>null);
+  profile.phTitle=Array.isArray(p.phTitle)?p.phTitle.slice():PHASES.map(()=>null);
+  profile.tlWeeks=p.tlWeeks||16;
+  normProfile();
   WORLDS.forEach(w=>{const s=(r.state||{})[w.id]||{};
     state[w.id]={komp:s.komp||[],felder:s.felder||[],ziel:s.ziel||[],abt:s.abt||[],bau:s.bau||[],kompCustom:s.kompCustom||{},kompExtra:s.kompExtra||[]};});
   notes=r.notes||""; activeId=r.id; dirty=false; editKomp=null; save(); applyAll(); renderList();
@@ -1194,6 +1470,16 @@ document.getElementById("btnCopy").addEventListener("click",async()=>{
   if(!act.length){toast("Noch nichts gewählt."); return;}
   const d=new Date().toLocaleDateString("de-AT",{day:"2-digit",month:"long",year:"numeric"});
   let t=`KOMPETENZMODELL${profile.name?" — "+profile.name.toUpperCase():""}\nArbeitsstand ${d} · ppedv Kompetenzmatrix\n\n`;
+  const ts=teamsUsed();
+  if(ts.length){
+    t+=`BEDARF IM HAUS — ${nBereich(ts.length).toUpperCase()} · ${headcount()} MITARBEITENDE\n`;
+    ts.forEach(x=>{
+      const wn=x.worlds.map(id=>{const w=WORLDS.find(y=>y.id===id); return w?w.title:"";}).filter(Boolean);
+      t+=`  ${(x.name||"").trim()||"Ohne Namen"}${tN(x)?` · ${tN(x)} Mitarbeitende`:""}\n`;
+      if(wn.length) t+=`    Kompetenzwelten: ${wn.join(" · ")}\n`;
+      if((x.note||"").trim()) t+=`    Fehlt: ${x.note.trim()}\n`;});
+    t+="\n";
+  }
   const pf=[]; PFIELDS.forEach(f=>{if((profile[f.k]||"").trim()) pf.push(`  ${f.l}\n    ${profile[f.k].trim()}`);});
   if(pf.length) t+=`KONTEXT\n${pf.join("\n")}\n\n`;
   act.forEach(w=>{const s=state[w.id]; t+=`${w.kw} — ${w.title.toUpperCase()}\n`;
@@ -1201,13 +1487,14 @@ document.getElementById("btnCopy").addEventListener("click",async()=>{
     const kompLabels=s.komp.map(n=>{const k=allKomp(w).find(x=>x.n===n); return k?kName(w,k):n;});
     b("Kernkompetenzen",kompLabels); b("Skills",s.felder); b("Zielgruppen",s.ziel.concat(s.abt)); b("Bausteine",s.bau); t+="\n";});
   if(notes.trim()) t+=`NOTIZEN\n${notes.trim()}\n\n`;
-  t+=`UMSETZUNG — PHASE 1 STARTET MIT DER ZUSAGE\n`+PHASES.map(p=>`  ${p.n} (${p.w}): ${p.t} → ${p.ms}`).join("\n")
+  t+=`UMSETZUNG — PHASE 1 STARTET MIT DER ZUSAGE · ${TLMAX()} WOCHEN\n`
+   +PHASES.map((p,i)=>{const[a,b]=tlRange(i); return `  ${p.n} (Woche ${a}–${b}): ${phTitle(i)} → ${p.ms}`;}).join("\n")
    +`\n\nDANACH — JAHRESPARTNERSCHAFT\n  4 Termine vor Ort, 12 Monate Laufzeit, Pauschalpreis\n`;
   try{await navigator.clipboard.writeText(t); toast("In die Zwischenablage kopiert.");}
   catch(e){toast("Kopieren nicht möglich — bitte „Als PDF sichern“.");}
 });
 document.getElementById("today").textContent=new Date().toLocaleDateString("de-AT",{day:"2-digit",month:"long",year:"numeric"});
-renderCust(); syncFields(); refreshAllKompLabels(); render();
+renderCust(); syncFields(); renderNeed(); refreshAllKompLabels(); renderTimeline(); renderPhases(); render();
 </script>
 
 </body></html>
