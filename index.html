@@ -551,8 +551,6 @@ details.more .in{padding-top:11px}
 <main>
 <section class="step" id="s1">
   <div class="wrap">
-    <p class="lead">Die Kompetenzwelt <b>dieses Kunden</b>, zum gemeinsamen Durchgehen: jeder Skill aus Schritt 1 ein Segment, jede betroffene Welt mit ihrer Kopfzahl. Ein Klick auf ein Segment springt zurück zur Zeile, ein Klick auf ein leeres Feld legt dort einen Skill an. Weitere Bausteine holen Sie sich unter <b>Das ppedv-Modell</b>.</p>
-
     <div class="needbar" id="needbar"></div>
     <div id="ctxbar"></div>
 
@@ -575,7 +573,7 @@ details.more .in{padding-top:11px}
             <text class="core-team" x="450" y="622" text-anchor="middle" id="coreTeam"></text>
           </g>
         </svg>
-        <p class="readout" id="readout">Innenring: die erfassten Skills · Außenring: Kompetenzwelt öffnen.</p>
+        <p class="readout" id="readout"></p>
       </div>
       <aside class="panel" id="panel"></aside>
     </div>
@@ -584,28 +582,13 @@ details.more .in{padding-top:11px}
 
 <section class="step on" id="s2">
   <div class="wrap">
-    <p class="lead">Sie fragen, der Kunde erzählt — und Sie schreiben mit. <b>Jedes genannte Thema ist ein Skill</b>: er bekommt eine Kompetenzwelt und die Teams, denen er fehlt. Daraus baut sich die Matrix in Schritt 2 auf, live im Gespräch.</p>
-
-    <div class="axes">
-      <div class="ax"><span class="ax-k">Was</span>
-        <b>Skill</b>
-        <p>Ein Thema in den Worten des Kunden. Das ist die Zeile, die Sie erfassen.</p>
-        <span class="ax-e">„Angebote dauern zu lange“ → KI produktiv einsetzen</span></div>
-      <div class="ax"><span class="ax-k">Wer</span>
-        <b>Team</b>
-        <p>Wem der Skill fehlt, und wie viele Mitarbeitende es dort betrifft.</p>
-        <span class="ax-e">Vertriebsinnendienst · 12 &nbsp;|&nbsp; Produktion · 30</span></div>
-      <p class="ax-note">Jeder Skill gehört zu genau einer der sechs Kompetenzwelten — das ist der Außenring. Der Innenring sind Ihre Skills: leer zu Beginn, er wächst im Gespräch mit.</p>
-    </div>
-
     <div class="find">
       <label for="findIn">Was sagt der Kunde?</label>
-      <p class="hint" style="margin:-3px 0 9px">Mitschreiben in seinen Worten — daraus schlägt die Matrix Kompetenzwelten und Skills vor.</p>
       <div class="find-row">
         <textarea id="findIn" rows="1" placeholder="z. B. Angebote dauern zu lange · niemand weiß, welche Zahl stimmt · neue Kollegen finden nichts"></textarea>
         <button class="btn warm" id="aiGo" hidden>Mit KI zuordnen</button>
       </div>
-      <p class="find-note" id="findNote">Stichwort genügt. Was hier und bei „Was funktioniert heute nicht?“ steht, wird zugeordnet.</p>
+      <p class="find-note" id="findNote"></p>
       <div class="hits" id="hits"></div>
     </div>
 
@@ -626,12 +609,11 @@ details.more .in{padding-top:11px}
     <div id="needOut"></div>
 
     <h3 style="font-size:22px;margin-top:34px">Ihr Kompetenzmodell</h3>
-    <p class="sub" style="font-size:14.5px;color:var(--ink-2);margin:6px 0 16px">Grundlage für Standortbestimmung, Curriculum und Angebot.</p>
     <div class="cards" id="cards"></div>
 
     <div class="block" id="blockAblauf">
       <h3>Umsetzung &mdash; ab Ihrer Zusage</h3>
-      <p class="sub">Kontext, Kompetenzauswahl und das Angebot gehören noch zum Vertrieb. Woche 1 beginnt mit der Zusage. Dauer, Zeiträume und Phasentitel lassen sich frei auf den Kunden einstellen.</p>
+      <p class="sub">Woche 1 beginnt mit der Zusage.</p>
       <div class="tl-top no-print">
         <label for="tlWeeks">Projektdauer <input type="number" class="tl-num" id="tlWeeks" min="4" max="52" value="16"> Wochen</label>
         <button type="button" class="btn" id="tlWeeksReset">Zurücksetzen</button>
@@ -644,7 +626,7 @@ details.more .in{padding-top:11px}
     <div class="block" id="blockPartner">
       <div class="partner">
         <h3>Danach: ein Termin pro Quartal, ein Jahr fix</h3>
-        <p>Kompetenz verfällt, wenn sie nicht nachgezogen wird. Nach der Einführung bleibt ppedv an Bord &mdash; <b>viermal im Jahr vor Ort</b>. Kein neues Projekt, keine Einzelabrechnung.</p>
+        <p>Nach der Einführung bleibt ppedv an Bord &mdash; <b>viermal im Jahr vor Ort</b>.</p>
         <div class="qs">
           <div class="q"><b>Quartal 1</b><h4>Auffrischung und Praxis-Check</h4><p>Was ist hängengeblieben, was eingeschlafen? Offene Fragen aus dem Betrieb.</p></div>
           <div class="q"><b>Quartal 2</b><h4>Neue Funktionen und Updates</h4><p>Was hat sich bei Microsoft und in der KI geändert &mdash; und was davon zählt für Sie?</p></div>
@@ -659,7 +641,7 @@ details.more .in{padding-top:11px}
 
 <section class="step" id="s4">
   <div class="wrap">
-    <p class="lead">Der Katalog hinter der Matrix: <b>sechs Kompetenzwelten</b>, dazu je drei Kernkompetenzen, die typischen Themen aus Kundengesprächen und die Kurse, aus denen der Lernpfad gebaut wird. Zum Zeigen im Termin &mdash; und mit <b>+ übernehmen</b> holen Sie einen Punkt direkt in die Kompetenzwelt des Kunden.</p>
+    <p class="lead">Sechs Kompetenzwelten. <b>+ übernehmen</b> holt einen Punkt in die Matrix des Kunden.</p>
 
     <div class="catbox">
       <svg class="ring" viewBox="0 0 900 900" role="img" aria-label="ppedv Kompetenzwelten">
@@ -690,11 +672,10 @@ details.more .in{padding-top:11px}
       <summary>Wie ist die Matrix aufgebaut?</summary>
       <div class="in">
         <dl class="lv">
-          <dt><em>Ebene 1</em>Kompetenzwelt</dt><dd>Das Themenfeld. Sechs Stück, fest, im Außenring. <em>Daten besser nutzen</em></dd>
-          <dt><em>Ebene 2</em>Skill</dt><dd>Was der Kunde nennt, in seinen Worten. Im Innenring. Nichts ist vorgegeben &mdash; der Ring füllt sich mit dem, was im Gespräch kommt. <em>„Drei Abteilungen, drei Umsatzzahlen“</em></dd>
-          <dt><em>Ebene 3</em>Team</dt><dd>Wem der Skill fehlt, mit der Zahl der betroffenen Mitarbeitenden. Mehrere Teams je Skill möglich. <em>Controlling · 5</em></dd>
+          <dt><em>Ebene 1</em>Kompetenzwelt</dt><dd>Sechs feste Themenfelder, der Außenring. <em>Daten besser nutzen</em></dd>
+          <dt><em>Ebene 2</em>Skill</dt><dd>Was der Kunde nennt, der Innenring. <em>„Drei Abteilungen, drei Umsatzzahlen“</em></dd>
+          <dt><em>Ebene 3</em>Team</dt><dd>Wem er fehlt, mit Kopfzahl. <em>Controlling · 5</em></dd>
         </dl>
-        <p style="font-size:14.5px;color:var(--ink-2);margin-top:16px;line-height:1.6;max-width:80ch"><b>Die Kernkompetenzen von ppedv</b> stehen weiter hinter jeder Welt &mdash; im Panel unter „Woran ppedv dabei denkt“. Sie sind der Anhalt für das Curriculum, aber nicht das, was Sie im Gespräch ausfüllen.</p>
       </div>
     </details>
     <details>
@@ -808,10 +789,10 @@ const WORLDS=[
 ];
 
 const PFIELDS=[
- {k:"anlass",l:"Was funktioniert heute nicht so, wie es soll?",ph:"Der Auslöser: seit wann, wie oft, was kostet es?",area:1,wide:1},
- {k:"erfolg",l:"Woran merken Sie in sechs Monaten, dass es gewirkt hat?",ph:"Das Erfolgsbild in den Worten des Kunden — so konkret wie möglich.",area:1,wide:1},
- {k:"start",l:"Wann soll es starten?",ph:"z. B. ab Januar, nach dem Jahresabschluss"},
- {k:"entscheidung",l:"Wer entscheidet — und bis wann?",ph:"z. B. GF und HR-Leitung, Entscheidung im November"}
+ {k:"anlass",l:"Was funktioniert nicht?",ph:"Seit wann, wie oft, was kostet es?",area:1,wide:1},
+ {k:"erfolg",l:"Erfolgsbild in sechs Monaten",ph:"In den Worten des Kunden",area:1,wide:1},
+ {k:"start",l:"Start",ph:"z. B. ab Januar"},
+ {k:"entscheidung",l:"Entscheidung",ph:"z. B. GF und HR-Leitung, November"}
 ];
 /* Anzahl und Rollen werden nicht mehr gefragt, sondern je Team erfasst (profile.teams).
    Die alten Schlüssel bleiben nur, um bestehende Karteien zu übernehmen. */
@@ -1170,11 +1151,7 @@ const findIn=document.getElementById("findIn"),hitsEl=document.getElementById("h
       findNote=document.getElementById("findNote"),aiGo=document.getElementById("aiGo");
 const spokenText=()=>[findIn.value,profile.anlass||""].join(" \n ").trim();
 let lastTerms=[];
-function noteDefault(){
-  findNote.className="find-note";
-  findNote.textContent=SAMPLE?"Stichwort genügt — ganze Sätze über „Mit KI zuordnen“."
-    :"Mitschreiben, dann unten als Skill übernehmen. Auch „Was funktioniert heute nicht?“ fließt ein.";
-}
+function noteDefault(){ findNote.className="find-note"; findNote.textContent=""; }
 function localFind(){
   const txt=spokenText(), tl=terms(txt); lastTerms=tl;
   if(txt.trim().length<3||!tl.length){hitsEl.innerHTML=""; noteDefault(); return;}
@@ -1352,14 +1329,14 @@ function skillRow(s,i){
     <div class="srow-top">
       <span class="srow-i">${i+1}</span>
       <input class="s-text" list="skillsug" value="${esc(s.text)}" data-sf="text" maxlength="120"
-        placeholder="Was der Kunde sagt — z. B. „Angebote dauern zu lange“">
+        placeholder="z. B. „Angebote dauern zu lange“">
       <button type="button" class="t-del no-print" data-sdel="${s.id}" title="Skill entfernen">&times;</button>
     </div>
-    <span class="s-lbl">Welche Kompetenzwelt?${sug?` <i>Vorschlag: ${esc(sug.title)}</i>`:""}</span>
+    <span class="s-lbl">Kompetenzwelt${sug?` <i>· ${esc(sug.title)}?</i>`:""}</span>
     <div class="wsel">${WORLDS.map(w=>`<button type="button" class="wchip" style="--wc:${w.c}" data-sw="${w.id}" aria-pressed="${s.welt===w.id}">${esc(w.title)}</button>`).join("")}</div>
-    <span class="s-lbl">Wen betrifft es — und wie viele?</span>
+    <span class="s-lbl">Teams</span>
     ${teamChips(s,i)}
-    <input class="s-note" value="${esc(s.note)}" maxlength="200" placeholder="Ergänzung (optional): welcher Fall, welche Frist?" data-sf="note">
+    <input class="s-note" value="${esc(s.note)}" maxlength="200" placeholder="Ergänzung (optional)" data-sf="note">
   </div>`;
 }
 const needEl=document.getElementById("need");
@@ -1374,10 +1351,8 @@ function renderNeed(){
   needEl.innerHTML=`
     <div class="need-h"><h3>Was fehlt — und wem?</h3>
       <span class="need-sum">${esc(needSummary())}</span></div>
-    <p class="need-hint">Eine Zeile je Thema, in den Worten des Kunden. Die Kompetenzwelt wird vorgeschlagen,
-      die betroffenen Teams tragen Sie mit ihrer Mitarbeiterzahl dazu ein. Daraus baut sich „Eure Kompetenzwelt“ auf.</p>
     ${ls.length?ls.map(skillRow).join("")
-      :`<div class="t-empty">Noch nichts erfasst — fangen Sie mit dem an, was der Kunde zuerst genannt hat.</div>`}
+      :`<div class="t-empty">Noch nichts erfasst.</div>`}
     <button type="button" class="btn go need-add no-print" id="sAdd">+ Weiteren Skill erfassen</button>`;
 }
 function refreshSug(){
@@ -1415,7 +1390,7 @@ needEl.addEventListener("input",e=>{
     if(g){ s.welt=g.id;
       row.classList.add("set");
       row.querySelectorAll("[data-sw]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.sw===g.id));
-      const l=row.querySelector(".s-lbl"); if(l) l.innerHTML="Welche Kompetenzwelt?";
+      const l=row.querySelector(".s-lbl"); if(l) l.innerHTML="Kompetenzwelt";
     }
   }
   touchSkills();
@@ -1451,7 +1426,6 @@ function renderPanel(){
        <p>${ts.map(t=>esc(t.name)+(t.n?" · "+t.n:"")).join(" &nbsp;|&nbsp; ")}${ts.length>1&&headFor(w.id)?" &mdash; zusammen "+headFor(w.id):""}</p></div>`:""}
      <div class="grp">
        <div class="grp-h"><span class="lbl">Erfasste Skills</span></div>
-       <p class="hint">Das, was der Kunde zu dieser Welt gesagt hat. Hier lässt es sich im Gespräch nachschärfen.</p>
        ${ls.length?ls.map(s=>`<div class="pskill" data-sid="${s.id}">
          <input class="ps-t" value="${esc(s.text)}" data-sf="text" maxlength="120">
          <div class="ps-t2">${sTeams(s).length
@@ -1460,13 +1434,12 @@ function renderPanel(){
            <button type="button" class="mini" data-goedit="${s.id}">bearbeiten</button></div>
          ${s.note.trim()?`<p class="ps-n">${esc(s.note.trim())}</p>`:""}
        </div>`).join("")
-        :`<p class="ps-empty">Noch nichts. Über den Ring oder unten anlegen.</p>`}
+        :`<p class="ps-empty">Noch nichts.</p>`}
        <button type="button" class="addk no-print" id="addHere">+ Skill in „${esc(w.title)}“ erfassen</button>
      </div>
-     <div class="beleg"><span class="lbl">Warum das gebraucht wird</span><p>${esc(w.beleg)}</p></div>
-     <details class="more"><summary>Woran ppedv dabei denkt</summary><div class="in">
-       <p class="hint">Kernkompetenzen dieser Welt — als Anhalt, nicht als Vorgabe:</p>
+     <details class="more"><summary>Kernkompetenzen und Beleg</summary><div class="in">
        <ul class="plist">${w.komp.map(k=>`<li><b>${esc(k.n)}</b>${esc(k.d)}</li>`).join("")}</ul>
+       <div class="beleg" style="margin-top:12px"><p>${esc(w.beleg)}</p></div>
      </div></details>
    </div>`;
   const ah=panel.querySelector("#addHere");
@@ -1487,7 +1460,7 @@ panel.addEventListener("click",e=>{
 });
 
 /* ---------- Ring-Interaktion ---------- */
-const readout=document.getElementById("readout"),DEF="Innenring: die erfassten Skills · Außenring: Kompetenzwelt öffnen.";
+const readout=document.getElementById("readout"),DEF="";
 const coreName=document.getElementById("coreName"),cds=[document.getElementById("cd1"),document.getElementById("cd2"),document.getElementById("cd3")];
 const coreTeamEl=document.getElementById("coreTeam");
 function setCore(name,desc){
@@ -1544,9 +1517,9 @@ function renderNeedbar(){
   const ohne=named().filter(s=>!s.welt);
   const warn=ohne.length?`<div class="nb-warn"><b>${nSkill(ohne.length)} ohne Kompetenzwelt</b>
     <span>${ohne.map(s=>esc(s.text)).join(" · ")}</span>
-    <i>Der Ring zeigt sie erst, wenn in Schritt 1 eine Welt gewählt ist.</i></div>`:"";
-  if(!act.length){box.innerHTML=warn||`<p class="nb-empty">Noch nichts erfasst — in Schritt 1 anfangen, der Ring füllt sich mit.</p>`; return;}
-  box.innerHTML=warn+`<span class="lbl">Betroffene Kompetenzwelten<i class="no-print"> — anklicken öffnet sie</i></span>
+    </div>`:"";
+  if(!act.length){box.innerHTML=warn||`<p class="nb-empty">Noch nichts erfasst.</p>`; return;}
+  box.innerHTML=warn+`<span class="lbl">Betroffene Kompetenzwelten</span>
     <div class="nb-row">${act.map(x=>{
       const ts=teamsFor(x.w.id);
       return `<button type="button" class="nb" style="--wc:${x.w.c}" data-nb="${x.w.id}">
@@ -1565,7 +1538,7 @@ function renderCtx(){
   const items=[];
   if((profile.gesagt||"").trim()) items.push(["Was der Kunde sagt",profile.gesagt.trim()]);
   PFIELDS.forEach(f=>{if((profile[f.k]||"").trim()) items.push([f.l,profile[f.k].trim()]);});
-  if((notes||"").trim()) items.push(["Notizen aus dem Gespräch",notes.trim()]);
+  if((notes||"").trim()) items.push(["Notizen",notes.trim()]);
   if(!items.length){box.innerHTML=""; return;}
   const open=(()=>{const d=box.querySelector("details"); return d?d.open:true;})();
   box.innerHTML=`<details class="ctx"${open?" open":""}>
@@ -1577,7 +1550,7 @@ function renderNeedOut(){
   const g=document.getElementById("needOut"), ls=named();
   if(!ls.length){g.innerHTML=""; return;}
   g.innerHTML=`<h3 style="font-size:22px">Was fehlt — und wem?</h3>
-    <p class="sub" style="font-size:14.5px;color:var(--ink-2);margin:6px 0 16px">Im Gespräch aufgenommen: ${esc(needSummary())}.</p>
+    <p class="sub" style="font-size:13.5px;color:var(--ink-3);margin:5px 0 14px">${esc(needSummary())}</p>
     <div class="ntab">
       <div class="nt-h"><span>Skill</span><span>Kompetenzwelt</span><span>Teams</span><span>Ergänzung</span></div>
       ${ls.map(s=>{const w=WORLDS.find(x=>x.id===s.welt);
@@ -1594,7 +1567,7 @@ function renderNeedOut(){
 const fields=document.getElementById("fields");
 fields.innerHTML=PFIELDS.map(f=>`<div class="field${f.wide?" wide":""}"><label for="pf-${f.k}">${esc(f.l)}</label>
   ${f.area?`<textarea id="pf-${f.k}" data-pf="${f.k}" placeholder="${esc(f.ph)}"></textarea>`:`<input id="pf-${f.k}" data-pf="${f.k}" placeholder="${esc(f.ph)}">`}</div>`).join("")
-  +`<div class="field wide"><label for="pfNotes">Notizen aus dem Gespräch</label><textarea id="pfNotes" placeholder="Alles, was sonst noch wichtig ist."></textarea></div>`;
+  +`<div class="field wide"><label for="pfNotes">Notizen</label><textarea id="pfNotes" placeholder=""></textarea></div>`;
 PFIELDS.forEach(f=>{const n=fields.querySelector(`[data-pf="${f.k}"]`);
   n.addEventListener("input",()=>{profile[f.k]=n.value; save(); renderSync(); renderCounts(); renderCtx();
     if(f.k==="anlass") localFind();});});
@@ -1656,7 +1629,7 @@ function renderTimeline(){
        <span>W ${a}–${b}</span><span class="m">${p.ms.split(" ")[0]}</span></button></div></div>`;}).join("")}
  <div class="tl-r tl-after"><div class="tl-l"><b>Danach</b><span>Jahrespartnerschaft</span></div>
    <div class="tl-t"><div class="bar part"><span>Ab Projektabschluss · 4 Termine vor Ort · Q1–Q4 · 12 Monate</span><span class="m">Pauschalpreis</span></div></div></div>
- <p class="tl-note">Woche 1 beginnt mit der Zusage · Phase 4 läuft parallel zu Phase 3 (gestrichelt) · Projektdauer oben, Zeitraum und Titel je Phase unten anpassbar</p></div>`;
+ <p class="tl-note">Phase 4 läuft parallel zu Phase 3 (gestrichelt)</p></div>`;
 }
 renderTimeline();
 const tlWeeksIn=document.getElementById("tlWeeks");
@@ -1685,9 +1658,8 @@ function renderPhases(){
    <div class="sync" id="sy${i}"></div>
    <div class="out"><span class="lbl" style="margin-right:4px">Ergebnis</span>${p.out.map(o=>`<span class="tag">${o}</span>`).join("")}<span class="tag m">${p.ms}</span></div>
    <div class="tl-edit no-print">
-     <span class="lbl">Diese Phase auf den Kunden einstellen</span>
-     <label class="elbl2">Titel dieser Phase<input type="text" maxlength="70" id="ph-t-${i}" value="${esc(phTitle(i))}" placeholder="${esc(p.t)}"></label>
-     <span class="elbl2" style="margin-bottom:0">Zeitraum (Woche ab Zusage)</span>
+     <label class="elbl2">Titel<input type="text" maxlength="70" id="ph-t-${i}" value="${esc(phTitle(i))}" placeholder="${esc(p.t)}"></label>
+     <span class="elbl2" style="margin-bottom:0">Woche</span>
      <div style="display:flex; gap:8px; align-items:center; margin-top:8px; flex-wrap:wrap">
        <input type="number" min="1" max="${TLMAX()}" id="tl-start-${i}" value="${a}" class="tl-num">
        <span style="font-size:13px; color:var(--ink-3)">bis</span>
@@ -1961,16 +1933,15 @@ async function buildPDF(scope){
     d.addImage(png,"PNG",(W-gr)/2,B.y,gr,gr,undefined,"FAST");
     B.y+=gr+3;
     B.setF(8,"normal",PDFC.ink3);
-    d.text("Außenring: die sechs Kompetenzwelten · Innenring: die erfassten Skills · Zahl am Rand: betroffene Mitarbeitende",
-      W/2,B.y,{align:"center",maxWidth:W-2*M});
+    d.text("Außen: Kompetenzwelten · Innen: Skills · Zahl: Mitarbeitende",W/2,B.y,{align:"center"});
     B.y+=6;
   }catch(e){ B.fliess("Der Kompetenzring konnte nicht eingebettet werden.",9,PDFC.ink3); }
 
   /* Wenig Kontext: die Worte des Kunden */
   const ctx=[];
-  if((profile.gesagt||"").trim()) ctx.push(["Was der Kunde sagt",profile.gesagt.trim()]);
-  if((profile.anlass||"").trim()) ctx.push(["Was heute nicht funktioniert",profile.anlass.trim()]);
-  if((profile.erfolg||"").trim()) ctx.push(["Erfolgsbild in sechs Monaten",profile.erfolg.trim()]);
+  if((profile.gesagt||"").trim()) ctx.push(["Gesagt",profile.gesagt.trim()]);
+  if((profile.anlass||"").trim()) ctx.push(["Funktioniert nicht",profile.anlass.trim()]);
+  if((profile.erfolg||"").trim()) ctx.push(["Erfolgsbild",profile.erfolg.trim()]);
   if(ctx.length){
     B.platz(30); B.titel("Aus dem Gespräch");
     ctx.forEach(([l,v])=>{
@@ -2024,7 +1995,7 @@ async function buildPDF(scope){
     B.seite();
     B.setF(16,"bold",PDFC.ink); d.text("Umsetzung — ab Ihrer Zusage",M,B.y); B.y+=6;
     B.setF(9.5,"normal",PDFC.ink2);
-    d.text("Woche 1 beginnt mit der Zusage. Gesamtdauer "+TLMAX()+" Wochen.",M,B.y); B.y+=6;
+    d.text("Ab Zusage · "+TLMAX()+" Wochen",M,B.y); B.y+=6;
     B.linie();
     /* Balkenplan */
     const x0=M+34, breite=W-M-x0, mx=TLMAX();
@@ -2059,7 +2030,7 @@ async function buildPDF(scope){
       B.y+=4;
     });
     B.platz(34); B.titel("Danach: ein Termin pro Quartal, ein Jahr fix");
-    B.fliess("Kompetenz verfällt, wenn sie nicht nachgezogen wird. Nach der Einführung bleibt ppedv an Bord — viermal im Jahr vor Ort. 12 Monate Laufzeit, ein Pauschalpreis.",9.5,PDFC.ink2);
+    B.fliess("Viermal im Jahr vor Ort. 12 Monate Laufzeit, ein Pauschalpreis.",9.5,PDFC.ink2);
   }
   B.fuss();
   return d;
@@ -2132,16 +2103,10 @@ async function saveDoc(scope){
 }
 function showPrintHelp(){
   phelp.innerHTML=`<button type="button" class="x" id="phX" title="Schließen">&times;</button>
-    <b>Weder drucken noch speichern möglich</b>
-    <p>Diese Seite läuft in einem abgeschirmten Rahmen, der den Druckdialog sperrt. Auch die
-    Dateiausgabe steht gerade nicht bereit — sie ist gesperrt, solange die Matrix über
-    „jeder mit dem Link“ geteilt ist.</p>
+    <b>PDF nicht möglich</b>
     <ol>
-      <li><b>Freigabe prüfen:</b> im „Share“-Menü darf <code>General access</code> nicht auf
-        „Anyone with the link“ stehen. Danach die Seite neu laden.</li>
-      <li><b>Sofort:</b> Rechtsklick mitten auf die Seite &rarr; <code>Dieser Frame</code> &rarr;
-        <code>Frame drucken…</code> (Chrome, Edge), dort <code>Als PDF sichern</code>.</li>
-      <li><b>Ersatzweise:</b> „Als Text kopieren“ funktioniert &mdash; die Zwischenablage ist erlaubt.</li>
+      <li>Im „Share“-Menü darf <code>General access</code> nicht auf „Anyone with the link“ stehen. Danach neu laden.</li>
+      <li>Ersatzweise: „Als Text kopieren“.</li>
     </ol>`;
   phelp.hidden=false;
   const x=document.getElementById("phX"); if(x) x.addEventListener("click",()=>{phelp.hidden=true;});
