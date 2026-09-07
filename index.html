@@ -619,7 +619,7 @@ details.more .in{padding-top:11px}
   <div class="wrap">
     <div class="actions no-print">
       <button class="btn go" id="btnPrint">Alles als PDF</button>
-      <button class="btn go" id="btnPrintModel">Nur das Kompetenzmodell</button>
+      <button class="btn go" id="btnPrintModel">Nur das Kompetenzmodell als PDF</button>
       <button class="btn" id="btnCopy">Als Text kopieren</button>
     </div>
     <div class="phelp no-print" id="phelp" hidden></div>
@@ -713,6 +713,7 @@ details.more .in{padding-top:11px}
     <p class="foot">ppedv AG · kompetenz@ppedv.de · Inhalte der Kompetenzwelten: ppedv.de/kompetenz<br>Arbeitsdokument für das gemeinsame Gespräch · <span id="today"></span></p>
   </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <datalist id="skillsug"></datalist>
 <datalist id="teamsug"></datalist>
 <div class="toast" id="toast"></div>
@@ -1861,6 +1862,209 @@ fbSel.addEventListener("change",()=>{
     restoredId=null; renderList(); idle();},e=>st(errT(e),"err"));
 })();
 
+
+/* ---------- PDF ----------
+   Der Ring kommt als hochauflösende Grafik ins Dokument, alles andere als
+   gesetzter PDF-Text. Farben sind fest hinterlegt: ein Druckstück ist immer
+   hell, auch wenn der Bildschirm gerade dunkel steht. */
+const PDFC={k:["#1F3358","#27406B","#2E4879","#365A93","#3E6BA8","#4A7DB8"],
+  orange:"#EA8F13", ink:"#141A24", ink2:"#465268", ink3:"#78849A",
+  line:"#D5DCE7", soft:"#FDF1DD", softInk:"#8A5A08", blue:"#2E4879"};
+const wCol=w=>PDFC.k[WORLDS.indexOf(w)]||PDFC.blue;
+
+/* SVG in ein Bild verwandeln: alle berechneten Stile müssen vorher fest
+   eingetragen werden, sonst gehen var() und color-mix() beim Serialisieren
+   verloren und der Ring käme schwarz heraus. */
+async function ringPNG(scale){
+  const root=document.documentElement, vorher=root.getAttribute("data-theme");
+  root.setAttribute("data-theme","light");
+  const src=document.querySelector("#s1 svg.ring");
+  const clone=src.cloneNode(true);
+  const A=[src,...src.querySelectorAll("*")], B=[clone,...clone.querySelectorAll("*")];
+  const props=["fill","stroke","stroke-width","stroke-linejoin","stroke-dasharray",
+               "opacity","font-family","font-size","font-weight","letter-spacing","display"];
+  A.forEach((n,i)=>{const cs=getComputedStyle(n), t=B[i]; if(!t) return;
+    props.forEach(p=>{const v=cs.getPropertyValue(p); if(v) t.style.setProperty(p,v);});});
+  root.setAttribute("data-theme",vorher||"");
+  if(!vorher) root.removeAttribute("data-theme");
+  /* Die Mitte trägt am Bildschirm die gerade gewählte Welt — im Druck wäre das willkürlich */
+  ["coreName","cd1","cd2","cd3","coreTeam"].forEach(id=>{
+    const n=clone.querySelector("#"+id); if(n) n.style.display="none";});
+  const rule=clone.querySelector(".core-rule"); if(rule) rule.style.display="none";
+  clone.setAttribute("xmlns","http://www.w3.org/2000/svg");
+  /* Die Weltnamen liegen auf textPath mit xlink:href — ohne diesen Namensraum
+     ist die serialisierte Grafik kein gültiges XML und das Bild lädt nicht. */
+  clone.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink");
+  clone.setAttribute("width","900"); clone.setAttribute("height","900");
+  const xml=new XMLSerializer().serializeToString(clone);
+  const img=new Image();
+  await new Promise((res,rej)=>{img.onload=res; img.onerror=()=>rej(new Error("Ring nicht darstellbar"));
+    img.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(xml);});
+  const cv=document.createElement("canvas"); cv.width=cv.height=900*scale;
+  const cx=cv.getContext("2d");
+  cx.fillStyle="#ffffff"; cx.fillRect(0,0,cv.width,cv.height);
+  cx.drawImage(img,0,0,cv.width,cv.height);
+  return cv.toDataURL("image/png");
+}
+
+function pdfBuilder(){
+  const {jsPDF}=window.jspdf;
+  const d=new jsPDF({unit:"mm",format:"a4"});
+  const W=210,H=297,M=17;
+  let y=M;
+  const setF=(sz,st,col)=>{d.setFont("helvetica",st||"normal"); d.setFontSize(sz); d.setTextColor(col||PDFC.ink);};
+  const fuss=()=>{
+    const n=d.getNumberOfPages();
+    setF(7.5,"normal",PDFC.ink3);
+    d.text("ppedv AG · kompetenz@ppedv.de · ppedv.de/kompetenz",M,H-10);
+    d.text("Seite "+n,W-M,H-10,{align:"right"});
+  };
+  const seite=()=>{fuss(); d.addPage(); y=M;};
+  const platz=h=>{if(y+h>H-18) seite();};
+  const abs=h=>{y+=h;};
+  const txt=(s,sz,st,col,x)=>{setF(sz,st,col); d.text(String(s),x||M,y); abs(sz*0.42+1.4);};
+  const fliess=(s,sz,col,breite)=>{
+    setF(sz,"normal",col||PDFC.ink2);
+    const zeilen=d.splitTextToSize(String(s),breite||(W-2*M));
+    zeilen.forEach(z=>{platz(6); d.text(z,M,y); abs(sz*0.42+1.2);});
+  };
+  const linie=()=>{d.setDrawColor(PDFC.line); d.setLineWidth(0.2); d.line(M,y,W-M,y); abs(4);};
+  const titel=t=>{platz(16); abs(3); setF(13,"bold",PDFC.ink); d.text(t,M,y); abs(6); linie();};
+  return {d,W,H,M,get y(){return y;},set y(v){y=v;},setF,fuss,seite,platz,abs,txt,fliess,linie,titel};
+}
+
+function kennzahl(){
+  const n=named().length, h=headcount(), ws=WORLDS.filter(w=>skillsFor(w.id).length).length;
+  return nSkill(n)+(h?"  ·  "+h+" Mitarbeitende":"")+(ws?"  ·  "+ws+" von 6 Kompetenzwelten":"");
+}
+
+async function buildPDF(scope){
+  const B=pdfBuilder(), {d,W,M}=B;
+  const heute=new Date().toLocaleDateString("de-AT",{day:"2-digit",month:"long",year:"numeric"});
+  const kunde=(profile.name||"").trim();
+
+  /* Kopf */
+  d.setFillColor(PDFC.blue); d.roundedRect(M,B.y,17,7,1.2,1.2,"F");
+  B.setF(9,"bold","#FFFFFF"); d.text("ppedv",M+2.6,B.y+4.9);
+  B.setF(8,"normal",PDFC.ink3); d.text(heute,W-M,B.y+4.9,{align:"right"});
+  B.y+=14;
+  B.setF(20,"bold",PDFC.ink); d.text(kunde||"Kompetenzmodell",M,B.y); B.y+=7.5;
+  B.setF(10.5,"normal",PDFC.ink2);
+  d.text(kunde?"Kompetenzmodell · ppedv Kompetenzmatrix":"ppedv Kompetenzmatrix",M,B.y); B.y+=5;
+  B.setF(9.5,"bold",PDFC.softInk); d.text(kennzahl(),M,B.y); B.y+=5;
+  B.linie();
+
+  /* Ring */
+  try{
+    const png=await ringPNG(2.5);
+    const gr=Math.min(W-2*M,132);
+    d.addImage(png,"PNG",(W-gr)/2,B.y,gr,gr,undefined,"FAST");
+    B.y+=gr+3;
+    B.setF(8,"normal",PDFC.ink3);
+    d.text("Außenring: die sechs Kompetenzwelten · Innenring: die erfassten Skills · Zahl am Rand: betroffene Mitarbeitende",
+      W/2,B.y,{align:"center",maxWidth:W-2*M});
+    B.y+=6;
+  }catch(e){ B.fliess("Der Kompetenzring konnte nicht eingebettet werden.",9,PDFC.ink3); }
+
+  /* Wenig Kontext: die Worte des Kunden */
+  const ctx=[];
+  if((profile.gesagt||"").trim()) ctx.push(["Was der Kunde sagt",profile.gesagt.trim()]);
+  if((profile.anlass||"").trim()) ctx.push(["Was heute nicht funktioniert",profile.anlass.trim()]);
+  if((profile.erfolg||"").trim()) ctx.push(["Erfolgsbild in sechs Monaten",profile.erfolg.trim()]);
+  if(ctx.length){
+    B.platz(30); B.titel("Aus dem Gespräch");
+    ctx.forEach(([l,v])=>{
+      B.platz(14);
+      B.setF(7.5,"bold",PDFC.softInk); d.text(l.toUpperCase(),M,B.y); B.y+=4;
+      B.fliess("„"+v+"“",10,PDFC.ink);
+      B.y+=2.5;
+    });
+  }
+
+  /* Die Welten mit ihren Skills */
+  const welten=WORLDS.filter(w=>skillsFor(w.id).length);
+  if(welten.length){
+    B.platz(26); B.titel("Das Kompetenzmodell");
+    welten.forEach(w=>{
+      const ls=skillsFor(w.id), tf=teamsFor(w.id);
+      B.platz(26);   /* Überschrift nicht allein am Seitenende stehen lassen */
+      d.setFillColor(wCol(w)); d.circle(M+1.6,B.y-1.4,1.6,"F");
+      B.setF(11,"bold",PDFC.ink); d.text(w.title,M+5.5,B.y);
+      B.setF(8.5,"normal",PDFC.ink3);
+      d.text(nSkill(ls.length)+(headFor(w.id)?" · "+headFor(w.id)+" MA":""),W-M,B.y,{align:"right"});
+      B.y+=5;
+      ls.forEach(s=>{
+        B.platz(10);
+        B.setF(9.5,"normal",PDFC.ink);
+        d.splitTextToSize("•  "+s.text,W-2*M-8).forEach((z,i)=>{d.text(z,M+5.5+(i?3:0),B.y); B.y+=4.3;});
+        const te=sTeams(s);
+        if(te.length){
+          B.setF(8,"normal",PDFC.softInk);
+          d.text(te.map(t=>((t.name||"").trim()||"Team?")+(tNum(t)?" · "+tNum(t):"")).join("   |   "),M+9,B.y);
+          B.y+=4;
+        }
+        if(s.note.trim()){B.setF(8.5,"italic",PDFC.ink3);
+          d.splitTextToSize(s.note.trim(),W-2*M-12).forEach(z=>{d.text(z,M+9,B.y); B.y+=3.8;});}
+        B.y+=1;
+      });
+      if(tf.length){B.setF(8,"normal",PDFC.ink3);
+        d.text("Betroffen: "+tf.map(t=>t.name+(t.n?" ("+t.n+")":"")).join(" · "),M+5.5,B.y); B.y+=4;}
+      B.y+=3;
+    });
+  }
+  const ohne=named().filter(s=>!s.welt);
+  if(ohne.length){
+    B.platz(16); B.setF(9,"bold",PDFC.softInk); d.text("Noch ohne Kompetenzwelt",M,B.y); B.y+=4.5;
+    ohne.forEach(s=>{B.platz(6); B.setF(9.5,"normal",PDFC.ink); d.text("•  "+s.text,M+5.5,B.y); B.y+=4.3;});
+    B.y+=3;
+  }
+
+  /* Umsetzung nur im vollen Umfang */
+  if(scope!=="model"){
+    B.seite();
+    B.setF(16,"bold",PDFC.ink); d.text("Umsetzung — ab Ihrer Zusage",M,B.y); B.y+=6;
+    B.setF(9.5,"normal",PDFC.ink2);
+    d.text("Woche 1 beginnt mit der Zusage. Gesamtdauer "+TLMAX()+" Wochen.",M,B.y); B.y+=6;
+    B.linie();
+    /* Balkenplan */
+    const x0=M+34, breite=W-M-x0, mx=TLMAX();
+    B.setF(7,"normal",PDFC.ink3);
+    for(let i=0;i<mx;i+=Math.ceil(mx/16)) d.text(String(i+1),x0+breite*(i/mx)+0.6,B.y);
+    B.y+=2;
+    d.setDrawColor(PDFC.line); d.setLineWidth(0.15);
+    PHASES.forEach((p,i)=>{
+      const[a,b]=tlRange(i);
+      B.platz(10);
+      B.setF(8.5,"bold",PDFC.ink); d.text(p.n,M,B.y+3);
+      d.line(x0,B.y+4.2,W-M,B.y+4.2);
+      const bx=x0+breite*((a-1)/mx), bw=Math.max(3,breite*((b-a+1)/mx));
+      d.setFillColor(TLPAR[i]?"#9DB0CE":PDFC.blue); d.roundedRect(bx,B.y,bw,6,1,1,"F");
+      B.setF(7.5,"bold","#FFFFFF"); d.text("W "+a+"–"+b,bx+1.8,B.y+4);
+      B.y+=8;
+      B.setF(9,"normal",PDFC.ink2); d.text(phTitle(i),M,B.y); 
+      B.setF(7.5,"normal",PDFC.softInk); d.text(PHASES[i].ms,W-M,B.y,{align:"right"});
+      B.y+=6;
+    });
+    B.y+=2; B.titel("Was in welcher Phase passiert");
+    PHASES.forEach((p,i)=>{
+      B.platz(26);
+      B.setF(10,"bold",PDFC.ink); d.text(p.n+" — "+phTitle(i),M,B.y); B.y+=4.5;
+      B.fliess(p.goal,9,PDFC.ink2);
+      p.steps.forEach(st=>{B.platz(6); B.setF(8.5,"normal",PDFC.ink2);
+        d.splitTextToSize("·  "+st,W-2*M-4).forEach(z=>{d.text(z,M+3,B.y); B.y+=3.7;});});
+      B.y+=1.5;
+      B.setF(8,"normal",PDFC.ink3);
+      d.splitTextToSize("ppedv: "+p.pp,W-2*M-4).forEach(z=>{d.text(z,M+3,B.y); B.y+=3.5;});
+      d.splitTextToSize("Kunde: "+p.ku,W-2*M-4).forEach(z=>{d.text(z,M+3,B.y); B.y+=3.5;});
+      B.y+=4;
+    });
+    B.platz(34); B.titel("Danach: ein Termin pro Quartal, ein Jahr fix");
+    B.fliess("Kompetenz verfällt, wenn sie nicht nachgezogen wird. Nach der Einführung bleibt ppedv an Bord — viermal im Jahr vor Ort. 12 Monate Laufzeit, ein Pauschalpreis.",9.5,PDFC.ink2);
+  }
+  B.fuss();
+  return d;
+}
+
 /* ---------- Ausgabe ---------- */
 const toast=m=>{const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show");
   clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),2200);};
@@ -1897,22 +2101,34 @@ ${clone.innerHTML}
 <`+`script>addEventListener("load",function(){setTimeout(function(){window.print();},500);});<`+`/script>
 </body></html>`;
 }
-function dateiname(scope){
+function dateiname(scope,ext){
   const d=new Date(), p=n=>String(n).padStart(2,"0");
   const kunde=((profile.name||"").trim()||"Kunde").replace(/[^\wÄÖÜäöüß -]/g,"").replace(/\s+/g,"-");
-  return `Kompetenzmatrix-${kunde}-${scope==="model"?"Modell-":""}${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.html`;
+  return `Kompetenzmatrix-${kunde}-${scope==="model"?"Modell-":""}${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.${ext}`;
 }
 async function saveDoc(scope){
   if(!DL){ showPrintHelp(); return; }
+  if(!named().length){ toast("Noch nichts erfasst."); return; }
+  const btn=scope==="model"?document.getElementById("btnPrintModel"):document.getElementById("btnPrint");
+  const label=btn?btn.textContent:"";
+  if(btn){btn.disabled=true; btn.textContent="PDF wird gebaut …";}
   try{
-    await DL.save({filename:dateiname(scope),data:standaloneDoc(scope)});
-    toast("Datei gesichert — öffnen, dann erscheint der Druckdialog. Dort „Als PDF sichern“.");
+    /* Echtes PDF, wenn jsPDF geladen ist — sonst die Seite als Datei, aus der
+       heraus der Druckdialog funktioniert. */
+    if(window.jspdf&&window.jspdf.jsPDF){
+      const doc=await buildPDF(scope);
+      await DL.save({filename:dateiname(scope,"pdf"),data:doc.output("blob")});
+      toast("PDF gesichert.");
+    }else{
+      await DL.save({filename:dateiname(scope,"html"),data:standaloneDoc(scope)});
+      toast("Als Datei gesichert — öffnen, dann erscheint der Druckdialog.");
+    }
   }catch(e){
     const c=e&&e.code;
-    if(c==="declined") return;
-    if(c==="rate_limited"){ toast("Ein Dialog ist noch offen — kurz warten."); return; }
-    showPrintHelp();
-  }
+    if(c==="declined"){ /* still */ }
+    else if(c==="rate_limited") toast("Ein Dialog ist noch offen — kurz warten.");
+    else { console.error(e); toast("PDF fehlgeschlagen — „Als Text kopieren“ geht weiterhin."); showPrintHelp(); }
+  }finally{ if(btn){btn.disabled=false; btn.textContent=label;} }
 }
 function showPrintHelp(){
   phelp.innerHTML=`<button type="button" class="x" id="phX" title="Schließen">&times;</button>
@@ -1933,6 +2149,9 @@ function showPrintHelp(){
 }
 function doPrint(scope){
   phelp.hidden=true;
+  /* Steht die Dateiausgabe bereit, ist sie der bessere Weg: sie liefert ein
+     gesetztes PDF statt eines Druckdialogs, der im Rahmen ohnehin gesperrt ist. */
+  if(DL){ saveDoc(scope); return; }
   document.body.classList.toggle("pm-model",scope==="model");
   document.querySelectorAll("#phases details, .bg details, .ctx").forEach(d=>d.open=true);
   let fired=false;
@@ -1943,7 +2162,7 @@ function doPrint(scope){
   try{ window.print(); }catch(e){}
   setTimeout(()=>{
     window.removeEventListener("beforeprint",mark);
-    if(!fired){ done(); saveDoc(scope); }
+    if(!fired){ done(); showPrintHelp(); }
   },700);
 }
 document.getElementById("btnPrint").addEventListener("click",()=>doPrint("full"));

@@ -154,20 +154,36 @@ der Knopf schien einfach nichts zu tun. Popups und Downloads sind ebenso
 gesperrt; `capabilities: {downloads: true}` wird beim Veröffentlichen
 mit 422 abgelehnt, solange „jeder mit dem Link" eingestellt ist.
 
-Die Seite misst das: schlägt `beforeprint` nicht innerhalb von 700 ms an, gibt
-sie stattdessen **eine Datei aus** — über die `downloads`-Capability, die seit
-der Umstellung der Freigabe deklariert ist.
+Deshalb wird das PDF **selbst gesetzt** und über die `downloads`-Capability
+ausgegeben — kein Druckdialog nötig. Grundlage ist **jsPDF** von cdnjs.
 
-Die Datei ist ein **in sich geschlossenes HTML-Dokument**: derselbe Stand,
-dieselben Stile, ohne die App-Skripte, mit `body.pm-model` beim schmalen Umfang.
-Beim Öffnen springt der Druckdialog von selbst auf — dort „Als PDF sichern".
-Aus dem Rahmen heraus geht Drucken nicht, aus einer lokalen Datei schon.
+**Aufbau des Dokuments** (`buildPDF(scope)`), A4 hochkant:
 
-`input.value` steckt nur in der Eigenschaft, nicht im Markup; die Werte werden
-deshalb vor dem Serialisieren als Attribute gesetzt, sonst wäre der Kundenname
-in der Datei leer.
+1. Kopf: ppedv-Marke, Datum, Kundenname, Kennzahlenzeile
+2. Der Kompetenzring als Grafik, mittig, mit Bildunterschrift
+3. „Aus dem Gespräch": die Worte des Kunden — wenig Kontext, wie gewünscht
+4. „Das Kompetenzmodell": je Welt die Skills mit Teams und Anzahl
+5. Nur im vollen Umfang: Balkenplan der Phasen, Phasendetails, Partnerschaft
 
-Dateiname: `Kompetenzmatrix-<Kunde>[-Modell]-<JJJJMMTT>.html`.
+Der Ring wird aus dem SVG heraus in eine Grafik verwandelt. Zwei Fallstricke
+stecken darin:
+
+- **Berechnete Stile müssen vorher fest eingetragen werden.** `var()` und
+  `color-mix()` überleben das Serialisieren nicht — sonst käme der Ring
+  schwarz heraus.
+- **Der `xlink`-Namensraum muss deklariert sein.** Die Weltnamen liegen auf
+  `textPath` mit `xlink:href`; ohne `xmlns:xlink` ist die Grafik kein gültiges
+  XML und lädt nicht. Genau daran scheiterte der erste Versuch — stillschweigend,
+  das PDF kam einfach ohne Ring.
+
+Für den Druck wird kurz `data-theme="light"` erzwungen: ein Druckstück ist
+immer hell, auch wenn der Bildschirm gerade dunkel steht. Die Farben im PDF
+sind fest hinterlegt, nicht aus den CSS-Variablen gelesen.
+
+Fällt jsPDF aus, gibt die Seite ersatzweise ein in sich geschlossenes
+HTML-Dokument aus, das sich beim Öffnen selbst zum Drucken anbietet.
+
+Dateiname: `Kompetenzmatrix-<Kunde>[-Modell]-<JJJJMMTT>.pdf`.
 
 **Die Druckausgabe ist auf den Kunden zugeschnitten**, nicht auf den Vertrieb:
 Bedienhinweise (`.lead`, `.hint`, `.need-hint`) fallen weg, das Eckdaten-Formular
