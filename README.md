@@ -6,122 +6,43 @@ Kompetenzmodell zusammenzustellen — als Grundlage für Schulungskonzept und An
 **Live:** https://claude.ai/code/artifact/d000a0b9-bdc8-4a60-a48a-f2c0e8fd4091
 **Quelle:** `index.html` (einzelne, eigenständige HTML-Datei — kein Build nötig, einfach im Browser öffnen)
 
-## Die zwei Achsen — Begriffe
+## Der Ablauf im Kundengespräch
 
-Das Werkzeug kreuzt zwei Dinge, die nichts miteinander zu tun haben. Wer sie
-verwechselt, verliert sich sofort:
+Das Werkzeug bildet einen Verkaufstermin ab, nicht einen Fragebogen:
 
-| | **Wer** | **Was** |
-|---|---|---|
-| Einheit | **Team** | **Kompetenzwelt → Kernkompetenz → Skill** |
-| Bedeutung | Eine Gruppe im Haus, mit Kopfzahl | Themenfeld → das Können → die trainierbare Einzelfähigkeit |
-| Beispiel | Vertriebsinnendienst · 12 Personen | Daten besser nutzen → Zahlen richtig lesen → Kennzahlen vereinheitlichen |
-| Erfasst in | Schritt 1 | Schritt 2 |
+1. **Fragen stellen** — was sind die Herausforderungen, in welchen Teams,
+   und tiefer nachfassen.
+2. **Mitschreiben.** Jedes genannte Thema ist ein **Skill**, in den Worten des
+   Kunden. Er bekommt eine der sechs **Kompetenzwelten** zugeordnet — der
+   Vorschlag kommt automatisch aus dem Text.
+3. **Teams dazu.** Wem fehlt der Skill, und wie viele Mitarbeitende betrifft es
+   dort? Mehrere Teams je Skill mit eigener Zahl.
+4. **Matrix live zeigen.** Schritt 2 baut sich zeitgleich auf — der Ring ist das
+   Ergebnis der Erfassung, nicht ein Katalog zum Abhaken. Danach Ergebnis und
+   Ablauf durchgehen, Zeitbalken bei Bedarf verschieben.
+5. **PDF sichern, Kartei speichern.**
+6. PDF an den Kunden senden.
+7. Kartei später nachbearbeiten. *(Versionshistorie ist noch offen — siehe unten.)*
 
-Ein Team ist nie eine Kompetenz. Das Team ist die Gruppe, die Kompetenz ist das
-Können — die Matrix verbindet beide. Diese Legende steht auch in der Anwendung
-oben in Schritt 1, dauerhaft sichtbar.
+## Die drei Ebenen
 
-**„Für wen"** ist die Verbindung: unter jedem gewählten Skill steht, für welche
-Gruppe er gilt. Die Teams aus Schritt 1 stehen als Chips bereit, freie Zusätze
-(„Schichtführer", „neue Kolleginnen") kommen im Gespräch dazu.
+| | Einheit | Bedeutung | Beispiel |
+|---|---|---|---|
+| 1 | **Kompetenzwelt** | Sechs feste Themenfelder. Der Außenring. | Daten besser nutzen |
+| 2 | **Skill** | Was der Kunde nennt, in seinen Worten. Der Innenring. | „Drei Abteilungen, drei Umsatzzahlen" |
+| 3 | **Team** | Wem er fehlt, mit Kopfzahl. Mehrere je Skill. | Controlling · 5 |
 
-Das Wort „Bereich" kommt bewusst nicht mehr vor: im Deutschen meint es sowohl
-Unternehmensbereich als auch Themenbereich, und genau an dieser Doppeldeutigkeit
-kippte das Verständnis. „Zielgruppe" ist ebenfalls verschwunden — es war ein
-zweiter Name für dasselbe wie ein Team.
+Nichts im Innenring ist vorgegeben: er ist leer, wenn das Gespräch beginnt, und
+wächst mit jeder Zeile. Welten ohne Skill zeigen ein gestricheltes, blasses
+Segment — ein Klick darauf legt dort einen Skill an.
 
-## Die Strategie hinter dem Ablauf
+Die **Kernkompetenzen** von ppedv (drei je Welt) sind kein Eingabefeld mehr. Sie
+stehen im Panel unter „Woran ppedv dabei denkt" als Anhalt fürs Curriculum und
+speisen weiter den Matcher.
 
-Das Werkzeug führt das Salesgespräch entlang einer einzigen Kette:
-
-> **Wo fehlen Kompetenzen — und bei wie vielen Menschen?**
-> → Zuordnung in die sechs ppedv-Kompetenzwelten
-> → Kernkompetenzen (Unterkategorien) in den Worten des Kunden
-> → individuelle Timeline
-> → Angebot
-
-Alles, was das Sales-Team hier sieht, sieht auch der Kunde: es gibt keine
-verborgene interne Ansicht. Der Bildschirm ist das gemeinsame Arbeitsdokument.
-
-## Ablauf im Kundengespräch
-
-### Schritt 1 — Bedarf & Kontext
-
-Kernstück ist die **Bedarfsaufnahme**: eine Zeile je Team oder Abteilung mit
-
-- **Name des Teams** (z. B. „Vertriebsinnendienst")
-- **Anzahl der Mitarbeitenden**
-- **in welchen Kompetenzwelten es hakt** — die sechs Welten als Auswahl
-- **was genau fehlt**, in den Worten des Kunden
-
-Kopfzeile rechts summiert laufend mit: *„2 Teams · 17 Mitarbeitende ·
-2 von 6 Kompetenzwelten"*. Diese Summe ersetzt die früheren Einzelfragen nach
-Teilnehmerzahl und Rollen — sie ergibt sich jetzt aus der Aufnahme.
-
-Dazu vier Eckdaten-Fragen (Anlass, Erfolgsbild, Start, Entscheidung) und ein
-Notizfeld.
-
-**Zuordnung aus dem Gesagten.** Das Feld „Was sagt der Kunde?" und die Frage
-„Was funktioniert heute nicht?" speisen gemeinsam die Zuordnung. Aus dem Text
-entstehen Vorschläge auf zwei Ebenen:
-
-- **Kompetenzwelt** — mit Begründung („passt zu generationsübergreifend,
-  einsetzung"). Darunter **„Welche Teams? (mehrere möglich)"**: jedes erfasste
-  Team als Kästchen mit seiner Kopfzahl, beliebig viele ankreuzbar. Bei
-  angekreuzten Teams lässt sich die Anzahl gleich hier eintragen — der Wert ist
-  dieselbe Zahl wie in Schritt 1 und wird in beide Richtungen mitgezogen.
-  Rechts läuft „X Mitarbeitende betroffen" mit. Gibt es noch kein Team, legt
-  „+ Als Team aufnehmen" eins an, mit dem Satz des Kunden als Notiz.
-- **Skill** — ein Klick nimmt ihn ins Modell auf, danach klappt die Karte auf
-  für Zielgruppe und Notiz.
-
-Findet der Katalog nichts, bietet die Trefferzeile an, den Satz als **eigene
-Kernkompetenz** anzulegen — vorbelegt mit dem Wortlaut des Kunden.
-
-### Schritt 2 — Kompetenzen wählen
-
-Das ist die Seite, an der Vertrieb und Kunde **gemeinsam entlanggehen**, nachdem
-die Themen besprochen sind. Alles aus Schritt 1 ist hier sichtbar, an vier
-Stellen:
-
-- **Am Ring selbst** — jede Kompetenzwelt mit erfasstem Team trägt außen eine
-  orange Marke mit der Kopfzahl (42, 30, 5). Ohne Anzahl bleibt die Marke hohl
-  und zeigt die Zahl der Teams.
-- **Im Ringzentrum** — unter der Weltbeschreibung stehen deren Teams
-  („Vertriebsinnendienst · 12"); wird es zu breit für den Innenkreis, kürzt es
-  auf „2 Teams · 42 Mitarbeitende". Die Breite wird per
-  `getComputedTextLength()` gemessen, nicht geschätzt.
-- **In der Bedarfsleiste** über dem Ring — je Welt eine Karte mit Teams,
-  Kopfzahl und den Notizen als Zitat. Ein Klick öffnet die Welt.
-- **Im Streifen „Im Gespräch notiert"** — die Mitschrift und alle vier
-  Eckdaten-Antworten, aufklappbar, damit man im Gespräch darauf zeigen kann.
-
-Im Panel rechts erscheint der Bedarf der gerade gewählten Welt noch einmal samt
-Kundenzitat. Bedarfsleiste und Kontextstreifen erscheinen auch im PDF.
-
-Der Kompetenzring zeigt die sechs Kompetenzwelten (außen) mit ihren
-Kernkompetenzen (innen). Auswahl per Klick im Ring oder im Panel.
-
-**„Für wen" und Notiz je Skill.** Sobald ein Skill aufgenommen ist, klappt
-darunter auf — sowohl in der Trefferkarte als auch im Panel — eine Zeile
-**„Für wen"** und eine für **Notiz**. Die Gruppen sind nicht vorgegeben: die
-Teams aus Schritt 1 stehen als Chips bereit, alles Weitere wird im Feld
-„+ weitere" frei eingetragen und steht danach überall zur Verfügung. Die Notiz
-hält fest, was zum Skill sonst noch gesagt wurde (welcher Fall, welche Frist).
-
-Bausteine (Kurse) gibt es in der Oberfläche nicht mehr — sie machten die
-Auswahl unübersichtlich. Welcher Kurs zu welchem Skill passt, entscheidet
-ppedv in Phase 2.
-
-### Schritt 3 — Ergebnis & Ablauf
-
-Tabelle **„Bedarf im Haus"** (Team · Personen · Kompetenzwelten · was fehlt,
-mit Summenzeile), darunter das Kompetenzmodell als Karten je Welt — jeder Skill
-mit seinen Gruppen und der Notiz —, die
-Umsetzungs-Timeline und das Partnerschaftsmodell. Export als PDF
-(Browser-Druckdialog) oder als Text (Zwischenablage) — beides enthält die
-Bedarfsaufnahme und die angepasste Timeline.
+**Mitarbeiterzahlen werden nicht addiert, sondern je Team maximiert.** Wenn dem
+Innendienst (12 Personen) drei Skills fehlen, sind das nicht 36 Menschen. Je
+Team zählt die größte Nennung, die Gesamtzahl ist deren Summe.
 
 ## Anpassbarkeit (pro Kundengespräch, nicht global)
 
@@ -182,19 +103,26 @@ ist, allein zu genügen.
 - Reines Vanilla-JS in einer HTML-Datei, kein Framework, kein Build-Schritt.
 - Zustand liegt im `localStorage` des Browsers (pro Gerät/Browser getrennt),
   Karteien zusätzlich in der Artifact-Datenbank, wenn verfügbar.
-- Datenmodell:
-  - `WORLDS` — Katalog der 6 Kompetenzwelten mit Kernkompetenzen/Skills
-  - `profile.teams[]` — Teams: `{name, n, worlds[], note}`
-  - `profile.gesagt` — Mitschrift „Was sagt der Kunde?", Teil der Kartei
-  - `WKEY` / `WHAY` / `WTOK` — Stichwörter und Heuhaufen je Kompetenzwelt
-  - `state[weltId].sk{}` — je Skill `{z: [Gruppen], n: "Notiz"}`
-  - `profile.ziele[]` — eigene Gruppen neben den Teams; der „Für wen"-Pool ist
+- Datenmodell — eine flache Liste ist der Kern:
+  - `profile.skills[]` — `{id, text, welt, teams:[{name,n}], note}`
+  - `WORLDS[]` — Katalog der 6 Kompetenzwelten; `komp`, `felder`, `ziel`, `bau`
+    sind nur noch Vorschläge und Suchmaterial, kein Auswahlzustand mehr
+  - `profile.gesagt` — Mitschrift „Was sagt der Kunde?"
+  - `profile.tlWeeks` / `tlSpan[]` / `phTitle[]` — Timeline
+  - Kein `state` mehr: die frühere Fassung hielt je Welt Auswahl-Arrays, die
+    aus dem Modell verschwunden sind
     `teamNames() ∪ profile.ziele`
   - `state[weltId].kompExtra[]` — pro Kunde ergänzte Kernkompetenzen
   - `state[weltId].kompCustom{}` — pro Kunde umformulierte Kernkompetenzen
   - `profile.tlWeeks` / `profile.tlSpan[]` / `profile.phTitle[]` — Timeline
-- `normProfile()` normalisiert und migriert das Profil beim Laden. Karteien aus
-  der Vorversion bringen `ziel`/`abt` je Welt mit; die wandern beim Laden in
-  `profile.ziele`, `bau` entfällt.
-- `WORLDS[].bau` bleibt im Katalog, erscheint aber nirgends mehr in der
-  Oberfläche — die Kursnamen sind gutes Suchmaterial für den Heuhaufen.
+- `skillsFromV4()` überführt Karteien der team-first-Fassung: aus jedem
+  gewählten Skill und jeder Kernkompetenz wird eine Skill-Zeile, die
+  Welt-Zielgruppen werden zu Teams. Läuft beim Laden der Kartei und beim ersten
+  Start aus dem alten localStorage-Schlüssel.
+- `normProfile()` normalisiert das Profil bei jedem Laden.
+
+## Noch offen
+
+**Versionshistorie der Kartei** (Punkt 7 des Ablaufs). Heute überschreibt
+`Store.put()` den letzten Stand; frühere Fassungen sind nicht mehr abrufbar.
+Geplant als eigener Schritt.

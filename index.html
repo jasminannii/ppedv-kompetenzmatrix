@@ -115,6 +115,9 @@ button{font:inherit; color:inherit; cursor:pointer}
 svg.ring{display:block; width:100%; height:auto}
 .seg{cursor:pointer; stroke-linejoin:round; stroke-width:6; transition:filter .18s}
 .seg:hover{filter:brightness(1.09)}
+.seg.empty{stroke-dasharray:5 5; stroke-width:2}
+.hs-t[disabled]{cursor:default; opacity:.6}
+.hs-t[disabled]:hover{background:none}
 .spot{pointer-events:none; transition:opacity .2s}
 .olabel{font-family:var(--sans); font-size:15px; font-weight:600; letter-spacing:.075em; fill:#fff; pointer-events:none; transition:opacity .2s}
 .ilabel{font-family:var(--sans); font-size:12.4px; font-weight:500; pointer-events:none}
@@ -144,20 +147,6 @@ svg.ring{display:block; width:100%; height:auto}
 .grp-h .lbl{color:var(--ink-2)}
 .mini{font-family:var(--mono); font-size:11.5px; color:var(--orange); background:none; border:0; padding:0; text-decoration:underline; text-underline-offset:3px}
 .hint{font-size:13px; color:var(--ink-3); line-height:1.45; margin-bottom:9px}
-.row{display:flex; gap:11px; width:100%; text-align:left; background:none; border:0; padding:9px 10px; border-radius:6px; align-items:flex-start; transition:.14s}
-.row:hover{background:var(--surface-2)}
-.row .box{width:18px; height:18px; flex:0 0 18px; border:1.6px solid var(--line-2); border-radius:4px; margin-top:2px; display:grid; place-items:center; transition:.14s}
-.row .box::after{content:""; width:7px; height:4px; border-left:2px solid #3D2402; border-bottom:2px solid #3D2402; transform:rotate(-45deg) translate(0,-1px); opacity:0}
-.row[aria-pressed="true"]{background:var(--accent-soft)}
-.row[aria-pressed="true"] .box{background:var(--orange); border-color:var(--orange)}
-.row[aria-pressed="true"] .box::after{opacity:1}
-.row .n{font-size:14.5px; font-weight:600; line-height:1.35; display:block}
-.row .s{display:block; font-family:var(--serif); font-size:13.5px; color:var(--ink-2); line-height:1.45; margin-top:3px}
-.row .d{font-size:13px; color:var(--ink-3); line-height:1.4; display:block; margin-top:2px}
-.chips{display:flex; flex-wrap:wrap; gap:6px}
-.chip-t{border:1px solid var(--line-2); background:var(--surface); border-radius:20px; padding:6px 13px; font-size:13px; color:var(--ink-2); transition:.14s; line-height:1.3}
-.chip-t:hover{border-color:var(--orange); color:var(--ink)}
-.chip-t[aria-pressed="true"]{background:var(--orange); border-color:var(--orange); color:#3D2402; font-weight:500}
 details.more{border-top:1px solid var(--line); padding-top:13px; margin-top:2px}
 details.more>summary{list-style:none; cursor:pointer; font-family:var(--mono); font-size:11px; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3); display:flex; justify-content:space-between; align-items:center}
 details.more>summary::-webkit-details-marker{display:none}
@@ -168,19 +157,6 @@ details.more .in{padding-top:11px}
 .beleg{margin:14px 0 0; background:var(--surface-2); border:1px solid var(--line); border-left:3px solid var(--pc); border-radius:6px; padding:11px 13px}
 .beleg .lbl{display:block; margin-bottom:5px; color:var(--ink-2)}
 .beleg p{font-size:13px; color:var(--ink-2); line-height:1.55}
-.komp-row{display:flex; align-items:flex-start; gap:2px}
-.komp-row .row{flex:1 1 auto; min-width:0}
-.kedit{flex:0 0 auto; border:1px solid transparent; background:none; border-radius:5px; padding:8px 9px; margin-top:1px; font-size:13.5px; color:var(--ink-3); line-height:1}
-.kedit:hover{color:var(--orange); border-color:var(--line)}
-.komp-edit{background:var(--surface-2); border:1px solid var(--orange); border-radius:6px; padding:11px 12px; margin:2px 0}
-.komp-edit .elbl{display:block; font-size:12.5px; font-weight:600; color:var(--ink-2); margin-bottom:8px}
-.komp-edit .elbl:last-of-type{margin-bottom:0}
-.komp-edit .elbl input,.komp-edit .elbl textarea{display:block; width:100%; margin-top:4px; font:inherit; font-size:13.5px; color:var(--ink);
-  background:var(--surface); border:1px solid var(--line-2); border-radius:5px; padding:8px 10px; resize:vertical}
-.komp-edit .elbl textarea{min-height:52px; line-height:1.4}
-.komp-edit .elbl input:focus,.komp-edit .elbl textarea:focus{outline:2px solid var(--orange); outline-offset:-1px}
-.ke-row{display:flex; gap:8px; margin-top:10px; flex-wrap:wrap}
-.ke-row .btn{padding:7px 12px; font-size:12.5px}
 
 /* ---------- Kontext ---------- */
 .fields{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px; max-width:1000px}
@@ -191,26 +167,6 @@ details.more .in{padding-top:11px}
   border:1px solid var(--line); border-radius:5px; padding:10px 12px; resize:vertical}
 .field textarea{min-height:70px; line-height:1.55}
 .field input:focus,.field textarea:focus{outline:2px solid var(--orange); outline-offset:-1px; background:var(--surface)}
-
-/* Team zuordnen: Mehrfachauswahl mit Kopfzahl */
-.tpick{display:inline-flex; align-items:stretch; border:1px solid var(--line-2); border-radius:5px; overflow:hidden; background:var(--surface)}
-.tpick.on{border-color:var(--orange)}
-.tb.tsel{border:0; border-radius:0; background:none; display:inline-flex; align-items:center; gap:7px; padding:5px 10px}
-.tb.tsel:hover{background:var(--surface-3); color:inherit}
-.tck{width:14px; height:14px; flex:0 0 14px; border:1.5px solid var(--line-2); border-radius:3px; display:grid; place-items:center}
-.tck::after{content:""; width:6px; height:3px; border-left:2px solid #3D2402; border-bottom:2px solid #3D2402;
-  transform:rotate(-45deg) translate(0,-1px); opacity:0}
-.tpick.on .tb.tsel{background:var(--orange); color:#3D2402; font-weight:600}
-.tpick.on .tck{background:#fff; border-color:#fff}
-.tpick.on .tck::after{opacity:1}
-.tn{display:grid; place-items:center; min-width:30px; padding:0 7px; font-family:var(--mono); font-size:11.5px;
-  color:var(--ink-3); background:var(--surface-2); border-left:1px solid var(--line)}
-.tnum{width:52px; font:inherit; font-family:var(--mono); font-size:12px; color:var(--ink); background:var(--surface-2);
-  border:0; border-left:1px solid var(--orange); padding:4px 6px; text-align:center}
-.tnum:focus{outline:2px solid var(--orange); outline-offset:-2px; background:var(--surface)}
-.hw-lbl i{font-style:normal; text-transform:none; letter-spacing:0; opacity:.75}
-.tsum{font-family:var(--mono); font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--orange); align-self:center}
-.tsum:empty{display:none}
 
 /* Legende der zwei Achsen */
 .axes{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line);
@@ -225,32 +181,12 @@ details.more .in{padding-top:11px}
 .ax-note{grid-column:1/-1; background:var(--surface-2); padding:10px 16px; font-size:13px; color:var(--ink-2)}
 @media (max-width:760px){.axes{grid-template-columns:1fr}}
 
-/* Skill-Detail: „Für wen“ und Notiz */
-.skwrap{border-radius:6px}
-.skwrap.on{background:var(--surface-2); padding-bottom:2px; margin:2px 0 6px}
-.skd{padding:2px 10px 11px; display:flex; flex-direction:column; gap:8px}
-.skd-row{display:flex; align-items:flex-start; gap:9px}
-.skd-l{font-family:var(--mono); font-size:10px; letter-spacing:.11em; text-transform:uppercase; color:var(--ink-3);
-  flex:0 0 66px; padding-top:7px}
-.zrow{display:flex; flex-wrap:wrap; gap:5px; flex:1 1 auto; min-width:0}
-.zchip{border:1px solid var(--line-2); background:var(--surface); border-radius:20px; padding:4px 11px; font-size:12.5px; transition:.14s}
-.zchip:hover{border-color:var(--orange)}
-.zchip[aria-pressed="true"]{background:var(--orange); border-color:var(--orange); color:#3D2402; font-weight:600}
-.zadd{font:inherit; font-size:12.5px; color:var(--ink); background:var(--surface); border:1px dashed var(--line-2);
-  border-radius:20px; padding:4px 11px; width:150px}
-.zadd:focus{outline:2px solid var(--orange); outline-offset:-1px; border-style:solid}
-.snote{flex:1 1 auto; min-width:0; font:inherit; font-family:var(--serif); font-size:13.5px; color:var(--ink);
-  background:var(--surface); border:1px solid var(--line-2); border-radius:5px; padding:6px 10px}
-.snote:focus{outline:2px solid var(--orange); outline-offset:-1px}
-
 /* Skill-Treffer als aufklappbare Karte */
 .hit.hs{padding:0; cursor:default; gap:0}
 .hit.hs:hover{background:var(--surface-2); border-color:var(--line)}
 .hit.hs[data-on="1"]{background:var(--accent-soft); border-color:var(--orange)}
 .hs-t{border:0; background:none; text-align:left; width:100%; padding:12px 14px; display:flex; flex-direction:column; gap:5px; border-radius:6px}
 .hs-t:hover{background:rgba(234,143,19,.07)}
-.hit.hs .skd{padding:0 14px 12px}
-.hit.hs .skd-l{flex-basis:60px}
 
 /* Karten im Ergebnis */
 .card .sec.sk li{margin-bottom:7px}
@@ -276,24 +212,41 @@ details.more .in{padding-top:11px}
 .need-h h3{font-size:17.5px}
 .need-sum{font-family:var(--mono); font-size:11.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--orange); margin-left:auto; white-space:nowrap}
 .need-hint{font-family:var(--serif); font-size:14.5px; color:var(--ink-2); margin-top:5px; max-width:76ch}
-.trow{border:1px solid var(--line); border-left:3px solid var(--line-2); border-radius:6px; background:var(--surface-2); padding:12px 13px 13px; margin-top:11px; transition:.15s}
-.trow:focus-within{border-left-color:var(--orange)}
-.trow-top{display:flex; gap:9px; flex-wrap:wrap; align-items:center}
-.trow input{font:inherit; font-size:14.5px; color:var(--ink); background:var(--surface); border:1px solid var(--line-2); border-radius:5px; padding:9px 11px}
-.trow input:focus{outline:2px solid var(--orange); outline-offset:-1px}
-.trow .t-name{flex:1 1 240px; min-width:150px; font-weight:600}
-.trow .t-n{width:112px; flex:0 0 auto}
-.trow .t-note{width:100%; margin-top:10px; font-family:var(--serif); font-size:14.5px}
-.t-del{border:0; background:none; color:var(--ink-3); font-size:21px; line-height:1; padding:3px 8px; border-radius:5px}
-.t-del:hover{color:#B3261E; background:var(--surface-3)}
-.t-lbl{font-family:var(--mono); font-size:11px; letter-spacing:.11em; text-transform:uppercase; color:var(--ink-3); display:block; margin:12px 0 7px}
+.srow{border:1px solid var(--line); border-left:3px solid var(--line-2); border-radius:6px; background:var(--surface-2);
+  padding:12px 13px 13px; margin-top:11px; transition:.18s}
+.srow.set{border-left-color:var(--orange)}
+.srow:focus-within{border-color:var(--line-2)}
+.srow.flash{box-shadow:0 0 0 3px var(--accent-soft); border-left-color:var(--orange)}
+.srow-top{display:flex; gap:9px; align-items:center}
+.srow-i{font-family:var(--mono); font-size:11px; color:var(--ink-3); flex:0 0 auto; width:16px; text-align:right}
+.srow input{font:inherit; color:var(--ink); background:var(--surface); border:1px solid var(--line-2); border-radius:5px; padding:9px 11px}
+.srow input:focus{outline:2px solid var(--orange); outline-offset:-1px}
+.s-text{flex:1 1 auto; min-width:0; font-size:15px!important; font-weight:600}
+.s-lbl{font-family:var(--mono); font-size:10.5px; letter-spacing:.11em; text-transform:uppercase; color:var(--ink-3);
+  display:block; margin:12px 0 7px}
+.s-lbl i{font-style:normal; color:var(--orange); text-transform:none; letter-spacing:.02em}
+.s-note{width:100%; margin-top:10px; font-family:var(--serif)!important; font-size:14px!important}
+.tlist{display:flex; flex-wrap:wrap; gap:7px; align-items:center}
+.tpair{display:inline-flex; align-items:stretch; border:1px solid var(--line-2); border-radius:5px; overflow:hidden; background:var(--surface)}
+.tpair:focus-within{border-color:var(--orange)}
+.tpair input{border:0!important; border-radius:0!important; padding:7px 9px!important}
+.tpair input:focus{outline:none!important}
+.tp-n{width:186px; font-size:13.5px!important}
+.tp-c{width:62px; font-family:var(--mono); font-size:13px!important; text-align:center; border-left:1px solid var(--line)!important;
+  background:var(--surface-2)!important}
+.tp-x{border:0; border-left:1px solid var(--line); background:var(--surface-2); color:var(--ink-3); font-size:16px; line-height:1; padding:0 9px}
+.tp-x:hover{color:#B3261E}
+.tp-add{border:1px dashed var(--line-2); background:none; border-radius:5px; padding:7px 12px; font-size:12.5px; color:var(--ink-2)}
+.tp-add:hover{border-color:var(--orange); color:var(--accent-ink)}
+.tp-sum{font-family:var(--mono); font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--orange)}
+/* Kompetenzwelt: genau eine je Skill */
 .wsel{display:flex; gap:6px; flex-wrap:wrap}
 .wchip{border:1px solid var(--line-2); background:var(--surface); border-radius:20px; padding:6px 12px 6px 10px; font-size:13px;
   display:inline-flex; align-items:center; gap:7px; transition:.14s}
-.wchip::before{content:""; width:9px; height:9px; border-radius:3px; background:var(--wc); opacity:.45; flex:0 0 auto}
+.wchip::before{content:""; width:9px; height:9px; border-radius:50%; background:var(--wc); opacity:.35; flex:0 0 auto}
 .wchip:hover{border-color:var(--ink-3)}
-.wchip[aria-pressed="true"]{background:var(--accent-soft); border-color:var(--orange); color:var(--accent-ink); font-weight:600}
-.wchip[aria-pressed="true"]::before{opacity:1}
+.wchip[aria-pressed="true"]{background:var(--wc); border-color:var(--wc); color:#fff; font-weight:600}
+.wchip[aria-pressed="true"]::before{background:#fff; opacity:1; box-shadow:0 0 0 2px color-mix(in srgb,#fff 35%,transparent)}
 .t-empty{border:1px dashed var(--line-2); border-radius:6px; padding:20px; text-align:center; color:var(--ink-3); font-size:14px; margin-top:11px}
 .need-add{margin-top:13px}
 
@@ -330,13 +283,14 @@ details.more .in{padding-top:11px}
 
 /* Bedarfstabelle im Ergebnis */
 .ntab{border:1px solid var(--line); border-radius:8px; background:var(--surface); overflow:hidden}
-.nt-h,.nt-r{display:grid; grid-template-columns:1.1fr 90px 1.5fr 1.5fr; gap:14px; padding:11px 16px; align-items:start}
+.nt-h,.nt-r{display:grid; grid-template-columns:1.4fr 1fr 1fr 1.2fr; gap:14px; padding:11px 16px; align-items:start}
 .nt-h{background:var(--surface-2); border-bottom:1px solid var(--line); font-family:var(--mono); font-size:11px;
   letter-spacing:.11em; text-transform:uppercase; color:var(--ink-3)}
 .nt-r+.nt-r,.nt-h+.nt-r{border-top:1px solid var(--line)}
 .nt-r{font-size:14px; color:var(--ink-2)}
 .nt-n{font-weight:600; color:var(--ink)}
 .nt-p{font-family:var(--mono); font-size:14px; color:var(--ink)}
+.nt-p2{font-family:var(--mono); font-size:12.5px; color:var(--ink); line-height:1.6}
 .nt-w{display:flex; flex-wrap:wrap; gap:5px}
 .nt-w i{font-style:normal; font-size:12.5px; border:1px solid var(--line-2); border-left:3px solid var(--wc);
   border-radius:4px; padding:2px 8px; color:var(--ink)}
@@ -345,11 +299,21 @@ details.more .in{padding-top:11px}
 .nt-sum span:first-child{font-family:var(--mono); font-size:11px; letter-spacing:.11em; text-transform:uppercase; color:var(--ink-3)}
 @media (max-width:760px){.nt-h{display:none} .nt-r{grid-template-columns:1fr; gap:4px}}
 
+/* Skills im Panel */
+.pskill{border-left:2px solid var(--pc); padding:2px 0 9px 11px; margin-bottom:11px}
+.ps-t{width:100%; font:inherit; font-size:14.5px; font-weight:600; color:var(--ink); background:none; border:0; border-bottom:1px dashed transparent; padding:2px 0}
+.ps-t:hover{border-bottom-color:var(--line-2)}
+.ps-t:focus{outline:none; border-bottom-color:var(--orange); background:var(--surface-2)}
+.ps-t2{display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:5px}
+.ps-team{font-family:var(--mono); font-size:11px; background:var(--accent-soft); color:var(--accent-ink); border-radius:3px; padding:2px 7px}
+.ps-none{font-family:var(--mono); font-size:11px; color:var(--ink-3)}
+.ps-n{font-family:var(--serif); font-size:13px; color:var(--ink-2); margin-top:5px; line-height:1.45}
+.ps-empty{font-size:13.5px; color:var(--ink-3); padding:6px 0 10px}
+.plist{margin:0; padding-left:16px; font-size:13px; color:var(--ink-2); line-height:1.5}
+.plist li{margin-bottom:7px}
+.plist b{display:block; color:var(--ink); font-weight:600}
+
 /* Eigene Kernkompetenz */
-.komp-row .kbadge{font-family:var(--mono); font-size:9.5px; letter-spacing:.09em; text-transform:uppercase;
-  color:var(--accent-ink); background:var(--accent-soft); border-radius:3px; padding:1px 5px; margin-left:6px; vertical-align:2px}
-.kdel{border:0; background:none; color:var(--ink-3); font-size:17px; line-height:1; padding:2px 5px; border-radius:4px}
-.kdel:hover{color:#B3261E; background:var(--surface-3)}
 .addk{width:100%; margin-top:10px; border:1px dashed var(--line-2); background:var(--surface-2); border-radius:6px;
   padding:10px; font-size:13.5px; font-weight:600; color:var(--accent-ink); transition:.14s}
 .addk:hover{border-color:var(--orange); background:var(--accent-soft)}
@@ -528,7 +492,7 @@ details.more .in{padding-top:11px}
 <main>
 <section class="step" id="s1">
   <div class="wrap">
-    <p class="lead">Die Seite zum <b>gemeinsamen Durchgehen</b>: alles aus Schritt 1 steht hier — am Ring, in der Leiste und im Panel. Sie ergänzen im Gespräch die Kernkompetenzen, die fehlen, und tragen unter jedem Skill ein, <b>für wen</b> er gilt. Passt nichts Vorhandenes, legen Sie mit <b>+</b> eine eigene an, in den Worten des Kunden.</p>
+    <p class="lead">Die Seite zum <b>gemeinsamen Durchgehen</b>: der Ring zeigt, was Sie in Schritt 1 erfasst haben — jeder Skill ein Segment, jede betroffene Welt mit ihrer Kopfzahl. Ein Klick auf ein Segment springt zurück zur Zeile, ein Klick auf ein leeres Feld legt dort einen Skill an.</p>
 
     <div class="needbar" id="needbar"></div>
     <div id="ctxbar"></div>
@@ -543,7 +507,7 @@ details.more .in{padding-top:11px}
             <image id="coreLogo" x="310" y="288" width="280" height="80" preserveAspectRatio="xMidYMid meet" style="display:none"></image>
             <text class="core-co" x="450" y="344" text-anchor="middle" id="coreCo"></text>
             <text class="core-n" x="450" y="444" text-anchor="middle" id="coreN">0</text>
-            <text class="core-sub" x="450" y="472" text-anchor="middle" id="coreSub">von 18 Kernkompetenzen</text>
+            <text class="core-sub" x="450" y="472" text-anchor="middle" id="coreSub">erfasste Skills</text>
             <line class="core-rule" x1="374" y1="502" x2="526" y2="502"></line>
             <text class="core-name" x="450" y="532" text-anchor="middle" id="coreName"></text>
             <text class="core-desc" x="450" y="556" text-anchor="middle" id="cd1"></text>
@@ -552,7 +516,7 @@ details.more .in{padding-top:11px}
             <text class="core-team" x="450" y="622" text-anchor="middle" id="coreTeam"></text>
           </g>
         </svg>
-        <p class="readout" id="readout">Innenring anklicken wählt eine Kompetenz · Außenring öffnet die Kompetenzwelt.</p>
+        <p class="readout" id="readout">Innenring: die erfassten Skills · Außenring: Kompetenzwelt öffnen.</p>
       </div>
       <aside class="panel" id="panel"></aside>
     </div>
@@ -561,18 +525,18 @@ details.more .in{padding-top:11px}
 
 <section class="step on" id="s2">
   <div class="wrap">
-    <p class="lead">Zwei Fragen tragen das Gespräch: <b>Wo fehlen Kompetenzen — und bei wie vielen Menschen?</b> Team für Team aufnehmen, dazu die Eckdaten. Alles fließt direkt in die Kompetenzauswahl und den Ablauf ein.</p>
+    <p class="lead">Sie fragen, der Kunde erzählt — und Sie schreiben mit. <b>Jedes genannte Thema ist ein Skill</b>: er bekommt eine Kompetenzwelt und die Teams, denen er fehlt. Daraus baut sich die Matrix in Schritt 2 auf, live im Gespräch.</p>
 
     <div class="axes">
+      <div class="ax"><span class="ax-k">Was</span>
+        <b>Skill</b>
+        <p>Ein Thema in den Worten des Kunden. Das ist die Zeile, die Sie erfassen.</p>
+        <span class="ax-e">„Angebote dauern zu lange“ → KI produktiv einsetzen</span></div>
       <div class="ax"><span class="ax-k">Wer</span>
         <b>Team</b>
-        <p>Eine Gruppe im Haus, mit Kopfzahl. Sie nehmen sie in Schritt 1 auf.</p>
-        <span class="ax-e">Vertriebsinnendienst · 12 Personen</span></div>
-      <div class="ax"><span class="ax-k">Was</span>
-        <b>Kompetenzwelt → Kernkompetenz → Skill</b>
-        <p>Das Themenfeld, darin das Können, darin die trainierbare Einzelfähigkeit.</p>
-        <span class="ax-e">Daten besser nutzen → Zahlen richtig lesen → Kennzahlen vereinheitlichen</span></div>
-      <p class="ax-note">Ein Team ist nie eine Kompetenz. Das Team ist die Gruppe, die Kompetenz ist das Können — die Matrix verbindet beide.</p>
+        <p>Wem der Skill fehlt, und wie viele Mitarbeitende es dort betrifft.</p>
+        <span class="ax-e">Vertriebsinnendienst · 12 &nbsp;|&nbsp; Produktion · 30</span></div>
+      <p class="ax-note">Jeder Skill gehört zu genau einer der sechs Kompetenzwelten — das ist der Außenring. Der Innenring sind Ihre Skills: leer zu Beginn, er wächst im Gespräch mit.</p>
     </div>
 
     <div class="find">
@@ -639,12 +603,11 @@ details.more .in{padding-top:11px}
       <summary>Wie ist die Matrix aufgebaut?</summary>
       <div class="in">
         <dl class="lv">
-          <dt><em>Ebene 1</em>Kompetenzwelt</dt><dd>Das Themenfeld. Sechs Stück, im Außenring. <em>Daten besser nutzen</em></dd>
-          <dt><em>Ebene 2</em>Kernkompetenz</dt><dd>Was Ihre Leute können sollen. Im Innenring. Drei Vorschläge je Welt &mdash; umformulierbar, löschbar, beliebig ergänzbar. <em>Zahlen richtig lesen</em></dd>
-          <dt><em>Ebene 3</em>Skill</dt><dd>Die trainierbare Einzelfähigkeit. Jedes Kundenthema gehört zu genau einem Skill. <em>Dashboards fokussieren</em></dd>
-          <dt><em>Ebene 4</em>Für wen</dt><dd>Wer genau es lernt. Frei benennbar &mdash; die Teams aus Schritt 1 stehen schon bereit, alles andere tragen Sie im Gespräch ein. <em>Innendienst · Schichtführer · neue Kolleginnen</em></dd>
+          <dt><em>Ebene 1</em>Kompetenzwelt</dt><dd>Das Themenfeld. Sechs Stück, fest, im Außenring. <em>Daten besser nutzen</em></dd>
+          <dt><em>Ebene 2</em>Skill</dt><dd>Was der Kunde nennt, in seinen Worten. Im Innenring. Nichts ist vorgegeben &mdash; der Ring füllt sich mit dem, was im Gespräch kommt. <em>„Drei Abteilungen, drei Umsatzzahlen“</em></dd>
+          <dt><em>Ebene 3</em>Team</dt><dd>Wem der Skill fehlt, mit der Zahl der betroffenen Mitarbeitenden. Mehrere Teams je Skill möglich. <em>Controlling · 5</em></dd>
         </dl>
-        <p style="font-size:14.5px;color:var(--ink-2);margin-top:16px;line-height:1.6;max-width:80ch"><b>Im Gespräch arbeiten Sie rückwärts:</b> Der Kunde nennt ein Problem, Sie ordnen es einem Skill zu &mdash; Kompetenzwelt und Baustein ergeben sich daraus.</p>
+        <p style="font-size:14.5px;color:var(--ink-2);margin-top:16px;line-height:1.6;max-width:80ch"><b>Die Kernkompetenzen von ppedv</b> stehen weiter hinter jeder Welt &mdash; im Panel unter „Woran ppedv dabei denkt“. Sie sind der Anhalt für das Curriculum, aber nicht das, was Sie im Gespräch ausfüllen.</p>
       </div>
     </details>
     <details>
@@ -663,7 +626,8 @@ details.more .in{padding-top:11px}
     <p class="foot">ppedv AG · kompetenz@ppedv.de · Inhalte der Kompetenzwelten: ppedv.de/kompetenz<br>Arbeitsdokument für das gemeinsame Gespräch · <span id="today"></span></p>
   </div>
 </div>
-<datalist id="zsug"></datalist>
+<datalist id="skillsug"></datalist>
+<datalist id="teamsug"></datalist>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -800,134 +764,106 @@ const PHASES=[
 const TLSPAN=[[1,2],[3,4],[5,12],[8,14],[14,16]], TLPAR=[0,0,0,1,0];
 const TLSHORT=["Kick-off & Standort","Lernpfade & Setup","Durchführung","Transfer & Use Cases","Wirkung & Abschluss"];
 
-/* ---------- Zustand ---------- */
-const KEY="ppedv-matrix-v4";
-let state={}, notes="", focusId=WORLDS[0].id, activeId=null, restoredId=null, editKomp=null;
+/* ---------- Zustand ----------
+   Der Kern ist eine flache Liste von Skills. Ein Skill ist das, was der Kunde sagt,
+   zugeordnet zu einer der sechs Kompetenzwelten, mit den betroffenen Teams. */
+const KEY="ppedv-matrix-v5", KEY4="ppedv-matrix-v4";
+let notes="", focusId=WORLDS[0].id, activeId=null, restoredId=null, editId=null;
 let profile={name:"",logo:""};
 PFIELDS.forEach(f=>profile[f.k]="");
 LEGACY_PF.forEach(k=>profile[k]="");
 profile.gesagt="";                       /* Mitschrift „Was sagt der Kunde?“ */
-profile.ziele=[];                        /* „Für wen“: eigene Gruppen neben den Teams */
-profile.teams=[];                        /* Bedarf je Team: {name,n,worlds[],note} */
-profile.tlSpan=PHASES.map(()=>null);     /* Zeitraum je Phase */
-profile.phTitle=PHASES.map(()=>null);    /* Titel je Phase */
-profile.tlWeeks=16;                      /* Projektdauer in Wochen */
-WORLDS.forEach(w=>state[w.id]={komp:[],felder:[],sk:{},kompCustom:{},kompExtra:[]});
-try{const r=localStorage.getItem(KEY); if(r){const p=JSON.parse(r);
-  if(p.state) WORLDS.forEach(w=>{if(p.state[w.id]) state[w.id]=Object.assign({komp:[],felder:[],sk:{},kompCustom:{},kompExtra:[]},p.state[w.id]);});
-  if(typeof p.notes==="string") notes=p.notes;
-  if(p.focusId&&WORLDS.some(w=>w.id===p.focusId)) focusId=p.focusId;
-  if(p.profile) profile=Object.assign(profile,p.profile);
-  if(typeof p.activeId==="string") restoredId=p.activeId;
-}}catch(e){}
+profile.skills=[];                       /* [{id,text,welt,teams:[{name,n}],note}] */
+profile.tlSpan=PHASES.map(()=>null);
+profile.phTitle=PHASES.map(()=>null);
+profile.tlWeeks=16;
+
+const uid=()=>"s"+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+function mkSkill(text,welt,teams,note){
+  return {id:uid(),text:String(text||"").trim(),welt:welt||"",
+          teams:Array.isArray(teams)?teams:[],note:String(note||"")};
+}
+/* Karteien der Vorversion waren team-first aufgebaut — hier werden sie zu Skills. */
+function skillsFromV4(st,pf){
+  const out=[], pt=(pf&&Array.isArray(pf.teams))?pf.teams:[];
+  const byName=z=>{const m=pt.find(t=>(t.name||"").trim()===z); return {name:z,n:m?m.n:""};};
+  const ofWorld=wid=>pt.filter(t=>(t.worlds||[]).indexOf(wid)>-1)
+    .map(t=>({name:(t.name||"").trim()||"Ohne Namen",n:t.n||""}));
+  WORLDS.forEach(w=>{
+    const s=(st||{})[w.id]; if(!s) return;
+    (s.komp||[]).forEach(n=>out.push(mkSkill(n,w.id,ofWorld(w.id))));
+    (s.felder||[]).forEach(n=>{
+      const meta=(s.sk||{})[n]||{}, z=(meta.z||[]).map(byName);
+      out.push(mkSkill(n,w.id,z.length?z:ofWorld(w.id),meta.n||""));
+    });
+  });
+  /* Teams, die genannt, aber keiner Welt zugeordnet waren, gehen sonst verloren */
+  pt.filter(t=>!(t.worlds||[]).length&&(t.note||"").trim())
+    .forEach(t=>out.push(mkSkill(t.note,"",[{name:(t.name||"").trim()||"Ohne Namen",n:t.n||""}])));
+  return out;
+}
+try{
+  let r=localStorage.getItem(KEY), p=r?JSON.parse(r):null;
+  if(!p){ const r4=localStorage.getItem(KEY4);
+    if(r4){ const q=JSON.parse(r4);
+      p={notes:q.notes,focusId:q.focusId,activeId:q.activeId,profile:Object.assign({},q.profile)};
+      p.profile.skills=skillsFromV4(q.state,q.profile); delete p.profile.teams; } }
+  if(p){
+    if(typeof p.notes==="string") notes=p.notes;
+    if(p.focusId&&WORLDS.some(w=>w.id===p.focusId)) focusId=p.focusId;
+    if(p.profile) profile=Object.assign(profile,p.profile);
+    if(typeof p.activeId==="string") restoredId=p.activeId;
+  }
+}catch(e){}
+
 function normProfile(){
   if(!Array.isArray(profile.tlSpan)||profile.tlSpan.length!==PHASES.length) profile.tlSpan=PHASES.map(()=>null);
   if(!Array.isArray(profile.phTitle)||profile.phTitle.length!==PHASES.length) profile.phTitle=PHASES.map(()=>null);
   profile.tlWeeks=Math.max(4,Math.min(52,parseInt(profile.tlWeeks,10)||16));
-  profile.ziele=[...new Set((Array.isArray(profile.ziele)?profile.ziele:[]).map(z=>String(z||"").trim()).filter(Boolean))];
-  profile.teams=(Array.isArray(profile.teams)?profile.teams:[]).map(t=>({
-    name:String((t&&t.name)||""), n:(t&&(t.n||t.n===0))?t.n:"",
-    worlds:(Array.isArray(t&&t.worlds)?t.worlds:[]).filter(id=>WORLDS.some(w=>w.id===id)),
-    note:String((t&&t.note)||"")}));
-  /* Altbestand: „Teilnehmende“ und „Rollen“ in Teamzeilen überführen */
-  if(!profile.teams.length){
-    const roles=String(profile.rollen||"").split(/[,;·\/]|\bund\b/).map(x=>x.trim()).filter(Boolean);
-    const tot=parseInt(profile.teilnehmende,10)||"";
-    if(roles.length) profile.teams=roles.map(r=>({name:r,n:roles.length===1?tot:"",worlds:[],note:""}));
-    else if(tot) profile.teams=[{name:"Gesamtes Haus",n:tot,worlds:[],note:""}];
-  }
+  profile.skills=(Array.isArray(profile.skills)?profile.skills:[]).map(s=>({
+    id:s&&s.id?s.id:uid(),
+    text:String((s&&s.text)||""),
+    welt:(s&&WORLDS.some(w=>w.id===s.welt))?s.welt:"",
+    teams:(Array.isArray(s&&s.teams)?s.teams:[]).map(t=>({
+      name:String((t&&t.name)||""), n:(t&&(t.n||t.n===0))?t.n:""})),
+    note:String((s&&s.note)||"")}));
+  delete profile.teams;
 }
 normProfile();
+
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({notes,focusId,profile,activeId}))}catch(e){}
+                try{scheduleSave()}catch(e){}};
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+
 const TLMAX=()=>Math.max(4,Math.min(52,parseInt(profile.tlWeeks,10)||16));
 function tlRange(i){const ov=profile.tlSpan&&profile.tlSpan[i], r=(ov&&ov.length===2)?ov:TLSPAN[i], m=TLMAX();
   return [Math.max(1,Math.min(r[0],m)),Math.max(1,Math.min(r[1],m))];}
 function phTitle(i){const o=profile.phTitle&&profile.phTitle[i]; return (o&&o.trim())?o.trim():PHASES[i].t;}
 function phShort(i){const o=profile.phTitle&&profile.phTitle[i]; return (o&&o.trim())?o.trim():TLSHORT[i];}
 
-/* ---------- Bedarf je Team ---------- */
-const teams=()=>(Array.isArray(profile.teams)?profile.teams:(profile.teams=[]));
-const tN=t=>parseInt(t&&t.n,10)||0;
-const headcount=()=>teams().reduce((a,t)=>a+tN(t),0);
-const teamsFor=id=>teams().filter(t=>t.worlds.indexOf(id)>-1);
-const headFor=id=>teamsFor(id).reduce((a,t)=>a+tN(t),0);
-const teamNames=()=>teams().map(t=>(t.name||"").trim()).filter(Boolean);
-const teamsUsed=()=>teams().filter(t=>(t.name||"").trim()||tN(t)||t.worlds.length||(t.note||"").trim());
-const nTeam=n=>n+(n===1?" Team":" Teams");
-
-/* ---------- „Für wen“ und Notiz je Skill ----------
-   Nicht mehr vorgegeben: die Teams aus Schritt 1 stehen bereit, alles Weitere
-   („Schichtführer“, „neue Kolleginnen“) trägt der Kunde im Gespräch ein.
-   Zugeordnet wird je Skill, nicht je Kompetenzwelt. */
-function skMeta(w,name){
-  const st=state[w.id]; if(!st.sk) st.sk={};
-  if(!st.sk[name]) st.sk[name]={z:[],n:""};
-  const m=st.sk[name]; if(!Array.isArray(m.z)) m.z=[]; if(typeof m.n!=="string") m.n="";
-  return m;
-}
-const skHas=(w,name)=>{const st=state[w.id]; return (st.sk&&st.sk[name])||null;};
-const zPool=()=>[...new Set(teamNames().concat(profile.ziele||[]))];
-function addZiel(v){
-  v=String(v||"").trim(); if(!v) return "";
-  if(!Array.isArray(profile.ziele)) profile.ziele=[];
-  if(zPool().indexOf(v)<0) profile.ziele.push(v);
-  return v;
-}
-const zSuggest=()=>{const p=zPool(); return [...new Set([].concat(...WORLDS.map(w=>w.ziel)))].filter(z=>p.indexOf(z)<0);};
-function refreshZsug(){
-  const d=document.getElementById("zsug"); if(!d) return;
-  d.innerHTML=zSuggest().map(z=>`<option value="${esc(z)}">`).join("");
-}
-/* Alle vergebenen Gruppen, jeweils mit ihren Skills — daraus werden die Lerngruppen */
-function zielMap(){
+/* ---------- Skills und Teams ---------- */
+const skills=()=>Array.isArray(profile.skills)?profile.skills:(profile.skills=[]);
+const named=()=>skills().filter(s=>s.text.trim());
+const skillsFor=wid=>skills().filter(s=>s.welt===wid&&s.text.trim());
+const sTeams=s=>(s.teams||[]).filter(t=>(t.name||"").trim()||parseInt(t.n,10));
+const tNum=t=>parseInt(t&&t.n,10)||0;
+/* Ein Mensch kann bei mehreren Skills fehlen — je Team zählt die größte Nennung,
+   sonst zählt man dieselben Leute mehrfach. */
+function teamMap(list){
   const m={};
-  WORLDS.forEach(w=>state[w.id].felder.forEach(n=>{
-    const d=skHas(w,n); if(!d) return;
-    d.z.forEach(z=>{(m[z]=m[z]||[]).push(n);});
-  }));
+  list.forEach(s=>(s.teams||[]).forEach(t=>{
+    const n=(t.name||"").trim(); if(!n) return;
+    m[n]=Math.max(m[n]||0,tNum(t));}));
   return m;
 }
-function skDetail(w,name){
-  const m=skMeta(w,name), pool=zPool();
-  return `<div class="skd">
-    <div class="skd-row"><span class="skd-l">Für wen</span>
-      <div class="zrow">
-        ${pool.map(z=>`<button type="button" class="zchip" data-zw="${w.id}" data-zs="${esc(name)}" data-zv="${esc(z)}" aria-pressed="${m.z.indexOf(z)>-1}">${esc(z)}</button>`).join("")}
-        <input class="zadd" list="zsug" placeholder="${pool.length?"+ weitere":"+ Gruppe eintragen"}" data-zadd="${w.id}" data-zas="${esc(name)}" maxlength="60">
-      </div></div>
-    <div class="skd-row"><span class="skd-l">Notiz</span>
-      <input class="snote" value="${esc(m.n)}" maxlength="200" placeholder="Wer genau, welcher Fall, welche Frist?" data-snw="${w.id}" data-sns="${esc(name)}"></div>
-  </div>`;
-}
-/* Chip, Freitext und Notiz wirken überall gleich — Panel wie Trefferliste */
-function skillDelegate(root,rerender){
-  root.addEventListener("click",e=>{
-    const c=e.target.closest("[data-zv]"); if(!c) return;
-    e.stopPropagation();
-    const m=skMeta(WORLDS.find(x=>x.id===c.dataset.zw),c.dataset.zs);
-    const i=m.z.indexOf(c.dataset.zv); i>-1?m.z.splice(i,1):m.z.push(c.dataset.zv);
-    c.setAttribute("aria-pressed",i<0); save(); renderCards(); renderSync();
-  });
-  root.addEventListener("keydown",e=>{
-    const a=e.target.closest("[data-zadd]"); if(!a||e.key!=="Enter") return;
-    e.preventDefault();
-    const v=addZiel(a.value); if(!v) return;
-    const m=skMeta(WORLDS.find(x=>x.id===a.dataset.zadd),a.dataset.zas);
-    if(m.z.indexOf(v)<0) m.z.push(v);
-    a.value=""; save(); refreshZsug(); rerender();
-  });
-  root.addEventListener("input",e=>{
-    const n=e.target.closest("[data-snw]"); if(!n) return;
-    skMeta(WORLDS.find(x=>x.id===n.dataset.snw),n.dataset.sns).n=n.value;
-    save(); renderCards(); renderSync();
-  });
-}
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({state,notes,focusId,profile,activeId}))}catch(e){}
-                try{scheduleSave()}catch(e){}};
-const has=(w,c,v)=>state[w][c].indexOf(v)>-1;
-function toggle(w,c,v){const a=state[w][c],i=a.indexOf(v); i>-1?a.splice(i,1):a.push(v); save(); render();}
-const totalIn=w=>allKomp(w).length+w.felder.length;
-const selIn=w=>{const s=state[w.id]; return s.komp.length+s.felder.length;};
-const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const teamList=m=>Object.keys(m).map(n=>({name:n,n:m[n]}));
+const headcount=()=>{const m=teamMap(named()); return Object.keys(m).reduce((a,k)=>a+m[k],0);};
+const teamsFor=wid=>teamList(teamMap(skillsFor(wid)));
+const headFor=wid=>teamsFor(wid).reduce((a,t)=>a+t.n,0);
+const teamPool=()=>Object.keys(teamMap(skills())).sort();
+const nSkill=n=>n+(n===1?" Skill":" Skills");
+const nTeam=n=>n+(n===1?" Team":" Teams");
+const sSum=s=>sTeams(s).reduce((a,t)=>a+tNum(t),0);
 
 /* ---------- Ring ---------- */
 const NS="http://www.w3.org/2000/svg",CX=450,CY=450,RAD=Math.PI/180;
@@ -956,15 +892,24 @@ WORLDS.forEach((w,i)=>{
   const tp=el("textPath",{href:"#"+pid,startOffset:"50%"}); tp.setAttribute("xlink:href","#"+pid);
   tp.textContent=w.title.toUpperCase(); t.appendChild(tp); gOuter.appendChild(t);
 });
-function allKomp(w){ const ex=(state[w.id]&&state[w.id].kompExtra)||[]; return w.komp.concat(ex); }
-/* Je mehr eigene Kernkompetenzen der Kunde ergänzt, desto schmaler das Segment —
-   Schriftgröße und Zeilenumbruch wachsen mit. */
+
+function wrapLabel(text,target,max){
+  const words=String(text).trim().split(/\s+/).filter(Boolean);
+  if(!words.length) return [""];
+  target=target||15; max=max||4; const lines=[]; let cur="";
+  words.forEach(wd=>{const test=cur?cur+" "+wd:wd;
+    if(!cur||test.length<=target) cur=test; else{lines.push(cur); cur=wd;}});
+  if(cur) lines.push(cur);
+  if(lines.length>max){const head=lines.slice(0,max-1); let last=lines.slice(max-1).join(" ");
+    if(last.length>target+1) last=last.slice(0,target).trimEnd()+"…"; head.push(last); return head;}
+  return lines;
+}
+/* Je mehr Skills der Kunde in einer Welt nennt, desto schmaler das Segment.
+   Ab vier dreht sich die Schrift mit und läuft radial nach außen. */
 function labelFit(n){
-  /* Bis drei Segmente: waagrechte Schrift wie gehabt. Darüber wird das Segment zu schmal —
-     die Schrift dreht sich mit dem Segment und läuft nach außen. */
-  if(n<=3) return {fs:12.4, lh:13.2, tgt:15, max:4, wrap:false, radial:false};
-  const fs=n===4?11:n===5?10.4:n===6?9.8:9.2;
-  return {fs:fs, lh:+(fs*1.18).toFixed(2), tgt:n===4?17:n===5?18:19, max:n<=5?4:3, wrap:true, radial:true};
+  if(n<=3) return {fs:12.4, lh:13.2, tgt:15, max:4, radial:false};
+  const fs=n===4?11:n===5?10.4:n===6?9.8:n===7?9.2:8.6;
+  return {fs:fs, lh:+(fs*1.18).toFixed(2), tgt:n===4?17:n===5?18:19, max:n<=5?4:3, radial:true};
 }
 function placeLines(lt,lines,fit){
   const lx=lt.getAttribute("x"), ly=parseFloat(lt.dataset.ly);
@@ -976,40 +921,31 @@ function placeLines(lt,lines,fit){
   const y0=ly-(lines.length-1)*fit.lh/2;
   lines.forEach((line,m)=>{const ts=el("tspan",{x:lx,y:(y0+m*fit.lh+fit.fs/3).toFixed(1)}); ts.textContent=line; lt.appendChild(ts);});
 }
+/* Der Innenring ist das Ergebnis der Erfassung: leer zu Beginn, wächst im Gespräch. */
 function buildInnerForWorld(w){
   gInner.querySelectorAll(`[data-w="${w.id}"]`).forEach(n=>n.remove());
-  const i=WORLDS.indexOf(w), a0=-90+i*60, list=allKomp(w), fit=labelFit(list.length);
-  const span=(60-2*GO)/list.length;
+  const i=WORLDS.indexOf(w), a0=-90+i*60, list=skillsFor(w.id);
+  if(!list.length){
+    const e=el("path",{d:ann(I1,I2,a0+GO,a0+60-GO),class:"seg empty","data-w":w.id,"data-kind":"empty",tabindex:"0",role:"button","aria-label":w.title+": noch kein Skill erfasst"});
+    e.appendChild(el("title")).textContent=w.title+" — noch kein Skill erfasst. Klicken legt einen an.";
+    gInner.appendChild(e); return;
+  }
+  const fit=labelFit(list.length), span=(60-2*GO)/list.length;
   list.forEach((k,j)=>{
     const b0=a0+GO+j*span,b1=b0+span,bm=(b0+b1)/2,c0=b0+(j===0?0:GK),c1=b1-(j===list.length-1?0:GK);
-    const s=el("path",{d:ann(I1,I2,c0,c1),class:"seg","data-w":w.id,"data-kind":"komp","data-v":k.n,tabindex:"0",role:"button","aria-pressed":has(w.id,"komp",k.n)?"true":"false","aria-label":w.title+": "+kName(w,k)});
-    s.appendChild(el("title")).textContent=kName(w,k)+" — "+kDesc(w,k); gInner.appendChild(s);
+    const s=el("path",{d:ann(I1,I2,c0,c1),class:"seg","data-w":w.id,"data-kind":"skill","data-v":k.id,tabindex:"0",role:"button","aria-label":w.title+": "+k.text});
+    const ts=sTeams(k);
+    s.appendChild(el("title")).textContent=k.text+(ts.length?" — "+ts.map(t=>(t.name||"?")+(tNum(t)?" ("+tNum(t)+")":"")).join(", "):" — noch ohne Team");
+    gInner.appendChild(s);
     /* data-w muss gesetzt sein, sonst räumt der Rebuild oben die alten Beschriftungen nicht weg */
-    const[lx,ly]=px(RC,bm), lt=el("text",{class:"ilabel","text-anchor":"middle","data-w":w.id,"data-lbl":w.id+"|"+k.n,x:lx.toFixed(1),y:"0","data-ly":ly.toFixed(2),"data-n":list.length,"data-a":bm.toFixed(2)});
-    placeLines(lt,(fit.wrap||kOverride(w,k))?wrapLabel(kName(w,k),fit.tgt,fit.max):k.l,fit);
+    const[lx,ly]=px(RC,bm), lt=el("text",{class:"ilabel","text-anchor":"middle","data-w":w.id,"data-lbl":k.id,x:lx.toFixed(1),y:"0","data-ly":ly.toFixed(2),"data-a":bm.toFixed(2)});
+    placeLines(lt,wrapLabel(k.text,fit.tgt,fit.max),fit);
     gInner.appendChild(lt);
   });
 }
-WORLDS.forEach(w=>buildInnerForWorld(w));
-function addKomp(w,name,desc){
-  name=(name||"").trim(); if(!name) return null;
-  const komp={n:name,d:(desc||"").trim()||"Individuell für dieses Gespräch ergänzt.",l:wrapLabel(name)};
-  if(!state[w.id].kompExtra) state[w.id].kompExtra=[];
-  state[w.id].kompExtra.push(komp);
-  buildInnerForWorld(w);
-  if(!has(w.id,"komp",komp.n)) state[w.id].komp.push(komp.n);
-  save();
-  return komp;
-}
-const isExtra=(w,k)=>((state[w.id].kompExtra)||[]).some(x=>x.n===k.n);
-function delKomp(w,name){
-  const ex=state[w.id].kompExtra||[], i=ex.findIndex(k=>k.n===name);
-  if(i<0) return;
-  ex.splice(i,1);
-  const j=state[w.id].komp.indexOf(name); if(j>-1) state[w.id].komp.splice(j,1);
-  if(state[w.id].kompCustom) delete state[w.id].kompCustom[name];
-  buildInnerForWorld(w); save(); render();
-}
+const buildInner=()=>WORLDS.forEach(buildInnerForWorld);
+buildInner();
+
 function fitLabels(){
   WORLDS.forEach((w,i)=>{
     const pth=document.getElementById("op"+i), t=gOuter.querySelector(`[data-wlabel="${w.id}"]`);
@@ -1026,9 +962,7 @@ requestAnimationFrame(fitLabels);
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitLabels).catch(()=>{});
 window.addEventListener("resize",()=>{clearTimeout(window._ft); window._ft=setTimeout(fitLabels,150);});
 
-/* ---------- Schritt 1 am Ring sichtbar machen ----------
-   Jede Kompetenzwelt, für die ein Team eingetragen ist, bekommt außen eine
-   Marke mit der Kopfzahl. Ohne Zahl bleibt die Marke hohl. */
+/* Marke außen am Ring: wie viele Mitarbeitende die Welt betrifft */
 function renderNeedRing(){
   if(!gNeed) return;
   gNeed.innerHTML="";
@@ -1041,206 +975,41 @@ function renderNeedRing(){
     t.textContent=h||ts.length;
     g.appendChild(t);
     g.appendChild(el("title")).textContent=
-      w.title+" — "+ts.map(v=>((v.name||"").trim()||"Ohne Namen")+(tN(v)?" ("+tN(v)+")":"")).join(", ")
+      w.title+" — "+ts.map(v=>v.name+(v.n?" ("+v.n+")":"")).join(", ")
       +(h?" · zusammen "+h+" Mitarbeitende":" · noch ohne Anzahl");
     gNeed.appendChild(g);
   });
 }
-/* Zeile im Kern: die Teams der gerade gezeigten Welt */
-const coreTeamEl=document.getElementById("coreTeam");
-function setCoreTeam(wid){
-  if(!coreTeamEl) return;
-  const ts=teamsFor(wid);
-  if(!ts.length){coreTeamEl.textContent=""; return;}
-  const full=ts.map(v=>((v.name||"").trim()||"Ohne Namen")+(tN(v)?" · "+tN(v):"")).join("   ");
-  const kurz=nTeam(ts.length)+" · "+(headFor(wid)||"?")+" Mitarbeitende";
-  /* Der Innenkreis ist an dieser Höhe rund 280 px breit — was nicht passt, wird zur Kurzform. */
-  coreTeamEl.textContent=full.length>34?kurz:full;
-  try{ if(coreTeamEl.getComputedTextLength()>276) coreTeamEl.textContent=kurz; }catch(e){}
-}
 
-/* ---------- Kernkompetenzen ans Kundengespräch anpassen ---------- */
-function kOverride(w,k){ const c=state[w.id]&&state[w.id].kompCustom; return c?c[k.n]:null; }
-function kName(w,k){ const o=kOverride(w,k); return (o&&o.n&&o.n.trim())?o.n.trim():k.n; }
-function kDesc(w,k){ const o=kOverride(w,k); return (o&&typeof o.d==="string"&&o.d.trim())?o.d.trim():k.d; }
-function wrapLabel(text,target,max){
-  const words=String(text).trim().split(/\s+/).filter(Boolean);
-  if(!words.length) return [""];
-  target=target||15; max=max||4; const lines=[]; let cur="";
-  words.forEach(wd=>{const test=cur?cur+" "+wd:wd;
-    if(!cur||test.length<=target) cur=test; else{lines.push(cur); cur=wd;}});
-  if(cur) lines.push(cur);
-  if(lines.length>max){const head=lines.slice(0,max-1); let last=lines.slice(max-1).join(" ");
-    if(last.length>target+1) last=last.slice(0,target).trimEnd()+"…"; head.push(last); return head;}
-  return lines;
-}
-function updateKompLabel(w,k){
-  const seg=gInner.querySelector(`[data-w="${w.id}"][data-kind="komp"][data-v="${CSS.escape(k.n)}"]`);
-  const disp=kName(w,k), desc=kDesc(w,k);
-  if(seg){ seg.setAttribute("aria-label",w.title+": "+disp);
-    const ti=seg.querySelector("title"); if(ti) ti.textContent=disp+" — "+desc; }
-  const lt=gInner.querySelector(`[data-lbl="${CSS.escape(w.id+"|"+k.n)}"]`);
-  if(lt){
-    const fit=labelFit(+lt.dataset.n||allKomp(w).length);
-    placeLines(lt,(fit.wrap||kOverride(w,k))?wrapLabel(disp,fit.tgt,fit.max):k.l,fit);
-  }
-}
-function refreshAllKompLabels(){ WORLDS.forEach(w=>allKomp(w).forEach(k=>updateKompLabel(w,k))); }
-
-/* ---------- Panel ---------- */
-const panel=document.getElementById("panel");
-function renderPanel(){
-  const w=WORLDS.find(x=>x.id===focusId), st=state[w.id], allK=st.komp.length===allKomp(w).length;
-  panel.style.setProperty("--pc",w.c);
-  panel.innerHTML=`
-   <div class="ph"><span class="kw">${w.kw} · ${selIn(w)} von ${totalIn(w)} gewählt</span>
-     <h2>${esc(w.title)}</h2><p>${esc(w.lead)}</p></div>
-   <div class="pb">
-     ${(()=>{const tf=teamsFor(w.id); if(!tf.length) return "";
-       return `<div class="pneed"><span class="lbl">Bedarf aus Schritt 1</span>
-         <p>${tf.map(t=>esc((t.name||"Ohne Namen").trim()||"Ohne Namen")+(tN(t)?" · "+tN(t):"")).join(" &nbsp;|&nbsp; ")}${tf.length>1&&headFor(w.id)?" &mdash; zusammen "+headFor(w.id)+" Mitarbeitende":tf.length===1&&headFor(w.id)?" Mitarbeitende":""}</p>
-         ${tf.filter(t=>(t.note||"").trim()).map(t=>`<p class="pn-note">„${esc(t.note.trim())}“</p>`).join("")}</div>`;})()}
-     <div class="beleg"><span class="lbl">Warum das gebraucht wird</span><p>${esc(w.beleg)}</p></div>
-     <div class="grp">
-       <div class="grp-h"><span class="lbl">Kernkompetenzen</span><button class="mini no-print" id="allK">${allK?"Alle abwählen":"Alle "+allKomp(w).length+" wählen"}</button></div>
-       <p class="hint">Was Ihre Leute können sollen — auch im Innenring anklickbar. Die drei unten sind Vorschläge: mit ✎ in die Worte des Kunden umschreiben, oder unten eine eigene anlegen.</p>
-       ${allKomp(w).map((k,ki)=>{
-         if(editKomp&&editKomp.w===w.id&&editKomp.i===ki){
-           const cn=kName(w,k), cd=kDesc(w,k), hasOv=!!kOverride(w,k);
-           return `<div class="komp-edit no-print">
-             <label class="elbl">Name<input type="text" id="ke-n" maxlength="80" value="${esc(cn)}"></label>
-             <label class="elbl">Beschreibung<textarea id="ke-d" rows="2" maxlength="220">${esc(cd)}</textarea></label>
-             <div class="ke-row">
-               <button type="button" class="btn go" id="keSave">Übernehmen</button>
-               <button type="button" class="btn" id="keCancel">Abbrechen</button>
-               ${hasOv?`<button type="button" class="btn" id="keReset">Zurücksetzen</button>`:""}
-             </div>
-           </div>`;
-         }
-         const own=isExtra(w,k);
-         return `<div class="komp-row">
-           <button type="button" class="row" data-w="${w.id}" data-cat="komp" data-v="${esc(k.n)}" aria-pressed="${has(w.id,'komp',k.n)}">
-             <span class="box"></span><span><span class="n">${esc(kName(w,k))}${own?`<span class="kbadge">eigene</span>`:""}</span><span class="d">${esc(kDesc(w,k))}</span></span></button>
-           <button type="button" class="kedit no-print" data-kedit="${ki}" title="Text anpassen">✎</button>
-           ${own?`<button type="button" class="kdel no-print" data-kdel="${esc(k.n)}" title="Eigene Kernkompetenz entfernen">&times;</button>`:""}
-         </div>`;
-       }).join("")}
-       ${editKomp&&editKomp.w===w.id&&editKomp.i==="new"?`
-       <div class="komp-edit no-print">
-         <label class="elbl">Name<input type="text" id="ke-n" maxlength="80" placeholder="z. B. Wortlaut des Kunden" value=""></label>
-         <label class="elbl">Beschreibung (optional)<textarea id="ke-d" rows="2" maxlength="220" placeholder="Kurz erläutern, was gemeint ist"></textarea></label>
-         <div class="ke-row">
-           <button type="button" class="btn go" id="keSave">Hinzufügen &amp; auswählen</button>
-           <button type="button" class="btn" id="keCancel">Abbrechen</button>
-         </div>
-       </div>`:`<button type="button" class="addk no-print" id="addKompBtn">+ Eigene Kernkompetenz in „${esc(w.title)}“ anlegen</button>`}
-     </div>
-     <div class="grp">
-       <div class="grp-h"><span class="lbl">Skills</span></div>
-       <p class="hint">Jedes Kundenthema gehört zu genau einem Skill. Kursiv: wie es im Gespräch klingt.
-         Sobald ein Skill gewählt ist, tragen Sie darunter ein, für wen er gilt.</p>
-       ${w.felder.map(s=>{const on=has(w.id,'felder',s.n);
-         return `<div class="skwrap${on?" on":""}">
-           <button type="button" class="row" data-w="${w.id}" data-cat="felder" data-v="${esc(s.n)}" aria-pressed="${on}">
-             <span class="box"></span><span><span class="n">${esc(s.n)}</span><span class="s">${esc(s.s)}</span><span class="d">Ziel: ${esc(s.z)}</span></span></button>
-           ${on?skDetail(w,s.n):""}</div>`;}).join("")}
-     </div>
-   </div>`;
-  panel.querySelector("#allK").addEventListener("click",()=>{state[w.id].komp=allK?[]:allKomp(w).map(k=>k.n); save(); render();});
-  panel.querySelectorAll("[data-kdel]").forEach(b=>b.addEventListener("click",e=>{
-    e.stopPropagation();
-    if(b.dataset.armed!=="1"){b.dataset.armed="1"; b.textContent="löschen?"; b.style.fontSize="11px"; b.style.color="#B3261E";
-      setTimeout(()=>{if(b.isConnected&&b.dataset.armed==="1"){b.dataset.armed=""; b.innerHTML="&times;"; b.style.fontSize=""; b.style.color="";}},4000); return;}
-    editKomp=null; delKomp(w,b.dataset.kdel);
-  }));
-  panel.querySelectorAll("[data-kedit]").forEach(b=>b.addEventListener("click",e=>{
-    e.stopPropagation(); editKomp={w:w.id,i:+b.dataset.kedit}; renderPanel();
-    const nEl=panel.querySelector("#ke-n"); if(nEl){nEl.focus(); nEl.select();}
-  }));
-  const addKompBtn=panel.querySelector("#addKompBtn");
-  if(addKompBtn) addKompBtn.addEventListener("click",()=>{
-    editKomp={w:w.id,i:"new"}; renderPanel();
-    const nEl=panel.querySelector("#ke-n"); if(nEl) nEl.focus();
-  });
-  const keSave=panel.querySelector("#keSave");
-  if(keSave) keSave.addEventListener("click",()=>{
-    const nv=panel.querySelector("#ke-n").value.trim(), dv=panel.querySelector("#ke-d").value.trim();
-    if(editKomp.i==="new"){
-      if(!nv) return;
-      addKomp(w,nv,dv);
-      editKomp=null; focusId=w.id; render();
-      return;
-    }
-    const k=allKomp(w)[editKomp.i];
-    if(!state[w.id].kompCustom) state[w.id].kompCustom={};
-    if(nv||dv) state[w.id].kompCustom[k.n]={n:nv,d:dv}; else delete state[w.id].kompCustom[k.n];
-    editKomp=null; save(); updateKompLabel(w,k); render();
-  });
-  const keCancel=panel.querySelector("#keCancel");
-  if(keCancel) keCancel.addEventListener("click",()=>{editKomp=null; renderPanel();});
-  const keReset=panel.querySelector("#keReset");
-  if(keReset) keReset.addEventListener("click",()=>{
-    const k=allKomp(w)[editKomp.i];
-    if(state[w.id].kompCustom) delete state[w.id].kompCustom[k.n];
-    editKomp=null; save(); updateKompLabel(w,k); render();
-  });
-}
-panel.addEventListener("click",e=>{const b=e.target.closest("[data-cat]"); if(b) toggle(b.dataset.w,b.dataset.cat,b.dataset.v);});
-skillDelegate(panel,renderPanel);
-
-/* ---------- Ring-Interaktion ---------- */
-const readout=document.getElementById("readout"),DEF="Innenring anklicken wählt eine Kompetenz · Außenring öffnet die Kompetenzwelt.";
-const coreName=document.getElementById("coreName"),cds=[document.getElementById("cd1"),document.getElementById("cd2"),document.getElementById("cd3")];
-function setCore(name,desc){
-  coreName.textContent=name||"";
-  const lines=[]; if(desc){let c="";desc.split(" ").forEach(v=>{if((c+" "+v).trim().length<=40)c=(c+" "+v).trim();else{lines.push(c);c=v;}});if(c)lines.push(c);}
-  cds.forEach((n,i)=>n.textContent=lines[i]||"");
-}
-function coreDefault(){const w=WORLDS.find(x=>x.id===focusId); setCore(w.title,w.lead); coreName.style.fill=w.c; setCoreTeam(w.id);}
-function hoverInfo(t){
-  const w=WORLDS.find(x=>x.id===t.dataset.w); if(!w) return; coreName.style.fill=w.c; setCoreTeam(w.id);
-  if(t.dataset.kind==="world"){readout.innerHTML=`<b>${esc(w.title)}</b> — ${esc(w.lead)}`; setCore(w.title,w.lead);}
-  else{const k=allKomp(w).find(k=>k.n===t.dataset.v); const nm=kName(w,k), ds=kDesc(w,k); readout.innerHTML=`<b>${esc(nm)}</b> — ${esc(ds)}`; setCore(nm,ds);}
-}
-function act(t){ editKomp=null; if(t.dataset.kind==="komp"){focusId=t.dataset.w; toggle(t.dataset.w,"komp",t.dataset.v);} else {focusId=t.dataset.w; save(); render();} }
-[gOuter,gInner].forEach(g=>{
-  g.addEventListener("mouseover",e=>{const t=e.target.closest("path.seg"); if(t) hoverInfo(t);});
-  g.addEventListener("mouseleave",()=>{readout.textContent=DEF; coreDefault();});
-  g.addEventListener("click",e=>{const t=e.target.closest("path.seg"); if(t) act(t);});
-  g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){const t=e.target.closest("path.seg"); if(t){e.preventDefault();act(t);}}});
-});
-
-/* ---------- Suche + KI ---------- */
-let SAMPLE=null,busy=false;
+/* ---------- Zuordnung aus dem Gesagten ---------- */
 const fold=t=>t.toLowerCase().replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss");
 
 /* Stichwörter je Kompetenzwelt. Kundensätze treffen selten die Katalogsprache —
    hier steht, wie Kunden über die Welt reden. */
 const WKEY={
  ki:"ki ai kuenstliche intelligenz copilot chatgpt claude gpt sprachmodell llm prompt prompten prompts automatisierung agent agenten "+
-    "generation generationen generationsuebergreifend aeltere aeltere juengere jung alt unerfahren erfahrung einsetzen einsetzung einsatz nutzen anwenden "+
-    "akzeptanz beruehrungsangst skepsis angst unsicher vorbehalte weigern will nicht traut zoegern nachwuchs senioritaet "+
+    "generation generationen generationsuebergreifend aeltere juengere jung alt unerfahren erfahrung einsetzen einsetzung einsatz nutzen anwenden "+
+    "akzeptanz beruehrungsangst skepsis angst unsicher vorbehalte weigern traut zoegern nachwuchs senioritaet "+
     "texte schreiben formulieren zusammenfassen recherche halluzination ai act schulungspflicht kompetenzpflicht",
  proz:"prozess prozesse ablauf ablaeufe automatisieren automatisierung workflow workflows power automate skript skripte powershell python "+
-    "manuell haendisch von hand routine wiederkehrend immer gleich freigabe genehmigung antrag schnittstelle doppelerfassung abtippen "+
-    "formular medienbruch papier durchlaufzeit liegenbleiben nachfassen erinnerung frist",
+    "manuell haendisch hand routine wiederkehrend freigabe genehmigung antrag schnittstelle doppelerfassung abtippen "+
+    "formular medienbruch papier durchlaufzeit liegenbleiben nachfassen erinnerung frist postfach urlaubsantrag",
  daten:"daten zahlen kennzahl kennzahlen kpi auswertung auswertungen analyse analysen bi power bi sql datenbank excel tabelle report reporting "+
-    "bericht berichte dashboard datenmodell fabric controlling statistik monatsabschluss abschluss pivot datenqualitaet "+
+    "bericht berichte dashboard datenmodell fabric controlling statistik monatsabschluss abschluss pivot datenqualitaet umsatzzahlen "+
     "widerspruechlich unterschiedlich bauchgefuehl entscheidungsgrundlage transparenz",
  dev:"entwicklung entwickler entwicklerinnen code coden programmieren programmierung software applikation anwendung net dotnet csharp azure devops "+
-    "git github test tests testen qualitaet release deployment architektur api schnittstellen requirements anforderungen legacy altsystem "+
+    "git github test tests testen qualitaet release deployment architektur api schnittstellen requirements anforderungen legacy altsystem modul "+
     "wartung refactoring bug fehler technische schulden",
  cloud:"cloud azure microsoft 365 m365 security sicherheit cybersecurity angriff angriffe hacker phishing ransomware "+
-    "identitaet identitaeten berechtigung berechtigungen zugriff rechte passwort mfa entra intune defender backup wiederherstellung notfall "+
+    "identitaet identitaeten berechtigung berechtigungen zugriff rechte passwort mfa entra intune defender backup backups wiederherstellung notfall "+
     "betrieb server infrastruktur monitoring ueberwachung ausfall stoerung datenschutz dsgvo compliance nachweis",
  zus:"zusammenarbeit kollaboration teams sharepoint onedrive outlook meeting meetings besprechung besprechungen jour fixe protokoll agenda "+
     "dokument dokumente datei dateien ablage versionen wissen wissenstransfer dokumentation intranet wiki onboarding einarbeitung "+
     "aufgabe aufgaben planner zustaendigkeit verantwortung uebergabe kommunikation abstimmung silo silos informationsfluss homeoffice hybrid"
 };
-
-/* Kurze Fachbegriffe, die trotz Länge zählen — „KI“ ist zwei Zeichen und war bisher unsichtbar. */
 const SHORT=new Set(["ki","ai","bi","it","hr","gf","erp","crm","sql","api","kpi","m365","git","vpn","mfa"]);
-const STOP=new Set(["und","oder","der","die","das","ein","eine","einen","einem","wir","uns","unsere","unser","ich","sie","ihre","ihr","nicht","ohne","mit","bei","aus","fuer","von","dem","den","des","ist","sind","war","waren","hat","haben","habe","wird","werden","kein","keine","alle","immer","noch","aber","auch","sich","dass","man","wie","was","wer","wenn","dann","viel","viele","zeit","gut","gute","mehr","sehr","zum","zur","auf","ueber","unter","nur","schon","eher","etwas","alles","nichts","ergebnis","problem","probleme","thema","themen","leute","mitarbeiter","mitarbeitende","kollegen","haus","firma","unternehmen",
+const STOP=new Set(["und","oder","der","die","das","ein","eine","einen","einem","wir","uns","unsere","unser","ich","sie","ihre","ihr","nicht","ohne","mit","bei","aus","fuer","von","dem","den","des","ist","sind","war","waren","hat","haben","habe","wird","werden","kein","keine","alle","immer","noch","aber","auch","sich","dass","man","wie","was","wer","wenn","dann","viel","viele","zeit","gut","gute","mehr","sehr","zum","zur","auf","ueber","unter","nur","schon","eher","etwas","alles","nichts",
+ "ergebnis","problem","probleme","thema","themen","leute","mitarbeiter","mitarbeitende","kollegen","haus","firma","unternehmen",
  "beim","jedem","jeder","jedes","jede","worauf","wobei","damit","dafuer","daran","darauf","dabei","danach","davon",
  "liegt","liegen","sitzen","sitzt","steht","stehen","macht","machen","geht","gehen","kommt","kommen","gibt","geben","traut","trauen",
  "will","wollen","muss","muessen","kann","koennen","soll","sollen","laeuft","laufen","bleibt","bleiben",
@@ -1250,7 +1019,6 @@ const STOP=new Set(["und","oder","der","die","das","ein","eine","einen","einem",
 const tok=t=>fold(String(t||"")).replace(/[^a-z0-9]+/g," ").split(/\s+/).filter(Boolean);
 const terms=t=>[...new Set(tok(t).filter(x=>(x.length>3||SHORT.has(x))&&!STOP.has(x)))];
 
-/* Heuhaufen je Welt und je Skill */
 const WHAY={},WTOK={};
 WORLDS.forEach(w=>{
   WHAY[w.id]=fold([w.title,w.lead,WKEY[w.id]||"",
@@ -1263,15 +1031,13 @@ const SKILLS=[]; WORLDS.forEach(w=>w.felder.forEach(s=>SKILLS.push({w,s,
   nam:fold(s.n).replace(/[^a-z0-9]+/g," "),
   hay:fold(s.n+" "+s.s+" "+s.z+" "+s.k).replace(/[^a-z0-9]+/g," ")})));
 
-/* Ein Term zählt, wenn er als ganzes Wort vorkommt, als Wortteil — oder wenn ein
-   Katalogwort in ihm steckt („Generationsübergreifend“ enthält „generation“). */
 function termScore(t,hay,toks){
   if(hay.indexOf(" "+t+" ")>-1) return 3;
   if(hay.indexOf(t)>-1) return 2;
   if(t.length>=8&&toks){ for(const k of toks) if(k.length>=5&&t.indexOf(k)>-1) return 2; }
   return 0;
 }
-/* Ein Wort, das in fünf von sechs Welten vorkommt („drei“, „liegt“), sagt nichts aus.
+/* Ein Wort, das in fünf von sechs Welten vorkommt, sagt nichts aus.
    Trennschärfe zählt: je weniger Welten ein Term trifft, desto schwerer wiegt er. */
 function matchWorlds(tl){
   const df={}, raw=WORLDS.map(w=>{
@@ -1298,252 +1064,302 @@ function matchSkills(tl){
   }).filter(h=>h.sc>0).sort((a,b)=>b.sc-a.sc);
 }
 
-const findIn=document.getElementById("findIn"),hitsEl=document.getElementById("hits"),findNote=document.getElementById("findNote"),aiGo=document.getElementById("aiGo");
-/* Alles, was der Kunde sagt: das Suchfeld und die Anlass-Frage. */
+let SAMPLE=null,busy=false;
+const findIn=document.getElementById("findIn"),hitsEl=document.getElementById("hits"),
+      findNote=document.getElementById("findNote"),aiGo=document.getElementById("aiGo");
 const spokenText=()=>[findIn.value,profile.anlass||""].join(" \n ").trim();
 let lastTerms=[];
-function localFind(){
-  const txt=spokenText();
-  const tl=terms(txt); lastTerms=tl;
-  if(txt.trim().length<3||!tl.length){hitsEl.innerHTML=""; noteDefault(); return;}
-  let ws=matchWorlds(tl); const wtop=ws.length?ws[0].sc:0;
-  ws=ws.filter(x=>x.sc>=Math.max(3,wtop*0.45)).slice(0,3);
-  let sk=matchSkills(tl); const top=sk.length?sk[0].sc:0;
-  sk=sk.filter(h=>h.sc>=Math.max(2,top*0.55)).slice(0,4);
-  renderHits(ws,sk.map(h=>h.x),txt);
-}
 function noteDefault(){
   findNote.className="find-note";
   findNote.textContent=SAMPLE?"Stichwort genügt — ganze Sätze über „Mit KI zuordnen“."
-    :"Stichwort genügt. Was hier und bei „Was funktioniert heute nicht?“ steht, wird zugeordnet.";
+    :"Mitschreiben, dann unten als Skill übernehmen. Auch „Was funktioniert heute nicht?“ fließt ein.";
 }
-function renderHits(ws,sk,txt){
+function localFind(){
+  const txt=spokenText(), tl=terms(txt); lastTerms=tl;
+  if(txt.trim().length<3||!tl.length){hitsEl.innerHTML=""; noteDefault(); return;}
+  let ws=matchWorlds(tl); const wtop=ws.length?ws[0].sc:0;
+  ws=ws.filter(x=>x.sc>=Math.max(3,wtop*0.45)).slice(0,2);
+  let sk=matchSkills(tl); const top=sk.length?sk[0].sc:0;
+  sk=sk.filter(h=>h.sc>=Math.max(2,top*0.55)).slice(0,4);
+  renderHits(ws,sk.map(h=>h.x));
+}
+function renderHits(ws,sk){
+  /* Der Satz kann aus dem Mitschreibfeld oder aus der Anlass-Frage kommen */
+  const said=(findIn.value.trim()||(profile.anlass||"").trim());
   if(!ws.length&&!sk.length){
-    hitsEl.innerHTML=`<div class="nohit">Kein Treffer im Katalog — das ist kein Problem:
-      <button type="button" class="mini" data-newk="">daraus eine eigene Kernkompetenz machen</button></div>`;
+    hitsEl.innerHTML=`<div class="nohit">Kein Treffer im Katalog — kein Problem:
+      <button type="button" class="mini" data-take="">trotzdem als Skill erfassen</button></div>`;
     return;
   }
-  const ts=teams();
   hitsEl.innerHTML=
-    ws.map(({w,why})=>{
-      const inTeams=ts.map((t,i)=>{
-        const on=t.worlds.indexOf(w.id)>-1, nm=(t.name||"").trim()||"Team "+(i+1);
-        return `<span class="tpick${on?" on":""}">
-          <button type="button" class="tb tsel" data-assign="${i}|${w.id}" aria-pressed="${on}"><span class="tck"></span>${esc(nm)}</button>
-          ${on?`<input type="number" class="tnum" min="0" max="9999" value="${esc(t.n===0||t.n?t.n:"")}" placeholder="Anz." title="Mitarbeitende in ${esc(nm)}" data-tnum="${i}">`
-              :`<span class="tn">${tN(t)?tN(t):"–"}</span>`}
-        </span>`;}).join("");
-      return `<div class="hit hw" style="--hc:${w.c}">
-        <span class="w">Kompetenzwelt${why.length?" · passt zu "+why.slice(0,3).map(esc).join(", "):""}</span>
-        <span class="n">${esc(w.title)}</span>
-        <div class="hw-act">${ts.length
-          ? `<span class="hw-lbl">Welche Teams? <i>mehrere möglich</i></span>${inTeams}
-             <span class="tsum" data-tsum="${w.id}">${headFor(w.id)?headFor(w.id)+" Mitarbeitende betroffen":""}</span>`
-          : `<button type="button" class="tb add" data-mkteam="${w.id}">+ Als Team aufnehmen</button>`}
-          <button type="button" class="tb open" data-open="${w.id}">Welt öffnen</button>
-          <button type="button" class="tb" data-newk="${w.id}">+ eigene Kernkompetenz</button></div>
-      </div>`;}).join("")
+    ws.map(({w,why})=>`<div class="hit hw" style="--hc:${w.c}">
+      <span class="w">Kompetenzwelt${why.length?" · passt zu "+why.slice(0,3).map(esc).join(", "):""}</span>
+      <span class="n">${esc(w.title)}</span>
+      <div class="hw-act">
+        <button type="button" class="tb add" data-take="${w.id}">${said?`+ „${esc(said.slice(0,34))}${said.length>34?"…":""}“ hier erfassen`:"+ Skill hier erfassen"}</button>
+        <button type="button" class="tb open" data-open="${w.id}">Welt öffnen</button></div>
+    </div>`).join("")
     + sk.map(({w,s})=>{
-      const on=has(w.id,"felder",s.n);
-      return `<div class="hit hs" style="--hc:${w.c}" data-on="${on?1:0}">
-        <button type="button" class="hs-t" data-fw="${w.id}" data-fs="${esc(s.n)}">
-          <span class="w">Skill · ${w.kw} ${esc(w.title)}</span><span class="n">${esc(s.n)}</span>
-          <span class="s">${esc(s.s)}</span><span class="a">${on?"✓ im Modell — klicken entfernt":"+ aufnehmen"}</span></button>
-        ${on?skDetail(w,s.n):""}</div>`;}).join("");
+      const have=skills().some(x=>x.text.trim()===s.n);
+      return `<div class="hit hs" style="--hc:${w.c}" data-on="${have?1:0}">
+        <button type="button" class="hs-t" data-take="${w.id}" data-txt="${esc(s.n)}"${have?" disabled":""}>
+          <span class="w">Vorschlag · ${w.kw} ${esc(w.title)}</span><span class="n">${esc(s.n)}</span>
+          <span class="s">${esc(s.s)}</span>
+          <span class="a">${have?"✓ schon erfasst":"+ so erfassen"}</span></button></div>`;}).join("");
 }
 findIn.addEventListener("input",()=>{profile.gesagt=findIn.value; save(); localFind(); renderCtx();});
-
 hitsEl.addEventListener("click",e=>{
-  /* Welt einem Team zuordnen */
-  const as=e.target.closest("[data-assign]");
-  if(as){ const p=as.dataset.assign.split("|"), t=teams()[+p[0]]; if(!t) return;
-    const j=t.worlds.indexOf(p[1]); j>-1?t.worlds.splice(j,1):t.worlds.push(p[1]);
-    save(); renderNeed(); renderCounts(); renderNeedbar(); renderCards(); renderNeedOut(); renderSync(); localFind(); return; }
-  /* Aus dem Gesagten direkt ein Team anlegen */
-  const mk=e.target.closest("[data-mkteam]");
-  if(mk){ teams().push({name:"",n:"",worlds:[mk.dataset.mkteam],note:findIn.value.trim().slice(0,200)});
-    save(); renderNeed(); renderCounts(); renderNeedbar(); renderCards(); renderNeedOut(); renderSync(); localFind();
-    const r=needEl.querySelectorAll(".trow"); if(r.length){const n=r[r.length-1].querySelector(".t-name"); n.focus(); n.scrollIntoView({block:"center"});}
-    return; }
   const op=e.target.closest("[data-open]");
-  if(op){ focusId=op.dataset.open; editKomp=null; save(); render(); goStep(1); return; }
-  /* Gesagtes als eigene Kernkompetenz übernehmen */
-  const nk=e.target.closest("[data-newk]");
-  if(nk){ const best=matchWorlds(lastTerms)[0];
-    const wid=nk.dataset.newk||(best?best.w.id:focusId);
-    focusId=wid; editKomp={w:wid,i:"new"}; save(); render(); goStep(1);
-    requestAnimationFrame(()=>{const n=panel.querySelector("#ke-n");
-      if(n){n.value=findIn.value.trim().slice(0,80); n.focus(); n.select();}});
-    return; }
-  const b=e.target.closest("[data-fs]"); if(!b||!b.dataset.fs) return;
-  focusId=b.dataset.fw; toggle(b.dataset.fw,"felder",b.dataset.fs);
-  if(b.dataset.ai){ render();
-    const w=WORLDS.find(x=>x.id===b.dataset.fw), on=has(b.dataset.fw,"felder",b.dataset.fs);
-    const wrap=b.closest(".hit"); wrap.dataset.on=on?1:0;
-    const a=b.querySelector(".a"); if(a) a.textContent=on?"✓ Skill im Modell":"+ Skill aufnehmen";
-    const old=wrap.querySelector(".skd"); if(old) old.remove();
-    if(on) wrap.insertAdjacentHTML("beforeend",skDetail(w,b.dataset.fs));
-  } else localFind();
-});
-skillDelegate(hitsEl,localFind);
-/* Mitarbeiterzahl in der Trefferkarte: Wert wandert in dieselbe Zeile wie in Schritt 1.
-   Kein localFind() hier — das würde die Liste neu bauen und den Fokus verlieren. */
-hitsEl.addEventListener("input",e=>{
-  const f=e.target.closest("[data-tnum]"); if(!f) return;
-  const i=+f.dataset.tnum, t=teams()[i]; if(!t) return;
-  t.n=f.value===""?"":Math.max(0,Math.min(9999,parseInt(f.value,10)||0));
-  save(); needSum(); renderCounts(); renderNeedRing(); renderNeedbar(); renderCards(); renderNeedOut(); renderSync();
-  const mirror=needEl.querySelector(`.trow[data-ti="${i}"] [data-tf="n"]`); if(mirror) mirror.value=t.n;
-  hitsEl.querySelectorAll("[data-tsum]").forEach(el=>{
-    const h=headFor(el.dataset.tsum); el.textContent=h?h+" Mitarbeitende betroffen":"";});
+  if(op){ focusId=op.dataset.open; save(); render(); goStep(1); return; }
+  const tk=e.target.closest("[data-take]"); if(!tk) return;
+  const fromFind=!tk.dataset.txt&&findIn.value.trim();
+  const txt=(tk.dataset.txt||findIn.value.trim()||(profile.anlass||"").trim()).trim();
+  const wid=tk.dataset.take||((matchWorlds(lastTerms)[0]||{}).w||{}).id||"";
+  addSkill(txt,wid,[{name:"",n:""}]);
+  /* Nur das Mitschreibfeld leeren — die Anlass-Antwort bleibt stehen */
+  if(fromFind){ findIn.value=""; profile.gesagt=""; }
+  save(); localFind(); renderCtx();
 });
 
-async function aiRun(){
-  const text=spokenText();
-  if(text.length<10){findNote.className="find-note err"; findNote.textContent="Bitte zuerst etwas mitschreiben."; return;}
-  if(busy) return; busy=true; aiGo.disabled=true;
-  findNote.className="find-note"; findNote.textContent="Ordne zu …";
-  const kat=WORLDS.map(w=>`${w.id} = ${w.title}\n  Kernkompetenzen: ${allKomp(w).map(k=>k.n).join(" | ")}\n  Skills: ${w.felder.map(s=>s.n).join(" | ")}`).join("\n");
-  try{
-    const out=await SAMPLE.json(
-`Du unterstützt ein Vertriebsgespräch eines IT-Weiterbildungsanbieters. Unten steht, was der Kunde gesagt hat.
-Zerlege es in einzelne Themen (Painpoints). Ordne JEDES Thema genau einer Kompetenzwelt aus dem Katalog zu.
-Prüfe dann, ob eine der vorhandenen Kernkompetenzen dieser Welt zum Thema passt — wenn ja, nenne sie EXAKT wie im Katalog unter "kompetenzMatch" und lasse "kompetenzNeu" null.
-Passt keine vorhandene Kernkompetenz wirklich gut, schlage stattdessen unter "kompetenzNeu" eine neue, kurze Kernkompetenz in den Worten des Kunden vor (name: max. 6 Wörter, beschreibung: ein Satz) und lasse "kompetenzMatch" null. Nenne niemals beide Felder gleichzeitig.
-Ordne außerdem, falls ein Skill aus dem Katalog dieser Welt gut passt, diesen unter "skill" EXAKT wie im Katalog zu, sonst null.
-Passt gar keine Kompetenzwelt zum Thema, setze weltId und alle anderen Felder auf null.
-
-KATALOG:
-${kat}
-
-MITSCHRIFT:
-${text}
-
-Antworte NUR mit JSON: {"z":[{"thema":"kurzer Satz in Kundenworten","weltId":"<id|null>","kompetenzMatch":"<exakt aus Katalog|null>","kompetenzNeu":{"name":"...","beschreibung":"..."}|null,"skill":"<exakt|null>","warum":"ein Satz"}]}`,
-      {modelTier:"default"});
-    const list=(out&&Array.isArray(out.z))?out.z:[];
-    const created=renderAI(list);
-    findNote.textContent=list.length?`${list.length} Thema${list.length===1?"":"n"} zugeordnet${created?` — ${created} neue Kernkompetenz${created===1?"":"en"} direkt übernommen`:""} — klicken zum Aufnehmen.`:"Kein Thema erkannt.";
-  }catch(e){
-    findNote.className="find-note err";
-    findNote.textContent=e&&e.code==="rate_limited"?"Zu viele Anfragen — bitte kurz warten.":"Zuordnung fehlgeschlagen.";
-  }
-  busy=false; aiGo.disabled=false;
-}
-function renderAI(list){
-  const ok=[]; let createdCount=0;
-  list.forEach(z=>{
-    const w=WORLDS.find(x=>x.id===z.weltId); if(!w) return;
-    let k=z.kompetenzMatch?allKomp(w).find(x=>x.n===z.kompetenzMatch):null;
-    let created=false;
-    if(!k&&z.kompetenzNeu&&z.kompetenzNeu.name){ k=addKomp(w,z.kompetenzNeu.name,z.kompetenzNeu.beschreibung); created=true; createdCount++; }
-    const s=z.skill?w.felder.find(x=>x.n===z.skill):null;
-    if(!k&&!s) return;
-    ok.push({w,s,k,created,thema:z.thema||"",warum:z.warum||""});
+/* ---------- Skills anlegen und ändern ---------- */
+function addSkill(text,welt,teams,focus){
+  const s=mkSkill(text,welt,teams);
+  skills().push(s); save(); redrawAll();
+  if(focus!==false) requestAnimationFrame(()=>{
+    const f=document.querySelector(`.srow[data-sid="${s.id}"] .s-text`);
+    if(f){f.focus(); f.scrollIntoView({behavior:"smooth",block:"center"});}
   });
-  if(!ok.length){hitsEl.innerHTML=""; return 0;}
-  focusId=ok[0].w.id;
-  hitsEl.innerHTML=ok.map(({w,s,k,created,thema})=>{
-    const skillOn=s?has(w.id,"felder",s.n):false;
-    return `<div class="hit hs" style="--hc:${w.c}" data-on="${(skillOn||created)?1:0}">
-      <button type="button" class="hs-t" data-ai="1" data-fw="${w.id}" data-fs="${s?esc(s.n):""}" data-fk="${(k&&!created)?esc(k.n):""}">
-        <span class="s">„${esc(thema)}“</span>
-        <span class="w">${w.kw} · ${esc(w.title)}</span>
-        ${k?`<span class="n">${created?"✓ Neu erstellt &amp; ausgewählt: ":""}${esc(kName(w,k))}</span>`:""}
-        ${s?`<span class="a">${skillOn?"✓ Skill im Modell":"+ Skill aufnehmen"}</span>`:""}
-      </button>
-      ${(s&&skillOn)?skDetail(w,s.n):""}</div>`;
-  }).join("");
-  render();
-  return createdCount;
+  return s;
 }
-hitsEl.addEventListener("click",e=>{const b=e.target.closest("[data-fk]"); if(!b||!b.dataset.fk) return;
-  if(!has(b.dataset.fw,"komp",b.dataset.fk)) state[b.dataset.fw].komp.push(b.dataset.fk);});
-aiGo.addEventListener("click",aiRun);
-(async()=>{try{SAMPLE=(window.claude&&window.claude.use)?await window.claude.use("sample"):null}catch(e){SAMPLE=null}
-  if(SAMPLE) aiGo.hidden=false;
-  noteDefault();})();
-
-/* ---------- Bedarfsaufnahme: wo fehlt was, bei wie vielen ---------- */
+const findSkill=id=>skills().find(s=>s.id===id);
+function delSkill(id){
+  const i=skills().findIndex(s=>s.id===id); if(i<0) return;
+  skills().splice(i,1); save(); redrawAll();
+}
+/* Der Zuordnungsvorschlag kommt aus demselben Matcher wie die Sofortsuche */
+function suggestWorld(text){
+  const tl=terms(text); if(!tl.length) return null;
+  const m=matchWorlds(tl); return m.length?m[0].w:null;
+}
+function teamChips(s,i){
+  const pool=teamPool();
+  return `<div class="tlist">
+    ${(s.teams||[]).map((t,j)=>`<span class="tpair">
+      <input class="tp-n" list="teamsug" value="${esc(t.name||"")}" placeholder="Team oder Abteilung" data-tf="name" data-ti="${j}" maxlength="60">
+      <input class="tp-c" type="number" min="0" max="9999" value="${esc(t.n===0||t.n?t.n:"")}" placeholder="MA" title="Wie viele Mitarbeitende betrifft es?" data-tf="n" data-ti="${j}">
+      <button type="button" class="tp-x" data-tdel="${j}" title="Team entfernen">&times;</button></span>`).join("")}
+    <button type="button" class="tp-add" data-tadd="1">+ Team</button>
+    ${sSum(s)?`<span class="tp-sum">zusammen ${sSum(s)}</span>`:""}
+  </div>`;
+}
+function skillRow(s,i){
+  const sug=(!s.welt&&s.text.trim())?suggestWorld(s.text):null;
+  return `<div class="srow${s.welt?" set":""}" data-sid="${s.id}" data-si="${i}">
+    <div class="srow-top">
+      <span class="srow-i">${i+1}</span>
+      <input class="s-text" list="skillsug" value="${esc(s.text)}" data-sf="text" maxlength="120"
+        placeholder="Was der Kunde sagt — z. B. „Angebote dauern zu lange“">
+      <button type="button" class="t-del no-print" data-sdel="${s.id}" title="Skill entfernen">&times;</button>
+    </div>
+    <span class="s-lbl">Welche Kompetenzwelt?${sug?` <i>Vorschlag: ${esc(sug.title)}</i>`:""}</span>
+    <div class="wsel">${WORLDS.map(w=>`<button type="button" class="wchip" style="--wc:${w.c}" data-sw="${w.id}" aria-pressed="${s.welt===w.id}">${esc(w.title)}</button>`).join("")}</div>
+    <span class="s-lbl">Wen betrifft es — und wie viele?</span>
+    ${teamChips(s,i)}
+    <input class="s-note" value="${esc(s.note)}" maxlength="200" placeholder="Ergänzung (optional): welcher Fall, welche Frist?" data-sf="note">
+  </div>`;
+}
 const needEl=document.getElementById("need");
 function needSummary(){
-  const ts=teamsUsed(), h=headcount(), ws=WORLDS.filter(w=>teamsFor(w.id).length).length;
-  if(!ts.length) return "noch nichts erfasst";
-  return nTeam(ts.length)+" · "+h+" Mitarbeitende"+(ws?" · "+ws+" von 6 Kompetenzwelten":"");
+  const n=named().length; if(!n) return "noch nichts erfasst";
+  const ws=WORLDS.filter(w=>skillsFor(w.id).length).length, h=headcount();
+  return nSkill(n)+(h?" · "+h+" Mitarbeitende":"")+(ws?" · "+ws+" von 6 Kompetenzwelten":"");
 }
 function needSum(){const n=needEl.querySelector(".need-sum"); if(n) n.textContent=needSummary();}
 function renderNeed(){
-  const ts=teams();
+  const ls=skills();
   needEl.innerHTML=`
-    <div class="need-h"><h3>Wo fehlen Kompetenzen — und bei wie vielen Menschen?</h3>
+    <div class="need-h"><h3>Was fehlt — und wem?</h3>
       <span class="need-sum">${esc(needSummary())}</span></div>
-    <p class="need-hint">Eine Zeile je Team oder Abteilung: Name, Anzahl der Mitarbeitenden, und in welchen Kompetenzwelten es hakt.
-      Das ist die Grundlage — Schritt 2 füllt diese Welten dann mit Kernkompetenzen.</p>
-    ${ts.length?ts.map((t,i)=>`
-      <div class="trow" data-ti="${i}">
-        <div class="trow-top">
-          <input class="t-name" data-tf="name" value="${esc(t.name||"")}" placeholder="Team oder Abteilung — z. B. Vertriebsinnendienst" maxlength="70">
-          <input class="t-n" data-tf="n" type="number" min="0" max="9999" value="${esc(t.n===0||t.n?t.n:"")}" placeholder="Personen">
-          <button type="button" class="t-del no-print" data-tdel="${i}" title="Team entfernen">&times;</button>
-        </div>
-        <span class="t-lbl">In welchen Kompetenzwelten fehlt es?</span>
-        <div class="wsel">${WORLDS.map(w=>`<button type="button" class="wchip" style="--wc:${w.c}" data-tw="${i}|${w.id}" aria-pressed="${t.worlds.indexOf(w.id)>-1}">${esc(w.title)}</button>`).join("")}</div>
-        <input class="t-note" data-tf="note" value="${esc(t.note||"")}" placeholder="Was genau fehlt? In den Worten des Kunden." maxlength="200">
-      </div>`).join("")
-     :`<div class="t-empty">Noch kein Team erfasst — fangen Sie dort an, wo es am meisten weh tut.</div>`}
-    <button type="button" class="btn go need-add no-print" id="tAdd">+ Team hinzufügen</button>`;
+    <p class="need-hint">Eine Zeile je Thema, in den Worten des Kunden. Die Kompetenzwelt wird vorgeschlagen,
+      die betroffenen Teams tragen Sie mit ihrer Mitarbeiterzahl dazu ein. Daraus baut sich Schritt 2 auf.</p>
+    ${ls.length?ls.map(skillRow).join("")
+      :`<div class="t-empty">Noch nichts erfasst — fangen Sie mit dem an, was der Kunde zuerst genannt hat.</div>`}
+    <button type="button" class="btn go need-add no-print" id="sAdd">+ Weiteren Skill erfassen</button>`;
 }
-function needChanged(full){
-  save();
-  if(full) renderNeed(); else needSum();
-  refreshZsug();  /* Teamnamen sind die Vorschläge für „Für wen“ */
-  renderCounts(); renderNeedRing(); renderNeedbar(); renderPanel(); renderCards(); renderNeedOut(); renderSync();
-  localFind();   /* Trefferkarten zeigen die Teams zum Zuordnen — die ändern sich hier */
+function refreshSug(){
+  const d=document.getElementById("teamsug");
+  if(d) d.innerHTML=teamPool().map(z=>`<option value="${esc(z)}">`).join("");
+}
+/* Alles neu zeichnen, was von den Skills abhängt */
+function redrawAll(){
+  refreshSug(); renderNeed(); buildInner(); render();
+}
+/* Leichter Durchlauf beim Tippen: keine Neuzeichnung der Eingabefelder */
+function touchSkills(){
+  save(); needSum(); refreshSug(); buildInner(); renderCounts(); coreDefault();
+  renderNeedRing(); renderPanel(); renderNeedbar(); renderCtx(); renderCards(); renderNeedOut(); renderSync();
 }
 needEl.addEventListener("input",e=>{
-  const f=e.target.closest("[data-tf]"); if(!f) return;
-  const row=f.closest("[data-ti]"), t=teams()[+row.dataset.ti]; if(!t) return;
-  t[f.dataset.tf]= f.dataset.tf==="n"
-    ? (f.value===""?"":Math.max(0,Math.min(9999,parseInt(f.value,10)||0)))
-    : f.value;
-  needChanged(false);
-});
-needEl.addEventListener("click",e=>{
-  if(e.target.closest("#tAdd")){
-    teams().push({name:"",n:"",worlds:[],note:""}); needChanged(true);
-    const rows=needEl.querySelectorAll(".trow"); const last=rows[rows.length-1];
-    if(last) last.querySelector(".t-name").focus();
+  const row=e.target.closest("[data-sid]"); if(!row) return;
+  const s=findSkill(row.dataset.sid); if(!s) return;
+  const tf=e.target.closest("[data-tf]");
+  if(tf){
+    const t=s.teams[+tf.dataset.ti]; if(!t) return;
+    t[tf.dataset.tf]= tf.dataset.tf==="n"
+      ? (tf.value===""?"":Math.max(0,Math.min(9999,parseInt(tf.value,10)||0)))
+      : tf.value;
+    touchSkills();
+    const sum=row.querySelector(".tp-sum"), v=sSum(s);
+    if(sum) sum.textContent=v?"zusammen "+v:""; 
     return;
   }
-  const d=e.target.closest("[data-tdel]");
-  if(d){ teams().splice(+d.dataset.tdel,1); needChanged(true); return; }
-  const c=e.target.closest("[data-tw]");
-  if(c){ const p=c.dataset.tw.split("|"), t=teams()[+p[0]]; if(!t) return;
-    const j=t.worlds.indexOf(p[1]); j>-1?t.worlds.splice(j,1):t.worlds.push(p[1]);
-    c.setAttribute("aria-pressed",j<0); needChanged(false); }
+  const sf=e.target.closest("[data-sf]"); if(!sf) return;
+  s[sf.dataset.sf]=sf.value;
+  if(sf.dataset.sf==="text"&&!s.welt){
+    const g=suggestWorld(s.text);
+    if(g){ s.welt=g.id;
+      row.classList.add("set");
+      row.querySelectorAll("[data-sw]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.sw===g.id));
+      const l=row.querySelector(".s-lbl"); if(l) l.innerHTML="Welche Kompetenzwelt?";
+    }
+  }
+  touchSkills();
+});
+needEl.addEventListener("click",e=>{
+  if(e.target.closest("#sAdd")){ addSkill("","",[{name:"",n:""}]); return; }
+  const row=e.target.closest("[data-sid]");
+  const del=e.target.closest("[data-sdel]");
+  if(del){ delSkill(del.dataset.sdel); return; }
+  if(!row) return;
+  const s=findSkill(row.dataset.sid); if(!s) return;
+  const wb=e.target.closest("[data-sw]");
+  if(wb){ s.welt=(s.welt===wb.dataset.sw)?"":wb.dataset.sw; save(); renderNeed(); render(); return; }
+  const ta=e.target.closest("[data-tadd]");
+  if(ta){ s.teams.push({name:"",n:""}); save(); renderNeed();
+    requestAnimationFrame(()=>{const r=needEl.querySelector(`.srow[data-sid="${s.id}"]`);
+      if(r){const f=[...r.querySelectorAll(".tp-n")].pop(); if(f) f.focus();}});
+    return; }
+  const td=e.target.closest("[data-tdel]");
+  if(td){ s.teams.splice(+td.dataset.tdel,1); save(); renderNeed(); render(); }
 });
 
-/* Bedarfsleiste über dem Ring (Schritt 2) */
+/* ---------- Panel: eine Kompetenzwelt im Detail ---------- */
+const panel=document.getElementById("panel");
+function renderPanel(){
+  const w=WORLDS.find(x=>x.id===focusId), ls=skillsFor(w.id), ts=teamsFor(w.id);
+  panel.style.setProperty("--pc",w.c);
+  panel.innerHTML=`
+   <div class="ph"><span class="kw">${w.kw} · ${ls.length?nSkill(ls.length):"noch nichts erfasst"}</span>
+     <h2>${esc(w.title)}</h2><p>${esc(w.lead)}</p></div>
+   <div class="pb">
+     ${ts.length?`<div class="pneed"><span class="lbl">Betroffen</span>
+       <p>${ts.map(t=>esc(t.name)+(t.n?" · "+t.n:"")).join(" &nbsp;|&nbsp; ")}${ts.length>1&&headFor(w.id)?" &mdash; zusammen "+headFor(w.id):""}</p></div>`:""}
+     <div class="grp">
+       <div class="grp-h"><span class="lbl">Erfasste Skills</span></div>
+       <p class="hint">Das, was der Kunde zu dieser Welt gesagt hat. Hier lässt es sich im Gespräch nachschärfen.</p>
+       ${ls.length?ls.map(s=>`<div class="pskill" data-sid="${s.id}">
+         <input class="ps-t" value="${esc(s.text)}" data-sf="text" maxlength="120">
+         <div class="ps-t2">${sTeams(s).length
+            ? sTeams(s).map(t=>`<span class="ps-team">${esc((t.name||"").trim()||"Team?")}${tNum(t)?" · "+tNum(t):""}</span>`).join("")
+            : `<span class="ps-none">noch ohne Team</span>`}
+           <button type="button" class="mini" data-goedit="${s.id}">bearbeiten</button></div>
+         ${s.note.trim()?`<p class="ps-n">${esc(s.note.trim())}</p>`:""}
+       </div>`).join("")
+        :`<p class="ps-empty">Noch nichts. Über den Ring oder unten anlegen.</p>`}
+       <button type="button" class="addk no-print" id="addHere">+ Skill in „${esc(w.title)}“ erfassen</button>
+     </div>
+     <div class="beleg"><span class="lbl">Warum das gebraucht wird</span><p>${esc(w.beleg)}</p></div>
+     <details class="more"><summary>Woran ppedv dabei denkt</summary><div class="in">
+       <p class="hint">Kernkompetenzen dieser Welt — als Anhalt, nicht als Vorgabe:</p>
+       <ul class="plist">${w.komp.map(k=>`<li><b>${esc(k.n)}</b>${esc(k.d)}</li>`).join("")}</ul>
+     </div></details>
+   </div>`;
+  const ah=panel.querySelector("#addHere");
+  if(ah) ah.addEventListener("click",()=>{addSkill("",w.id,[{name:"",n:""}]); goStep(2);});
+}
+panel.addEventListener("input",e=>{
+  const f=e.target.closest("[data-sf]"); if(!f) return;
+  const s=findSkill(f.closest("[data-sid]").dataset.sid); if(!s) return;
+  s[f.dataset.sf]=f.value; save(); buildInner(); renderNeed(); renderCounts(); renderCards(); renderNeedOut(); renderSync();
+});
+panel.addEventListener("click",e=>{
+  const g=e.target.closest("[data-goedit]"); if(!g) return;
+  goStep(2);
+  requestAnimationFrame(()=>{const r=needEl.querySelector(`.srow[data-sid="${g.dataset.goedit}"]`);
+    if(r){r.classList.add("flash"); r.scrollIntoView({behavior:"smooth",block:"center"});
+      const f=r.querySelector(".tp-n"); if(f) f.focus();
+      setTimeout(()=>r.classList.remove("flash"),1600);}});
+});
+
+/* ---------- Ring-Interaktion ---------- */
+const readout=document.getElementById("readout"),DEF="Innenring: die erfassten Skills · Außenring: Kompetenzwelt öffnen.";
+const coreName=document.getElementById("coreName"),cds=[document.getElementById("cd1"),document.getElementById("cd2"),document.getElementById("cd3")];
+const coreTeamEl=document.getElementById("coreTeam");
+function setCore(name,desc){
+  coreName.textContent=name||"";
+  const lines=[]; if(desc){let c="";desc.split(" ").forEach(v=>{if((c+" "+v).trim().length<=40)c=(c+" "+v).trim();else{lines.push(c);c=v;}});if(c)lines.push(c);}
+  cds.forEach((n,i)=>n.textContent=lines[i]||"");
+}
+function setCoreTeam(wid){
+  if(!coreTeamEl) return;
+  const ts=teamsFor(wid);
+  if(!ts.length){coreTeamEl.textContent=""; return;}
+  const full=ts.map(v=>v.name+(v.n?" · "+v.n:"")).join("   ");
+  const kurz=nTeam(ts.length)+" · "+(headFor(wid)||"?")+" Mitarbeitende";
+  /* Der Innenkreis ist an dieser Höhe rund 280 px breit — was nicht passt, wird zur Kurzform. */
+  coreTeamEl.textContent=full.length>34?kurz:full;
+  try{ if(coreTeamEl.getComputedTextLength()>276) coreTeamEl.textContent=kurz; }catch(e){}
+}
+function coreDefault(){const w=WORLDS.find(x=>x.id===focusId); setCore(w.title,w.lead); coreName.style.fill=w.c; setCoreTeam(w.id);}
+function hoverInfo(t){
+  const w=WORLDS.find(x=>x.id===t.dataset.w); if(!w) return; coreName.style.fill=w.c; setCoreTeam(w.id);
+  if(t.dataset.kind==="skill"){
+    const s=findSkill(t.dataset.v); if(!s) return;
+    const ts=sTeams(s).map(x=>(x.name||"Team?")+(tNum(x)?" ("+tNum(x)+")":"")).join(" · ");
+    readout.innerHTML=`<b>${esc(s.text)}</b>${ts?" — "+esc(ts):" — noch ohne Team"}`;
+    setCore(s.text,ts||w.title);
+  }else{
+    readout.innerHTML=`<b>${esc(w.title)}</b> — ${esc(w.lead)}`; setCore(w.title,w.lead);
+  }
+}
+function actSeg(t){
+  focusId=t.dataset.w;
+  if(t.dataset.kind==="skill"){
+    save(); render(); goStep(2);
+    requestAnimationFrame(()=>{const r=needEl.querySelector(`.srow[data-sid="${t.dataset.v}"]`);
+      if(r){r.classList.add("flash"); r.scrollIntoView({behavior:"smooth",block:"center"});
+        setTimeout(()=>r.classList.remove("flash"),1600);}});
+    return;
+  }
+  if(t.dataset.kind==="empty"){ addSkill("",t.dataset.w,[{name:"",n:""}]); goStep(2); return; }
+  save(); render();
+}
+[gOuter,gInner].forEach(g=>{
+  g.addEventListener("mouseover",e=>{const t=e.target.closest("path.seg"); if(t) hoverInfo(t);});
+  g.addEventListener("mouseleave",()=>{readout.textContent=DEF; coreDefault();});
+  g.addEventListener("click",e=>{const t=e.target.closest("path.seg"); if(t) actSeg(t);});
+  g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){const t=e.target.closest("path.seg"); if(t){e.preventDefault();actSeg(t);}}});
+});
+
+/* ---------- Leisten über dem Ring ---------- */
 function renderNeedbar(){
   const box=document.getElementById("needbar"); if(!box) return;
-  const act=WORLDS.map(w=>({w,t:teamsFor(w.id)})).filter(x=>x.t.length);
-  if(!act.length){box.innerHTML=`<p class="nb-empty">Kein Bedarf aus Schritt 1 erfasst — Sie können hier trotzdem frei auswählen.</p>`; return;}
+  const act=WORLDS.map(w=>({w,l:skillsFor(w.id)})).filter(x=>x.l.length);
+  if(!act.length){box.innerHTML=`<p class="nb-empty">Noch nichts erfasst — in Schritt 1 anfangen, der Ring füllt sich mit.</p>`; return;}
   box.innerHTML=`<span class="lbl">Aus Schritt 1 — anklicken öffnet die Kompetenzwelt</span>
     <div class="nb-row">${act.map(x=>{
-      const notes=x.t.map(t=>(t.note||"").trim()).filter(Boolean);
+      const ts=teamsFor(x.w.id);
       return `<button type="button" class="nb" style="--wc:${x.w.c}" data-nb="${x.w.id}">
       <b>${esc(x.w.title)}</b>
-      <span>${nTeam(x.t.length)} · ${headFor(x.w.id)} Mitarbeitende</span>
-      <i>${x.t.map(t=>esc(((t.name||"").trim()||"Ohne Namen"))+(tN(t)?" ("+tN(t)+")":"")).join(" · ")}</i>
-      ${notes.map(n=>`<em>„${esc(n)}“</em>`).join("")}</button>`;}).join("")}</div>`;
+      <span>${nSkill(x.l.length)}${headFor(x.w.id)?" · "+headFor(x.w.id)+" Mitarbeitende":""}</span>
+      ${ts.length?`<i>${ts.map(t=>esc(t.name)+(t.n?" ("+t.n+")":"")).join(" · ")}</i>`:""}
+      ${x.l.map(s=>`<em>„${esc(s.text)}“</em>`).join("")}</button>`;}).join("")}</div>`;
 }
 document.getElementById("needbar").addEventListener("click",e=>{
   const b=e.target.closest("[data-nb]"); if(!b) return;
-  focusId=b.dataset.nb; editKomp=null; save(); render();
+  focusId=b.dataset.nb; save(); render();
   document.querySelector(".board").scrollIntoView({behavior:"smooth",block:"start"});
 });
-
-/* Was der Kunde gesagt hat — beim Durchgehen der Matrix immer greifbar */
 function renderCtx(){
   const box=document.getElementById("ctxbar"); if(!box) return;
   const items=[];
@@ -1557,25 +1373,24 @@ function renderCtx(){
     <div class="ctx-in">${items.map(([l,v])=>`<div class="ctx-i"><span>${esc(l)}</span><p>${esc(v)}</p></div>`).join("")}</div>
   </details>`;
 }
-
-/* Bedarfstabelle im Ergebnis (Schritt 3) */
 function renderNeedOut(){
-  const g=document.getElementById("needOut"), ts=teamsUsed();
-  if(!ts.length){g.innerHTML=""; return;}
-  g.innerHTML=`<h3 style="font-size:22px">Bedarf im Haus</h3>
+  const g=document.getElementById("needOut"), ls=named();
+  if(!ls.length){g.innerHTML=""; return;}
+  g.innerHTML=`<h3 style="font-size:22px">Was fehlt — und wem?</h3>
     <p class="sub" style="font-size:14.5px;color:var(--ink-2);margin:6px 0 16px">Im Gespräch aufgenommen: ${esc(needSummary())}.</p>
     <div class="ntab">
-      <div class="nt-h"><span>Team</span><span>Personen</span><span>Kompetenzwelten</span><span>Was fehlt</span></div>
-      ${ts.map(t=>`<div class="nt-r">
-        <span class="nt-n">${esc((t.name||"").trim()||"Ohne Namen")}</span>
-        <span class="nt-p">${tN(t)||"—"}</span>
-        <span class="nt-w">${t.worlds.map(id=>{const w=WORLDS.find(x=>x.id===id); return w?`<i style="--wc:${w.c}">${esc(w.title)}</i>`:"";}).join("")||"—"}</span>
-        <span class="nt-t">${esc((t.note||"").trim())||"—"}</span></div>`).join("")}
-      <div class="nt-r nt-sum"><span>Summe</span><span class="nt-p">${headcount()}</span><span></span><span></span></div>
+      <div class="nt-h"><span>Skill</span><span>Kompetenzwelt</span><span>Teams</span><span>Ergänzung</span></div>
+      ${ls.map(s=>{const w=WORLDS.find(x=>x.id===s.welt);
+        return `<div class="nt-r">
+        <span class="nt-n">${esc(s.text)}</span>
+        <span class="nt-w">${w?`<i style="--wc:${w.c}">${esc(w.title)}</i>`:"—"}</span>
+        <span class="nt-p2">${sTeams(s).length?sTeams(s).map(t=>esc((t.name||"").trim()||"Team?")+(tNum(t)?" · "+tNum(t):"")).join("<br>"):"—"}</span>
+        <span class="nt-t">${esc(s.note.trim())||"—"}</span></div>`;}).join("")}
+      <div class="nt-r nt-sum"><span>Summe</span><span>${nSkill(ls.length)}</span><span class="nt-p2">${headcount()} Mitarbeitende</span><span></span></div>
     </div>`;
 }
 
-/* ---------- Kontext ---------- */
+/* ---------- Kontextfragen ---------- */
 const fields=document.getElementById("fields");
 fields.innerHTML=PFIELDS.map(f=>`<div class="field${f.wide?" wide":""}"><label for="pf-${f.k}">${esc(f.l)}</label>
   ${f.area?`<textarea id="pf-${f.k}" data-pf="${f.k}" placeholder="${esc(f.ph)}"></textarea>`:`<input id="pf-${f.k}" data-pf="${f.k}" placeholder="${esc(f.ph)}">`}</div>`).join("")
@@ -1590,40 +1405,40 @@ function syncFields(){PFIELDS.forEach(f=>{const n=fields.querySelector(`[data-pf
 
 /* ---------- Ergebnis ---------- */
 function renderCards(){
-  const g=document.getElementById("cards"), act=WORLDS.filter(w=>selIn(w)>0);
-  if(!act.length){g.innerHTML=`<div class="empty">Noch nichts gewählt. Gehen Sie zurück zu Schritt 1 oder 2.</div>`; return;}
-  g.innerHTML=act.map(w=>{const st=state[w.id];
-    const kompLabels=st.komp.map(n=>{const k=allKomp(w).find(x=>x.n===n); return k?kName(w,k):n;});
-    const sec=(l,a,c="")=>a.length?`<div class="sec ${c}"><span class="lbl">${l}</span><ul>${a.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:"";
-    const skills=st.felder.map(n=>{const d=skHas(w,n);
-      const z=(d&&d.z.length)?`<span class="cz">${d.z.map(esc).join(" · ")}</span>`:"";
-      const nt=(d&&d.n.trim())?`<span class="cn">${esc(d.n.trim())}</span>`:"";
-      return esc(n)+z+nt;});
+  const g=document.getElementById("cards"), act=WORLDS.filter(w=>skillsFor(w.id).length);
+  if(!act.length){g.innerHTML=`<div class="empty">Noch nichts erfasst. Gehen Sie zurück zu Schritt 1.</div>`; return;}
+  g.innerHTML=act.map(w=>{
+    const ls=skillsFor(w.id);
     return `<div class="card" style="--pc:${w.c}"><div class="h"><span class="kw">${w.kw}</span><h4>${esc(w.title)}</h4></div>
-      <div class="b">${sec("Kernkompetenzen",kompLabels.map(esc),"kk")}${sec("Skills",skills,"sk")}</div></div>`;}).join("");
+      <div class="b"><div class="sec sk"><span class="lbl">${nSkill(ls.length)}</span><ul>${ls.map(s=>{
+        const t=sTeams(s);
+        return `<li>${esc(s.text)}
+          ${t.length?`<span class="cz">${t.map(x=>esc((x.name||"").trim()||"Team?")+(tNum(x)?" · "+tNum(x):"")).join(" | ")}</span>`:""}
+          ${s.note.trim()?`<span class="cn">${esc(s.note.trim())}</span>`:""}</li>`;}).join("")}</ul></div></div></div>`;}).join("");
 }
-const pick=c=>{const o=[]; WORLDS.forEach(w=>state[w.id][c].forEach(v=>o.push(v))); return o;};
 function syncHTML(kind){
-  const li=[];
-  if(kind==="kk"){const a=[]; WORLDS.forEach(w=>state[w.id].komp.forEach(n=>{const k=allKomp(w).find(x=>x.n===n); a.push(k?kName(w,k):n);}));
-    if(a.length) li.push(`<li><strong>${a.length===1?"1 Kernkompetenz":a.length+" Kernkompetenzen"}</strong> ${a.length===1?"wird":"werden"} erhoben: ${a.map(esc).join(" · ")}</li>`);
-    const h=headcount(), nm=teamNames();
-    if(h||nm.length) li.push(`<li>Assessment für <strong>${h||"—"} Mitarbeitende</strong>${nm.length?` aus ${nm.map(esc).join(" · ")}`:""}</li>`);}
-  if(kind==="lern"){const zm=zielMap(), zs=Object.keys(zm), off=pick("felder").filter(n=>!Object.values(zm).some(a=>a.indexOf(n)>-1));
-    zs.forEach(z=>li.push(`<li>Lernpfad <strong>${esc(z)}</strong>: ${[...new Set(zm[z])].map(esc).join(" · ")}</li>`));
-    if(off.length) li.push(`<li>Noch ohne Zuordnung „für wen“: ${[...new Set(off)].map(esc).join(" · ")}</li>`);
+  const li=[], ls=named(), tm=teamMap(ls), tn=Object.keys(tm);
+  if(kind==="kk"){
+    if(ls.length) li.push(`<li><strong>${nSkill(ls.length)}</strong> ${ls.length===1?"wird":"werden"} erhoben: ${ls.map(s=>esc(s.text)).join(" · ")}</li>`);
+    if(tn.length) li.push(`<li>Assessment für <strong>${headcount()} Mitarbeitende</strong> aus ${tn.map(esc).join(" · ")}</li>`);}
+  if(kind==="lern"){
+    tn.forEach(t=>{const mine=ls.filter(s=>(s.teams||[]).some(x=>(x.name||"").trim()===t));
+      li.push(`<li>Lernpfad <strong>${esc(t)}</strong>${tm[t]?" ("+tm[t]+")":""}: ${mine.map(s=>esc(s.text)).join(" · ")}</li>`);});
+    const off=ls.filter(s=>!sTeams(s).length);
+    if(off.length) li.push(`<li>Noch ohne Team: ${off.map(s=>esc(s.text)).join(" · ")}</li>`);
     if(profile.start) li.push(`<li>Terminplanung auf Ihren Wunschstart: <strong>${esc(profile.start)}</strong></li>`);}
-  if(kind==="ziel"){const zs=Object.keys(zielMap()), t=teamsUsed();
-    if(zs.length) li.push(`<li><strong>Lerngruppen</strong>: ${zs.map(esc).join(" · ")}</li>`);
-    if(t.length) li.push(`<li>Wellen entlang der erfassten Teams: ${t.map(x=>esc((x.name||"Ohne Namen").trim()||"Ohne Namen")+(tN(x)?" ("+tN(x)+")":"")).join(" · ")}</li>`);}
-  if(kind==="felder"){const a=pick("felder");
-    if(a.length) li.push(`<li>Use Cases entlang der gewählten <strong>Skills</strong>: ${a.map(esc).join(" · ")}</li>`);}
-  if(kind==="erfolg"){const a=pick("komp");
-    if(a.length) li.push(`<li>Re-Assessment derselben <strong>${a.length}</strong> Kernkompetenzen wie in Phase 1</li>`);
+  if(kind==="ziel"){
+    if(tn.length) li.push(`<li><strong>Lerngruppen</strong>: ${tn.map(t=>esc(t)+(tm[t]?" ("+tm[t]+")":"")).join(" · ")}</li>`);
+    const ws=WORLDS.filter(w=>skillsFor(w.id).length);
+    if(ws.length) li.push(`<li>Wellen entlang der Kompetenzwelten: ${ws.map(w=>esc(w.title)).join(" · ")}</li>`);}
+  if(kind==="felder"){
+    if(ls.length) li.push(`<li>Use Cases entlang der erfassten Skills: ${ls.map(s=>esc(s.text)).join(" · ")}</li>`);}
+  if(kind==="erfolg"){
+    if(ls.length) li.push(`<li>Re-Assessment derselben <strong>${ls.length}</strong> Skills wie in Phase 1</li>`);
     if(profile.erfolg) li.push(`<li>Gemessen gegen Ihr Erfolgsbild: <strong>${esc(profile.erfolg.slice(0,200))}</strong></li>`);
     if(profile.entscheidung) li.push(`<li>Abschlusspräsentation für: ${esc(profile.entscheidung)}</li>`);}
   return `<span class="lbl">Aus Ihrer Auswahl</span>`+(li.length?`<ul>${li.join("")}</ul>`
-    :`<p class="none">Sobald Sie in Schritt 1 und 2 ausfüllen, steht hier, was in diese Phase einfließt.</p>`);
+    :`<p class="none">Sobald Sie in Schritt 1 erfassen, steht hier, was in diese Phase einfließt.</p>`);
 }
 function renderSync(){PHASES.forEach((p,i)=>{const n=document.getElementById("sy"+i); if(n) n.innerHTML=syncHTML(p.sync);});}
 
@@ -1697,7 +1512,6 @@ document.getElementById("phases").addEventListener("click",e=>{
   const rs=e.target.closest("[data-tlreset]");
   if(rs){ const i=+rs.dataset.tlreset; profile.tlSpan[i]=null; profile.phTitle[i]=null; save(); renderTimeline(); renderPhases(); }
 });
-
 /* ---------- Kunde + Logo ---------- */
 const custName=document.getElementById("custName"),logoSlot=document.getElementById("logoSlot"),
       logoFile=document.getElementById("logoFile"),logoClear=document.getElementById("logoClear"),
@@ -1750,22 +1564,26 @@ function goStep(n){
 }
 tabs.forEach(t=>t.addEventListener("click",()=>goStep(+t.dataset.step)));
 function renderCounts(){
-  let tot=0,kk=0,allKk=0; WORLDS.forEach(w=>{tot+=selIn(w); kk+=state[w.id].komp.length; allKk+=allKomp(w).length;});
-  document.getElementById("cnt1").textContent=tot;
-  const filled=PFIELDS.filter(f=>(profile[f.k]||"").trim()).length, nb=teamsUsed().length;
-  document.getElementById("cnt2").textContent=nb?nb+" · "+headcount():filled+"/"+PFIELDS.length;
-  document.getElementById("coreN").textContent=kk;
-  document.getElementById("coreSub").textContent="von "+allKk+" Kernkompetenzen";
+  const n=named().length, h=headcount();
+  document.getElementById("cnt1").textContent=n;
+  document.getElementById("cnt2").textContent=n?n+(h?" · "+h:""):"0";
+  document.getElementById("coreN").textContent=n;
+  document.getElementById("coreSub").textContent=n===1?"erfasster Skill":"erfasste Skills";
 }
 
 /* ---------- Render ---------- */
 function render(){
   gInner.querySelectorAll("path.seg").forEach(p=>{
-    const on=has(p.dataset.w,"komp",p.dataset.v), wc=WORLDS.find(x=>x.id===p.dataset.w).c;
-    const f=on?"var(--orange)":`color-mix(in srgb, ${wc} 20%, var(--surface))`;
-    p.style.fill=f; p.style.stroke=f; p.setAttribute("aria-pressed",on);
-    const lb=gInner.querySelector(`[data-lbl="${CSS.escape(p.dataset.w+"|"+p.dataset.v)}"]`);
-    if(lb){lb.style.fill=on?"#3D2402":"var(--k3)"; lb.style.fontWeight=on?"600":"500";}
+    const wc=WORLDS.find(x=>x.id===p.dataset.w).c;
+    if(p.dataset.kind==="empty"){
+      p.style.fill=`color-mix(in srgb, ${wc} 7%, var(--surface))`;
+      p.style.stroke=`color-mix(in srgb, ${wc} 7%, var(--surface))`; return;
+    }
+    const s=findSkill(p.dataset.v), done=s&&sTeams(s).length;
+    const f=done?"var(--orange)":`color-mix(in srgb, ${wc} 20%, var(--surface))`;
+    p.style.fill=f; p.style.stroke=f;
+    const lb=gInner.querySelector(`[data-lbl="${CSS.escape(p.dataset.v)}"]`);
+    if(lb){lb.style.fill=done?"#3D2402":"var(--k3)"; lb.style.fontWeight=done?"600":"500";}
   });
   gSpot.querySelectorAll("[data-spot]").forEach(s=>s.style.opacity=s.dataset.spot===focusId?"1":"0");
   gOuter.querySelectorAll("[data-wlabel]").forEach(t=>t.style.opacity=t.dataset.wlabel===focusId?"1":".85");
@@ -1794,11 +1612,12 @@ function errT(e){const c=e&&e.code;
     :c==="invalid_argument"?"Kartei zu groß — kleineres Logo verwenden."
     :c==="resource_exhausted"?"Zu viele Zugriffe — kurz warten.":"Speichern fehlgeschlagen.";}
 const payload=()=>({title:(profile.name||"").trim()||"Ohne Namen",profile:JSON.parse(JSON.stringify(profile)),
-  state:JSON.parse(JSON.stringify(state)),notes,updatedAt:new Date().toISOString()});
-function blank(){WORLDS.forEach(w=>state[w.id]={komp:[],felder:[],sk:{},kompCustom:{},kompExtra:[]});
-  profile={name:"",logo:"",teams:[],gesagt:"",ziele:[],tlWeeks:16,tlSpan:PHASES.map(()=>null),phTitle:PHASES.map(()=>null)};
-  PFIELDS.forEach(f=>profile[f.k]=""); LEGACY_PF.forEach(k=>profile[k]=""); notes=""; editKomp=null;}
-function applyAll(){refreshZsug(); renderCust(); syncFields(); renderNeed(); refreshAllKompLabels(); renderTimeline(); renderPhases(); render();}
+  notes,updatedAt:new Date().toISOString()});
+function blank(){
+  profile={name:"",logo:"",gesagt:"",skills:[],tlWeeks:16,tlSpan:PHASES.map(()=>null),phTitle:PHASES.map(()=>null)};
+  PFIELDS.forEach(f=>profile[f.k]=""); LEGACY_PF.forEach(k=>profile[k]=""); notes=""; editId=null;
+}
+function applyAll(){refreshSug(); renderCust(); syncFields(); renderNeed(); buildInner(); renderTimeline(); renderPhases(); render();}
 function renderList(){
   fbSel.innerHTML=`<option value="">${activeId?"— neue Kartei —":"Neue Kartei"}</option>`+
     records.map(r=>{const d=r.updatedAt?new Date(r.updatedAt).toLocaleDateString("de-AT",{day:"2-digit",month:"2-digit",year:"2-digit"}):"";
@@ -1836,18 +1655,12 @@ fbSel.addEventListener("change",()=>{
   if(!id){blank(); activeId=null; dirty=false; save(); applyAll(); renderList(); st("Neue Kartei."); return;}
   const r=records.find(x=>x.id===id); if(!r) return;
   blank();
-  const p=r.profile||{}; profile.name=p.name||""; profile.logo=p.logo||"";
-  PFIELDS.forEach(f=>profile[f.k]=p[f.k]||""); LEGACY_PF.forEach(k=>profile[k]=p[k]||"");
-  profile.gesagt=p.gesagt||""; profile.ziele=Array.isArray(p.ziele)?p.ziele.slice():[];
-  profile.teams=Array.isArray(p.teams)?JSON.parse(JSON.stringify(p.teams)):[];
-  profile.tlSpan=Array.isArray(p.tlSpan)?p.tlSpan.slice():PHASES.map(()=>null);
-  profile.phTitle=Array.isArray(p.phTitle)?p.phTitle.slice():PHASES.map(()=>null);
-  profile.tlWeeks=p.tlWeeks||16;
-  normProfile();
-  WORLDS.forEach(w=>{const s=(r.state||{})[w.id]||{};
-    state[w.id]={komp:s.komp||[],felder:s.felder||[],sk:s.sk||{},kompCustom:s.kompCustom||{},kompExtra:s.kompExtra||[]};
-    (s.ziel||[]).concat(s.abt||[]).forEach(addZiel);});   /* Altbestand: Welt-Zielgruppen in den offenen Pool */
-  notes=r.notes||""; activeId=r.id; dirty=false; editKomp=null; save(); applyAll(); renderList();
+  const p=r.profile||{};
+  Object.keys(p).forEach(k=>{profile[k]=JSON.parse(JSON.stringify(p[k]));});
+  /* Karteien der Vorversion tragen state und profile.teams — daraus werden Skills */
+  if(!Array.isArray(p.skills)&&(r.state||p.teams)) profile.skills=skillsFromV4(r.state,p);
+  notes=r.notes||""; activeId=r.id; dirty=false; editId=null;
+  normProfile(); save(); applyAll(); renderList();
   st("Geladen: "+(r.title||"Ohne Namen"),"ok");
 });
 (async()=>{ await refreshList();
@@ -1865,33 +1678,27 @@ const toast=m=>{const t=document.getElementById("toast"); t.textContent=m; t.cla
 document.getElementById("btnPrint").addEventListener("click",()=>{
   document.querySelectorAll("#phases details, .bg details, .ctx").forEach(d=>d.open=true); window.print();});
 document.getElementById("btnCopy").addEventListener("click",async()=>{
-  const act=WORLDS.filter(w=>selIn(w)>0);
-  if(!act.length){toast("Noch nichts gewählt."); return;}
+  const ls=named();
+  if(!ls.length){toast("Noch nichts erfasst."); return;}
   const d=new Date().toLocaleDateString("de-AT",{day:"2-digit",month:"long",year:"numeric"});
   let t=`KOMPETENZMODELL${profile.name?" — "+profile.name.toUpperCase():""}\nArbeitsstand ${d} · ppedv Kompetenzmatrix\n\n`;
-  const ts=teamsUsed();
-  if(ts.length){
-    t+=`BEDARF IM HAUS — ${nTeam(ts.length).toUpperCase()} · ${headcount()} MITARBEITENDE\n`;
-    ts.forEach(x=>{
-      const wn=x.worlds.map(id=>{const w=WORLDS.find(y=>y.id===id); return w?w.title:"";}).filter(Boolean);
-      t+=`  ${(x.name||"").trim()||"Ohne Namen"}${tN(x)?` · ${tN(x)} Mitarbeitende`:""}\n`;
-      if(wn.length) t+=`    Kompetenzwelten: ${wn.join(" · ")}\n`;
-      if((x.note||"").trim()) t+=`    Fehlt: ${x.note.trim()}\n`;});
-    t+="\n";
-  }
+  const tm=teamMap(ls), tn=Object.keys(tm);
+  t+=`ERFASST — ${nSkill(ls.length).toUpperCase()}${tn.length?` · ${headcount()} MITARBEITENDE`:""}\n`;
+  if(tn.length) t+=`  Teams: ${tn.map(k=>k+(tm[k]?" ("+tm[k]+")":"")).join(" · ")}\n`;
+  t+="\n";
   const pf=[];
   if((profile.gesagt||"").trim()) pf.push(`  Was sagt der Kunde?\n    ${profile.gesagt.trim()}`);
   PFIELDS.forEach(f=>{if((profile[f.k]||"").trim()) pf.push(`  ${f.l}\n    ${profile[f.k].trim()}`);});
   if(pf.length) t+=`KONTEXT\n${pf.join("\n")}\n\n`;
-  act.forEach(w=>{const s=state[w.id]; t+=`${w.kw} — ${w.title.toUpperCase()}\n`;
-    const b=(l,a)=>{if(a.length) t+=`  ${l}:\n`+a.map(x=>`    - ${x}\n`).join("");};
-    const kompLabels=s.komp.map(n=>{const k=allKomp(w).find(x=>x.n===n); return k?kName(w,k):n;});
-    b("Kernkompetenzen",kompLabels);
-    if(s.felder.length){ t+="  Skills:\n";
-      s.felder.forEach(n=>{const d=skHas(w,n);
-        t+=`    - ${n}${(d&&d.z.length)?`  [${d.z.join(" · ")}]`:""}\n`;
-        if(d&&d.n.trim()) t+=`        ${d.n.trim()}\n`;});}
+  WORLDS.filter(w=>skillsFor(w.id).length).forEach(w=>{
+    t+=`${w.kw} — ${w.title.toUpperCase()}\n`;
+    skillsFor(w.id).forEach(s=>{
+      const te=sTeams(s);
+      t+=`  - ${s.text}${te.length?`  [${te.map(x=>((x.name||"").trim()||"Team?")+(tNum(x)?" · "+tNum(x):"")).join(" | ")}]`:""}\n`;
+      if(s.note.trim()) t+=`      ${s.note.trim()}\n`;});
     t+="\n";});
+  const ohne=ls.filter(s=>!s.welt);
+  if(ohne.length) t+=`NOCH OHNE KOMPETENZWELT\n${ohne.map(s=>"  - "+s.text).join("\n")}\n\n`;
   if(notes.trim()) t+=`NOTIZEN\n${notes.trim()}\n\n`;
   t+=`UMSETZUNG — PHASE 1 STARTET MIT DER ZUSAGE · ${TLMAX()} WOCHEN\n`
    +PHASES.map((p,i)=>{const[a,b]=tlRange(i); return `  ${p.n} (Woche ${a}–${b}): ${phTitle(i)} → ${p.ms}`;}).join("\n")
@@ -1900,7 +1707,7 @@ document.getElementById("btnCopy").addEventListener("click",async()=>{
   catch(e){toast("Kopieren nicht möglich — bitte „Als PDF sichern“.");}
 });
 document.getElementById("today").textContent=new Date().toLocaleDateString("de-AT",{day:"2-digit",month:"long",year:"numeric"});
-refreshZsug(); renderCust(); syncFields(); renderNeed(); refreshAllKompLabels(); renderTimeline(); renderPhases(); render();
+refreshSug(); renderCust(); syncFields(); renderNeed(); buildInner(); render();
 </script>
 
 </body></html>
