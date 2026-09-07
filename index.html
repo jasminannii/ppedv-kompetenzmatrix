@@ -122,6 +122,11 @@ svg.ring{display:block; width:100%; height:auto}
 .core-sub{font-family:var(--mono); font-size:12.5px; letter-spacing:.13em; fill:var(--ink-3); text-transform:uppercase}
 .core-name{font-family:var(--sans); font-size:17px; font-weight:600; fill:var(--ink)}
 .core-desc{font-family:var(--sans); font-size:14px; fill:var(--ink-2)}
+.core-team{font-family:var(--mono); font-size:12px; letter-spacing:.02em; fill:var(--accent-ink)}
+.nmark circle{fill:var(--orange); stroke:var(--surface); stroke-width:3}
+.nmark text{font-family:var(--mono); font-size:14px; font-weight:600; fill:#3D2402}
+.nmark.thin circle{fill:var(--surface); stroke:var(--orange); stroke-width:2}
+.nmark.thin text{fill:var(--accent-ink); font-size:12px}
 .core-co{font-family:var(--sans); font-size:25px; font-weight:700; letter-spacing:-.025em; fill:var(--ink)}
 .core-rule{stroke:var(--line); stroke-width:1}
 .readout{padding:12px 12px 0; margin:4px 8px 0; border-top:1px solid var(--line); font-size:13.5px; color:var(--ink-3)}
@@ -293,6 +298,20 @@ details.more .in{padding-top:11px}
 .need-add{margin-top:13px}
 
 /* Bedarfs-Leiste in Schritt 2 */
+/* Kontext-Streifen in Schritt 2 */
+.ctx{border:1px solid var(--line); border-radius:8px; background:var(--surface); margin-bottom:18px; overflow:hidden}
+.ctx>summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:10px; padding:11px 15px}
+.ctx>summary::-webkit-details-marker{display:none}
+.ctx>summary:hover{background:var(--surface-2)}
+.ctx>summary::after{content:"+"; margin-left:auto; font-size:17px; color:var(--ink-3)}
+.ctx[open]>summary::after{content:"–"}
+.ctx-n{font-family:var(--mono); font-size:11px; background:var(--accent-soft); color:var(--accent-ink);
+  border-radius:20px; padding:2px 9px; font-weight:600}
+.ctx-in{padding:2px 15px 14px; display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px}
+.ctx-i{border-left:2px solid var(--orange); padding-left:11px}
+.ctx-i span{display:block; font-family:var(--mono); font-size:10px; letter-spacing:.11em; text-transform:uppercase; color:var(--ink-3)}
+.ctx-i p{font-family:var(--serif); font-size:14.5px; color:var(--ink); line-height:1.5; margin-top:3px}
+
 .needbar{margin-bottom:18px}
 .nb-row{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:9px; margin-top:8px}
 .nb{border:1px solid var(--line); border-left:3px solid var(--wc); border-radius:6px; background:var(--surface); padding:10px 13px;
@@ -301,6 +320,7 @@ details.more .in{padding-top:11px}
 .nb b{font-size:14.5px; font-weight:600; line-height:1.3}
 .nb span{font-family:var(--mono); font-size:11px; letter-spacing:.07em; color:var(--orange)}
 .nb i{font-style:normal; font-size:13px; color:var(--ink-2); line-height:1.4}
+.nb em{display:block; font-family:var(--serif); font-style:normal; font-size:12.5px; color:var(--ink-3); line-height:1.4; margin-top:3px}
 .nb-empty{font-family:var(--mono); font-size:11.5px; color:var(--ink-3)}
 
 /* Bedarf im Panel */
@@ -470,6 +490,10 @@ details.more .in{padding-top:11px}
   .tl{overflow:visible} .tl-in{min-width:0} .tl-r{grid-template-columns:100px 1fr}
   .bar,.tl-w i{font-size:8.5px} .bar .m{font-size:8px; padding:1px 4px}
   .bg details{display:block} .bg .in{display:block!important}
+  .nb{border:1px solid var(--line)!important; background:none!important}
+  .ctx>summary::after{display:none} .ctx-in{display:grid!important}
+  .ctx,.needbar,.axes{break-inside:avoid}
+  .nb-row{grid-template-columns:repeat(3,1fr)}
   .logo-slot:not(.set){display:none!important}
   .cust{border:0!important; background:none!important; padding:0!important; font-size:19px!important; color:var(--ink)!important}
 }
@@ -504,15 +528,16 @@ details.more .in{padding-top:11px}
 <main>
 <section class="step" id="s1">
   <div class="wrap">
-    <p class="lead">Hier geht es nur um die <b>Was</b>-Achse: jede Kompetenzwelt aus Schritt 1 bekommt die Kernkompetenzen, die dazu fehlen. Passt nichts Vorhandenes, legen Sie im Panel rechts mit <b>+</b> eine eigene an, in den Worten des Kunden. Unter jedem gewählten Skill tragen Sie ein, <b>für wen</b> er gilt.</p>
+    <p class="lead">Die Seite zum <b>gemeinsamen Durchgehen</b>: alles aus Schritt 1 steht hier — am Ring, in der Leiste und im Panel. Sie ergänzen im Gespräch die Kernkompetenzen, die fehlen, und tragen unter jedem Skill ein, <b>für wen</b> er gilt. Passt nichts Vorhandenes, legen Sie mit <b>+</b> eine eigene an, in den Worten des Kunden.</p>
 
-    <div class="needbar no-print" id="needbar"></div>
+    <div class="needbar" id="needbar"></div>
+    <div id="ctxbar"></div>
 
     <div class="board">
       <div class="ringbox">
         <svg class="ring" viewBox="0 0 900 900" role="application" aria-label="Kompetenzring">
           <defs id="ringDefs"></defs>
-          <g id="gSpot"></g><g id="gOuter"></g><g id="gInner"></g>
+          <g id="gSpot"></g><g id="gOuter"></g><g id="gInner"></g><g id="gNeed"></g>
           <g>
             <circle cx="450" cy="450" r="222" fill="var(--core)"></circle>
             <image id="coreLogo" x="310" y="288" width="280" height="80" preserveAspectRatio="xMidYMid meet" style="display:none"></image>
@@ -524,6 +549,7 @@ details.more .in{padding-top:11px}
             <text class="core-desc" x="450" y="556" text-anchor="middle" id="cd1"></text>
             <text class="core-desc" x="450" y="576" text-anchor="middle" id="cd2"></text>
             <text class="core-desc" x="450" y="596" text-anchor="middle" id="cd3"></text>
+            <text class="core-team" x="450" y="622" text-anchor="middle" id="coreTeam"></text>
           </g>
         </svg>
         <p class="readout" id="readout">Innenring anklicken wählt eine Kompetenz · Außenring öffnet die Kompetenzwelt.</p>
@@ -913,7 +939,8 @@ function arc(r,a0,a1,rev){const s=rev?a1:a0,e=rev?a0:a1;const[x1,y1]=px(r,s),[x2
   return `M${x1.toFixed(2)},${y1.toFixed(2)} A${r},${r} 0 0 ${rev?0:1} ${x2.toFixed(2)},${y2.toFixed(2)}`;}
 const el=(t,a={})=>{const n=document.createElementNS(NS,t); for(const k in a) n.setAttribute(k,a[k]); return n;};
 const gOuter=document.getElementById("gOuter"),gInner=document.getElementById("gInner"),
-      gSpot=document.getElementById("gSpot"),defs=document.getElementById("ringDefs");
+      gSpot=document.getElementById("gSpot"),gNeed=document.getElementById("gNeed"),
+      defs=document.getElementById("ringDefs");
 
 WORLDS.forEach((w,i)=>{
   const a0=-90+i*60,a1=a0+60,mid=a0+30,midN=((mid%360)+360)%360,flip=midN>0&&midN<=180;
@@ -998,6 +1025,39 @@ function fitLabels(){
 requestAnimationFrame(fitLabels);
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitLabels).catch(()=>{});
 window.addEventListener("resize",()=>{clearTimeout(window._ft); window._ft=setTimeout(fitLabels,150);});
+
+/* ---------- Schritt 1 am Ring sichtbar machen ----------
+   Jede Kompetenzwelt, für die ein Team eingetragen ist, bekommt außen eine
+   Marke mit der Kopfzahl. Ohne Zahl bleibt die Marke hohl. */
+function renderNeedRing(){
+  if(!gNeed) return;
+  gNeed.innerHTML="";
+  WORLDS.forEach((w,i)=>{
+    const ts=teamsFor(w.id); if(!ts.length) return;
+    const h=headFor(w.id), mid=-90+i*60+30, [x,y]=px(430,mid);
+    const g=el("g",{class:"nmark"+(h?"":" thin")});
+    g.appendChild(el("circle",{cx:x.toFixed(1),cy:y.toFixed(1),r:h>999?19:16}));
+    const t=el("text",{x:x.toFixed(1),y:(y+5).toFixed(1),"text-anchor":"middle"});
+    t.textContent=h||ts.length;
+    g.appendChild(t);
+    g.appendChild(el("title")).textContent=
+      w.title+" — "+ts.map(v=>((v.name||"").trim()||"Ohne Namen")+(tN(v)?" ("+tN(v)+")":"")).join(", ")
+      +(h?" · zusammen "+h+" Mitarbeitende":" · noch ohne Anzahl");
+    gNeed.appendChild(g);
+  });
+}
+/* Zeile im Kern: die Teams der gerade gezeigten Welt */
+const coreTeamEl=document.getElementById("coreTeam");
+function setCoreTeam(wid){
+  if(!coreTeamEl) return;
+  const ts=teamsFor(wid);
+  if(!ts.length){coreTeamEl.textContent=""; return;}
+  const full=ts.map(v=>((v.name||"").trim()||"Ohne Namen")+(tN(v)?" · "+tN(v):"")).join("   ");
+  const kurz=nTeam(ts.length)+" · "+(headFor(wid)||"?")+" Mitarbeitende";
+  /* Der Innenkreis ist an dieser Höhe rund 280 px breit — was nicht passt, wird zur Kurzform. */
+  coreTeamEl.textContent=full.length>34?kurz:full;
+  try{ if(coreTeamEl.getComputedTextLength()>276) coreTeamEl.textContent=kurz; }catch(e){}
+}
 
 /* ---------- Kernkompetenzen ans Kundengespräch anpassen ---------- */
 function kOverride(w,k){ const c=state[w.id]&&state[w.id].kompCustom; return c?c[k.n]:null; }
@@ -1136,9 +1196,9 @@ function setCore(name,desc){
   const lines=[]; if(desc){let c="";desc.split(" ").forEach(v=>{if((c+" "+v).trim().length<=40)c=(c+" "+v).trim();else{lines.push(c);c=v;}});if(c)lines.push(c);}
   cds.forEach((n,i)=>n.textContent=lines[i]||"");
 }
-function coreDefault(){const w=WORLDS.find(x=>x.id===focusId); setCore(w.title,w.lead); coreName.style.fill=w.c;}
+function coreDefault(){const w=WORLDS.find(x=>x.id===focusId); setCore(w.title,w.lead); coreName.style.fill=w.c; setCoreTeam(w.id);}
 function hoverInfo(t){
-  const w=WORLDS.find(x=>x.id===t.dataset.w); if(!w) return; coreName.style.fill=w.c;
+  const w=WORLDS.find(x=>x.id===t.dataset.w); if(!w) return; coreName.style.fill=w.c; setCoreTeam(w.id);
   if(t.dataset.kind==="world"){readout.innerHTML=`<b>${esc(w.title)}</b> — ${esc(w.lead)}`; setCore(w.title,w.lead);}
   else{const k=allKomp(w).find(k=>k.n===t.dataset.v); const nm=kName(w,k), ds=kDesc(w,k); readout.innerHTML=`<b>${esc(nm)}</b> — ${esc(ds)}`; setCore(nm,ds);}
 }
@@ -1291,7 +1351,7 @@ function renderHits(ws,sk,txt){
           <span class="s">${esc(s.s)}</span><span class="a">${on?"✓ im Modell — klicken entfernt":"+ aufnehmen"}</span></button>
         ${on?skDetail(w,s.n):""}</div>`;}).join("");
 }
-findIn.addEventListener("input",()=>{profile.gesagt=findIn.value; save(); localFind();});
+findIn.addEventListener("input",()=>{profile.gesagt=findIn.value; save(); localFind(); renderCtx();});
 
 hitsEl.addEventListener("click",e=>{
   /* Welt einem Team zuordnen */
@@ -1332,7 +1392,7 @@ hitsEl.addEventListener("input",e=>{
   const f=e.target.closest("[data-tnum]"); if(!f) return;
   const i=+f.dataset.tnum, t=teams()[i]; if(!t) return;
   t.n=f.value===""?"":Math.max(0,Math.min(9999,parseInt(f.value,10)||0));
-  save(); needSum(); renderCounts(); renderNeedbar(); renderCards(); renderNeedOut(); renderSync();
+  save(); needSum(); renderCounts(); renderNeedRing(); renderNeedbar(); renderCards(); renderNeedOut(); renderSync();
   const mirror=needEl.querySelector(`.trow[data-ti="${i}"] [data-tf="n"]`); if(mirror) mirror.value=t.n;
   hitsEl.querySelectorAll("[data-tsum]").forEach(el=>{
     const h=headFor(el.dataset.tsum); el.textContent=h?h+" Mitarbeitende betroffen":"";});
@@ -1437,7 +1497,7 @@ function needChanged(full){
   save();
   if(full) renderNeed(); else needSum();
   refreshZsug();  /* Teamnamen sind die Vorschläge für „Für wen“ */
-  renderCounts(); renderNeedbar(); renderPanel(); renderCards(); renderNeedOut(); renderSync();
+  renderCounts(); renderNeedRing(); renderNeedbar(); renderPanel(); renderCards(); renderNeedOut(); renderSync();
   localFind();   /* Trefferkarten zeigen die Teams zum Zuordnen — die ändern sich hier */
 }
 needEl.addEventListener("input",e=>{
@@ -1468,17 +1528,35 @@ function renderNeedbar(){
   const box=document.getElementById("needbar"); if(!box) return;
   const act=WORLDS.map(w=>({w,t:teamsFor(w.id)})).filter(x=>x.t.length);
   if(!act.length){box.innerHTML=`<p class="nb-empty">Kein Bedarf aus Schritt 1 erfasst — Sie können hier trotzdem frei auswählen.</p>`; return;}
-  box.innerHTML=`<span class="lbl">Bedarf aus Schritt 1 — anklicken öffnet die Kompetenzwelt</span>
-    <div class="nb-row">${act.map(x=>`<button type="button" class="nb" style="--wc:${x.w.c}" data-nb="${x.w.id}">
+  box.innerHTML=`<span class="lbl">Aus Schritt 1 — anklicken öffnet die Kompetenzwelt</span>
+    <div class="nb-row">${act.map(x=>{
+      const notes=x.t.map(t=>(t.note||"").trim()).filter(Boolean);
+      return `<button type="button" class="nb" style="--wc:${x.w.c}" data-nb="${x.w.id}">
       <b>${esc(x.w.title)}</b>
       <span>${nTeam(x.t.length)} · ${headFor(x.w.id)} Mitarbeitende</span>
-      <i>${x.t.map(t=>esc((t.name||"").trim()||"Ohne Namen")).join(" · ")}</i></button>`).join("")}</div>`;
+      <i>${x.t.map(t=>esc(((t.name||"").trim()||"Ohne Namen"))+(tN(t)?" ("+tN(t)+")":"")).join(" · ")}</i>
+      ${notes.map(n=>`<em>„${esc(n)}“</em>`).join("")}</button>`;}).join("")}</div>`;
 }
 document.getElementById("needbar").addEventListener("click",e=>{
   const b=e.target.closest("[data-nb]"); if(!b) return;
   focusId=b.dataset.nb; editKomp=null; save(); render();
   document.querySelector(".board").scrollIntoView({behavior:"smooth",block:"start"});
 });
+
+/* Was der Kunde gesagt hat — beim Durchgehen der Matrix immer greifbar */
+function renderCtx(){
+  const box=document.getElementById("ctxbar"); if(!box) return;
+  const items=[];
+  if((profile.gesagt||"").trim()) items.push(["Was der Kunde sagt",profile.gesagt.trim()]);
+  PFIELDS.forEach(f=>{if((profile[f.k]||"").trim()) items.push([f.l,profile[f.k].trim()]);});
+  if((notes||"").trim()) items.push(["Notizen aus dem Gespräch",notes.trim()]);
+  if(!items.length){box.innerHTML=""; return;}
+  const open=(()=>{const d=box.querySelector("details"); return d?d.open:true;})();
+  box.innerHTML=`<details class="ctx"${open?" open":""}>
+    <summary><span class="lbl">Im Gespräch notiert</span><span class="ctx-n">${items.length}</span></summary>
+    <div class="ctx-in">${items.map(([l,v])=>`<div class="ctx-i"><span>${esc(l)}</span><p>${esc(v)}</p></div>`).join("")}</div>
+  </details>`;
+}
 
 /* Bedarfstabelle im Ergebnis (Schritt 3) */
 function renderNeedOut(){
@@ -1503,10 +1581,10 @@ fields.innerHTML=PFIELDS.map(f=>`<div class="field${f.wide?" wide":""}"><label f
   ${f.area?`<textarea id="pf-${f.k}" data-pf="${f.k}" placeholder="${esc(f.ph)}"></textarea>`:`<input id="pf-${f.k}" data-pf="${f.k}" placeholder="${esc(f.ph)}">`}</div>`).join("")
   +`<div class="field wide"><label for="pfNotes">Notizen aus dem Gespräch</label><textarea id="pfNotes" placeholder="Alles, was sonst noch wichtig ist."></textarea></div>`;
 PFIELDS.forEach(f=>{const n=fields.querySelector(`[data-pf="${f.k}"]`);
-  n.addEventListener("input",()=>{profile[f.k]=n.value; save(); renderSync(); renderCounts();
+  n.addEventListener("input",()=>{profile[f.k]=n.value; save(); renderSync(); renderCounts(); renderCtx();
     if(f.k==="anlass") localFind();});});
 const notesEl=document.getElementById("pfNotes");
-notesEl.addEventListener("input",()=>{notes=notesEl.value; save();});
+notesEl.addEventListener("input",()=>{notes=notesEl.value; save(); renderCtx();});
 function syncFields(){PFIELDS.forEach(f=>{const n=fields.querySelector(`[data-pf="${f.k}"]`); if(n) n.value=profile[f.k]||"";});
   notesEl.value=notes; findIn.value=profile.gesagt||""; localFind();}
 
@@ -1691,7 +1769,7 @@ function render(){
   });
   gSpot.querySelectorAll("[data-spot]").forEach(s=>s.style.opacity=s.dataset.spot===focusId?"1":"0");
   gOuter.querySelectorAll("[data-wlabel]").forEach(t=>t.style.opacity=t.dataset.wlabel===focusId?"1":".85");
-  renderCounts(); coreDefault(); renderPanel(); renderNeedbar(); renderCards(); renderNeedOut(); renderSync();
+  renderCounts(); coreDefault(); renderNeedRing(); renderPanel(); renderNeedbar(); renderCtx(); renderCards(); renderNeedOut(); renderSync();
 }
 
 /* ---------- Karteien ---------- */
@@ -1785,7 +1863,7 @@ fbSel.addEventListener("change",()=>{
 const toast=m=>{const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show");
   clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),2200);};
 document.getElementById("btnPrint").addEventListener("click",()=>{
-  document.querySelectorAll("#phases details, .bg details").forEach(d=>d.open=true); window.print();});
+  document.querySelectorAll("#phases details, .bg details, .ctx").forEach(d=>d.open=true); window.print();});
 document.getElementById("btnCopy").addEventListener("click",async()=>{
   const act=WORLDS.filter(w=>selIn(w)>0);
   if(!act.length){toast("Noch nichts gewählt."); return;}

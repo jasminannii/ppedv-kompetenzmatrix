@@ -81,9 +81,24 @@ Kernkompetenz** anzulegen — vorbelegt mit dem Wortlaut des Kunden.
 
 ### Schritt 2 — Kompetenzen wählen
 
-Über dem Ring steht die **Bedarfsleiste**: je genannter Kompetenzwelt eine
-Karte mit Teams und Kopfzahl, ein Klick springt in die Welt. Im Panel
-rechts erscheint der Bedarf noch einmal samt Kundenzitat.
+Das ist die Seite, an der Vertrieb und Kunde **gemeinsam entlanggehen**, nachdem
+die Themen besprochen sind. Alles aus Schritt 1 ist hier sichtbar, an vier
+Stellen:
+
+- **Am Ring selbst** — jede Kompetenzwelt mit erfasstem Team trägt außen eine
+  orange Marke mit der Kopfzahl (42, 30, 5). Ohne Anzahl bleibt die Marke hohl
+  und zeigt die Zahl der Teams.
+- **Im Ringzentrum** — unter der Weltbeschreibung stehen deren Teams
+  („Vertriebsinnendienst · 12"); wird es zu breit für den Innenkreis, kürzt es
+  auf „2 Teams · 42 Mitarbeitende". Die Breite wird per
+  `getComputedTextLength()` gemessen, nicht geschätzt.
+- **In der Bedarfsleiste** über dem Ring — je Welt eine Karte mit Teams,
+  Kopfzahl und den Notizen als Zitat. Ein Klick öffnet die Welt.
+- **Im Streifen „Im Gespräch notiert"** — die Mitschrift und alle vier
+  Eckdaten-Antworten, aufklappbar, damit man im Gespräch darauf zeigen kann.
+
+Im Panel rechts erscheint der Bedarf der gerade gewählten Welt noch einmal samt
+Kundenzitat. Bedarfsleiste und Kontextstreifen erscheinen auch im PDF.
 
 Der Kompetenzring zeigt die sechs Kompetenzwelten (außen) mit ihren
 Kernkompetenzen (innen). Auswahl per Klick im Ring oder im Panel.
