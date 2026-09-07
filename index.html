@@ -308,6 +308,7 @@ details.more .in{padding-top:11px}
 .nb i{font-style:normal; font-size:13px; color:var(--ink-2); line-height:1.4}
 .nb em{display:block; font-family:var(--serif); font-style:normal; font-size:12.5px; color:var(--ink-3); line-height:1.4; margin-top:3px}
 .nb-empty{font-family:var(--mono); font-size:11.5px; color:var(--ink-3)}
+.needbar>.lbl i{font-style:normal; text-transform:none; letter-spacing:.02em}
 .nb-warn{border:1px solid var(--orange); background:var(--accent-soft); border-radius:6px; padding:10px 13px; margin-bottom:11px}
 .nb-warn b{display:block; font-size:13.5px; color:var(--accent-ink)}
 .nb-warn span{display:block; font-family:var(--serif); font-size:13.5px; color:var(--ink); margin-top:3px}
@@ -489,6 +490,15 @@ details.more .in{padding-top:11px}
 @media print{
   body{background:#fff}
   .steps,.kartei,.find,.actions,.readout,.need,.no-print{display:none!important}
+  /* Bedienhinweise sind für den Vertrieb, nicht für das Kundendokument */
+  .lead,.phelp,.need-hint,.hint{display:none!important}
+  /* Die Eckdaten stehen schon im Streifen „Im Gespräch notiert“ — nicht doppelt */
+  .fields{display:none!important}
+  /* Leeres Kundenfeld darf im PDF nicht als Platzhalter auftauchen */
+  .cust:placeholder-shown{display:none!important}
+  /* Dokumentreihenfolge: erst erklären, dann die Matrix, dann das Ergebnis */
+  main{display:flex; flex-direction:column}
+  #s2{order:1} #s1{order:2} #s3{order:3} #s4{order:4}
   /* Der Katalog ist zum Zeigen im Termin, nicht fürs Kunden-PDF — sonst
      verdoppelt er dessen Umfang. Zeile löschen, wenn er mitgedruckt werden soll. */
   #s4{display:none!important}
@@ -1535,7 +1545,7 @@ function renderNeedbar(){
     <span>${ohne.map(s=>esc(s.text)).join(" · ")}</span>
     <i>Der Ring zeigt sie erst, wenn in Schritt 1 eine Welt gewählt ist.</i></div>`:"";
   if(!act.length){box.innerHTML=warn||`<p class="nb-empty">Noch nichts erfasst — in Schritt 1 anfangen, der Ring füllt sich mit.</p>`; return;}
-  box.innerHTML=warn+`<span class="lbl">Aus Schritt 1 — anklicken öffnet die Kompetenzwelt</span>
+  box.innerHTML=warn+`<span class="lbl">Betroffene Kompetenzwelten<i class="no-print"> — anklicken öffnet sie</i></span>
     <div class="nb-row">${act.map(x=>{
       const ts=teamsFor(x.w.id);
       return `<button type="button" class="nb" style="--wc:${x.w.c}" data-nb="${x.w.id}">

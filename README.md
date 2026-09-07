@@ -159,7 +159,19 @@ erscheint statt Schweigen eine Erklärung mit drei Wegen —
 Rechtsklick → „Dieser Frame" → „Frame drucken…" (Chrome/Edge), Freigabe auf
 die Organisation umstellen, oder „Als Text kopieren".
 
-**Nur die Freigabe löst es dauerhaft.** Mit „nur Organisation" lassen sich
+**Die Druckausgabe ist auf den Kunden zugeschnitten**, nicht auf den Vertrieb:
+Bedienhinweise (`.lead`, `.hint`, `.need-hint`) fallen weg, das Eckdaten-Formular
+ebenso — dessen Inhalt steht schon im Streifen „Im Gespräch notiert". Ein leeres
+Kundenfeld verschwindet über `:placeholder-shown`, statt den Platzhalter zu
+drucken. Und `main` wird im Druck zur Flex-Spalte, damit die Reihenfolge stimmt:
+Erklärung → Matrix → Ergebnis, unabhängig von der DOM-Reihenfolge der Reiter.
+
+**Die Alternative zur Freigabe: irgendwo selbst hosten.** `index.html` ist eine
+einzelne Datei ohne Abhängigkeiten außer Google Fonts. Auf einem beliebigen
+Webserver — oder auch nur lokal geöffnet — gibt es keinen Sandkasten, und
+Drucken funktioniert nativ.
+
+**Die Freigabe löst es an der Wurzel.** Mit „nur Organisation" lassen sich
 `downloads`, `sample` (KI-Zuordnung) und `db` (team-geteilte Karteien)
 deklarieren — alle drei sind bei öffentlicher Freigabe gesperrt.
 
