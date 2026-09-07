@@ -367,6 +367,12 @@ details.more .in{padding-top:11px}
 
 /* ---------- Ergebnis ---------- */
 .actions{display:flex; gap:9px; flex-wrap:wrap; margin-bottom:22px}
+.phelp{border:1px solid var(--orange); background:var(--accent-soft); border-radius:8px; padding:14px 17px; margin:-8px 0 22px; max-width:74ch}
+.phelp b{display:block; font-size:14.5px; color:var(--accent-ink); margin-bottom:5px}
+.phelp p{font-size:14px; color:var(--ink-2); line-height:1.55; margin-top:6px}
+.phelp ol{margin:8px 0 0; padding-left:20px; font-size:14px; color:var(--ink-2); line-height:1.6}
+.phelp code{font-family:var(--mono); font-size:12.5px; background:var(--surface); border:1px solid var(--line); border-radius:3px; padding:1px 5px}
+.phelp .x{float:right; border:0; background:none; color:var(--ink-3); font-size:19px; line-height:1; padding:0 2px}
 .cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px}
 .card{border:1px solid var(--line); border-radius:8px; overflow:hidden; background:var(--surface)}
 .card .h{background:var(--pc); color:#fff; padding:11px 15px}
@@ -486,6 +492,8 @@ details.more .in{padding-top:11px}
   /* Der Katalog ist zum Zeigen im Termin, nicht fürs Kunden-PDF — sonst
      verdoppelt er dessen Umfang. Zeile löschen, wenn er mitgedruckt werden soll. */
   #s4{display:none!important}
+  /* Schmaler Umfang: Kompetenzmodell und Erklärung, ohne Umsetzung und Angebot */
+  body.pm-model #blockAblauf,body.pm-model #blockPartner{display:none!important}
   .step{display:block!important; padding:0 0 18px; break-inside:auto}
   .phase{break-inside:avoid} .phase>summary .chev{display:none}
   .pbody{display:block!important}
@@ -600,16 +608,18 @@ details.more .in{padding-top:11px}
 <section class="step" id="s3">
   <div class="wrap">
     <div class="actions no-print">
-      <button class="btn go" id="btnPrint">Als PDF sichern</button>
+      <button class="btn go" id="btnPrint">Alles als PDF</button>
+      <button class="btn go" id="btnPrintModel">Nur das Kompetenzmodell</button>
       <button class="btn" id="btnCopy">Als Text kopieren</button>
     </div>
+    <div class="phelp no-print" id="phelp" hidden></div>
     <div id="needOut"></div>
 
     <h3 style="font-size:22px;margin-top:34px">Ihr Kompetenzmodell</h3>
     <p class="sub" style="font-size:14.5px;color:var(--ink-2);margin:6px 0 16px">Grundlage für Standortbestimmung, Curriculum und Angebot.</p>
     <div class="cards" id="cards"></div>
 
-    <div class="block">
+    <div class="block" id="blockAblauf">
       <h3>Umsetzung &mdash; ab Ihrer Zusage</h3>
       <p class="sub">Kontext, Kompetenzauswahl und das Angebot gehören noch zum Vertrieb. Woche 1 beginnt mit der Zusage. Dauer, Zeiträume und Phasentitel lassen sich frei auf den Kunden einstellen.</p>
       <div class="tl-top no-print">
@@ -621,7 +631,7 @@ details.more .in{padding-top:11px}
       <div id="phases" style="margin-top:16px"></div>
     </div>
 
-    <div class="block">
+    <div class="block" id="blockPartner">
       <div class="partner">
         <h3>Danach: ein Termin pro Quartal, ein Jahr fix</h3>
         <p>Kompetenz verfällt, wenn sie nicht nachgezogen wird. Nach der Einführung bleibt ppedv an Bord &mdash; <b>viermal im Jahr vor Ort</b>. Kein neues Projekt, keine Einzelabrechnung.</p>
@@ -1844,8 +1854,44 @@ fbSel.addEventListener("change",()=>{
 /* ---------- Ausgabe ---------- */
 const toast=m=>{const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show");
   clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),2200);};
-document.getElementById("btnPrint").addEventListener("click",()=>{
-  document.querySelectorAll("#phases details, .bg details, .ctx").forEach(d=>d.open=true); window.print();});
+/* Der Artifact-Rahmen läuft mit sandbox="allow-scripts allow-same-origin allow-forms".
+   Ohne allow-modals bleibt window.print() wirkungslos — es wirft nicht einmal.
+   Deshalb: versuchen, das Ergebnis messen, und im Zweifel erklären statt schweigen. */
+const phelp=document.getElementById("phelp");
+function showPrintHelp(){
+  phelp.innerHTML=`<button type="button" class="x" id="phX" title="Schließen">&times;</button>
+    <b>Der Druckdialog lässt sich von hier aus nicht öffnen</b>
+    <p>Diese Seite läuft in einem abgeschirmten Rahmen. Solange die Matrix über „jeder mit
+    dem Link“ geteilt ist, darf sie weder drucken noch Dateien ausgeben — das sperrt die Plattform,
+    nicht die Seite.</p>
+    <ol>
+      <li><b>Sofort:</b> Rechtsklick mitten auf die Seite &rarr; <code>Dieser Frame</code> &rarr;
+        <code>Frame drucken…</code> (Chrome, Edge). Dort im Dialog <code>Als PDF sichern</code> wählen.</li>
+      <li><b>Dauerhaft:</b> Freigabe im „Share“-Menü von „jeder mit dem Link“ auf die Organisation
+        umstellen. Dann kann der Knopf hier die PDF direkt ausgeben.</li>
+      <li><b>Ersatzweise:</b> „Als Text kopieren“ funktioniert &mdash; die Zwischenablage ist erlaubt.</li>
+    </ol>`;
+  phelp.hidden=false;
+  const x=document.getElementById("phX"); if(x) x.addEventListener("click",()=>{phelp.hidden=true;});
+  phelp.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function doPrint(scope){
+  phelp.hidden=true;
+  document.body.classList.toggle("pm-model",scope==="model");
+  document.querySelectorAll("#phases details, .bg details, .ctx").forEach(d=>d.open=true);
+  let fired=false;
+  const mark=()=>{fired=true;};
+  const done=()=>document.body.classList.remove("pm-model");
+  window.addEventListener("beforeprint",mark,{once:true});
+  window.addEventListener("afterprint",done,{once:true});
+  try{ window.print(); }catch(e){}
+  setTimeout(()=>{
+    window.removeEventListener("beforeprint",mark);
+    if(!fired){ done(); showPrintHelp(); }
+  },700);
+}
+document.getElementById("btnPrint").addEventListener("click",()=>doPrint("full"));
+document.getElementById("btnPrintModel").addEventListener("click",()=>doPrint("model"));
 document.getElementById("btnCopy").addEventListener("click",async()=>{
   const ls=named();
   if(!ls.length){toast("Noch nichts erfasst."); return;}

@@ -145,6 +145,24 @@ ist, allein zu genügen.
   Start aus dem alten localStorage-Schlüssel.
 - `normProfile()` normalisiert das Profil bei jedem Laden.
 
+## Drucken: eine Sperre der Plattform
+
+Der Artifact-Rahmen läuft mit
+`sandbox="allow-scripts allow-same-origin allow-forms"`. Ohne `allow-modals`
+bleibt `window.print()` **wirkungslos** — es wirft nicht einmal eine Ausnahme,
+der Knopf schien einfach nichts zu tun. Popups und Downloads sind ebenso
+gesperrt; `capabilities: {downloads: true}` wird beim Veröffentlichen
+mit 422 abgelehnt, solange „jeder mit dem Link" eingestellt ist.
+
+Die Seite misst das jetzt: schlägt `beforeprint` nicht innerhalb von 700 ms an,
+erscheint statt Schweigen eine Erklärung mit drei Wegen —
+Rechtsklick → „Dieser Frame" → „Frame drucken…" (Chrome/Edge), Freigabe auf
+die Organisation umstellen, oder „Als Text kopieren".
+
+**Nur die Freigabe löst es dauerhaft.** Mit „nur Organisation" lassen sich
+`downloads`, `sample` (KI-Zuordnung) und `db` (team-geteilte Karteien)
+deklarieren — alle drei sind bei öffentlicher Freigabe gesperrt.
+
 ## Noch offen
 
 **Versionshistorie der Kartei** (Punkt 7 des Ablaufs). Heute überschreibt
