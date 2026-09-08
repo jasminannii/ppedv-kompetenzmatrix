@@ -203,6 +203,16 @@ details.more .in{padding-top:11px}
 .cc-take.on{border-color:transparent; background:none; color:var(--orange); font-weight:600; padding-left:0; cursor:default}
 .cc-f .cc-take{margin-top:5px}
 
+/* PDF-Überlagerung */
+.pdfov{position:fixed; inset:0; z-index:200; background:rgba(13,17,23,.88);
+  display:flex; flex-direction:column; padding:16px; gap:12px}
+.pdfov-bar{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+.pdfov-bar b{font-size:14px; font-weight:600; color:#fff; margin-right:auto;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:60%}
+.pdfov-bar .btn{text-decoration:none; color:var(--ink); background:#fff; border-color:#fff}
+.pdfov-hint{font-family:var(--mono); font-size:11px; color:rgba(255,255,255,.7)}
+.pdfov iframe{flex:1 1 auto; width:100%; min-height:0; border:0; border-radius:8px; background:#fff}
+
 /* Legende der zwei Achsen */
 .axes{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line);
   border-radius:8px; overflow:hidden; margin-bottom:22px; max-width:1000px}
@@ -2081,6 +2091,28 @@ function dateiname(scope,ext){
   const kunde=((profile.name||"").trim()||"Kunde").replace(/[^\wÄÖÜäöüß -]/g,"").replace(/\s+/g,"-");
   return `Kompetenzmatrix-${kunde}-${scope==="model"?"Modell-":""}${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.${ext}`;
 }
+/* Auf öffentlich geteilten Seiten darf der Rahmen keine Datei ausgeben.
+   Dann wird das PDF eingeblendet — im Betrachter des Browsers, der sein
+   eigenes Speichern- und Drucken-Symbol mitbringt. */
+function zeigePDF(blob,name){
+  const url=URL.createObjectURL(blob);
+  const ov=document.createElement("div");
+  ov.className="pdfov";
+  /* Kein Herunterladen-Knopf: öffentlich geteilte Artifacts dürfen keine
+     Dateien ausgeben, der Link wäre tot. Speichern geht über das Symbol im
+     Betrachter oben rechts — und immer, wenn die Seite außerhalb läuft. */
+  ov.innerHTML=`<div class="pdfov-bar">
+      <b>${esc(name)}</b>
+      <span class="pdfov-hint">Sichern über das Symbol im Betrachter</span>
+      <button type="button" class="btn" data-x>Schließen</button>
+    </div><iframe title="PDF" src="${url}"></iframe>`;
+  document.body.appendChild(ov);
+  const zu=()=>{ov.remove(); URL.revokeObjectURL(url);};
+  ov.querySelector("[data-x]").addEventListener("click",zu);
+  ov.addEventListener("click",e=>{if(e.target===ov) zu();});
+  document.addEventListener("keydown",function esc2(e){
+    if(e.key==="Escape"){zu(); document.removeEventListener("keydown",esc2);}});
+}
 async function saveDoc(scope){
   if(!named().length){ toast("Noch nichts erfasst."); return; }
   const btn=scope==="model"?document.getElementById("btnPrintModel"):document.getElementById("btnPrint");
@@ -2089,14 +2121,12 @@ async function saveDoc(scope){
   try{
     const doc=await buildPDF(scope), name=dateiname(scope,"pdf");
     if(DL){ await DL.save({filename:name,data:doc.output("blob")}); toast("PDF gesichert."); }
-    /* Ohne Artifact-Rahmen — eigener Server oder lokale Datei — reicht der
-       normale Weg: dort ist Herunterladen nicht gesperrt. */
-    else { doc.save(name); toast("PDF gesichert."); }
+    else{ zeigePDF(doc.output("blob"),name); }
   }catch(e){
     const c=e&&e.code;
     if(c==="declined"){ /* still */ }
     else if(c==="rate_limited") toast("Ein Dialog ist noch offen — kurz warten.");
-    else { console.error(e); toast("PDF fehlgeschlagen — „Als Text kopieren“ geht weiterhin."); showPrintHelp(); }
+    else { console.error(e); toast("PDF fehlgeschlagen — „Als Text kopieren“ geht weiterhin."); }
   }finally{ if(btn){btn.disabled=false; btn.textContent=label;} }
 }
 function showPrintHelp(){
