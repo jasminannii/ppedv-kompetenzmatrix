@@ -1769,16 +1769,33 @@ function render(){
 /* ---------- Karteien ---------- */
 const fbSel=document.getElementById("fbSel"),fbSave=document.getElementById("fbSave"),
       fbNew=document.getElementById("fbNew"),fbDel=document.getElementById("fbDel"),fbStatus=document.getElementById("fbStatus");
-let DB=null,records=[],autoT=null,dirty=false,mode="local";
+let records=[],autoT=null,dirty=false,mode="db";
+/* Gemeinsame Datenbank (Supabase) — der anon-Key ist zur Einbettung im
+   Frontend gedacht, geschützt durch Row-Level-Security-Regeln auf der
+   Tabelle „karteien" (siehe README). Keine geheimen Daten in diesem Key. */
+const SB_URL="https://vpzcooncjcqddjxcdlft.supabase.co";
+const SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwemNvb25jamNxZGRqeGNkbGZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1ODEyNTIsImV4cCI6MjEwNjE1NzI1Mn0.kb5NvMLDakc4TXzAU5mNAzIdsNEhb9e8ynGvatfASiU";
+const sbHeaders={apikey:SB_KEY,Authorization:"Bearer "+SB_KEY,"Content-Type":"application/json"};
 const LKEY="ppedv-karteien-v1";
 const lAll=()=>{try{return JSON.parse(localStorage.getItem(LKEY)||"{}")}catch(e){return{}}};
 const lPut=o=>{try{localStorage.setItem(LKEY,JSON.stringify(o))}catch(e){throw{code:"quota_exceeded"}}};
 const Store={
-  async list(){ if(DB){const s=await DB.collection("kunden").orderBy("updatedAt","desc").limit(200).get();
-    return s.docs.map(d=>Object.assign({id:d.id},d.data()));}
-    const o=lAll(); return Object.keys(o).map(id=>Object.assign({id},o[id])).sort((a,b)=>String(b.updatedAt||"").localeCompare(String(a.updatedAt||"")));},
-  async put(id,b){ if(DB) return DB.doc("kunden/"+id).set(b); const o=lAll(); o[id]=b; lPut(o);},
-  async del(id){ if(DB) return DB.doc("kunden/"+id).delete(); const o=lAll(); delete o[id]; lPut(o);}
+  async list(){
+    const res=await fetch(`${SB_URL}/rest/v1/karteien?select=id,doc,updated_at&order=updated_at.desc&limit=200`,{headers:sbHeaders});
+    if(!res.ok) throw{code:"unavailable"};
+    const rows=await res.json();
+    return rows.map(r=>Object.assign({id:r.id},r.doc,{updatedAt:r.updated_at}));
+  },
+  async put(id,b){
+    const res=await fetch(`${SB_URL}/rest/v1/karteien`,{method:"POST",
+      headers:Object.assign({},sbHeaders,{Prefer:"resolution=merge-duplicates,return=minimal"}),
+      body:JSON.stringify([{id,doc:b,updated_at:b.updatedAt}])});
+    if(!res.ok) throw{code:"unavailable"};
+  },
+  async del(id){
+    const res=await fetch(`${SB_URL}/rest/v1/karteien?id=eq.${encodeURIComponent(id)}`,{method:"DELETE",headers:sbHeaders});
+    if(!res.ok) throw{code:"unavailable"};
+  }
 };
 const st=(m,k)=>{fbStatus.className="fb-status"+(k?" "+k:""); fbStatus.textContent=m||"";};
 const hhmm=()=>new Date().toLocaleTimeString("de-AT",{hour:"2-digit",minute:"2-digit"});
@@ -1786,7 +1803,9 @@ const wo=()=>mode==="db"?"für Ihr Team":"in diesem Browser";
 function errT(e){const c=e&&e.code;
   return c==="quota_exceeded"?"Speicher voll — alte Karteien löschen."
     :c==="invalid_argument"?"Kartei zu groß — kleineres Logo verwenden."
-    :c==="resource_exhausted"?"Zu viele Zugriffe — kurz warten.":"Speichern fehlgeschlagen.";}
+    :c==="resource_exhausted"?"Zu viele Zugriffe — kurz warten."
+    :c==="unavailable"?"Keine Verbindung zur Datenbank — kurz warten und erneut versuchen."
+    :"Speichern fehlgeschlagen.";}
 const payload=()=>({title:(profile.name||"").trim()||"Ohne Namen",profile:JSON.parse(JSON.stringify(profile)),
   notes,updatedAt:new Date().toISOString()});
 function blank(){
@@ -1808,7 +1827,7 @@ function idle(){ if(dirty) return;
 async function saveRec(){
   const first=!activeId; if(!activeId) activeId="k-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,6);
   try{ await Store.put(activeId,payload()); dirty=false; save();
-    if(mode!=="db") await refreshList(); else renderList();
+    await refreshList();
     st((first?"Angelegt · ":"Gespeichert ")+hhmm(),"ok");
   }catch(e){ if(first) activeId=null; st(errT(e),"err"); }
 }
@@ -1824,7 +1843,7 @@ fbDel.addEventListener("click",async()=>{
     armed=setTimeout(()=>{armed=null; fbDel.textContent="Löschen"; fbDel.style.color="";},4000); return;}
   clearTimeout(armed); armed=null; fbDel.textContent="Löschen"; fbDel.style.color="";
   try{ await Store.del(activeId); activeId=null; blank(); dirty=false; save(); applyAll();
-    if(mode!=="db") await refreshList(); else renderList(); st("Gelöscht.","ok");}catch(e){st(errT(e),"err");}
+    await refreshList(); st("Gelöscht.","ok");}catch(e){st(errT(e),"err");}
 });
 fbSel.addEventListener("change",()=>{
   const id=fbSel.value;
@@ -1839,14 +1858,7 @@ fbSel.addEventListener("change",()=>{
   normProfile(); save(); applyAll(); renderList();
   st("Geladen: "+(r.title||"Ohne Namen"),"ok");
 });
-(async()=>{ await refreshList();
-  let d=null; try{d=(window.claude&&window.claude.use)?await window.claude.use("db"):null}catch(e){d=null}
-  if(!d) return; DB=d; mode="db";
-  DB.collection("kunden").orderBy("updatedAt","desc").limit(200).onSnapshot(s=>{
-    records=s.docs.map(x=>Object.assign({id:x.id},x.data()));
-    if(restoredId&&!activeId&&records.some(r=>r.id===restoredId)) activeId=restoredId;
-    restoredId=null; renderList(); idle();},e=>st(errT(e),"err"));
-})();
+refreshList();
 
 
 /* ---------- PDF ----------
