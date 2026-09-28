@@ -3,8 +3,18 @@
 Interaktives Vertriebstool für ppedv, um im Kundengespräch live ein individuelles
 Kompetenzmodell zusammenzustellen — als Grundlage für Schulungskonzept und Angebot.
 
-**Live:** https://claude.ai/code/artifact/d000a0b9-bdc8-4a60-a48a-f2c0e8fd4091
+**Live (für das ganze Team, dieser Link):** https://jasminannii.github.io/ppedv-kompetenzmatrix/
 **Quelle:** `index.html` (einzelne, eigenständige HTML-Datei — kein Build nötig, einfach im Browser öffnen)
+
+Gehostet über **GitHub Pages** (Deploy from branch `main`, Ordner `/root` — Einstellung
+unter Settings → Pages). Das Repo muss dafür öffentlich bleiben (kostenlos; bei privaten
+Repos verlangt GitHub Pages einen bezahlten Plan). Kein sensibler Code ist darin enthalten.
+
+Der alte Weg über einen Claude-Artifact-Link (`claude.ai/code/artifact/...`) wird nicht
+mehr verwendet: Der Artifact-Sandkasten blockiert bei öffentlich geteilten Links sowohl
+Datei-Downloads als auch die serverseitige Kartei-Speicherung — das ließ sich nicht
+zuverlässig reparieren (siehe „Drucken und PDF" unten). GitHub Pages hat keinen solchen
+Sandkasten.
 
 ## Der Ablauf im Kundengespräch
 
@@ -147,15 +157,18 @@ ist, allein zu genügen.
 
 ## Drucken und PDF
 
-Der Artifact-Rahmen läuft mit
-`sandbox="allow-scripts allow-same-origin allow-forms"`. Ohne `allow-modals`
-bleibt `window.print()` **wirkungslos** — es wirft nicht einmal eine Ausnahme,
-der Knopf schien einfach nichts zu tun. Popups und Downloads sind ebenso
-gesperrt; `capabilities: {downloads: true}` wird beim Veröffentlichen
-mit 422 abgelehnt, solange „jeder mit dem Link" eingestellt ist.
+Das PDF wird **clientseitig selbst gebaut**, kein Druckdialog nötig. Grundlage
+ist **jsPDF** von cdnjs.
 
-Deshalb wird das PDF **selbst gesetzt** und über die `downloads`-Capability
-ausgegeben — kein Druckdialog nötig. Grundlage ist **jsPDF** von cdnjs.
+**Verlaufsnotiz (nicht mehr relevant, aber als Warnung stehen gelassen):** Auf
+dem alten Claude-Artifact-Link scheiterte sowohl `window.print()` (Sandkasten
+ohne `allow-modals`) als auch eine PDF-Vorschau in einem `<iframe src="blob:...">`
+— Letzteres wurde von Edge und teils Chrome als „blockiert" abgewiesen, auch
+außerhalb jedes Sandkastens. Die heutige Lösung ist der Web-Standardweg: ein
+programmatisch angeklickter `<a download>`-Link (`downloadBlob()`). Der
+funktioniert browserübergreifend zuverlässig, ganz ohne Capability-Deklaration
+oder Sandkasten-Rücksicht. `zeigePDF()` (iframe-Vorschau) bleibt nur als letzter
+Fallback im Code, falls ein Browser auch den `<a download>`-Weg verweigert.
 
 **Aufbau des Dokuments** (`buildPDF(scope)`), A4 hochkant:
 
@@ -192,16 +205,39 @@ Kundenfeld verschwindet über `:placeholder-shown`, statt den Platzhalter zu
 drucken. Und `main` wird im Druck zur Flex-Spalte, damit die Reihenfolge stimmt:
 Erklärung → Matrix → Ergebnis, unabhängig von der DOM-Reihenfolge der Reiter.
 
-**Die Alternative zur Freigabe: irgendwo selbst hosten.** `index.html` ist eine
-einzelne Datei ohne Abhängigkeiten außer Google Fonts. Auf einem beliebigen
-Webserver — oder auch nur lokal geöffnet — gibt es keinen Sandkasten, und
-Drucken funktioniert nativ.
+## Kartei-Speicherung (Supabase)
 
-**Wichtig: die Freigabe darf nicht zurück auf „Anyone with the link".** Sobald
-sie das täte, ließe sich `downloads` nicht mehr deklarieren und die
-Dateiausgabe fiele wieder aus. Dieselbe Sperre betrifft `sample` (KI-Zuordnung)
-und `db` (server-seitige Karteien) — beide sind jetzt möglich, aber noch nicht
-deklariert.
+Gemeinsame Karteien liegen in einer **Supabase**-Tabelle `karteien`
+(Spalten: `id text primary key`, `doc jsonb`, `updated_at timestamptz`),
+angesprochen per einfachem `fetch()` gegen die REST-API — kein SDK, kein
+Build-Schritt, passt zum Rest des Codes.
+
+```sql
+create table if not exists karteien (
+  id text primary key,
+  doc jsonb not null,
+  updated_at timestamptz not null default now()
+);
+alter table karteien enable row level security;
+create policy "anon all" on karteien for all to anon using (true) with check (true);
+```
+
+Projekt-URL und `anon`-Key (Supabase-Dashboard → Project Settings → API Keys →
+Tab **„Legacy anon, service_role API keys"** — nicht den neuen „Publishable key"
+verwenden, dessen REST-Kompatibilität mit reinem `fetch()` ungeprüft ist) stehen
+direkt im Code (`SB_URL`, `SB_KEY` in `index.html`). Der `anon`-Key ist zur
+Einbettung im Frontend gedacht — Schutz kommt über die Row-Level-Security-Regel
+oben, nicht über Geheimhaltung des Keys. **Den `service_role`-Key niemals
+verwenden oder committen.**
+
+Kostenloser Supabase-Plan reicht für diesen Anwendungsfall (500 MB, weit mehr
+als genug Text-Karteien). Einzige Besonderheit: Ein kostenloses Projekt
+pausiert automatisch nach 7 Tagen ganz ohne Zugriff — Daten bleiben erhalten,
+im Dashboard reicht ein Klick auf „Restore" zum Reaktivieren.
+
+Vor dieser Umstellung lag jede Kartei nur im `localStorage` des jeweiligen
+Browsers (die Claude-Artifact-`db`-Capability war außerhalb von Claude nie
+erreichbar) — nicht teamübergreifend sichtbar. Das ist jetzt behoben.
 
 ## Noch offen
 
