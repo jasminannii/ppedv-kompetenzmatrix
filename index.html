@@ -2091,16 +2091,24 @@ function dateiname(scope,ext){
   const kunde=((profile.name||"").trim()||"Kunde").replace(/[^\wÄÖÜäöüß -]/g,"").replace(/\s+/g,"-");
   return `Kompetenzmatrix-${kunde}-${scope==="model"?"Modell-":""}${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.${ext}`;
 }
-/* Auf öffentlich geteilten Seiten darf der Rahmen keine Datei ausgeben.
-   Dann wird das PDF eingeblendet — im Betrachter des Browsers, der sein
-   eigenes Speichern- und Drucken-Symbol mitbringt. */
+/* Standard-Downloadmechanismus des Web: ein unsichtbarer <a download>-Link,
+   programmatisch angeklickt. Funktioniert in jedem Browser ohne Plugin-
+   Eigenheiten — anders als eine PDF-Vorschau in einem <iframe src="blob:...">,
+   die einzelne Browser (u. a. Edge und teils Chrome, auch außerhalb jedes
+   Sandkastens) als „blockiert" abweisen. */
+function downloadBlob(blob,name){
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url; a.download=name; a.style.display="none";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),4000);
+}
+/* Fallback, falls ein Browser auch den <a download>-Weg verweigert: PDF im
+   Betrachter anzeigen, der sein eigenes Speichern-Symbol mitbringt. */
 function zeigePDF(blob,name){
   const url=URL.createObjectURL(blob);
   const ov=document.createElement("div");
   ov.className="pdfov";
-  /* Kein Herunterladen-Knopf: öffentlich geteilte Artifacts dürfen keine
-     Dateien ausgeben, der Link wäre tot. Speichern geht über das Symbol im
-     Betrachter oben rechts — und immer, wenn die Seite außerhalb läuft. */
   ov.innerHTML=`<div class="pdfov-bar">
       <b>${esc(name)}</b>
       <span class="pdfov-hint">Sichern über das Symbol im Betrachter</span>
@@ -2119,9 +2127,12 @@ async function saveDoc(scope){
   const label=btn?btn.textContent:"";
   if(btn){btn.disabled=true; btn.textContent="PDF wird gebaut …";}
   try{
-    const doc=await buildPDF(scope), name=dateiname(scope,"pdf");
-    if(DL){ await DL.save({filename:name,data:doc.output("blob")}); toast("PDF gesichert."); }
-    else{ zeigePDF(doc.output("blob"),name); }
+    const doc=await buildPDF(scope), name=dateiname(scope,"pdf"), blob=doc.output("blob");
+    if(DL){ await DL.save({filename:name,data:blob}); toast("PDF gesichert."); }
+    else{
+      try{ downloadBlob(blob,name); toast("PDF heruntergeladen."); }
+      catch(e2){ console.error(e2); zeigePDF(blob,name); }
+    }
   }catch(e){
     const c=e&&e.code;
     if(c==="declined"){ /* still */ }
