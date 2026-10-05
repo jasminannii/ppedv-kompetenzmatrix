@@ -132,27 +132,80 @@ und trägt die Kosten. Wer den öffentlichen Link ohne Login öffnet, sieht den
 Button nicht und arbeitet mit der lokalen Zuordnung oben, die dafür ausgelegt
 ist, allein zu genügen.
 
+## Hosting und Speicherung
+
+Die Anwendung liegt auf **Vercel**: `index.html` als statische Datei, dazu eine
+einzige Serverless-Funktion unter `api/kartei.js`.
+
+### Warum Vercel Blob
+
+Freie Speichermöglichkeiten auf dem Hobby-Plan, geprüft an den Vercel-Docs:
+
+| Option | Frei enthalten | Geeignet |
+|---|---|---|
+| **Vercel Blob** | 1 GB, auf allen Plänen | **ja** — mit privatem Store |
+| Global Config | 100.000 Lesevorgänge, **100 Schreibvorgänge** | nein, jedes Speichern ist ein Schreibvorgang |
+| Marketplace (Neon, Upstash, Supabase) | eigene Kontingente | ginge, verlangt aber ein zweites Anbieterkonto |
+
+Gewählt: **Vercel Blob mit privatem Store**. Eine Kartei ist genau ein
+JSON-Dokument unter `karteien/<id>.json`. „Privat" heißt: Lesen geht nur über
+unsere Funktion, nie über eine Blob-URL.
+
+> **Achtung, Nutzungsbedingungen.** Vercel schreibt: *„the Hobby plan restricts
+> users to non-commercial, personal use only."* Ein Vertriebswerkzeug für
+> Kundengespräche ist kommerziell — formal verlangt das den Pro-Plan.
+
+### Eine URL je Unternehmen
+
+- Anlegen auf `/` → Unternehmen und Passwort → Weiterleitung auf `/k/<id>`
+- `<id>` sind 12 Zeichen aus `randomBytes(9)` — nicht zu erraten
+- Das Passwort ist voreingestellt der Unternehmensname, aber frei änderbar
+- Gespeichert wird nur ein **scrypt-Hash** mit eigenem Salt, nie das Passwort
+- Falsches Passwort und unbekannte Kartei liefern **dieselbe** 401-Antwort,
+  sonst verriete der Server, welche Karteien existieren
+- Nach einem Fehlversuch wartet die Funktion 400 ms — bremst Rateversuche
+
+**Zur Stärke dieses Schutzes:** Der Unternehmensname als Passwort ist schwach;
+wer die URL hat und den Kunden kennt, kommt hinein. Die eigentliche Hürde ist
+die nicht erratbare URL. Für höheren Schutz ein eigenes Passwort vergeben.
+
+### Kein Browser-Speicher mehr
+
+`localStorage` kommt nicht mehr vor. Der Zustand lebt im Arbeitsspeicher der
+Seite und wird 1,5 Sekunden nach der letzten Änderung zum Server geschrieben
+(`scheduleSave` → `sichern`). Das Passwort bleibt ebenfalls nur im
+Arbeitsspeicher: nach dem Neuladen fragt die Schleuse erneut.
+
+### Dateien
+
+```
+index.html        die Anwendung, eine Datei
+api/kartei.js     anlegen / oeffnen / sichern / loeschen, alles per POST
+vercel.json       Rewrite /k/:id → /index.html
+package.json      @vercel/blob
+```
+
+### Einrichten
+
+1. Repository mit Vercel verbinden
+2. Im Vercel-Dashboard einen **Blob-Store mit Zugriffsmodus „private"** anlegen
+   (der Modus lässt sich später nicht ändern) und mit dem Projekt verbinden
+3. Deployen — die Funktion authentifiziert sich über OIDC, es ist kein Token
+   im Code nötig
+
+Lokal testen ohne Vercel-Konto: `api/kartei.js` lässt sich gegen eine
+Speicher-Attrappe laufen lassen, da es außer `@vercel/blob` nichts importiert.
+
 ## Technisch
 
 - Reines Vanilla-JS in einer HTML-Datei, kein Framework, kein Build-Schritt.
-- Zustand liegt im `localStorage` des Browsers (pro Gerät/Browser getrennt),
-  Karteien zusätzlich in der Artifact-Datenbank, wenn verfügbar.
 - Datenmodell — eine flache Liste ist der Kern:
   - `profile.skills[]` — `{id, text, welt, teams:[{name,n}], note}`
   - `WORLDS[]` — Katalog der 6 Kompetenzwelten; `komp`, `felder`, `ziel`, `bau`
     sind nur noch Vorschläge und Suchmaterial, kein Auswahlzustand mehr
   - `profile.gesagt` — Mitschrift „Was sagt der Kunde?"
   - `profile.tlWeeks` / `tlSpan[]` / `phTitle[]` — Timeline
-  - Kein `state` mehr: die frühere Fassung hielt je Welt Auswahl-Arrays, die
-    aus dem Modell verschwunden sind
-    `teamNames() ∪ profile.ziele`
-  - `state[weltId].kompExtra[]` — pro Kunde ergänzte Kernkompetenzen
-  - `state[weltId].kompCustom{}` — pro Kunde umformulierte Kernkompetenzen
-  - `profile.tlWeeks` / `profile.tlSpan[]` / `profile.phTitle[]` — Timeline
-- `skillsFromV4()` überführt Karteien der team-first-Fassung: aus jedem
-  gewählten Skill und jeder Kernkompetenz wird eine Skill-Zeile, die
-  Welt-Zielgruppen werden zu Teams. Läuft beim Laden der Kartei und beim ersten
-  Start aus dem alten localStorage-Schlüssel.
+- `skillsFromV4()` überführt Karteien älterer Fassungen.
 - `normProfile()` normalisiert das Profil bei jedem Laden.
 
 ## Drucken und PDF

@@ -203,6 +203,22 @@ details.more .in{padding-top:11px}
 .cc-take.on{border-color:transparent; background:none; color:var(--orange); font-weight:600; padding-left:0; cursor:default}
 .cc-f .cc-take{margin-top:5px}
 
+/* Passwort-Schleuse */
+.gate{position:fixed; inset:0; z-index:300; background:var(--paper); display:grid; place-items:center; padding:20px}
+.gate-box{background:var(--surface); border:1px solid var(--line); border-radius:10px; box-shadow:var(--shadow);
+  padding:26px 28px 24px; width:min(380px,100%); display:flex; flex-direction:column}
+.gate-mark{height:24px; width:auto; align-self:flex-start; margin-bottom:16px}
+.gate-box h2{font-size:20px}
+.gate-box>p{font-size:13.5px; color:var(--ink-2); line-height:1.5; margin-top:6px}
+.gate-l{display:block; font-size:12.5px; font-weight:600; color:var(--ink-2); margin-top:16px}
+.gate-l input{display:block; width:100%; margin-top:6px; font:inherit; font-size:15px; color:var(--ink);
+  background:var(--surface-2); border:1px solid var(--line-2); border-radius:6px; padding:10px 12px}
+.gate-l input:focus{outline:2px solid var(--orange); outline-offset:-1px; background:var(--surface)}
+.gate-box .btn.go{margin-top:18px; padding:11px}
+.gate-err{font-size:13px; color:#B3261E; margin-top:10px; min-height:1em}
+.gate-err:empty{display:none}
+@media print{.gate{display:none!important}}
+
 /* PDF-Überlagerung */
 .pdfov{position:fixed; inset:0; z-index:200; background:rgba(13,17,23,.88);
   display:flex; flex-direction:column; padding:16px; gap:12px}
@@ -533,6 +549,20 @@ details.more .in{padding-top:11px}
 }
 </style>
 
+<div class="gate" id="gate" hidden>
+  <form class="gate-box" id="gateForm" autocomplete="on">
+    <img class="gate-mark" id="gateMark" alt="ppedv">
+    <h2 id="gateTitel">Kartei öffnen</h2>
+    <p id="gateText"></p>
+    <label class="gate-l" id="gateLblU" hidden>Unternehmen
+      <input id="gateU" name="organization" autocomplete="organization" maxlength="80"></label>
+    <label class="gate-l">Passwort
+      <input id="gateP" name="password" type="password" autocomplete="current-password" maxlength="120"></label>
+    <button class="btn go" type="submit" id="gateGo">Öffnen</button>
+    <p class="gate-err" id="gateErr"></p>
+  </form>
+</div>
+
 <header class="top">
   <div class="wrap">
     <div class="top-row" id="setup">
@@ -542,10 +572,9 @@ details.more .in{padding-top:11px}
       <input class="cust" id="custName" placeholder="Unternehmen eintragen">
       <input type="file" id="logoFile" accept="image/*" hidden>
       <div class="kartei no-print">
-        <select class="fb-sel" id="fbSel"><option value="">Neue Kartei</option></select>
-        <button class="btn go" id="fbSave">Speichern</button>
-        <button class="btn" id="fbNew">Neu</button>
-        <button class="btn" id="fbDel" disabled>Löschen</button>
+        <button class="btn" id="fbLink">Link kopieren</button>
+        <button class="btn" id="fbNew">Neue Kartei</button>
+        <button class="btn" id="fbDel">Löschen</button>
         <span class="fb-status" id="fbStatus"></span>
       </div>
     </div>
@@ -850,8 +879,7 @@ const TLSHORT=["Kick-off & Standort","Lernpfade & Setup","Durchführung","Transf
 /* ---------- Zustand ----------
    Der Kern ist eine flache Liste von Skills. Ein Skill ist das, was der Kunde sagt,
    zugeordnet zu einer der sechs Kompetenzwelten, mit den betroffenen Teams. */
-const KEY="ppedv-matrix-v5", KEY4="ppedv-matrix-v4";
-let notes="", focusId=WORLDS[0].id, activeId=null, restoredId=null, editId=null;
+let notes="", focusId=WORLDS[0].id, editId=null;
 let profile={name:"",logo:""};
 PFIELDS.forEach(f=>profile[f.k]="");
 LEGACY_PF.forEach(k=>profile[k]="");
@@ -885,20 +913,6 @@ function skillsFromV4(st,pf){
     .forEach(t=>out.push(mkSkill(t.note,"",[{name:(t.name||"").trim()||"Ohne Namen",n:t.n||""}])));
   return out;
 }
-try{
-  let r=localStorage.getItem(KEY), p=r?JSON.parse(r):null;
-  if(!p){ const r4=localStorage.getItem(KEY4);
-    if(r4){ const q=JSON.parse(r4);
-      p={notes:q.notes,focusId:q.focusId,activeId:q.activeId,profile:Object.assign({},q.profile)};
-      p.profile.skills=skillsFromV4(q.state,q.profile); delete p.profile.teams; } }
-  if(p){
-    if(typeof p.notes==="string") notes=p.notes;
-    if(p.focusId&&WORLDS.some(w=>w.id===p.focusId)) focusId=p.focusId;
-    if(p.profile) profile=Object.assign(profile,p.profile);
-    if(typeof p.activeId==="string") restoredId=p.activeId;
-  }
-}catch(e){}
-
 function normProfile(){
   if(!Array.isArray(profile.tlSpan)||profile.tlSpan.length!==PHASES.length) profile.tlSpan=PHASES.map(()=>null);
   if(!Array.isArray(profile.phTitle)||profile.phTitle.length!==PHASES.length) profile.phTitle=PHASES.map(()=>null);
@@ -914,8 +928,8 @@ function normProfile(){
 }
 normProfile();
 
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({notes,focusId,profile,activeId}))}catch(e){}
-                try{scheduleSave()}catch(e){}};
+/* Gespeichert wird ausschließlich auf dem Server, entprellt. */
+const save=()=>{try{scheduleSave()}catch(e){}};
 const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 
 const TLMAX=()=>Math.max(4,Math.min(52,parseInt(profile.tlWeeks,10)||16));
@@ -1766,99 +1780,133 @@ function render(){
   renderCounts(); coreDefault(); renderNeedRing(); renderPanel(); renderNeedbar(); renderCtx(); renderCards(); renderNeedOut(); renderSync();
 }
 
-/* ---------- Karteien ---------- */
-const fbSel=document.getElementById("fbSel"),fbSave=document.getElementById("fbSave"),
-      fbNew=document.getElementById("fbNew"),fbDel=document.getElementById("fbDel"),fbStatus=document.getElementById("fbStatus");
-let records=[],autoT=null,dirty=false,mode="db";
-/* Gemeinsame Datenbank (Supabase) — der anon-Key ist zur Einbettung im
-   Frontend gedacht, geschützt durch Row-Level-Security-Regeln auf der
-   Tabelle „karteien" (siehe README). Keine geheimen Daten in diesem Key. */
-const SB_URL="https://vpzcooncjcqddjxcdlft.supabase.co";
-const SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwemNvb25jamNxZGRqeGNkbGZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1ODEyNTIsImV4cCI6MjEwNjE1NzI1Mn0.kb5NvMLDakc4TXzAU5mNAzIdsNEhb9e8ynGvatfASiU";
-const sbHeaders={apikey:SB_KEY,Authorization:"Bearer "+SB_KEY,"Content-Type":"application/json"};
-const LKEY="ppedv-karteien-v1";
-const lAll=()=>{try{return JSON.parse(localStorage.getItem(LKEY)||"{}")}catch(e){return{}}};
-const lPut=o=>{try{localStorage.setItem(LKEY,JSON.stringify(o))}catch(e){throw{code:"quota_exceeded"}}};
-const Store={
-  async list(){
-    const res=await fetch(`${SB_URL}/rest/v1/karteien?select=id,doc,updated_at&order=updated_at.desc&limit=200`,{headers:sbHeaders});
-    if(!res.ok) throw{code:"unavailable"};
-    const rows=await res.json();
-    return rows.map(r=>Object.assign({id:r.id},r.doc,{updatedAt:r.updated_at}));
-  },
-  async put(id,b){
-    const res=await fetch(`${SB_URL}/rest/v1/karteien`,{method:"POST",
-      headers:Object.assign({},sbHeaders,{Prefer:"resolution=merge-duplicates,return=minimal"}),
-      body:JSON.stringify([{id,doc:b,updated_at:b.updatedAt}])});
-    if(!res.ok) throw{code:"unavailable"};
-  },
-  async del(id){
-    const res=await fetch(`${SB_URL}/rest/v1/karteien?id=eq.${encodeURIComponent(id)}`,{method:"DELETE",headers:sbHeaders});
-    if(!res.ok) throw{code:"unavailable"};
-  }
-};
+/* ---------- Karteien: eine URL je Unternehmen ----------
+   Gespeichert wird auf dem Server (Vercel Blob, privater Store). Der Browser
+   hält nichts dauerhaft — weder Daten noch Passwort. Die Adresse /k/<id> ist
+   nicht zu erraten, das Passwort prüft die Funktion unter /api/kartei. */
+const fbStatus=document.getElementById("fbStatus");
+let karteiId=(location.pathname.match(/^\/k\/([A-Za-z0-9_-]+)/)||[])[1]||"";
+let pw="", offen=false, dirty=false, autoT=null;
+
 const st=(m,k)=>{fbStatus.className="fb-status"+(k?" "+k:""); fbStatus.textContent=m||"";};
 const hhmm=()=>new Date().toLocaleTimeString("de-AT",{hour:"2-digit",minute:"2-digit"});
-const wo=()=>mode==="db"?"für Ihr Team":"in diesem Browser";
-function errT(e){const c=e&&e.code;
-  return c==="quota_exceeded"?"Speicher voll — alte Karteien löschen."
-    :c==="invalid_argument"?"Kartei zu groß — kleineres Logo verwenden."
-    :c==="resource_exhausted"?"Zu viele Zugriffe — kurz warten."
-    :c==="unavailable"?"Keine Verbindung zur Datenbank — kurz warten und erneut versuchen."
-    :"Speichern fehlgeschlagen.";}
-const payload=()=>({title:(profile.name||"").trim()||"Ohne Namen",profile:JSON.parse(JSON.stringify(profile)),
-  notes,updatedAt:new Date().toISOString()});
+
+async function api(aktion,extra){
+  const r=await fetch("/api/kartei",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(Object.assign({aktion,id:karteiId,passwort:pw},extra||{}))});
+  let j={}; try{j=await r.json()}catch(e){}
+  if(!r.ok) throw Object.assign(new Error(j.fehler||"Es hat nicht geklappt."),{status:r.status});
+  return j;
+}
+const payload=()=>({profile:JSON.parse(JSON.stringify(profile)),notes,focusId});
+
 function blank(){
-  profile={name:"",logo:"",gesagt:"",skills:[],tlWeeks:16,tlSpan:PHASES.map(()=>null),phTitle:PHASES.map(()=>null)};
+  profile={name:"",logo:"",gesagt:"",skills:[],tlWeeks:16,
+           tlSpan:PHASES.map(()=>null),phTitle:PHASES.map(()=>null)};
   PFIELDS.forEach(f=>profile[f.k]=""); LEGACY_PF.forEach(k=>profile[k]=""); notes=""; editId=null;
 }
 function applyAll(){refreshSug(); renderCust(); syncFields(); renderNeed(); buildInner(); renderTimeline(); renderPhases(); render();}
-function renderList(){
-  fbSel.innerHTML=`<option value="">${activeId?"— neue Kartei —":"Neue Kartei"}</option>`+
-    records.map(r=>{const d=r.updatedAt?new Date(r.updatedAt).toLocaleDateString("de-AT",{day:"2-digit",month:"2-digit",year:"2-digit"}):"";
-      return `<option value="${r.id}"${r.id===activeId?" selected":""}>${esc(r.title||"Ohne Namen")}${d?" · "+d:""}</option>`;}).join("");
-  fbSel.value=activeId||""; fbDel.disabled=!activeId;
-}
-async function refreshList(){ try{records=await Store.list()}catch(e){records=[]}
-  if(restoredId&&!activeId&&records.some(r=>r.id===restoredId)) activeId=restoredId;
-  restoredId=null; renderList(); idle();}
-function idle(){ if(dirty) return;
-  st(activeId?"Kartei aktiv · speichert automatisch "+wo():(records.length?`${records.length} Kartei${records.length===1?"":"en"} ${wo()}`:"Noch keine Kartei"));}
-async function saveRec(){
-  const first=!activeId; if(!activeId) activeId="k-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,6);
-  try{ await Store.put(activeId,payload()); dirty=false; save();
-    await refreshList();
-    st((first?"Angelegt · ":"Gespeichert ")+hhmm(),"ok");
-  }catch(e){ if(first) activeId=null; st(errT(e),"err"); }
-}
-function scheduleSave(){ if(!activeId) return; dirty=true; st("Änderungen …");
-  clearTimeout(autoT); autoT=setTimeout(saveRec,1500);}
-fbSave.addEventListener("click",saveRec);
-fbNew.addEventListener("click",()=>{blank(); activeId=null; dirty=false; save(); applyAll(); renderList();
-  st("Neue Kartei — mit „Speichern“ anlegen."); goStep(2); custName.focus();});
-let armed=null;
-fbDel.addEventListener("click",async()=>{
-  if(!activeId) return;
-  if(!armed){fbDel.textContent="Sicher?"; fbDel.style.color="#B3261E";
-    armed=setTimeout(()=>{armed=null; fbDel.textContent="Löschen"; fbDel.style.color="";},4000); return;}
-  clearTimeout(armed); armed=null; fbDel.textContent="Löschen"; fbDel.style.color="";
-  try{ await Store.del(activeId); activeId=null; blank(); dirty=false; save(); applyAll();
-    await refreshList(); st("Gelöscht.","ok");}catch(e){st(errT(e),"err");}
-});
-fbSel.addEventListener("change",()=>{
-  const id=fbSel.value;
-  if(!id){blank(); activeId=null; dirty=false; save(); applyAll(); renderList(); st("Neue Kartei."); return;}
-  const r=records.find(x=>x.id===id); if(!r) return;
+
+function uebernehmen(d){
   blank();
-  const p=r.profile||{};
-  Object.keys(p).forEach(k=>{profile[k]=JSON.parse(JSON.stringify(p[k]));});
-  /* Karteien der Vorversion tragen state und profile.teams — daraus werden Skills */
-  if(!Array.isArray(p.skills)&&(r.state||p.teams)) profile.skills=skillsFromV4(r.state,p);
-  notes=r.notes||""; activeId=r.id; dirty=false; editId=null;
-  normProfile(); save(); applyAll(); renderList();
-  st("Geladen: "+(r.title||"Ohne Namen"),"ok");
+  const p=(d&&d.profile)||{};
+  Object.keys(p).forEach(k=>{try{profile[k]=JSON.parse(JSON.stringify(p[k]))}catch(e){}});
+  /* Karteien der Vorversionen tragen state oder profile.teams — daraus werden Skills */
+  if(!Array.isArray(p.skills)&&(d&&d.state||p.teams)) profile.skills=skillsFromV4(d&&d.state,p);
+  notes=(d&&d.notes)||"";
+  if(d&&d.focusId&&WORLDS.some(w=>w.id===d.focusId)) focusId=d.focusId;
+  normProfile(); applyAll();
+}
+
+async function sichern(){
+  if(!offen||!karteiId) return;
+  try{
+    const j=await api("sichern",{data:payload(),titel:(profile.name||"").trim()});
+    dirty=false; st("Gespeichert "+hhmm(),"ok");
+    return j;
+  }catch(e){ st(e.status===401?"Sitzung abgelaufen — Seite neu laden.":"Nicht gespeichert — "+e.message,"err"); }
+}
+function scheduleSave(){
+  if(!offen||!karteiId) return;
+  dirty=true; st("Änderungen …");
+  clearTimeout(autoT); autoT=setTimeout(sichern,1500);
+}
+/* Beim Schließen des Tabs noch schnell wegschreiben */
+addEventListener("beforeunload",e=>{ if(dirty){ e.preventDefault(); e.returnValue=""; } });
+
+/* ---------- Schleuse ---------- */
+const gate=document.getElementById("gate"),gateForm=document.getElementById("gateForm"),
+      gateU=document.getElementById("gateU"),gateP=document.getElementById("gateP"),
+      gateErr=document.getElementById("gateErr"),gateGo=document.getElementById("gateGo"),
+      gateTitel=document.getElementById("gateTitel"),gateText=document.getElementById("gateText"),
+      gateLblU=document.getElementById("gateLblU");
+
+function zeigeSchleuse(){
+  gate.hidden=false;
+  const neu=!karteiId;
+  gateLblU.hidden=!neu;
+  gateTitel.textContent=neu?"Neue Kartei":"Kartei öffnen";
+  gateText.textContent=neu
+    ? "Unternehmen eintragen. Das Passwort schützt diese Kartei — voreingestellt ist der Unternehmensname."
+    : "Diese Kartei ist mit einem Passwort geschützt.";
+  gateGo.textContent=neu?"Anlegen":"Öffnen";
+  gateErr.textContent="";
+  requestAnimationFrame(()=>(neu?gateU:gateP).focus());
+}
+/* Vorbelegung: Passwort folgt dem Unternehmensnamen, solange es keiner angefasst hat */
+let pwBeruehrt=false;
+gateP.addEventListener("input",()=>{pwBeruehrt=true;});
+gateU.addEventListener("input",()=>{ if(!pwBeruehrt) gateP.value=gateU.value; });
+
+gateForm.addEventListener("submit",async e=>{
+  e.preventDefault();
+  gateErr.textContent=""; gateGo.disabled=true;
+  const label=gateGo.textContent; gateGo.textContent="…";
+  try{
+    pw=gateP.value;
+    if(!karteiId){
+      const titel=gateU.value.trim();
+      if(!titel) throw new Error("Unternehmen fehlt.");
+      profile.name=titel;
+      const j=await api("anlegen",{titel,data:payload()});
+      karteiId=j.id;
+      history.replaceState({},"","/k/"+karteiId);
+      offen=true; gate.hidden=true;
+      renderCust(); st("Angelegt · "+hhmm(),"ok");
+    }else{
+      const j=await api("oeffnen");
+      offen=true; gate.hidden=true;
+      uebernehmen(j.data);
+      if(!((profile.name||"").trim()) && j.titel){ profile.name=j.titel; renderCust(); }
+      st("Geöffnet · zuletzt "+(j.updatedAt?new Date(j.updatedAt).toLocaleString("de-AT",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}):"—"));
+    }
+    gateP.value=""; gateU.value="";
+  }catch(err){
+    gateErr.textContent=err.message||"Es hat nicht geklappt.";
+    pw="";
+  }finally{ gateGo.disabled=false; gateGo.textContent=label; }
 });
-refreshList();
+
+/* ---------- Kopfzeilen-Knöpfe ---------- */
+document.getElementById("fbNew").addEventListener("click",()=>{ location.href="/"; });
+document.getElementById("fbLink").addEventListener("click",async()=>{
+  if(!karteiId){ st("Erst anlegen.","err"); return; }
+  const u=location.origin+"/k/"+karteiId;
+  try{ await navigator.clipboard.writeText(u); st("Link kopiert","ok"); }
+  catch(e){ prompt("Link zu dieser Kartei:",u); }
+});
+let armed=null;
+document.getElementById("fbDel").addEventListener("click",async()=>{
+  const b=document.getElementById("fbDel");
+  if(!offen||!karteiId) return;
+  if(!armed){ b.textContent="Sicher?"; b.style.color="#B3261E";
+    armed=setTimeout(()=>{armed=null; b.textContent="Löschen"; b.style.color="";},4000); return; }
+  clearTimeout(armed); armed=null; b.textContent="Löschen"; b.style.color="";
+  try{ await api("loeschen"); location.href="/"; }
+  catch(e){ st("Nicht gelöscht — "+e.message,"err"); }
+});
+
+zeigeSchleuse();
 
 
 /* ---------- PDF ----------
@@ -2214,6 +2262,7 @@ document.getElementById("btnCopy").addEventListener("click",async()=>{
 });
 document.getElementById("today").textContent=new Date().toLocaleDateString("de-AT",{day:"2-digit",month:"long",year:"numeric"});
 document.getElementById("ppMark").src=PPLOGO;
+document.getElementById("gateMark").src=PPLOGO;
 refreshSug(); renderCust(); syncFields(); renderNeed(); buildInner(); render();
 </script>
 
