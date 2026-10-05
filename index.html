@@ -215,7 +215,7 @@ details.more .in{padding-top:11px}
   background:var(--surface-2); border:1px solid var(--line-2); border-radius:6px; padding:10px 12px}
 .gate-l input:focus{outline:2px solid var(--orange); outline-offset:-1px; background:var(--surface)}
 .gate-box .btn.go{margin-top:18px; padding:11px}
-.gate-err{font-size:13px; color:#B3261E; margin-top:10px; min-height:1em}
+.gate-err{font-size:13px; color:#B3261E; margin-top:10px; min-height:1em; white-space:pre-line; line-height:1.45}
 .gate-err:empty{display:none}
 @media print{.gate{display:none!important}}
 
@@ -1795,7 +1795,11 @@ async function api(aktion,extra){
   const r=await fetch("/api/kartei",{method:"POST",headers:{"Content-Type":"application/json"},
     body:JSON.stringify(Object.assign({aktion,id:karteiId,passwort:pw},extra||{}))});
   let j={}; try{j=await r.json()}catch(e){}
-  if(!r.ok) throw Object.assign(new Error(j.fehler||"Es hat nicht geklappt."),{status:r.status});
+  if(!r.ok){
+    /* Die Diagnose des Servers mitnehmen — sonst steht nur „Serverfehler“ da */
+    const detail=[j.code,j.hinweis].filter(Boolean).join(" · ");
+    throw Object.assign(new Error((j.fehler||"Es hat nicht geklappt.")+(detail?"\n"+detail:"")),{status:r.status});
+  }
   return j;
 }
 const payload=()=>({profile:JSON.parse(JSON.stringify(profile)),notes,focusId});

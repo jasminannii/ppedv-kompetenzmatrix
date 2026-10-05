@@ -84,7 +84,19 @@ export default async function handler(req, res) {
     }
     return res.status(400).json({ fehler: "Unbekannte Aktion." });
   } catch (e) {
-    console.error("kartei", aktion, e);
-    return res.status(500).json({ fehler: "Serverfehler." });
+    const name = (e && (e.name || (e.constructor && e.constructor.name))) || "Error";
+    const txt = String((e && e.message) || "");
+    console.error("kartei", aktion, name, txt);
+    /* Fast immer ist es der Blob-Store: nicht angelegt, nicht mit dem Projekt
+       verbunden, oder im Modus "public" statt "private". Das gehört in die
+       Antwort — sonst sucht man im Dunkeln. */
+    const konfig = /store|token|blob|not found|unauthor|forbidden|credential/i.test(name + " " + txt);
+    return res.status(500).json({
+      fehler: konfig
+        ? "Der Blob-Store fehlt, ist nicht mit dem Projekt verbunden, oder steht auf „public“ statt „private“."
+        : "Serverfehler.",
+      code: name,
+      hinweis: txt.slice(0, 160)
+    });
   }
 }
