@@ -169,6 +169,26 @@ unsere Funktion, nie über eine Blob-URL.
 wer die URL hat und den Kunden kennt, kommt hinein. Die eigentliche Hürde ist
 die nicht erratbare URL. Für höheren Schutz ein eigenes Passwort vergeben.
 
+### Übersicht über alle Karteien
+
+`/` zeigt die Liste aller Karteien — Unternehmen, letzte Änderung, Link.
+Dahinter steht ein **eigenes Team-Passwort** aus der Umgebungsvariablen
+`UEBERSICHT_PASSWORT`. Ist sie nicht gesetzt, antwortet die Funktion mit 503
+und die Übersicht bleibt aus; eine offene Liste wäre die schlechtere
+Voreinstellung.
+
+Die Liste kommt aus einem Verzeichnis-Blob `karteien/_index.json`, das bei
+Anlegen, Sichern und Löschen nachgeführt wird. Ein Lesevorgang statt einem je
+Kartei. Das Verzeichnis enthält nur `id`, `titel` und `updatedAt` — keine
+Passwörter und keine Kundendaten. Schlägt die Nachführung fehl, ist die Kartei
+trotzdem gespeichert; der Fehler landet im Log, nicht beim Nutzer.
+
+> **Was die Übersicht am Schutz ändert.** Wer das Team-Passwort hat, sieht alle
+> Kundennamen. Da das Kartei-Passwort voreingestellt der Unternehmensname ist,
+> kommt diese Person damit auch in jede Kartei. Für ein internes
+> Vertriebswerkzeug ist das vertretbar — wer es nicht will, vergibt je Kartei
+> ein eigenes Passwort.
+
 ### Kein Browser-Speicher mehr
 
 `localStorage` kommt nicht mehr vor. Der Zustand lebt im Arbeitsspeicher der
@@ -180,17 +200,21 @@ Arbeitsspeicher: nach dem Neuladen fragt die Schleuse erneut.
 
 ```
 index.html        die Anwendung, eine Datei
-api/kartei.js     anlegen / oeffnen / sichern / loeschen, alles per POST
+api/kartei.js     anlegen / oeffnen / sichern / loeschen / uebersicht, per POST
 vercel.json       Rewrite /k/:id → /index.html
 package.json      @vercel/blob
 ```
+
+Blobs: `karteien/<id>.json` je Kartei, `karteien/_index.json` als Verzeichnis.
 
 ### Einrichten
 
 1. Repository mit Vercel verbinden
 2. Im Vercel-Dashboard einen **Blob-Store mit Zugriffsmodus „private"** anlegen
    (der Modus lässt sich später nicht ändern) und mit dem Projekt verbinden
-3. Deployen — die Funktion authentifiziert sich über OIDC, es ist kein Token
+3. Unter **Settings → Environment Variables** `UEBERSICHT_PASSWORT` setzen —
+   das Team-Passwort für die Liste unter `/`
+4. Deployen — die Funktion authentifiziert sich über OIDC, es ist kein Token
    im Code nötig
 
 Lokal testen ohne Vercel-Konto: `api/kartei.js` lässt sich gegen eine

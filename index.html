@@ -219,6 +219,25 @@ details.more .in{padding-top:11px}
 .gate-err:empty{display:none}
 @media print{.gate{display:none!important}}
 
+/* Übersicht */
+.uebers{position:fixed; inset:0; z-index:290; background:var(--paper); overflow:auto; padding:24px 20px 60px}
+.uebers-box{max-width:760px; margin:0 auto}
+.uebers-kopf{display:flex; align-items:center; gap:14px; margin-bottom:26px}
+.uebers-kopf .gate-mark{margin:0; margin-right:auto}
+.uebers-box h2{font-size:24px}
+.uebers-sub{font-size:13.5px; color:var(--ink-3); margin-top:5px; margin-bottom:16px}
+.uebers-liste{display:flex; flex-direction:column; gap:8px}
+.ue-z{display:flex; align-items:center; gap:14px; background:var(--surface); border:1px solid var(--line);
+  border-left:3px solid var(--orange); border-radius:7px; padding:13px 15px; text-align:left;
+  text-decoration:none; color:inherit; transition:.14s}
+.ue-z:hover{border-color:var(--orange); background:var(--accent-soft)}
+.ue-z b{font-size:15.5px; font-weight:600; flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.ue-z span{font-family:var(--mono); font-size:11.5px; color:var(--ink-3); white-space:nowrap}
+.ue-leer{border:1px dashed var(--line-2); border-radius:7px; padding:28px; text-align:center; color:var(--ink-3); font-size:14px}
+.gate-alt{border:0; background:none; color:var(--orange); font-size:13px; margin-top:12px; text-decoration:underline;
+  text-underline-offset:3px; padding:0; align-self:flex-start}
+@media print{.uebers{display:none!important}}
+
 /* PDF-Überlagerung */
 .pdfov{position:fixed; inset:0; z-index:200; background:rgba(13,17,23,.88);
   display:flex; flex-direction:column; padding:16px; gap:12px}
@@ -559,8 +578,21 @@ details.more .in{padding-top:11px}
     <label class="gate-l">Passwort
       <input id="gateP" name="password" type="password" autocomplete="current-password" maxlength="120"></label>
     <button class="btn go" type="submit" id="gateGo">Öffnen</button>
+    <button class="gate-alt" type="button" id="gateAlt" hidden></button>
     <p class="gate-err" id="gateErr"></p>
   </form>
+</div>
+
+<div class="uebers" id="uebers" hidden>
+  <div class="uebers-box">
+    <div class="uebers-kopf">
+      <img class="gate-mark" id="ueMark" alt="ppedv">
+      <button class="btn go" id="ueNeu">+ Neue Kartei</button>
+    </div>
+    <h2>Karteien</h2>
+    <p class="uebers-sub" id="ueSub"></p>
+    <div class="uebers-liste" id="ueListe"></div>
+  </div>
 </div>
 
 <header class="top">
@@ -1843,20 +1875,54 @@ const gate=document.getElementById("gate"),gateForm=document.getElementById("gat
       gateU=document.getElementById("gateU"),gateP=document.getElementById("gateP"),
       gateErr=document.getElementById("gateErr"),gateGo=document.getElementById("gateGo"),
       gateTitel=document.getElementById("gateTitel"),gateText=document.getElementById("gateText"),
-      gateLblU=document.getElementById("gateLblU");
+      gateLblU=document.getElementById("gateLblU"),gateAlt=document.getElementById("gateAlt"),
+      uebers=document.getElementById("uebers"),ueListe=document.getElementById("ueListe"),
+      ueSub=document.getElementById("ueSub");
+
+/* Drei Zustände: Übersicht entsperren, Kartei anlegen, Kartei öffnen */
+let modus = karteiId ? "oeffnen" : "uebersicht";
+let teamPw="";
 
 function zeigeSchleuse(){
-  gate.hidden=false;
-  const neu=!karteiId;
-  gateLblU.hidden=!neu;
-  gateTitel.textContent=neu?"Neue Kartei":"Kartei öffnen";
-  gateText.textContent=neu
-    ? "Unternehmen eintragen. Das Passwort schützt diese Kartei — voreingestellt ist der Unternehmensname."
-    : "Diese Kartei ist mit einem Passwort geschützt.";
-  gateGo.textContent=neu?"Anlegen":"Öffnen";
-  gateErr.textContent="";
-  requestAnimationFrame(()=>(neu?gateU:gateP).focus());
+  uebers.hidden=true; gate.hidden=false;
+  gateLblU.hidden = modus!=="anlegen";
+  if(modus==="uebersicht"){
+    gateTitel.textContent="Karteien";
+    gateText.textContent="Die Übersicht ist mit dem Team-Passwort geschützt.";
+    gateGo.textContent="Übersicht öffnen";
+    gateAlt.hidden=false; gateAlt.textContent="Stattdessen neue Kartei anlegen";
+  }else if(modus==="anlegen"){
+    gateTitel.textContent="Neue Kartei";
+    gateText.textContent="Unternehmen eintragen. Das Passwort schützt diese Kartei — voreingestellt ist der Unternehmensname.";
+    gateGo.textContent="Anlegen";
+    gateAlt.hidden=false; gateAlt.textContent="Zurück zur Übersicht";
+  }else{
+    gateTitel.textContent="Kartei öffnen";
+    gateText.textContent="Diese Kartei ist mit einem Passwort geschützt.";
+    gateGo.textContent="Öffnen";
+    gateAlt.hidden=true;
+  }
+  gateErr.textContent=""; gateP.value="";
+  requestAnimationFrame(()=>(modus==="anlegen"?gateU:gateP).focus());
 }
+gateAlt.addEventListener("click",()=>{
+  modus = modus==="anlegen" ? "uebersicht" : "anlegen";
+  zeigeSchleuse();
+});
+
+function zeigeUebersicht(liste){
+  gate.hidden=true; uebers.hidden=false;
+  ueSub.textContent = liste.length
+    ? (liste.length===1?"1 Kartei":liste.length+" Karteien")
+    : "Noch keine Kartei angelegt.";
+  ueListe.innerHTML = liste.length
+    ? liste.map(k=>{
+        const d=k.updatedAt?new Date(k.updatedAt).toLocaleDateString("de-AT",{day:"2-digit",month:"2-digit",year:"2-digit"}):"";
+        return `<a class="ue-z" href="/k/${encodeURIComponent(k.id)}"><b>${esc(k.titel||"Ohne Namen")}</b><span>${d}</span></a>`;
+      }).join("")
+    : `<div class="ue-leer">Mit „+ Neue Kartei“ anfangen.</div>`;
+}
+document.getElementById("ueNeu").addEventListener("click",()=>{ modus="anlegen"; zeigeSchleuse(); });
 /* Vorbelegung: Passwort folgt dem Unternehmensnamen, solange es keiner angefasst hat */
 let pwBeruehrt=false;
 gateP.addEventListener("input",()=>{pwBeruehrt=true;});
@@ -1867,6 +1933,12 @@ gateForm.addEventListener("submit",async e=>{
   gateErr.textContent=""; gateGo.disabled=true;
   const label=gateGo.textContent; gateGo.textContent="…";
   try{
+    if(modus==="uebersicht"){
+      teamPw=gateP.value;
+      const j=await api("uebersicht",{teamPasswort:teamPw});
+      zeigeUebersicht(j.karteien||[]);
+      return;
+    }
     pw=gateP.value;
     if(!karteiId){
       const titel=gateU.value.trim();
@@ -1875,11 +1947,11 @@ gateForm.addEventListener("submit",async e=>{
       const j=await api("anlegen",{titel,data:payload()});
       karteiId=j.id;
       history.replaceState({},"","/k/"+karteiId);
-      offen=true; gate.hidden=true;
+      offen=true; modus="oeffnen"; gate.hidden=true; uebers.hidden=true;
       renderCust(); st("Angelegt · "+hhmm(),"ok");
     }else{
       const j=await api("oeffnen");
-      offen=true; gate.hidden=true;
+      offen=true; gate.hidden=true; uebers.hidden=true;
       uebernehmen(j.data);
       if(!((profile.name||"").trim()) && j.titel){ profile.name=j.titel; renderCust(); }
       st("Geöffnet · zuletzt "+(j.updatedAt?new Date(j.updatedAt).toLocaleString("de-AT",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}):"—"));
@@ -1887,7 +1959,7 @@ gateForm.addEventListener("submit",async e=>{
     gateP.value=""; gateU.value="";
   }catch(err){
     gateErr.textContent=err.message||"Es hat nicht geklappt.";
-    pw="";
+    if(modus==="uebersicht") teamPw=""; else pw="";
   }finally{ gateGo.disabled=false; gateGo.textContent=label; }
 });
 
@@ -2267,6 +2339,7 @@ document.getElementById("btnCopy").addEventListener("click",async()=>{
 document.getElementById("today").textContent=new Date().toLocaleDateString("de-AT",{day:"2-digit",month:"long",year:"numeric"});
 document.getElementById("ppMark").src=PPLOGO;
 document.getElementById("gateMark").src=PPLOGO;
+document.getElementById("ueMark").src=PPLOGO;
 refreshSug(); renderCust(); syncFields(); renderNeed(); buildInner(); render();
 </script>
 

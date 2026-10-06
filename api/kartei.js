@@ -2,7 +2,7 @@
    Privat heißt: lesen geht nur über diese Funktion, nie über eine Blob-URL.
    Das Passwort verlässt den Server nie — gespeichert wird nur ein scrypt-Hash. */
 import { put, get, del } from "@vercel/blob";
-import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
+import { randomBytes, scryptSync, timingSafeEqual, createHash } from "node:crypto";
 
 const pfad = id => `karteien/${id}.json`;
 const neueId = () => randomBytes(9).toString("base64url");       // 12 Zeichen, nicht zu erraten
@@ -35,6 +35,43 @@ const schreiben = (id, satz) => put(pfad(id), JSON.stringify(satz), {
   contentType: "application/json", cacheControlMaxAge: 0
 });
 
+/* ---------- Übersicht ----------
+   Ein eigenes Verzeichnis-Blob statt list() + N Einzellesevorgänge: die
+   Übersicht ist damit ein Lesevorgang statt einem pro Kartei. */
+const IDX = "karteien/_index.json";
+
+async function rohLesen(p) {
+  const r = await get(p, { access: "private", useCache: false });
+  if (!r || r.statusCode !== 200 || !r.stream) return null;
+  const leser = r.stream.getReader(), dec = new TextDecoder();
+  let txt = "";
+  for (;;) { const { done, value } = await leser.read(); if (done) break; txt += dec.decode(value, { stream: true }); }
+  return txt + dec.decode();
+}
+async function indexLesen() {
+  try { const t = await rohLesen(IDX); const j = t ? JSON.parse(t) : null; return Array.isArray(j) ? j : []; }
+  catch { return []; }
+}
+const indexSchreiben = liste => put(IDX, JSON.stringify(liste), {
+  access: "private", allowOverwrite: true, contentType: "application/json", cacheControlMaxAge: 0
+});
+/* Verzeichnis nachführen. Schlägt das fehl, soll die Kartei selbst trotzdem
+   gespeichert sein — deshalb gekapselt und nicht durchgereicht. */
+async function indexPflegen(id, titel, weg) {
+  try {
+    const liste = (await indexLesen()).filter(e => e && e.id !== id);
+    if (!weg) liste.push({ id, titel: String(titel || "Ohne Namen"), updatedAt: new Date().toISOString() });
+    liste.sort((a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")));
+    await indexSchreiben(liste);
+  } catch (e) { console.error("index", id, e && e.message); }
+}
+const digest = v => createHash("sha256").update(String(v)).digest();
+function teamStimmt(eingabe) {
+  const soll = process.env.UEBERSICHT_PASSWORT || "";
+  if (!soll) return null;                       // nicht eingerichtet
+  return timingSafeEqual(digest(eingabe || ""), digest(soll));
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ fehler: "Nur POST." });
   let b = req.body;
@@ -55,7 +92,16 @@ export default async function handler(req, res) {
         updatedAt: new Date().toISOString(),
         data: b.data || null
       });
+      await indexPflegen(neu, titel, false);
       return res.status(200).json({ id: neu, titel });
+    }
+
+    if (aktion === "uebersicht") {
+      const ok = teamStimmt(b.teamPasswort);
+      if (ok === null) return res.status(503).json({
+        fehler: "Die Übersicht ist nicht eingerichtet — in Vercel die Umgebungsvariable UEBERSICHT_PASSWORT setzen." });
+      if (!ok) { await new Promise(r => setTimeout(r, 400)); return res.status(401).json({ fehler: "Passwort stimmt nicht." }); }
+      return res.status(200).json({ karteien: await indexLesen() });
     }
 
     if (!istId(id)) return res.status(400).json({ fehler: "Ungültige Kartei-Adresse." });
@@ -75,11 +121,13 @@ export default async function handler(req, res) {
       if (typeof b.titel === "string" && b.titel.trim()) satz.titel = b.titel.trim();
       satz.updatedAt = new Date().toISOString();
       await schreiben(id, satz);
+      await indexPflegen(id, satz.titel, false);
       return res.status(200).json({ updatedAt: satz.updatedAt });
     }
 
     if (aktion === "loeschen") {
       await del(pfad(id));
+      await indexPflegen(id, "", true);
       return res.status(200).json({ ok: true });
     }
     return res.status(400).json({ fehler: "Unbekannte Aktion." });
