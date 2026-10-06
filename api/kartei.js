@@ -2,7 +2,7 @@
    Privat heißt: lesen geht nur über diese Funktion, nie über eine Blob-URL.
    Das Passwort verlässt den Server nie — gespeichert wird nur ein scrypt-Hash. */
 import { put, get, del } from "@vercel/blob";
-import { randomBytes, scryptSync, timingSafeEqual, createHash } from "node:crypto";
+import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 
 const pfad = id => `karteien/${id}.json`;
 const neueId = () => randomBytes(9).toString("base64url");       // 12 Zeichen, nicht zu erraten
@@ -65,12 +65,7 @@ async function indexPflegen(id, titel, weg) {
     await indexSchreiben(liste);
   } catch (e) { console.error("index", id, e && e.message); }
 }
-const digest = v => createHash("sha256").update(String(v)).digest();
-function teamStimmt(eingabe) {
-  const soll = process.env.UEBERSICHT_PASSWORT || "";
-  if (!soll) return null;                       // nicht eingerichtet
-  return timingSafeEqual(digest(eingabe || ""), digest(soll));
-}
+
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ fehler: "Nur POST." });
@@ -96,13 +91,10 @@ export default async function handler(req, res) {
       return res.status(200).json({ id: neu, titel });
     }
 
-    if (aktion === "uebersicht") {
-      const ok = teamStimmt(b.teamPasswort);
-      if (ok === null) return res.status(503).json({
-        fehler: "Die Übersicht ist nicht eingerichtet — in Vercel die Umgebungsvariable UEBERSICHT_PASSWORT setzen." });
-      if (!ok) { await new Promise(r => setTimeout(r, 400)); return res.status(401).json({ fehler: "Passwort stimmt nicht." }); }
+    /* Offen, ohne Passwort — ausdrücklich so gewollt. Die Liste trägt nur
+       Unternehmensnamen und Daten, der Inhalt jeder Kartei bleibt geschützt. */
+    if (aktion === "uebersicht")
       return res.status(200).json({ karteien: await indexLesen() });
-    }
 
     if (!istId(id)) return res.status(400).json({ fehler: "Ungültige Kartei-Adresse." });
     const satz = await lesen(id);

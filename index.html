@@ -1880,18 +1880,12 @@ const gate=document.getElementById("gate"),gateForm=document.getElementById("gat
       ueSub=document.getElementById("ueSub");
 
 /* Drei Zustände: Übersicht entsperren, Kartei anlegen, Kartei öffnen */
-let modus = karteiId ? "oeffnen" : "uebersicht";
-let teamPw="";
+let modus = karteiId ? "oeffnen" : "anlegen";
 
 function zeigeSchleuse(){
   uebers.hidden=true; gate.hidden=false;
   gateLblU.hidden = modus!=="anlegen";
-  if(modus==="uebersicht"){
-    gateTitel.textContent="Karteien";
-    gateText.textContent="Die Übersicht ist mit dem Team-Passwort geschützt.";
-    gateGo.textContent="Übersicht öffnen";
-    gateAlt.hidden=false; gateAlt.textContent="Stattdessen neue Kartei anlegen";
-  }else if(modus==="anlegen"){
+  if(modus==="anlegen"){
     gateTitel.textContent="Neue Kartei";
     gateText.textContent="Unternehmen eintragen. Das Passwort schützt diese Kartei — voreingestellt ist der Unternehmensname.";
     gateGo.textContent="Anlegen";
@@ -1905,10 +1899,7 @@ function zeigeSchleuse(){
   gateErr.textContent=""; gateP.value="";
   requestAnimationFrame(()=>(modus==="anlegen"?gateU:gateP).focus());
 }
-gateAlt.addEventListener("click",()=>{
-  modus = modus==="anlegen" ? "uebersicht" : "anlegen";
-  zeigeSchleuse();
-});
+gateAlt.addEventListener("click",()=>{ ladeUebersicht(); });
 
 function zeigeUebersicht(liste){
   gate.hidden=true; uebers.hidden=false;
@@ -1923,6 +1914,12 @@ function zeigeUebersicht(liste){
     : `<div class="ue-leer">Mit „+ Neue Kartei“ anfangen.</div>`;
 }
 document.getElementById("ueNeu").addEventListener("click",()=>{ modus="anlegen"; zeigeSchleuse(); });
+
+/* Die Liste ist offen — ohne id im Pfad startet die Seite damit */
+async function ladeUebersicht(){
+  try{ const j=await api("uebersicht"); zeigeUebersicht(j.karteien||[]); }
+  catch(e){ modus="anlegen"; zeigeSchleuse(); gateErr.textContent=e.message||"Liste nicht erreichbar."; }
+}
 /* Vorbelegung: Passwort folgt dem Unternehmensnamen, solange es keiner angefasst hat */
 let pwBeruehrt=false;
 gateP.addEventListener("input",()=>{pwBeruehrt=true;});
@@ -1933,12 +1930,6 @@ gateForm.addEventListener("submit",async e=>{
   gateErr.textContent=""; gateGo.disabled=true;
   const label=gateGo.textContent; gateGo.textContent="…";
   try{
-    if(modus==="uebersicht"){
-      teamPw=gateP.value;
-      const j=await api("uebersicht",{teamPasswort:teamPw});
-      zeigeUebersicht(j.karteien||[]);
-      return;
-    }
     pw=gateP.value;
     if(!karteiId){
       const titel=gateU.value.trim();
@@ -1959,7 +1950,7 @@ gateForm.addEventListener("submit",async e=>{
     gateP.value=""; gateU.value="";
   }catch(err){
     gateErr.textContent=err.message||"Es hat nicht geklappt.";
-    if(modus==="uebersicht") teamPw=""; else pw="";
+    pw="";
   }finally{ gateGo.disabled=false; gateGo.textContent=label; }
 });
 
@@ -1982,7 +1973,7 @@ document.getElementById("fbDel").addEventListener("click",async()=>{
   catch(e){ st("Nicht gelöscht — "+e.message,"err"); }
 });
 
-zeigeSchleuse();
+if(karteiId) zeigeSchleuse(); else ladeUebersicht();
 
 
 /* ---------- PDF ----------
