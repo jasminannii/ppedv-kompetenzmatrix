@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skill-Building-Workshop | ppedv</title>
+<meta name="description" content="KI-Abläufe, die funktionieren. 1 Tag, max. 10 Personen, ohne Programmierkenntnisse. Online, im ppedv-Trainingscenter oder bei Ihnen vor Ort.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-900:#0E1A30; --navy-700:#1F3358; --navy-600:#2E4879; --navy-400:#5078AE; --navy-50:#F3F6FB; --navy-100:#E6ECF5;
+  --orange:#EA8F13; --orange-600:#D27D08; --orange-50:#FDF1DD;
+  --ink:#141A24; --ink-2:#465268; --ink-3:#78849A;
+  --line:#DDE3EC; --bg:#F7F9FC; --ok:#1E8E5A;
+  --shadow:0 1px 2px rgba(14,26,48,.06),0 8px 24px rgba(14,26,48,.06);
+  --shadow-lg:0 2px 4px rgba(14,26,48,.06),0 24px 60px rgba(14,26,48,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+@media(max-width:600px){.wrap{padding:0 16px}}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav img{height:34px;width:auto;display:block}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:14px 24px;font-weight:700;font-size:15px;text-decoration:none;transition:background .15s,transform .15s;white-space:nowrap}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--orange);color:#fff;box-shadow:0 6px 18px rgba(234,143,19,.35)}
+.btn-primary:hover{background:var(--orange-600)}
+.btn-line{background:#fff;color:var(--navy-700);border:1px solid var(--line)}
+.btn-sm{padding:9px 16px;font-size:14px}
+.btn[disabled]{opacity:.45;pointer-events:none;box-shadow:none}
+
+/* Hero */
+.hero{background:radial-gradient(900px 500px at 80% -20%,rgba(80,120,174,.5),transparent 60%),radial-gradient(700px 400px at 0% 120%,rgba(234,143,19,.2),transparent 60%),var(--navy-900);color:#fff;text-align:center;padding:96px 0 104px}
+.hero h1{font-size:clamp(40px,6.4vw,72px);line-height:1.03;letter-spacing:-.03em;font-weight:800}
+.hero h1 em{font-style:normal;color:var(--orange)}
+.hero .lead{font-size:clamp(18px,2vw,22px);color:rgba(255,255,255,.8);margin:20px auto 32px;max-width:560px}
+.facts{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:36px}
+.facts span{font-size:14px;font-weight:600;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16)}
+.facts b{color:var(--orange)}
+
+/* Sections */
+section{padding:88px 0}
+@media(max-width:700px){section{padding:60px 0}.hero{padding:64px 0 72px}}
+.eyebrow{display:block;font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-600);text-align:center}
+h2{font-size:clamp(28px,3.8vw,40px);line-height:1.12;letter-spacing:-.02em;font-weight:800;color:var(--navy-900);margin:8px 0 40px;text-align:center;text-wrap:balance}
+h3{font-size:18px;font-weight:700;line-height:1.3}
+
+.hero .lead{max-width:680px;margin-bottom:12px}
+.hero .lead b{color:#fff}
+.lead2{font-size:15px;font-weight:600;color:#FFC877;margin-bottom:28px}
+.intro{text-align:center;color:var(--ink-2);font-size:17px;max-width:640px;margin:-24px auto 36px}
+.alt{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.vs-row .p p,.vs-row .s p{font-size:14px;margin-top:4px}
+.vs-row .p p{color:var(--ink-3)}
+.vs-row .s p{color:var(--ink-2)}
+.human{text-align:center;margin-top:24px;color:var(--ink-2)}
+.human b{color:var(--navy-900)}
+.who{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+@media(max-width:860px){.who{grid-template-columns:1fr;gap:32px}}
+.result{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:var(--shadow)}
+.result ol{list-style:none;counter-reset:r;display:grid;gap:14px;margin-top:14px}
+.result li{counter-increment:r;display:grid;grid-template-columns:32px 1fr;gap:12px;font-size:15px;color:var(--ink-2)}
+.result li::before{content:counter(r);width:32px;height:32px;border-radius:50%;background:var(--orange);color:#fff;font-weight:800;display:grid;place-items:center}
+.result li b{color:var(--navy-900)}
+.contact{margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);font-size:14px;color:rgba(255,255,255,.75)}
+.contact b{color:#fff}
+.contact p{margin:4px 0 8px;font-size:13px}
+.contact a{color:#FFC877;font-weight:700;text-decoration:none}
+
+/* Problem vs. Lösung */
+.vs-head,.vs-row{display:grid;grid-template-columns:1fr 56px 1fr;align-items:stretch}
+.vs-head{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.vs-head span:first-child{color:var(--ink-3)}
+.vs-head span:last-child{color:var(--orange-600)}
+.vs-row{margin-bottom:14px}
+.vs-row .p,.vs-row .s{border-radius:16px;padding:22px 24px;display:flex;flex-direction:column;justify-content:center}
+.vs-row .p{background:#fff;border:1px solid var(--line);color:var(--ink-2)}
+.vs-row .p h3{color:var(--ink-2);font-weight:600}
+.vs-row .s{background:#fff;border:1.5px solid rgba(234,143,19,.55);box-shadow:0 0 0 4px rgba(234,143,19,.07),var(--shadow)}
+.vs-row .s h3{color:var(--navy-900)}
+.vs-row .arr{display:grid;place-items:center;color:var(--orange);font-size:24px;font-weight:800}
+@media(max-width:700px){
+  .vs-head{display:none}
+  .vs-row{grid-template-columns:1fr;gap:0}
+  .vs-row .arr{transform:rotate(90deg);height:36px}
+  .vs-row .p::before{content:"Problem";font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
+  .vs-row .s::before{content:"Lösung";font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--orange-600);margin-bottom:4px}
+  .vs-row{margin-bottom:28px}
+}
+
+/* Ablauf */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;counter-reset:s}
+@media(max-width:860px){.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.steps{grid-template-columns:1fr}}
+.step{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px}
+.step::before{counter-increment:s;content:"0" counter(s);display:block;font-size:13px;font-weight:800;color:var(--orange-600);margin-bottom:8px}
+.step p{font-size:14px;color:var(--ink-2);margin-top:4px}
+
+/* Konfigurator */
+.cfg-section{background:var(--navy-900);color:#fff}
+.cfg-section h2{color:#fff}
+.cfg-section .eyebrow{color:#FFC877}
+.cfg{display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start}
+@media(max-width:940px){.cfg{grid-template-columns:1fr}}
+.panel{background:#fff;color:var(--ink);border-radius:24px;box-shadow:var(--shadow-lg);overflow:hidden}
+.progress{display:flex;gap:6px;padding:20px 26px 0}
+.progress i{flex:1;height:5px;border-radius:5px;background:var(--line);transition:background .25s}
+.progress i.on{background:var(--orange)}
+.meta{padding:12px 26px 0;font-size:13px;font-weight:700;color:var(--ink-3)}
+.q{display:none;border:0;padding:8px 26px 26px}
+.q.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.q h3{font-size:23px;letter-spacing:-.01em;margin-bottom:18px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opts.three{grid-template-columns:repeat(3,1fr)}
+@media(max-width:640px){.opts,.opts.three{grid-template-columns:1fr}}
+.opt{position:relative;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:15px 15px 15px 48px;color:var(--ink);font-weight:600;font-size:15px;line-height:1.35;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--navy-400)}
+.opt::before{content:"";position:absolute;left:15px;top:15px;width:20px;height:20px;border-radius:50%;border:2px solid #BCC6D6;background:#fff}
+.opts[data-multi] .opt::before{border-radius:6px}
+.opt[aria-pressed="true"]{border-color:var(--orange);background:#FFFAF2}
+.opt[aria-pressed="true"]::before{border-color:var(--orange);background:var(--orange) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='white' stroke-width='3'%3E%3Cpath d='M5 10.5l3.2 3L15 7'/%3E%3C/svg%3E") center/14px no-repeat}
+.opt small{display:block;font-size:13px;font-weight:500;color:var(--ink-2);margin-top:2px}
+.opt .price{display:block;margin-top:8px;font-size:19px;font-weight:800;color:var(--navy-700)}
+.opt .price s{font-size:14px;color:var(--ink-3);font-weight:600;margin-right:6px}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:10px 16px;font-size:15px;font-weight:600;color:var(--ink);transition:all .15s}
+.chip:hover{border-color:var(--navy-400)}
+.chip[aria-pressed="true"]{background:var(--navy-700);border-color:var(--navy-700);color:#fff}
+
+/* Referenz */
+.ref{margin-top:22px;border-radius:18px;background:var(--navy-50);border:1px solid var(--navy-100);padding:22px;animation:fade .3s ease}
+.ref-title{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--navy-600)}
+.ref-title b{color:var(--navy-900)}
+.ref-flow{display:grid;grid-template-columns:1fr 40px 1fr;gap:0;margin-top:14px;align-items:stretch}
+.ref-flow > div{border-radius:12px;padding:14px 16px;font-size:15px;font-weight:600}
+.ref-flow small{display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.ref-from{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+.ref-from small{color:var(--ink-3)}
+.ref-to{background:#fff;color:var(--navy-900);border:1.5px solid var(--orange)}
+.ref-to small{color:var(--orange-600)}
+.ref-flow .arr{display:grid;place-items:center;color:var(--orange);font-weight:800;font-size:20px}
+.ref-cta{margin-top:14px;font-size:17px;font-weight:800;color:var(--navy-900)}
+@media(max-width:560px){.ref-flow{grid-template-columns:1fr}.ref-flow .arr{transform:rotate(90deg);height:30px}}
+
+.field{display:grid;gap:6px;margin-top:14px}
+.field label{font-size:14px;font-weight:700}
+.field label small{font-weight:500;color:var(--ink-3)}
+.field input,.field select,.field textarea{font:inherit;font-size:15px;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);width:100%}
+.field textarea{min-height:80px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus,.opt:focus-visible,.chip:focus-visible,.btn:focus-visible{outline:none;border-color:var(--navy-400);box-shadow:0 0 0 4px rgba(80,120,174,.2)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+@media(max-width:560px){.row2{grid-template-columns:1fr}}
+.toggle{display:flex;align-items:center;gap:14px;border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer;margin-top:14px;font-weight:600;font-size:15px}
+.toggle input{position:absolute;opacity:0;pointer-events:none}
+.toggle .sw{flex:none;width:46px;height:26px;border-radius:999px;background:var(--line);position:relative;transition:background .2s}
+.toggle .sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .2s}
+.toggle input:checked + .sw{background:var(--ok)}
+.toggle input:checked + .sw::after{transform:translateX(20px)}
+.toggle input:focus-visible + .sw{box-shadow:0 0 0 4px rgba(80,120,174,.3)}
+.toggle em{font-style:normal;color:var(--ok);font-weight:800}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink-2);margin-top:16px}
+.check input{margin-top:3px;accent-color:var(--orange);width:16px;height:16px;flex:none}
+.foot{display:flex;align-items:center;gap:12px;padding:18px 26px;border-top:1px solid var(--line);background:var(--bg)}
+.err{flex:1;color:#B4471A;font-size:13px;font-weight:600}
+
+.summary{position:sticky;top:84px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:24px;padding:22px}
+.summary h4{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.sum{list-style:none;margin:14px 0;display:grid;gap:10px;font-size:14px}
+.sum li{display:grid;grid-template-columns:90px 1fr;gap:8px}
+.sum small{color:rgba(255,255,255,.55);font-weight:600}
+.sum span{font-weight:600}
+.sum span.empty{color:rgba(255,255,255,.35);font-weight:500}
+.total{border-top:1px solid rgba(255,255,255,.14);padding-top:14px}
+.amt{font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.amt s{font-size:17px;color:rgba(255,255,255,.45);font-weight:600;margin-right:6px}
+.total p{font-size:13px;color:rgba(255,255,255,.6);margin-top:2px}
+.save{display:inline-block;margin-top:10px;font-size:12px;font-weight:800;background:rgba(30,142,90,.25);color:#9BF0C6;padding:4px 10px;border-radius:999px}
+@media(max-width:940px){.summary{position:static}}
+
+.done{display:none;padding:48px 26px;text-align:center}
+.done.active{display:block;animation:fade .3s ease}
+.done .big{width:60px;height:60px;border-radius:50%;background:#E3F5EC;color:var(--ok);display:grid;place-items:center;margin:0 auto 16px}
+.done p{color:var(--ink-2);margin-top:6px}
+
+/* FAQ */
+.faq{max-width:720px;margin:0 auto;display:grid;gap:10px}
+details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:0 20px}
+summary{list-style:none;cursor:pointer;padding:18px 0;font-weight:700;color:var(--navy-900);display:flex;justify-content:space-between;gap:16px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:22px;color:var(--orange-600);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--ink-2);padding:0 0 18px;font-size:15px}
+
+footer{background:var(--navy-900);color:rgba(255,255,255,.7);font-size:14px;padding:36px 0}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 32px}
+footer b{color:#fff}
+footer nav{display:flex;flex-wrap:wrap;gap:6px 16px}
+footer a{text-decoration:none}footer a:hover{color:#fff}
+
+.mcta{position:fixed;left:12px;right:12px;bottom:12px;z-index:60;display:none;align-items:center;justify-content:space-between;gap:12px;background:var(--navy-900);color:#fff;border-radius:16px;padding:10px 10px 10px 18px;box-shadow:var(--shadow-lg);transform:translateY(140%);transition:transform .3s}
+.mcta.show{transform:none}
+@media(max-width:940px){.mcta{display:flex}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="https://ppedv.de" aria-label="ppedv Startseite"><img src="ppedv_Logo.png" alt="ppedv" width="112" height="34"></a>
+    <a class="btn btn-primary btn-sm" href="#anfrage">Workshop anfragen</a>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <h1>KI-Abläufe,<br>die <em>funktionieren.</em></h1>
+    <p class="lead"><b>Ein Prompt hilft einmal.</b> Ihr Team lernt, aus vorhandenem Wissen, klaren Regeln und wiederverwendbaren Arbeitsanweisungen einen verlässlichen KI-Ablauf zu bauen – für weniger Routinearbeit und gleichbleibend gute Ergebnisse.</p>
+    <p class="lead2">Verständlich erklärt · am Beispiel Ihrer Branche · ohne Programmierkenntnisse</p>
+    <div class="facts">
+      <span>1 Tag</span><span>Einsteiger</span><span>max. 10 Personen</span><span><b>3.500 €</b> für Ihr Team</span><span>online · Trainingscenter · vor Ort</span>
+    </div>
+    <a class="btn btn-primary" href="#anfrage">Workshop konfigurieren →</a>
+  </div>
+</section>
+
+<!-- PROBLEM vs. LÖSUNG -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Problem → Lösung</span>
+    <h2>Ein guter Prompt ist noch kein verlässlicher Ablauf.</h2>
+    <p class="intro">Viele Teams nutzen KI für einzelne Texte. Bei wiederkehrenden Aufgaben beginnt die Arbeit trotzdem jedes Mal von vorn – der Zeitgewinn bleibt aus.</p>
+    <div class="vs-head"><span>Das Problem</span><span></span><span>Die Lösung im Workshop</span></div>
+    <div class="vs-row">
+      <div class="p"><h3>Wiederkehrende Aufgaben kosten immer wieder Zeit</h3><p>Ohne festen Ablauf muss die KI jedes Mal neu angeleitet werden.</p></div>
+      <div class="arr" aria-hidden="true">→</div>
+      <div class="s"><h3>Ein Skill statt einmaliger Prompts</h3><p>Eine wiederverwendbare Arbeitsanweisung: Die KI prüft nach einheitlichen Kriterien und liefert eine nachvollziehbare Empfehlung.</p></div>
+    </div>
+    <div class="vs-row">
+      <div class="p"><h3>Der KI fehlt Ihr Unternehmenswissen</h3><p>Vorlagen, Beispiele und Fachbegriffe liegen verteilt.</p></div>
+      <div class="arr" aria-hidden="true">→</div>
+      <div class="s"><h3>Wissen und Beispiele geordnet</h3><p>Eine Wissensbasis, auf die die KI gezielt zugreift.</p></div>
+    </div>
+    <div class="vs-row">
+      <div class="p"><h3>Entscheidungsregeln bleiben unausgesprochen</h3><p>Erfahrene Mitarbeiter wissen, worauf es ankommt – die KI nicht.</p></div>
+      <div class="arr" aria-hidden="true">→</div>
+      <div class="s"><h3>Regeln und Grenzen sichtbar</h3><p>Kriterien, Ausnahmen und Prüfschritte festgehalten und prüfbar.</p></div>
+    </div>
+    <p class="human"><b>Die Verantwortung bleibt beim Menschen:</b> Ihr Team legt fest, wann geprüft, ergänzt oder freigegeben wird.</p>
+  </div>
+</section>
+
+<!-- ABLAUF -->
+<section class="alt">
+  <div class="wrap">
+    <span class="eyebrow">Der Workshop-Tag</span>
+    <h2>So entsteht ein verlässlicher KI-Ablauf</h2>
+    <p class="intro">An einem vorbereiteten, typischen Vorgang aus Ihrer Branche.</p>
+    <div class="steps">
+      <div class="step"><h3>Vorgang verstehen</h3><p>Welche Schritte kosten Zeit, welche Informationen braucht es, wo entscheidet Erfahrung?</p></div>
+      <div class="step"><h3>Wissensbasis aufbauen</h3><p>Informationen, Vorlagen und Hintergrundwissen so ordnen, dass die KI gezielt darauf zugreift.</p></div>
+      <div class="step"><h3>Regeln &amp; Skill entwickeln</h3><p>Kriterien, Ausnahmen und Prüfschritte festhalten – daraus entsteht der Skill.</p></div>
+      <div class="step"><h3>Testen &amp; verbessern</h3><p>Verschiedene Fälle zeigen Lücken, bis die Ergebnisse nachvollziehbar und brauchbar sind.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ZIELGRUPPE & ERGEBNIS -->
+<section>
+  <div class="wrap">
+    <div class="who">
+      <div>
+        <span class="eyebrow" style="text-align:left">Zielgruppe</span>
+        <h2 style="text-align:left;margin-bottom:16px">Für Teams mit zeitintensiven Routineaufgaben</h2>
+        <p class="intro" style="text-align:left;margin:0">Für <b>Teamleiter, Entscheider und ihre Fachbereiche</b>, die wiederkehrende Aufgaben einfacher und verlässlicher erledigen möchten. KI- oder IT-Vorkenntnisse sind nicht nötig.</p>
+      </div>
+      <div class="result">
+        <span class="eyebrow" style="text-align:left">Was Ihr Team mitnimmt</span>
+        <ol>
+          <li><span><b>Ein nachvollziehbares Branchenbeispiel</b> – mit Informationen, Entscheidungsregeln und menschlichen Prüfpunkten.</span></li>
+          <li><span><b>Ein erprobtes Vorgehensmodell für KI-Skills</b> – wie Wissen, Regeln, Ausnahmen und Qualitätskriterien zusammenspielen.</span></li>
+          <li><span><b>Einen realistischen nächsten Schritt</b> – für die Übertragung auf eigene Aufgaben im Unternehmen.</span></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KONFIGURATOR -->
+<section class="cfg-section" id="anfrage">
+  <div class="wrap">
+    <span class="eyebrow">Ihr Workshop</span>
+    <h2>Was soll Ihr Team künftig einfacher erledigen?</h2>
+    <p class="intro" style="color:rgba(255,255,255,.75)">Branche wählen → im Vorgespräch stimmen wir Ziele und den passenden Branchenfall ab → Ihr Team erprobt die Methode.</p>
+
+    <div class="cfg">
+      <form class="panel" id="form" novalidate>
+        <div class="progress" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="meta" id="meta">Schritt 1 von 5</div>
+
+        <fieldset class="q active" data-step="1">
+          <legend class="sr">Branche</legend>
+          <h3>Ihre Branche?</h3>
+          <div class="chips" data-key="industry" id="industries"></div>
+          <div class="field" id="otherWrap" hidden><label for="industryOther">Ihre Branche</label><input id="industryOther" placeholder="Branche eingeben"></div>
+          <div class="ref" id="ref" hidden aria-live="polite"></div>
+        </fieldset>
+
+        <fieldset class="q" data-step="2">
+          <legend class="sr">Größtes Problem</legend>
+          <h3>Ihr größtes Problem?</h3>
+          <div class="opts" data-key="problem">
+            <button type="button" class="opt" data-value="Wiederkehrende Aufgaben kosten immer wieder Zeit">Wiederkehrende Aufgaben kosten immer wieder Zeit</button>
+            <button type="button" class="opt" data-value="Der KI fehlt unser Unternehmenswissen">Der KI fehlt unser Unternehmenswissen</button>
+            <button type="button" class="opt" data-value="Entscheidungsregeln bleiben unausgesprochen">Entscheidungsregeln bleiben unausgesprochen</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="q" data-step="3">
+          <legend class="sr">Gewünschte Lösung</legend>
+          <h3>Was soll die KI für Ihr Team erledigen?</h3>
+          <div class="opts" data-key="solution" data-multi>
+            <button type="button" class="opt" data-value="Anfragen prüfen und weiterleiten">Anfragen prüfen und weiterleiten</button>
+            <button type="button" class="opt" data-value="Unterlagen und Entwürfe vorbereiten">Unterlagen und Entwürfe vorbereiten</button>
+            <button type="button" class="opt" data-value="Informationen vergleichen und bewerten">Informationen vergleichen und bewerten</button>
+            <button type="button" class="opt" data-value="Noch offen – im Vorgespräch klären">Noch offen – im Vorgespräch klären</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="q" data-step="4">
+          <legend class="sr">Format</legend>
+          <h3>Wo soll der Workshop stattfinden?</h3>
+          <div class="opts three" data-key="format">
+            <button type="button" class="opt" data-value="online">Online<span class="price" data-price="online"></span></button>
+            <button type="button" class="opt" data-value="standort">ppedv-Standort<small>ggf. zzgl. Anreise</small><span class="price" data-price="standort"></span></button>
+            <button type="button" class="opt" data-value="inhouse">Bei Ihnen vor Ort<small>zzgl. Reisekosten</small><span class="price" data-price="inhouse"></span></button>
+          </div>
+          <div class="field" id="locWrap" hidden>
+            <label for="location">Standort</label>
+            <select id="location"><option>München</option><option>Burghausen</option><option>Berlin</option><option>Wien</option></select>
+          </div>
+          <label class="toggle"><input type="checkbox" id="existing"><span class="sw"></span><span>Wir sind bereits ppedv-Kunde – <em>20 % Rabatt</em></span></label>
+        </fieldset>
+
+        <fieldset class="q" data-step="5">
+          <legend class="sr">Kontakt</legend>
+          <h3>Wohin dürfen wir uns melden?</h3>
+          <div class="opts" data-key="intent">
+            <button type="button" class="opt" data-value="Buchung unverbindlich anfragen" aria-pressed="true">Buchung unverbindlich anfragen</button>
+            <button type="button" class="opt" data-value="Erst beraten lassen">Erst beraten lassen</button>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="name">Name</label><input id="name" autocomplete="name"></div>
+            <div class="field"><label for="company">Unternehmen</label><input id="company" autocomplete="organization"></div>
+            <div class="field"><label for="email">E-Mail</label><input id="email" type="email" autocomplete="email"></div>
+            <div class="field"><label for="phone">Telefon <small>(optional)</small></label><input id="phone" type="tel" autocomplete="tel"></div>
+          </div>
+          <label class="check"><input type="checkbox" id="privacy"><span>Ich bin einverstanden, dass ppedv meine Angaben zur Bearbeitung der Anfrage verwendet (<a href="https://ppedv.de" style="color:var(--navy-600)">Datenschutz</a>).</span></label>
+        </fieldset>
+
+        <div class="done" id="done">
+          <div class="big"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+          <h3 style="font-size:22px">Danke – wir melden uns in Kürze.</h3>
+          <p>Im kurzen Vorgespräch stimmen wir Ihren Branchenfall ab.</p>
+        </div>
+
+        <div class="foot" id="foot">
+          <button type="button" class="btn btn-line" id="back" disabled>←</button>
+          <div class="err" id="err" role="alert"></div>
+          <button type="button" class="btn btn-primary" id="next">Weiter →</button>
+        </div>
+      </form>
+
+      <aside class="summary" aria-live="polite">
+        <h4>Zusammenfassung</h4>
+        <ul class="sum">
+          <li><small>Branche</small><span id="s-industry" class="empty">–</span></li>
+          <li><small>Problem</small><span id="s-problem" class="empty">–</span></li>
+          <li><small>Ziel</small><span id="s-solution" class="empty">–</span></li>
+          <li><small>Format</small><span id="s-format" class="empty">–</span></li>
+        </ul>
+        <div class="total">
+          <div class="amt" id="s-price"></div>
+          <p id="s-note"></p>
+          <span class="save" id="s-save" hidden></span>
+        </div>
+        <div class="contact">
+          <b>Lieber persönlich?</b>
+          <p>Wir beraten Sie zum passenden Branchenbeispiel und Format.</p>
+          <a href="tel:+49867798890">+49 8677 98890</a> · <a href="mailto:info@ppedv.de?subject=Anfrage%20Skill-Building-Workshop">E-Mail</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">FAQ</span>
+    <h2>Häufige Fragen</h2>
+    <div class="faq">
+      <details><summary>Braucht unser Team IT- oder Programmierkenntnisse?</summary><p>Nein. Die Fachkenntnis Ihres Teams steht im Mittelpunkt.</p></details>
+      <details><summary>Arbeiten wir mit echten Unternehmensdaten?</summary><p>Nein. Wir arbeiten an einem vorbereiteten Beispiel aus Ihrer Branche.</p></details>
+      <details><summary>Können wir die Inhalte anpassen?</summary><p>Ja. Den Branchenfall stimmen wir im Vorgespräch mit Ihnen ab.</p></details>
+      <details><summary>Wo findet der Workshop statt?</summary><p>Online, in einem ppedv-Trainingscenter oder bei Ihnen im Unternehmen.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>ppedv AG</b> · Marktler Straße 15b · 84489 Burghausen<br>+49 (0) 8677 - 9889-0 · <a href="mailto:info@ppedv.de">info@ppedv.de</a></div>
+    <nav aria-label="Rechtliches"><span>München · Burghausen · Berlin · Wien · Virtual Classroom</span><a href="https://ppedv.de">AGB</a><a href="https://ppedv.de">Impressum</a><a href="https://ppedv.de">Datenschutz</a></nav>
+  </div>
+</footer>
+
+<div class="mcta" id="mcta">
+  <b>ab 3.500 € für Ihr Team</b>
+  <a class="btn btn-primary btn-sm" href="#anfrage">Anfragen</a>
+</div>
+
+<script>
+/* ---- Konfiguration ---- */
+const PRICES = { online: 3500, standort: 3500, inhouse: 4200 }; // inhouse: Platzhalter, bitte final festlegen
+const DISCOUNT = 0.20;
+const ENDPOINT = "";            // CRM-/Formular-Webhook. Leer = E-Mail-Programm öffnen
+const MAILTO   = "info@ppedv.de";
+
+/* PLATZHALTER: durch echte, freigegebene Kundenreferenzen ersetzen. */
+const REFERENCES = {
+  "IT & Software":           ["Support-Tickets wurden von Hand gesichtet und verteilt.", "Ein Skill prüft jedes Ticket nach festen Kriterien und schlägt das richtige Team vor."],
+  "Industrie & Fertigung":   ["Reklamationen kamen unsortiert beim Qualitätsteam an.", "Reklamationen werden nach einheitlichen Regeln vorgeprüft und priorisiert."],
+  "Banken & Versicherungen": ["Jede Schadensmeldung wurde neu auf Vollständigkeit geprüft.", "Fehlende Angaben erkennt der Skill sofort – das Team prüft nur noch und gibt frei."],
+  "Öffentliche Verwaltung":  ["Anträge wurden nach ungeschriebenen Regeln einzeln gesichtet.", "Kriterien sind festgehalten, Anträge kommen vorstrukturiert mit Empfehlung."],
+  "Gesundheitswesen":        ["Berichte und Schreiben entstanden jedes Mal von vorn.", "Entwürfe entstehen aus festen Vorlagen – das Team ergänzt und gibt frei."],
+  "Handel & E-Commerce":     ["Kundenanfragen wurden einzeln und unterschiedlich beantwortet.", "Antwortentwürfe folgen einheitlichen Regeln – in einem Bruchteil der Zeit."],
+  "Andere": null
+};
+
+const FORMAT = { online:"Online", standort:"ppedv-Standort", inhouse:"Bei Ihnen vor Ort" };
+const eur = n => n.toLocaleString("de-DE") + " €";
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const state = { industry:null, problem:null, solution:[], format:null, intent:"Buchung unverbindlich anfragen" };
+let step = 1; const TOTAL = 5;
+
+$("#industries").innerHTML = Object.keys(REFERENCES).map(k =>
+  `<button type="button" class="chip" data-value="${k}">${k === "Andere" ? "Andere Branche" : k}</button>`).join("");
+
+const industryName = () => state.industry === "Andere" ? $("#industryOther").value.trim() : state.industry;
+
+function showRef() {
+  const r = REFERENCES[state.industry], el = $("#ref");
+  el.hidden = !state.industry;
+  el.innerHTML = r
+    ? `<div class="ref-title">Referenz aus <b>${state.industry}</b> – das haben wir geschafft: <span style="background:#FDECE4;color:#B4471A;padding:2px 8px;border-radius:999px;margin-left:4px;white-space:nowrap">Beispiel · Platzhalter</span></div>
+       <div class="ref-flow"><div class="ref-from"><small>Vorher</small>${r[0]}</div><div class="arr" aria-hidden="true">→</div><div class="ref-to"><small>Nachher</small>${r[1]}</div></div>
+       <div class="ref-cta">Jetzt sind Sie an der Reihe!</div>`
+    : `<div class="ref-cta" style="margin:0">Ihre Branche ist nicht dabei? Kein Problem – im Vorgespräch wählen wir ein passendes Szenario.</div>`;
+}
+
+$$("[data-key]").forEach(group => {
+  const key = group.dataset.key, multi = group.hasAttribute("data-multi");
+  group.addEventListener("click", e => {
+    const b = e.target.closest("button[data-value]"); if (!b) return;
+    const v = b.dataset.value;
+    if (multi) {
+      const on = b.getAttribute("aria-pressed") !== "true";
+      b.setAttribute("aria-pressed", on);
+      state[key] = on ? [...state[key], v] : state[key].filter(x => x !== v);
+    } else {
+      group.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+      state[key] = v;
+    }
+    if (key === "industry") { $("#otherWrap").hidden = v !== "Andere"; showRef(); }
+    if (key === "format") $("#locWrap").hidden = v !== "standort";
+    $("#err").textContent = "";
+    render();
+    if (key === "problem") setTimeout(() => go(1), 220);
+  });
+});
+["#existing","#location","#industryOther"].forEach(id => $(id).addEventListener("input", render));
+$("#existing").addEventListener("change", render);
+
+function price() {
+  const base = PRICES[state.format || "online"], disc = $("#existing").checked;
+  return { base, final: disc ? Math.round(base * (1 - DISCOUNT)) : base, disc };
+}
+
+function render() {
+  const disc = $("#existing").checked;
+  $$("[data-price]").forEach(el => {
+    const b = PRICES[el.dataset.price], f = Math.round(b * (1 - DISCOUNT));
+    el.innerHTML = disc ? `<s>${eur(b)}</s>${eur(f)}` : eur(b);
+  });
+  const set = (id, v) => { const el = $(id); el.textContent = v || "–"; el.classList.toggle("empty", !v); };
+  set("#s-industry", industryName());
+  set("#s-problem", state.problem);
+  set("#s-solution", state.solution.join(", "));
+  set("#s-format", state.format && FORMAT[state.format] + (state.format === "standort" ? " " + $("#location").value : ""));
+  const p = price();
+  $("#s-price").innerHTML = (state.format ? "" : "ab ") + (p.disc ? `<s>${eur(p.base)}</s>${eur(p.final)}` : eur(p.final));
+  $("#s-note").textContent = "für Ihr Team · 1 Tag · max. 10 Personen";
+  $("#s-save").hidden = !p.disc;
+  $("#s-save").textContent = `−20 % Bestandskunde: Sie sparen ${eur(p.base - p.final)}`;
+}
+
+function validate() {
+  if (step === 1 && (!state.industry || (state.industry === "Andere" && !$("#industryOther").value.trim()))) return "Bitte wählen Sie Ihre Branche.";
+  if (step === 2 && !state.problem) return "Bitte wählen Sie ein Problem.";
+  if (step === 3 && !state.solution.length) return "Bitte wählen Sie mindestens ein Ziel.";
+  if (step === 4 && !state.format) return "Bitte wählen Sie ein Format.";
+  if (step === 5) {
+    if (!$("#name").value.trim() || !$("#company").value.trim()) return "Bitte Name und Unternehmen angeben.";
+    if (!/^\S+@\S+\.\S+$/.test($("#email").value.trim())) return "Bitte eine gültige E-Mail angeben.";
+    if (!$("#privacy").checked) return "Bitte den Datenschutzhinweis bestätigen.";
+  }
+  return "";
+}
+
+function show() {
+  $$(".q").forEach(q => q.classList.toggle("active", +q.dataset.step === step));
+  $$(".progress i").forEach((i, n) => i.classList.toggle("on", n < step));
+  $("#meta").textContent = `Schritt ${step} von ${TOTAL}`;
+  $("#back").disabled = step === 1;
+  $("#next").textContent = step === 1 && state.industry ? "Los geht’s →" : step === TOTAL ? "Unverbindlich anfragen →" : "Weiter →";
+}
+
+function go(dir) {
+  if (dir > 0) { const e = validate(); if (e) { $("#err").textContent = e; return; } }
+  $("#err").textContent = "";
+  if (dir > 0 && step === TOTAL) return submit();
+  step = Math.min(TOTAL, Math.max(1, step + dir)); show();
+  if ($("#form").getBoundingClientRect().top < 64) $("#form").scrollIntoView({ behavior: "smooth" });
+}
+$("#next").addEventListener("click", () => go(1));
+$("#back").addEventListener("click", () => go(-1));
+$("#industries").addEventListener("click", show);
+$("#form").addEventListener("submit", e => { e.preventDefault(); go(1); });
+
+async function submit() {
+  const p = price();
+  const data = {
+    Anliegen: state.intent, Branche: industryName(), Problem: state.problem, Ziel: state.solution.join(", "),
+    Format: FORMAT[state.format] + (state.format === "standort" ? " (" + $("#location").value + ")" : ""),
+    Bestandskunde: p.disc ? "ja" : "nein", Preis: eur(p.final),
+    Name: $("#name").value.trim(), Unternehmen: $("#company").value.trim(), "E-Mail": $("#email").value.trim(), Telefon: $("#phone").value.trim() || "–"
+  };
+  try {
+    if (ENDPOINT) {
+      const r = await fetch(ENDPOINT, { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(data) });
+      if (!r.ok) throw new Error("HTTP " + r.status);
+    } else {
+      const body = Object.entries(data).map(([k, v]) => `${k}: ${v}`).join("\n");
+      location.href = `mailto:${MAILTO}?subject=${encodeURIComponent(`${data.Anliegen}: Skill-Building-Workshop – ${data.Unternehmen}`)}&body=${encodeURIComponent(body)}`;
+    }
+    $$(".q").forEach(q => q.classList.remove("active"));
+    $("#foot").hidden = $("#meta").hidden = true;
+    $("#done").classList.add("active");
+    $$(".progress i").forEach(i => i.classList.add("on"));
+  } catch (err) {
+    $("#err").textContent = `Senden fehlgeschlagen (${err.message}). Bitte an ${MAILTO} schreiben.`;
+  }
+}
+
+const mcta = $("#mcta"), cfg = $("#anfrage");
+addEventListener("scroll", () => {
+  const r = cfg.getBoundingClientRect();
+  mcta.classList.toggle("show", scrollY > 500 && !(r.top < innerHeight && r.bottom > 0));
+}, { passive: true });
+
+show(); render();
+</script>
+</body>
+</html>
