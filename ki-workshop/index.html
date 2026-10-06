@@ -117,10 +117,21 @@ h3{font-size:18px;font-weight:700;line-height:1.3}
 .progress i{flex:1;height:5px;border-radius:5px;background:var(--line);transition:background .25s}
 .progress i.on{background:var(--orange)}
 .meta{padding:12px 26px 0;font-size:13px;font-weight:700;color:var(--ink-3)}
-.q{display:none;border:0;padding:8px 26px 26px}
-.q.active{display:block;animation:fade .25s ease}
+.q{display:block;border:0;border-top:1px solid var(--line);padding:20px 26px;min-width:0}
+.q:first-of-type{border-top:0}
+.q.active{animation:fade .25s ease}
+.q h3 .num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--orange);color:#fff;font-size:15px;margin-right:10px;vertical-align:2px}
+.q.locked h3{color:var(--ink-3);font-size:18px;margin:0}
+.q.locked h3 .num{background:var(--line);color:var(--ink-3)}
+.q.answered h3{font-size:18px;margin-bottom:6px}
+.q.answered h3 .num{background:var(--ok)}
+.q.locked > :not(h3),.q.answered > :not(h3):not(.ans):not(.ref){display:none!important}
+.q:not(.answered) .ans{display:none}
+.ans{padding-left:40px;font-size:15px;font-weight:600;color:var(--navy-700)}
+.ans button{border:0;background:none;color:var(--orange-600);font-weight:700;font-size:14px;margin-left:8px;text-decoration:underline}
+.q.answered .ref{margin-top:14px}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.q h3{font-size:23px;letter-spacing:-.01em;margin-bottom:18px}
+.q h3{font-size:21px;letter-spacing:-.01em;margin-bottom:16px}
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .opts.three{grid-template-columns:repeat(3,1fr)}
 @media(max-width:640px){.opts,.opts.three{grid-template-columns:1fr}}
@@ -171,7 +182,7 @@ h3{font-size:18px;font-weight:700;line-height:1.3}
 .toggle em{font-style:normal;color:var(--ok);font-weight:800}
 .check{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink-2);margin-top:16px}
 .check input{margin-top:3px;accent-color:var(--orange);width:16px;height:16px;flex:none}
-.foot{display:flex;align-items:center;gap:12px;padding:18px 26px;border-top:1px solid var(--line);background:var(--bg)}
+.foot{display:flex;align-items:center;gap:12px;padding:0 26px 22px}
 .err{flex:1;color:#B4471A;font-size:13px;font-weight:600}
 
 .summary{position:sticky;top:84px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:24px;padding:22px}
@@ -312,9 +323,9 @@ footer a{text-decoration:none}footer a:hover{color:#fff}
         <div class="progress" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
         <div class="meta" id="meta">Schritt 1 von 5</div>
 
-        <fieldset class="q active" data-step="1">
+        <fieldset class="q" data-step="1">
           <legend class="sr">Branche</legend>
-          <h3>Ihre Branche?</h3>
+          <h3><span class="num">1</span>Ihre Branche?</h3>
           <div class="chips" data-key="industry" id="industries"></div>
           <div class="field" id="otherWrap" hidden><label for="industryOther">Ihre Branche</label><input id="industryOther" placeholder="Branche eingeben"></div>
           <div class="ref" id="ref" hidden aria-live="polite"></div>
@@ -322,7 +333,7 @@ footer a{text-decoration:none}footer a:hover{color:#fff}
 
         <fieldset class="q" data-step="2">
           <legend class="sr">Größtes Problem</legend>
-          <h3>Ihr größtes Problem?</h3>
+          <h3><span class="num">2</span>Ihr größtes Problem?</h3>
           <div class="opts" data-key="problem">
             <button type="button" class="opt" data-value="Wiederkehrende Aufgaben kosten immer wieder Zeit">Wiederkehrende Aufgaben kosten immer wieder Zeit</button>
             <button type="button" class="opt" data-value="Der KI fehlt unser Unternehmenswissen">Der KI fehlt unser Unternehmenswissen</button>
@@ -332,7 +343,7 @@ footer a{text-decoration:none}footer a:hover{color:#fff}
 
         <fieldset class="q" data-step="3">
           <legend class="sr">Gewünschte Lösung</legend>
-          <h3>Was soll die KI für Ihr Team erledigen?</h3>
+          <h3><span class="num">3</span>Welche Lösung wünschen Sie sich?</h3>
           <div class="opts" data-key="solution" data-multi>
             <button type="button" class="opt" data-value="Anfragen prüfen und weiterleiten">Anfragen prüfen und weiterleiten</button>
             <button type="button" class="opt" data-value="Unterlagen und Entwürfe vorbereiten">Unterlagen und Entwürfe vorbereiten</button>
@@ -343,7 +354,7 @@ footer a{text-decoration:none}footer a:hover{color:#fff}
 
         <fieldset class="q" data-step="4">
           <legend class="sr">Format</legend>
-          <h3>Wo soll der Workshop stattfinden?</h3>
+          <h3><span class="num">4</span>Online, bei ppedv oder bei Ihnen vor Ort?</h3>
           <div class="opts three" data-key="format">
             <button type="button" class="opt" data-value="online">Online<span class="price" data-price="online"></span></button>
             <button type="button" class="opt" data-value="standort">ppedv-Standort<small>ggf. zzgl. Anreise</small><span class="price" data-price="standort"></span></button>
@@ -358,7 +369,7 @@ footer a{text-decoration:none}footer a:hover{color:#fff}
 
         <fieldset class="q" data-step="5">
           <legend class="sr">Kontakt</legend>
-          <h3>Wohin dürfen wir uns melden?</h3>
+          <h3><span class="num">5</span>Wohin dürfen wir uns melden?</h3>
           <div class="opts" data-key="intent">
             <button type="button" class="opt" data-value="Buchung unverbindlich anfragen" aria-pressed="true">Buchung unverbindlich anfragen</button>
             <button type="button" class="opt" data-value="Erst beraten lassen">Erst beraten lassen</button>
@@ -379,7 +390,7 @@ footer a{text-decoration:none}footer a:hover{color:#fff}
         </div>
 
         <div class="foot" id="foot">
-          <button type="button" class="btn btn-line" id="back" disabled>←</button>
+          
           <div class="err" id="err" role="alert"></div>
           <button type="button" class="btn btn-primary" id="next">Weiter →</button>
         </div>
@@ -533,11 +544,28 @@ function validate() {
   return "";
 }
 
+function answer(n) {
+  const fmt = state.format && FORMAT[state.format] + (state.format === "standort" ? " " + $("#location").value : "") + " · " + eur(price().final);
+  return [industryName(), state.problem, state.solution.join(", "), fmt, ""][n - 1] || "";
+}
+
+$$(".q").forEach(q => {
+  const a = document.createElement("div"); a.className = "ans";
+  q.querySelector("h3").after(a);
+  a.addEventListener("click", e => { if (e.target.tagName === "BUTTON") { step = +q.dataset.step; show(); } });
+});
+
 function show() {
-  $$(".q").forEach(q => q.classList.toggle("active", +q.dataset.step === step));
+  $$(".q").forEach(q => {
+    const n = +q.dataset.step;
+    q.classList.toggle("active", n === step);
+    q.classList.toggle("answered", n < step);
+    q.classList.toggle("locked", n > step);
+    if (n < step) q.querySelector(".ans").innerHTML = `${answer(n)} <button type="button">ändern</button>`;
+  });
+  $(`.q[data-step="${step}"]`).after($("#foot"));
   $$(".progress i").forEach((i, n) => i.classList.toggle("on", n < step));
   $("#meta").textContent = `Schritt ${step} von ${TOTAL}`;
-  $("#back").disabled = step === 1;
   $("#next").textContent = step === 1 && state.industry ? "Los geht’s →" : step === TOTAL ? "Unverbindlich anfragen →" : "Weiter →";
 }
 
@@ -546,10 +574,9 @@ function go(dir) {
   $("#err").textContent = "";
   if (dir > 0 && step === TOTAL) return submit();
   step = Math.min(TOTAL, Math.max(1, step + dir)); show();
-  if ($("#form").getBoundingClientRect().top < 64) $("#form").scrollIntoView({ behavior: "smooth" });
+  if (dir > 0) $(`.q[data-step="${step}"]`).scrollIntoView({ behavior: "smooth", block: "center" });
 }
 $("#next").addEventListener("click", () => go(1));
-$("#back").addEventListener("click", () => go(-1));
 $("#industries").addEventListener("click", show);
 $("#form").addEventListener("submit", e => { e.preventDefault(); go(1); });
 
@@ -569,7 +596,7 @@ async function submit() {
       const body = Object.entries(data).map(([k, v]) => `${k}: ${v}`).join("\n");
       location.href = `mailto:${MAILTO}?subject=${encodeURIComponent(`${data.Anliegen}: Skill-Building-Workshop – ${data.Unternehmen}`)}&body=${encodeURIComponent(body)}`;
     }
-    $$(".q").forEach(q => q.classList.remove("active"));
+    $$(".q").forEach(q => q.hidden = true);
     $("#foot").hidden = $("#meta").hidden = true;
     $("#done").classList.add("active");
     $$(".progress i").forEach(i => i.classList.add("on"));
