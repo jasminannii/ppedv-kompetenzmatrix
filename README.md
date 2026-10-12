@@ -23,8 +23,8 @@ Die fünf Reiter folgen dem Termin. Jeder Schritt endet mit „Weiter: …“.
 1. **Bedarf & Kontext.** Der Kunde spricht Themen an, sie werden als **Skills**
    mitgeschrieben, in seinen Worten. Jeder Skill bekommt automatisch eine
    Kompetenzwelt und **Kursvorschläge**. Vorschläge werden mit ✓ bestätigt, mit ×
-   entfernt oder über „+ Kurs“ ergänzt. Dazu kommen die Teams, die zentrale Größe des
-   gesamten Teams und die Frage „KI im Unternehmen: nur Microsoft Copilot“.
+   entfernt oder über „+ Kurs“ ergänzt. Dazu kommen die Teams und die zentrale Größe des
+   gesamten Teams. Ganz oben steht immer der Workshop-Skill (siehe „Kurse und Preise“).
 2. **Das ppedv-Modell.** Gemeinsam die sechs Welten durchgehen. „+ übernehmen“ legt
    eine Kernkompetenz oder ein Gesprächsbeispiel als Skill an; deren Kurse erscheinen
    sofort darunter und lassen sich dort bestätigen oder entfernen.
@@ -108,11 +108,12 @@ Preise erscheinen nur im Abschluss (Schritt 5) und im Angebots-PDF.
 
 - **Preis:** jeder Kurs 3.500 €, für Bestandskunden 2.800 € (Häkchen „Bestandskunde“).
   Festgelegt in `PREIS` und `PREIS_BESTAND`.
-- **Ein Kurs ist immer dabei:** der
-  [Skill-Building-Workshop](https://jasminannii.github.io/ppedv-kompetenzmatrix/ki-workshop/).
-  Ist „KI im Unternehmen: nur Microsoft Copilot“ angehakt, wird stattdessen der
-  [Copilot-Praxistag](https://ppedv.de/schulung/kurse/microsoft-copilot-oekosystem)
-  angeboten. Festgelegt in `KURS_SKILL`, `KURS_COPILOT` und `pflichtKurs()`.
+- **Ein Workshop ist immer dabei — als Skill.** Jede Kartei beginnt mit dem Skill
+  „Eigene Arbeitsabläufe mit KI umbauen“ (KI produktiv einsetzen). Er lässt sich nicht
+  löschen; an ihm wird gewählt: der allgemeine, KI-unabhängige
+  [Skill-Building-Workshop](https://jasminannii.github.io/ppedv-kompetenzmatrix/ki-workshop/)
+  oder der [Copilot-Praxistag](https://ppedv.de/schulung/kurse/microsoft-copilot-oekosystem).
+  Festgelegt in `PFLICHT_TEXT`, `ensurePflicht()`, `KURS_SKILL`, `KURS_COPILOT`.
 
 Auswahl, Bestandskunde und Copilot-Häkchen werden mit der Kartei gespeichert.
 
