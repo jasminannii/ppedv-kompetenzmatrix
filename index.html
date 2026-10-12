@@ -522,6 +522,10 @@ details.more .in{padding-top:11px}
 .ksum.ang{background:var(--surface);color:var(--ink)}
 .ksum s{color:var(--ink-3);font-weight:400}
 .nextbar{display:flex;justify-content:flex-end;margin-top:26px}
+.pw-wrap{position:relative;display:block}
+.pw-wrap input{width:100%;padding-right:86px!important}
+.pw-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:none;font:inherit;font-size:12.5px;font-weight:600;color:var(--blue);cursor:pointer;padding:4px 8px;border-radius:4px}
+.pw-eye:hover{background:var(--surface-3)}
 /* Kundenzugang: nur Bedarf & Kontext, ppedv-Modell, Kompetenzwelt — ohne Kartei-Verwaltung, Name, Logo, Ablauf, Abschluss */
 body.kunde .stab[data-step="3"],body.kunde .stab[data-step="5"],body.kunde #s3,body.kunde #s5,
 body.kunde [data-go="3"],body.kunde #fbLink,body.kunde #fbNew,body.kunde #fbDel,body.kunde #fbKunde,
@@ -701,7 +705,8 @@ body.kunde .cust{border-color:transparent!important;background:none!important;po
     <label class="gate-l" id="gateLblU" hidden>Unternehmen
       <input id="gateU" name="organization" autocomplete="organization" maxlength="80"></label>
     <label class="gate-l">Passwort
-      <input id="gateP" name="password" type="password" autocomplete="current-password" maxlength="120"></label>
+      <span class="pw-wrap"><input id="gateP" name="password" type="password" autocomplete="current-password" maxlength="120">
+      <button type="button" class="pw-eye" id="gateEye" aria-label="Passwort anzeigen" title="Passwort anzeigen">Anzeigen</button></span></label>
     <button class="btn go" type="submit" id="gateGo">Öffnen</button>
     <button class="gate-alt" type="button" id="gateAlt" hidden></button>
     <p class="gate-err" id="gateErr"></p>
@@ -2366,7 +2371,7 @@ function zeigeSchleuse(){
     gateGo.textContent="Öffnen";
     gateAlt.hidden=true;
   }
-  gateErr.textContent=""; gateP.value="";
+  gateErr.textContent=""; gateP.value=""; pwSicht(modus==="anlegen");
   requestAnimationFrame(()=>(modus==="anlegen"?gateU:gateP).focus());
 }
 gateAlt.addEventListener("click",()=>{ ladeUebersicht(); });
@@ -2396,6 +2401,11 @@ gateP.addEventListener("input",()=>{pwBeruehrt=true;});
 /* Vorschlag: Unternehmensname in Großbuchstaben ohne Leer- und Sonderzeichen + Jahr, z. B. PPEDV2026 */
 const pwVorschlag=n=>{const k=String(n||"").toUpperCase().replace(/Ä/g,"AE").replace(/Ö/g,"OE").replace(/Ü/g,"UE").replace(/ß/g,"SS").replace(/[^A-Z0-9]/g,"");
   return k?k+new Date().getFullYear():"";};
+/* Passwort sichtbar machen — beim Anlegen sieht man so den Vorschlag */
+const gateEye=document.getElementById("gateEye");
+function pwSicht(an){ gateP.type=an?"text":"password"; gateEye.textContent=an?"Verbergen":"Anzeigen";
+  gateEye.setAttribute("aria-label",an?"Passwort verbergen":"Passwort anzeigen"); gateEye.title=gateEye.getAttribute("aria-label"); }
+gateEye.addEventListener("click",()=>{ pwSicht(gateP.type==="password"); gateP.focus(); });
 gateU.addEventListener("input",()=>{ if(!pwBeruehrt) gateP.value=pwVorschlag(gateU.value); });
 
 gateForm.addEventListener("submit",async e=>{
