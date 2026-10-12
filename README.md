@@ -18,21 +18,25 @@ Sandkasten.
 
 ## Der Ablauf im Kundengespräch
 
-Das Werkzeug bildet einen Verkaufstermin ab, nicht einen Fragebogen:
+Die fünf Reiter folgen dem Termin. Jeder Schritt endet mit „Weiter: …“.
 
-1. **Fragen stellen** — was sind die Herausforderungen, in welchen Teams,
-   und tiefer nachfassen.
-2. **Mitschreiben.** Jedes genannte Thema ist ein **Skill**, in den Worten des
-   Kunden. Er bekommt eine der sechs **Kompetenzwelten** zugeordnet — der
-   Vorschlag kommt automatisch aus dem Text.
-3. **Teams dazu.** Wem fehlt der Skill, und wie viele Mitarbeitende betrifft es
-   dort? Mehrere Teams je Skill mit eigener Zahl.
-4. **Matrix live zeigen.** „Eure Kompetenzwelt" baut sich zeitgleich auf — der Ring ist das
-   Ergebnis der Erfassung, nicht ein Katalog zum Abhaken. Danach Ergebnis und
-   Ablauf durchgehen, Zeitbalken bei Bedarf verschieben.
-5. **PDF sichern, Kartei speichern.**
-6. PDF an den Kunden senden.
-7. Kartei später nachbearbeiten. *(Versionshistorie ist noch offen — siehe unten.)*
+1. **Bedarf & Kontext.** Der Kunde spricht Themen an, sie werden als **Skills**
+   mitgeschrieben, in seinen Worten. Jeder Skill bekommt automatisch eine
+   Kompetenzwelt und **Kursvorschläge**. Vorschläge werden mit ✓ bestätigt, mit ×
+   entfernt oder über „+ Kurs“ ergänzt. Dazu kommen die Teams, die zentrale Größe des
+   gesamten Teams und die Frage „KI im Unternehmen: nur Microsoft Copilot“.
+2. **Das ppedv-Modell.** Gemeinsam die sechs Welten durchgehen. „+ übernehmen“ legt
+   eine Kernkompetenz oder ein Gesprächsbeispiel als Skill an; deren Kurse erscheinen
+   sofort darunter und lassen sich dort bestätigen oder entfernen.
+3. **Eure Kompetenzwelt.** Ring und Panel gemeinsam sichten und anpassen, auch die
+   Kurse je Skill.
+4. **Ablauf.** Durchführung (Inhouse, Hybrid, Online), Kursplan mit Priorität, Team,
+   Woche und Ort, Timeline und Phasen. **Hier stehen keine Preise.**
+5. **Abschluss.** Das **Kundendokument** als PDF (Kompetenzmodell, Kursplan,
+   Ablauf, ohne Preise) und **separat das Angebot** als PDF (Preise, Bestandskunde,
+   Anreise, Summe).
+
+Die Kartei speichert alles; sie lässt sich später nachbearbeiten.
 
 ## Die drei Ebenen
 
@@ -85,9 +89,22 @@ Die Kurse je Kompetenzwelt (`bau` in `WORLDS`) stammen aus der ppedv-Kursübersi
 Jeder Kurs steht in genau einer Welt. Ändert sich die Kursübersicht, wird nur diese
 Liste gepflegt.
 
-In Schritt 3 steht der Block **Kurse und Investition**: Je Kompetenzwelt des Kunden
-lassen sich Kurse anklicken, darunter stehen Liste und Summe. Die Auswahl geht ins PDF
-(„Alles als PDF“) und in „Als Text kopieren“.
+**Kurse hängen an den Skills.** Jeder Skill trägt seine Kurse (`ku`): Vorschläge
+kommen automatisch, sobald Text und Kompetenzwelt stehen; bestätigte bleiben,
+abgelehnte kommen nicht wieder (`kuNo`). So entstehen die Vorschläge:
+- Skill aus einer Kernkompetenz oder einem Gesprächsbeispiel: genau deren Kurse
+  (`ku` an `komp` und `felder`).
+- Freier Text: das Beispiel bzw. die Kernkompetenz der Welt mit der größten
+  Wortüberschneidung; Kurstitel, die ein Stichwort des Kunden enthalten, zuerst.
+  Allgemeine Titelwörter („Grundlagen“, „Administration“ …) zählen dabei nicht.
+- Höchstens drei Vorschläge je Skill. Die Pflichtkurse werden nie vorgeschlagen,
+  sie sind ohnehin immer dabei.
+
+Der Kursplan in Schritt 4 ist die Vereinigung aller Skill-Kurse plus Pflichtkurs.
+Das Team eines Kurses ergibt sich aus den Skills, die ihn tragen, und lässt sich
+überschreiben. „×“ im Kursplan nimmt einen Kurs aus allen Skills.
+
+Preise erscheinen nur im Abschluss (Schritt 5) und im Angebots-PDF.
 
 - **Preis:** jeder Kurs 3.500 €, für Bestandskunden 2.800 € (Häkchen „Bestandskunde“).
   Festgelegt in `PREIS` und `PREIS_BESTAND`.
@@ -99,12 +116,12 @@ lassen sich Kurse anklicken, darunter stehen Liste und Summe. Die Auswahl geht i
 
 Auswahl, Bestandskunde und Copilot-Häkchen werden mit der Kartei gespeichert.
 
-**Durchführung und Anreise.** Oben im Block wird die Durchführung gewählt:
+**Durchführung und Anreise.** Im Ablauf (Schritt 4) wird die Durchführung gewählt:
 - *Inhouse – vor Ort* (Standard): Alle Kurse finden beim Kunden statt, und jeder Kurs ist ein Vor-Ort-Termin mit Anreise.
 - *Hybrid – vor Ort und online*: Je Kurs wird gewählt, ob er vor Ort oder online läuft. Nur die Vor-Ort-Termine kosten Anreise.
 - *Online*: keine Anreise.
 
-Der Betrag „Anreise je Vor-Ort-Termin“ geht in die Summe ein. Bleibt er leer, steht
+Der Betrag „Anreise je Vor-Ort-Termin“ wird im Abschluss beim Angebot eingetragen und geht in die Summe ein. Bleibt er leer, steht
 „zzgl. Anreise (nach Aufwand)“ da.
 
 **Kursplan: welcher Kurs, für welches Team, wann.** Die Reihenfolge der Tabelle ist

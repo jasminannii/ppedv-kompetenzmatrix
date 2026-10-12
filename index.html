@@ -75,7 +75,9 @@ button{font:inherit; color:inherit; cursor:pointer}
 .drop{outline:2px dashed var(--orange); outline-offset:3px}
 
 /* Schritt-Navigation */
-.steps{display:flex; gap:0; border-top:1px solid var(--line)}
+.steps{display:flex; gap:0; border-top:1px solid var(--line); overflow-x:auto; scrollbar-width:none}
+.steps::-webkit-scrollbar{display:none}
+.stab{white-space:nowrap; flex-shrink:0}
 .stab{flex:0 1 auto; background:none; border:0; border-bottom:3px solid transparent; padding:13px 20px 11px;
   display:flex; align-items:baseline; gap:9px; color:var(--ink-3); transition:.15s}
 .stab:hover{color:var(--ink)}
@@ -464,7 +466,7 @@ details.more .in{padding-top:11px}
 .kurs-wahl .kw-w+.kw-w{margin-top:12px}
 .kw-n{font-size:12.5px;color:var(--accent-ink);font-weight:600}
 .kp-hint{font-size:12.5px;color:var(--ink-3);margin:0 0 8px}
-.kp{display:grid;grid-template-columns:64px minmax(0,1fr) 160px 72px 92px 104px;gap:10px;padding:9px 14px;border-top:1px solid var(--line);font-size:14px;align-items:center}
+.kp{display:grid;grid-template-columns:64px minmax(0,1fr) 190px 72px 92px 28px;gap:10px;padding:9px 14px;border-top:1px solid var(--line);font-size:14px;align-items:center}
 .kp:first-child{border-top:0}
 .kp-h{background:var(--surface-2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
 .kp-h span:last-child{text-align:right}
@@ -487,6 +489,34 @@ details.more .in{padding-top:11px}
 .ksum.tot{font-weight:700;color:var(--ink);font-size:15px}
 .ksum.tot span:last-child{font-size:16px}
 .kurs-fuss{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.kp-x button{border:0;background:none;color:var(--ink-3);font-size:18px;line-height:1;cursor:pointer;padding:0 4px}
+.kp-x button:hover{color:#B3261E}
+.sku{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}
+.sku-none{font-size:12.5px;color:var(--ink-3)}
+.kc{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;border:1px dashed var(--orange);background:var(--surface);color:var(--ink);border-radius:20px;padding:3px 4px 3px 10px}
+.kc i{font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);margin-right:2px}
+.kc.ok{border-style:solid;border-color:var(--blue);background:color-mix(in srgb,var(--blue) 9%,var(--surface))}
+.kc button{border:0;background:none;color:var(--ink-3);font-size:14px;line-height:1;width:20px;height:20px;border-radius:50%;cursor:pointer;padding:0}
+.kc button[data-kok]{color:var(--ok,#1E8E5A);font-weight:700}
+.kc button:hover{background:var(--surface-3)}
+.kadd{font:inherit;font-size:12.5px;max-width:200px;border:1px dashed var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:20px;padding:3px 8px}
+.cc-k .sku,.cc-f .sku{margin-top:6px}
+.pskill .sku{margin-top:6px}
+.gt-cp{flex-basis:100%;display:flex;align-items:center;gap:8px;padding-top:6px;border-top:1px solid var(--line);margin-top:4px}
+.gt-cp input{width:16px!important;height:16px;accent-color:var(--orange)}
+.fin{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+@media(max-width:860px){.fin{grid-template-columns:1fr}}
+.fin-c{border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:18px 20px}
+.fin-c h3{font-size:19px;margin:4px 0 2px}
+.fin-c .actions{margin:14px 0 0}
+.ang-opt{display:flex;flex-direction:column;gap:8px;margin:12px 0;font-size:13.5px;color:var(--ink-2)}
+.ang-opt label{display:flex;align-items:center;gap:8px}
+.ang-opt input[type=checkbox]{width:16px;height:16px;accent-color:var(--orange)}
+.ksum.ang small{display:block;font-size:12px;color:var(--ink-3)}
+.ksum.ang em{font-style:normal;font-size:11px;font-weight:700;color:var(--accent-ink)}
+.ksum.ang{background:var(--surface);color:var(--ink)}
+.ksum s{color:var(--ink-3);font-weight:400}
+.nextbar{display:flex;justify-content:flex-end;margin-top:26px}
 .gt-box{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:10px 0 14px;padding:10px 14px;border:1px dashed var(--line-2);border-radius:8px;font-size:13.5px}
 .gt-box label{display:flex;align-items:center;gap:8px}
 .gt-box input{font:inherit;font-size:13.5px;width:90px;background:var(--surface-2);color:var(--ink);border:1px solid var(--line-2);border-radius:5px;padding:5px 8px}
@@ -499,9 +529,10 @@ details.more .in{padding-top:11px}
 .bar.kurs{background:var(--orange);color:#3D2402;justify-content:center;padding:0;font-size:11px;font-weight:700;min-width:22px}
 .bar.kurs.onl{background:color-mix(in srgb,var(--blue) 35%,var(--surface));color:var(--ink);border:1px dashed var(--blue)}
 @media(max-width:760px){
-  .kp{grid-template-columns:52px 1fr 1fr;row-gap:6px}
+  .kp{grid-template-columns:52px 1fr 1fr 28px;row-gap:6px}
+  .kp-x{grid-column:4/5;grid-row:1}
   .kp-h{display:none}
-  .kp-n{grid-column:2/-1}
+  .kp-n{grid-column:2/4}
   .kp-team{grid-column:2/3}.kp-w{grid-column:3/4}.kp-o{grid-column:2/3}.kp-p{grid-column:3/4}
   .kp .lbl{display:block;font-size:10px;margin-bottom:2px}
 }
@@ -616,7 +647,8 @@ details.more .in{padding-top:11px}
   .cust:placeholder-shown{display:none!important}
   /* Dokumentreihenfolge: erst erklären, dann die Matrix, dann das Ergebnis */
   main{display:flex; flex-direction:column}
-  #s2{order:1} #s1{order:2} #s3{order:3} #s4{order:4}
+  #s2{order:1} #s1{order:2} #s3{order:4} #s5{order:3} #s4{order:5}
+  #finAngebot,.nextbar{display:none!important}
   /* Der Katalog ist zum Zeigen im Termin, nicht fürs Kunden-PDF — sonst
      verdoppelt er dessen Umfang. Zeile löschen, wenn er mitgedruckt werden soll. */
   #s4{display:none!important}
@@ -685,9 +717,10 @@ details.more .in{padding-top:11px}
   <div class="wrap">
     <nav class="steps" role="tablist">
       <button class="stab" role="tab" data-step="2" aria-selected="true"><span class="n">1</span><span class="t">Bedarf &amp; Kontext</span><span class="c" id="cnt2">0</span></button>
-      <button class="stab" role="tab" data-step="1" aria-selected="false"><span class="n">2</span><span class="t">Eure Kompetenzwelt</span><span class="c" id="cnt1">0</span></button>
-      <button class="stab" role="tab" data-step="3" aria-selected="false"><span class="n">3</span><span class="t">Ergebnis &amp; Ablauf</span></button>
-      <button class="stab" role="tab" data-step="4" aria-selected="false"><span class="n">4</span><span class="t">Das ppedv-Modell</span></button>
+      <button class="stab" role="tab" data-step="4" aria-selected="false"><span class="n">2</span><span class="t">Das ppedv-Modell</span></button>
+      <button class="stab" role="tab" data-step="1" aria-selected="false"><span class="n">3</span><span class="t">Eure Kompetenzwelt</span><span class="c" id="cnt1">0</span></button>
+      <button class="stab" role="tab" data-step="3" aria-selected="false"><span class="n">4</span><span class="t">Ablauf</span></button>
+      <button class="stab" role="tab" data-step="5" aria-selected="false"><span class="n">5</span><span class="t">Abschluss</span></button>
     </nav>
   </div>
 </header>
@@ -722,6 +755,7 @@ details.more .in{padding-top:11px}
       <aside class="panel" id="panel"></aside>
     </div>
   </div>
+  <div class="wrap nextbar no-print"><button type="button" class="btn go" data-go="3">Weiter: Ablauf festlegen &rarr;</button></div>
 </section>
 
 <section class="step on" id="s2">
@@ -741,24 +775,14 @@ details.more .in{padding-top:11px}
 
     <div class="fields" id="fields"></div>
   </div>
+  <div class="wrap nextbar no-print"><button type="button" class="btn go" data-go="4">Weiter: Das ppedv-Modell &rarr;</button></div>
 </section>
 
 <section class="step" id="s3">
   <div class="wrap">
-    <div class="actions no-print">
-      <button class="btn go" id="btnPrint">Alles als PDF</button>
-      <button class="btn go" id="btnPrintModel">Nur das Kompetenzmodell als PDF</button>
-      <button class="btn" id="btnCopy">Als Text kopieren</button>
-    </div>
-    <div class="phelp no-print" id="phelp" hidden></div>
-    <div id="needOut"></div>
-
-    <h3 style="font-size:22px;margin-top:34px">Ihr Kompetenzmodell</h3>
-    <div class="cards" id="cards"></div>
-
-    <div class="block" id="blockKurse">
-      <h3>Kurse und Investition</h3>
-      <p class="sub">Je Kurs 3.500 € — für Bestandskunden 2.800 €. Ein Kurs ist immer dabei.</p>
+    <div class="block" id="blockKurse" style="margin-top:0">
+      <h3>Kursplan</h3>
+      <p class="sub">Welcher Kurs, für welches Team, wann. Die Kurse kommen aus Schritt 1 und 2 — dort ergänzen oder entfernen.</p>
       <div id="kurse"></div>
     </div>
 
@@ -788,15 +812,39 @@ details.more .in{padding-top:11px}
       </div>
     </div>
   </div>
+  <div class="wrap nextbar no-print"><button type="button" class="btn go" data-go="5">Weiter: Abschluss &rarr;</button></div>
+</section>
+
+<section class="step" id="s5">
+  <div class="wrap">
+    <div class="phelp no-print" id="phelp" hidden></div>
+    <div class="fin no-print">
+      <div class="fin-c">
+        <span class="lbl">1 · Für den Kunden</span>
+        <h3>Kundendokument</h3>
+        <p class="sub">Kompetenzmodell, Kursplan und Ablauf — ohne Preise. Zum Versenden nach dem Termin.</p>
+        <div class="actions"><button class="btn go" id="btnPrint">Kundendokument als PDF</button><button class="btn" id="btnCopy">Als Text kopieren</button></div>
+      </div>
+      <div class="fin-c" id="finAngebot">
+        <span class="lbl">2 · Separat</span>
+        <h3>Angebot</h3>
+        <p class="sub">Preise zum Kursplan — als eigenes PDF.</p>
+        <div id="angebot"></div>
+        <div class="actions"><button class="btn go" id="btnAngebot">Angebot als PDF</button></div>
+      </div>
+    </div>
+    <div id="needOut"></div>
+    <h3 style="font-size:22px;margin-top:34px">Ihr Kompetenzmodell</h3>
+    <div class="cards" id="cards"></div>
+  </div>
 </section>
 
 <section class="step" id="s4">
   <div class="wrap">
     <p class="lead">Sechs Kompetenzwelten. <b>+ übernehmen</b> holt einen Punkt in die Matrix des Kunden.</p>
-    <p class="kurs-hinweis">Jeder Kurs <b>3.500 €</b>, für Bestandskunden <b>2.800 €</b>. Immer mit im Angebot: der
-      <a href="https://jasminannii.github.io/ppedv-kompetenzmatrix/ki-workshop/" target="_blank" rel="noopener">Skill-Building-Workshop</a> —
-      setzt das Unternehmen nur Microsoft Copilot ein, stattdessen der
-      <a href="https://ppedv.de/schulung/kurse/microsoft-copilot-oekosystem" target="_blank" rel="noopener">Copilot-Praxistag</a>.</p>
+    <p class="kurs-hinweis">Mit <b>+ übernehmen</b> kommen die passenden Kurse gleich mit — bestätigen, entfernen oder ergänzen. Immer dabei:
+      der <a href="https://jasminannii.github.io/ppedv-kompetenzmatrix/ki-workshop/" target="_blank" rel="noopener">Skill-Building-Workshop</a>,
+      bei reinem Copilot-Einsatz der <a href="https://ppedv.de/schulung/kurse/microsoft-copilot-oekosystem" target="_blank" rel="noopener">Copilot-Praxistag</a>.</p>
 
     <div class="catbox">
       <svg class="ring" viewBox="0 0 900 900" role="img" aria-label="ppedv Kompetenzwelten">
@@ -818,6 +866,7 @@ details.more .in{padding-top:11px}
 
     <div class="catcards" id="catCards"></div>
   </div>
+  <div class="wrap nextbar no-print"><button type="button" class="btn go" data-go="1">Weiter: Eure Kompetenzwelt &rarr;</button></div>
 </section>
 </main>
 
@@ -865,10 +914,10 @@ const WORLDS=[
         {n:"Eigene Arbeitsabläufe mit KI umbauen",d:"Erkennt im eigenen Alltag, welche Schritte KI übernehmen kann, und macht daraus einen wiederholbaren Ablauf.",l:["Abläufe mit", "KI umbauen"],ku:["Skill-Building-Workshop – KI-Abläufe, die funktionieren", "Microsoft Copilot Ökosystem – Wiederkehrende Prozesse mit Copilot automatisieren", "Copilot für IT, Power-User und AI Champions"]}],
   beleg:"79 % der Unternehmen fehlen grundlegende KI-Kompetenzen, 86 % schöpfen das Potenzial kaum aus (Stifterverband 2025). Seit 02/2025 verpflichtet Art. 4 EU AI Act Betreiber zu nachweisbarer KI-Kompetenz.",
   felder:[
-    {n:"Informationen verdichten",s:"„Ich lese mich durch 40 Seiten, bevor ich antworten kann.“",z:"Aus langen Dokumenten und Mailverläufen in Minuten eine belastbare Zusammenfassung ziehen.",k:"zusammenfassung protokoll unterlagen recherche dokumente mails lange texte einlesen lesen bericht"},
-    {n:"Texte auf den Punkt bringen",s:"„Jedes Angebot schreibt bei uns jemand von Null.“",z:"Entwürfe für Angebote, Mails und Berichte in der eigenen Tonlage erzeugen — und sicher prüfen.",k:"schreiben formulieren angebot mail newsletter entwurf textbaustein korrektur antwort"},
-    {n:"Entscheidungen vorbereiten",s:"„Wir diskutieren dreimal, bevor wir entscheiden.“",z:"Optionen, Risiken und eine Empfehlung aufbereiten, bevor die Runde zusammenkommt.",k:"entscheidung entscheiden vorlage geschaeftsfuehrung optionen vergleich bewertung gremium"},
-    {n:"Routinearbeit beschleunigen",s:"„Das Gleiche jede Woche, immer von Hand.“",z:"Wiederkehrende Textarbeit an KI abgeben — mit Prüfschritt, nicht blind.",k:"wiederkehrend routine immer gleich manuell zeitfresser standardantwort fleissarbeit tippen"}],
+    {n:"Informationen verdichten",ku:["Copilot - KI in Word, Excel, Outlook & Co.", "Prompt like a pro - KI-Anweisungen für komplexe Aufgaben optimieren"],s:"„Ich lese mich durch 40 Seiten, bevor ich antworten kann.“",z:"Aus langen Dokumenten und Mailverläufen in Minuten eine belastbare Zusammenfassung ziehen.",k:"zusammenfassung protokoll unterlagen recherche dokumente mails lange texte einlesen lesen bericht"},
+    {n:"Texte auf den Punkt bringen",ku:["Copilot - KI in Word, Excel, Outlook & Co.", "Prompt like a pro - KI-Anweisungen für komplexe Aufgaben optimieren"],s:"„Jedes Angebot schreibt bei uns jemand von Null.“",z:"Entwürfe für Angebote, Mails und Berichte in der eigenen Tonlage erzeugen — und sicher prüfen.",k:"schreiben formulieren angebot mail newsletter entwurf textbaustein korrektur antwort"},
+    {n:"Entscheidungen vorbereiten",ku:["Copilot für IT, Power-User und AI Champions", "Prompt like a pro - KI-Anweisungen für komplexe Aufgaben optimieren"],s:"„Wir diskutieren dreimal, bevor wir entscheiden.“",z:"Optionen, Risiken und eine Empfehlung aufbereiten, bevor die Runde zusammenkommt.",k:"entscheidung entscheiden vorlage geschaeftsfuehrung optionen vergleich bewertung gremium"},
+    {n:"Routinearbeit beschleunigen",ku:["Copilot für IT, Power-User und AI Champions", "Copilot - KI in Word, Excel, Outlook & Co."],s:"„Das Gleiche jede Woche, immer von Hand.“",z:"Wiederkehrende Textarbeit an KI abgeben — mit Prüfschritt, nicht blind.",k:"wiederkehrend routine immer gleich manuell zeitfresser standardantwort fleissarbeit tippen"}],
   /* ziel: Vorschlaege fuer die offene „Fuer wen“-Eingabe.
      bau: Kurse der Welt aus der ppedv-Kursuebersicht (ppedv.de/Schulung/MicrosoftTraining),
      n = Kurstitel, t = Dauer. Erscheinen im Katalog, in der Kursauswahl (Schritt 3) und im Matcher. */
@@ -882,10 +931,10 @@ const WORLDS=[
         {n:"Administration per Skript automatisieren",d:"Erledigt wiederkehrende Admin-Aufgaben mit PowerShell oder Python reproduzierbar statt per Hand.",l:["Admin per", "Skript"],ku:["PowerShell - Grundkurs automatisierte Administration", "PowerShell mit AI – Automatisierung für Clevere", "PowerShell - Fortgeschrittene Techniken", "Python Grundlagen - Einstieg in die Programmierung"]}],
   beleg:"Digitalisierung und Automatisierung gelten als zentraler Hebel gegen Personalengpässe (DIHK 2025/26). Über ein Drittel der Unternehmen meldet Lücken bei der Automatisierung von Arbeitsprozessen (Stifterverband 2025).",
   felder:[
-    {n:"Freigaben beschleunigen",s:"„Der Antrag liegt drei Tage im Postfach.“",z:"Genehmigungen laufen als Workflow mit Erinnerung und Nachweis statt per Mail.",k:"freigabe genehmigung urlaubsantrag urlaub antrag unterschrift abzeichnen workflow liegenbleiben postfach bestellung"},
-    {n:"Daten zwischen Systemen übertragen",s:"„Wir tippen dieselben Zahlen in zwei Systeme.“",z:"Übertragungen laufen automatisch, Doppelerfassung entfällt.",k:"doppelerfassung schnittstelle export import excel abtippen systeme uebertragen crm erp synchron"},
-    {n:"Fristen im Blick behalten",s:"„Wir merken zu spät, dass ein Vertrag ausläuft.“",z:"Termine und Fristen melden sich selbst, bevor sie kritisch werden.",k:"frist termin vertrag kuendigung ablauf erinnerung wiedervorlage verpasst deadline mahnung"},
-    {n:"IT-Aufgaben standardisieren",s:"„Jeder Admin macht es ein bisschen anders.“",z:"Wiederkehrende Aufgaben laufen als geprüftes Skript statt als Handarbeit.",k:"skript powershell admin benutzer anlegen onboarding standard manuell konto einrichten"}],
+    {n:"Freigaben beschleunigen",ku:["Power Apps und Power Automate Einstieg - Apps, Workflows und Automatisierung", "Copilot Studio und Power Platform AI - Agenten, Workflows, Automatisierung"],s:"„Der Antrag liegt drei Tage im Postfach.“",z:"Genehmigungen laufen als Workflow mit Erinnerung und Nachweis statt per Mail.",k:"freigabe genehmigung urlaubsantrag urlaub antrag unterschrift abzeichnen workflow liegenbleiben postfach bestellung"},
+    {n:"Daten zwischen Systemen übertragen",ku:["Power Apps und Power Automate Fortgeschrittene - Low-Code Lösungen", "Dataverse - Power Platform Daten verwalten"],s:"„Wir tippen dieselben Zahlen in zwei Systeme.“",z:"Übertragungen laufen automatisch, Doppelerfassung entfällt.",k:"doppelerfassung schnittstelle export import excel abtippen systeme uebertragen crm erp synchron"},
+    {n:"Fristen im Blick behalten",ku:["Power Apps und Power Automate Einstieg - Apps, Workflows und Automatisierung"],s:"„Wir merken zu spät, dass ein Vertrag ausläuft.“",z:"Termine und Fristen melden sich selbst, bevor sie kritisch werden.",k:"frist termin vertrag kuendigung ablauf erinnerung wiedervorlage verpasst deadline mahnung"},
+    {n:"IT-Aufgaben standardisieren",ku:["PowerShell - Grundkurs automatisierte Administration", "PowerShell mit AI – Automatisierung für Clevere"],s:"„Jeder Admin macht es ein bisschen anders.“",z:"Wiederkehrende Aufgaben laufen als geprüftes Skript statt als Handarbeit.",k:"skript powershell admin benutzer anlegen onboarding standard manuell konto einrichten"}],
   ziel:["Fachbereiche","Prozessverantwortliche","IT- & Plattformteams","Führungskräfte"],
   bau:[{n:"Power Apps und Power Automate Einstieg - Apps, Workflows und Automatisierung",t:"2 Tage"},{n:"Power Apps und Power Automate Fortgeschrittene - Low-Code Lösungen",t:"3 Tage"},{n:"Citizen Developer Week - Power Apps und Power Automate",t:"5 Tage"},{n:"Dataverse - Power Platform Daten verwalten",t:"1 Tag"},{n:"Copilot Studio und Power Platform AI - Agenten, Workflows, Automatisierung",t:"3 Tage"},{n:"PowerShell - Grundkurs automatisierte Administration",t:"2 Tage"},{n:"PowerShell - Fortgeschrittene Techniken",t:"2 Tage"},{n:"PowerShell Days - kompakt in 4 Tagen",t:"4 Tage"},{n:"PowerShell mit AI – Automatisierung für Clevere",t:"1 Tag"},{n:"Python Grundlagen - Einstieg in die Programmierung",t:"3 Tage"},{n:"VBA - Excel, Access, Word Makro Programmierung",t:"3 Tage"}]},
 
@@ -896,10 +945,10 @@ const WORLDS=[
         {n:"Mit Daten entscheiden und begründen",d:"Führt von der Zahl zur Entscheidung — adressatengerecht dargestellt und nachvollziehbar begründet.",l:["Mit Daten", "entscheiden"],ku:["Power BI Fortgeschrittene - Deep Dive", "Python - Machine Learning und Visualisierung"]}],
   beleg:"Data Literacy zählt zu den fünf digitalen Zukunftskompetenzen (Stifterverband, Future Skills 2030). Rund 20 % melden Lücken beim datengetriebenen Entscheiden; Datenbanken und SQL führen die gefragtesten IT-Qualifikationen in Österreich an (WKO 2025).",
   felder:[
-    {n:"Kennzahlen vereinheitlichen",s:"„Drei Abteilungen, drei Umsatzzahlen.“",z:"Eine verbindliche Definition je Kennzahl, an die sich alle halten.",k:"kennzahl kpi umsatz definition zahlen abweichung berichtswesen controlling unterschiedlich"},
-    {n:"Daten aufbereiten",s:"„Vor jedem Report kommt der Excel-Marathon.“",z:"Rohdaten werden einmal sauber modelliert und danach wiederverwendet.",k:"excel datenqualitaet aufbereiten rohdaten monatsabschluss report datenmodell pivot bereinigen"},
-    {n:"Dashboards fokussieren",s:"„Unser Bericht hat 30 Diagramme, keiner schaut rein.“",z:"Ein Bericht beantwortet genau die Fragen, die zur Entscheidung führen.",k:"dashboard bericht report diagramm auswertung visualisierung liest keiner uebersicht"},
-    {n:"Zugriffe sicher steuern",s:"„Eigentlich sollte nicht jeder alle Zahlen sehen.“",z:"Rollen und Berechtigungen sind geregelt und nachvollziehbar.",k:"berechtigung zugriff rechte vertraulich gehalt sensibel sichtbar datenschutz freigeben"}],
+    {n:"Kennzahlen vereinheitlichen",ku:["Power BI Days kompakt!", "Microsoft Fabric - Data Warehouse und ML"],s:"„Drei Abteilungen, drei Umsatzzahlen.“",z:"Eine verbindliche Definition je Kennzahl, an die sich alle halten.",k:"kennzahl kpi umsatz definition zahlen abweichung berichtswesen controlling unterschiedlich"},
+    {n:"Daten aufbereiten",ku:["Power BI und Excel - Analyse und Visualisierung von Daten", "SQL Grundlagen - Einfache Abfragen in 1 Tag"],s:"„Vor jedem Report kommt der Excel-Marathon.“",z:"Rohdaten werden einmal sauber modelliert und danach wiederverwendet.",k:"excel datenqualitaet aufbereiten rohdaten monatsabschluss report datenmodell pivot bereinigen"},
+    {n:"Dashboards fokussieren",ku:["Power BI und Excel - Analyse und Visualisierung von Daten", "Power BI Fortgeschrittene - Deep Dive"],s:"„Unser Bericht hat 30 Diagramme, keiner schaut rein.“",z:"Ein Bericht beantwortet genau die Fragen, die zur Entscheidung führen.",k:"dashboard bericht report diagramm auswertung visualisierung liest keiner uebersicht"},
+    {n:"Zugriffe sicher steuern",ku:["Power BI Fortgeschrittene - Deep Dive", "SQL Server - Planung, Aufbau und Verwaltung"],s:"„Eigentlich sollte nicht jeder alle Zahlen sehen.“",z:"Rollen und Berechtigungen sind geregelt und nachvollziehbar.",k:"berechtigung zugriff rechte vertraulich gehalt sensibel sichtbar datenschutz freigeben"}],
   ziel:["Fachbereiche","Führungskräfte","Analysten & Controller","Data- & IT-Teams"],
   bau:[{n:"Power BI und Excel - Analyse und Visualisierung von Daten",t:"2 Tage"},{n:"Power BI Days kompakt!",t:"4 Tage"},{n:"Power BI Fortgeschrittene - Deep Dive",t:"2 Tage"},{n:"Microsoft Fabric - Data Warehouse und ML",t:"4 Tage"},{n:"SQL Grundlagen - Einfache Abfragen in 1 Tag",t:"1 Tag"},{n:"SQL Server - Grundlagen Abfragesprache",t:"3 Tage"},{n:"SQL - Datenbanksprache und Fortgeschrittene Techniken",t:"3 Tage"},{n:"Power-Woche: SQL Server Abfragen",t:"5 Tage"},{n:"Power-Woche: SQL Server Data Warehouse",t:"5 Tage"},{n:"SQL Server Analysis Services (SSAS)",t:"3 Tage"},{n:"SQL Server Integration Services (SSIS)",t:"2 Tage"},{n:"Python - Machine Learning und Visualisierung",t:"2 Tage"},{n:"Power-Woche: Python - Vom Anfänger zum Data Science Profi",t:"5 Tage"}]},
 
@@ -910,10 +959,10 @@ const WORLDS=[
         {n:"Automatisiert testen und sauber ausliefern",d:"Sichert Code mit automatisierten Tests ab, versioniert mit Git und stellt in Containern reproduzierbar bereit.",l:["Testen und", "sauber", "ausliefern"],ku:["Softwaretests mit Visual Studio", "GIT Einstieg in die verteilte Versionskontrolle", "Docker und Kubernetes - Grundlagen Container-Virtualisierung"]}],
   beleg:"AI Engineering und Change Management & AI Leadership zählen zu den technologischen Zukunftskompetenzen (Stifterverband 2030). 53 % nennen fehlendes technisches Know-how als größte KI-Hürde (Bitkom 2025).",
   felder:[
-    {n:"Anforderungen schärfen",s:"„Am Ende war es doch nicht das, was gemeint war.“",z:"Anforderungen sind früh testbar formuliert — Missverständnisse fallen vor dem Code auf.",k:"anforderung spezifikation lastenheft missverstaendnis fachbereich requirements story pflichtenheft"},
-    {n:"Legacy-Code beherrschbar machen",s:"„An das alte Modul traut sich keiner ran.“",z:"Altsysteme werden Schritt für Schritt verstanden, abgesichert und erneuert.",k:"legacy altsystem alter code wartung refactoring umbauen niemand kennt monolith technische schulden"},
-    {n:"Qualität früher prüfen",s:"„Fehler finden wir erst beim Kunden.“",z:"Automatisierte Tests fangen Fehler vor der Auslieferung ab.",k:"test testing bug fehler qualitaet regression abnahme testfaelle nachbessern"},
-    {n:"Sauber ausliefern",s:"„Ein Release ist bei uns ein halber Feiertag.“",z:"Versioniert mit Git, verpackt in Containern — Auslieferung läuft wiederholbar statt mit Bauchweh.",k:"release deployment ausliefern deploy pipeline devops rollout produktiv livegang git container docker"}],
+    {n:"Anforderungen schärfen",ku:["AI in Requirements Engineering"],s:"„Am Ende war es doch nicht das, was gemeint war.“",z:"Anforderungen sind früh testbar formuliert — Missverständnisse fallen vor dem Code auf.",k:"anforderung spezifikation lastenheft missverstaendnis fachbereich requirements story pflichtenheft"},
+    {n:"Legacy-Code beherrschbar machen",ku:["Software verstehen im Zeitalter von Vibe Coding - Vom Blindflug zur Kontrolle", ".NET - Moderne Architekturen und Prinzipien mit AI"],s:"„An das alte Modul traut sich keiner ran.“",z:"Altsysteme werden Schritt für Schritt verstanden, abgesichert und erneuert.",k:"legacy altsystem alter code wartung refactoring umbauen niemand kennt monolith technische schulden"},
+    {n:"Qualität früher prüfen",ku:["Softwaretests mit Visual Studio", "AI-Driven Software Development – Konzeption bis zum Test"],s:"„Fehler finden wir erst beim Kunden.“",z:"Automatisierte Tests fangen Fehler vor der Auslieferung ab.",k:"test testing bug fehler qualitaet regression abnahme testfaelle nachbessern"},
+    {n:"Sauber ausliefern",ku:["GIT Einstieg in die verteilte Versionskontrolle", "Docker und Kubernetes - Grundlagen Container-Virtualisierung"],s:"„Ein Release ist bei uns ein halber Feiertag.“",z:"Versioniert mit Git, verpackt in Containern — Auslieferung läuft wiederholbar statt mit Bauchweh.",k:"release deployment ausliefern deploy pipeline devops rollout produktiv livegang git container docker"}],
   ziel:["Entwickler","Tech Leads & Architekten","Produkt- & Requirements-Teams","QA & DevOps"],
   bau:[{n:"AI in Requirements Engineering",t:"1 Tag"},{n:"Agentic Coding - KI-Agenten im Entwickleralltag",t:"1 Tag"},{n:"AI-Driven Software Development – Konzeption bis zum Test",t:"3 Tage"},{n:"GitHub Copilot und ChatGPT - besseren Code in kürzerer Zeit",t:"2 Tage"},{n:"Software verstehen im Zeitalter von Vibe Coding - Vom Blindflug zur Kontrolle",t:"1 Tag"},{n:"C# Programmierung - Sprache und .NET Grundlagen",t:"4 Tage"},{n:"C# Fortgeschrittene Programmierung",t:"3 Tage"},{n:".NET - Moderne Architekturen und Prinzipien mit AI",t:"3 Tage"},{n:"ASP.NET Core - Grundlagen",t:"3 Tage"},{n:"ASP.NET Core Web API - RESTful Webservices mit C#",t:"2 Tage"},{n:"ASP.NET Blazor - SPA mit C#",t:"2 Tage"},{n:"Power-Woche: ASP.NET Core und Blazor",t:"5 Tage"},{n:"Power-Woche: ASP.NET Core und Web API",t:"5 Tage"},{n:"Windows Presentation Foundation (WPF) - Windows-Anwendungen programmieren",t:"4 Tage"},{n:"Softwaretests mit Visual Studio",t:"2 Tage"},{n:"Power-Woche: Softwaretests und .NET Architektur mit AI",t:"5 Tage"},{n:"GIT Einstieg in die verteilte Versionskontrolle",t:"2 Tage"},{n:"Docker und Kubernetes - Grundlagen Container-Virtualisierung",t:"3 Tage"},{n:"Modernes Java – Verständlicher Code durch aktuelle Sprachfeatures",t:"2 Tage"},{n:"Skalierbare Java-Systeme mit Virtuellen Threads & Structured Concurrency",t:"3 Tage"},{n:"Power-Woche: Modernes Java & Skalierbare Java-Systeme",t:"5 Tage"},{n:"Rust Programmierung Einstieg",t:"2 Tage"},{n:"SharePoint - Einstieg Anwendungsentwicklung",t:"2 Tage"},{n:"SharePoint Framework - Lösungen entwickeln",t:"3 Tage"},{n:"Power-Woche: SharePoint für Entwickler",t:"5 Tage"},{n:"WordPress-Architekt: Planen, Bauen und Steuern der eigenen Web-Präsenz",t:"2 Tage"}]},
 
@@ -924,10 +973,10 @@ const WORLDS=[
         {n:"Cloud und Endgeräte zentral betreiben",d:"Verwaltet Azure-Ressourcen und Geräte zentral und nachvollziehbar — statt jede Umgebung von Hand einzurichten.",l:["Cloud und", "Geräte", "betreiben"],ku:["Azure - Administration AZ-104", "Microsoft Intune - Geräte verwalten", "Windows 11 - Administration"]}],
   beleg:"Cybersecurity ist eine der technologischen Zukunftskompetenzen (Stifterverband 2030); Security zählt zu den Top-IT-Qualifikationen in Österreich (WKO 2025). 48 % nennen Datenschutzanforderungen, 39 % die Sorge um eigene Daten als Bremse (Bitkom 2025).",
   felder:[
-    {n:"Identitäten schützen",s:"„Wir wissen nicht genau, wer worauf Zugriff hat.“",z:"Rollen, Rechte und Zugriffsregeln sind dokumentiert und technisch durchgesetzt.",k:"zugriff berechtigung passwort mfa entra directory rollen konten admin anmeldung identitaet"},
-    {n:"Betrieb überwachen",s:"„Von Störungen erfahren wir durch Anrufe.“",z:"Probleme melden sich selbst, Alarme sind nach Wichtigkeit sortiert.",k:"monitoring stoerung ausfall alarm verfuegbarkeit meldung ueberwachung langsam performance"},
-    {n:"Geräte zentral verwalten",s:"„Jeder Laptop ist ein bisschen anders eingerichtet.“",z:"Geräte, Updates und Richtlinien laufen zentral über Intune statt von Hand.",k:"geraete laptop client intune update richtlinie einrichten handy mobil endgeraet windows"},
-    {n:"Standards automatisieren",s:"„Jede neue Umgebung wird von Hand gebaut.“",z:"Umgebungen entstehen reproduzierbar aus Skripten statt aus Erinnerung.",k:"automatisieren skript infrastruktur umgebung aufsetzen provisionierung wiederholbar server"}],
+    {n:"Identitäten schützen",ku:["Entra ID (Azure AD) - Identitätsverwaltung", "Active Directory mit Windows Server"],s:"„Wir wissen nicht genau, wer worauf Zugriff hat.“",z:"Rollen, Rechte und Zugriffsregeln sind dokumentiert und technisch durchgesetzt.",k:"zugriff berechtigung passwort mfa entra directory rollen konten admin anmeldung identitaet"},
+    {n:"Betrieb überwachen",ku:["SQL Server - Monitoring und Performance-Tuning", "Azure - Administration AZ-104"],s:"„Von Störungen erfahren wir durch Anrufe.“",z:"Probleme melden sich selbst, Alarme sind nach Wichtigkeit sortiert.",k:"monitoring stoerung ausfall alarm verfuegbarkeit meldung ueberwachung langsam performance"},
+    {n:"Geräte zentral verwalten",ku:["Microsoft Intune - Geräte verwalten", "Windows 11 - Administration"],s:"„Jeder Laptop ist ein bisschen anders eingerichtet.“",z:"Geräte, Updates und Richtlinien laufen zentral über Intune statt von Hand.",k:"geraete laptop client intune update richtlinie einrichten handy mobil endgeraet windows"},
+    {n:"Standards automatisieren",ku:["Azure - Administration AZ-104", "PowerShell - Grundkurs automatisierte Administration"],s:"„Jede neue Umgebung wird von Hand gebaut.“",z:"Umgebungen entstehen reproduzierbar aus Skripten statt aus Erinnerung.",k:"automatisieren skript infrastruktur umgebung aufsetzen provisionierung wiederholbar server"}],
   ziel:["Cloud-Administratoren","Security-Verantwortliche","Architekten & Plattformteams","IT-Leitung & Service Owner"],
   bau:[{n:"Azure - Grundlagenkurs in 8h",t:"1 Tag"},{n:"Azure - Administration AZ-104",t:"4 Tage"},{n:"Entra ID (Azure AD) - Identitätsverwaltung",t:"1 Tag"},{n:"Power-Woche: Azure und Entra ID (Azure AD) Administration",t:"5 Tage"},{n:"Microsoft 365 Grundkurs - IT-Sicherheit Administration",t:"3 Tage"},{n:"Microsoft 365 DSGVO sicher umsetzen",t:"1 Tag"},{n:"Microsoft Defender - Bedrohungen abwehren und Endpunkte schützen",t:"2 Tage"},{n:"Microsoft Intune - Geräte verwalten",t:"2 Tage"},{n:"Power-Woche: Endpoint Manager und Intune",t:"5 Tage"},{n:"Copilot für M365 Admins - Sichere Einführung und Betrieb",t:"1 Tag"},{n:"Active Directory mit Windows Server",t:"2 Tage"},{n:"Gruppenrichtlinien (GPO) - Verwaltung in Windows",t:"2 Tage"},{n:"Netzwerk und TCP/IP Grundlagen",t:"2 Tage"},{n:"Windows Server Netzwerk - Administration",t:"3 Tage"},{n:"Power-Woche: Windows Server und Active Directory",t:"5 Tage"},{n:"Windows 11 - Administration",t:"3 Tage"},{n:"Power-Woche: Windows 11 und Intune",t:"5 Tage"},{n:"Windows Server 2025 & Windows 11 - Neuerungen",t:"1 Tag"},{n:"SQL Server - Planung, Aufbau und Verwaltung",t:"3 Tage"},{n:"Power-Woche: SQL Server Administration",t:"5 Tage"},{n:"SQL Server - Hochverfügbarkeit mit Always On",t:"2 Tage"},{n:"SQL Server - Monitoring und Performance-Tuning",t:"2 Tage"},{n:"SQL Server - Abfragen und Indizes beschleunigen",t:"2 Tage"},{n:"SQL Server - Neuerungen und Migration",t:"2 Tage"},{n:"Exchange Server - Administration",t:"3 Tage"},{n:"System Center Configuration Manager - Administration (SCCM)",t:"3 Tage"}]},
 
@@ -938,10 +987,10 @@ const WORLDS=[
         {n:"Teams und Exchange sicher betreiben",d:"Hält Teams, Postfächer und Freigaben im Alltag sauber, sicher und für alle verlässlich verfügbar.",l:["Teams & Exchange", "betreiben"],ku:["Microsoft Teams - Grundlagen Administration", "Microsoft Teams - Fortgeschrittene Administration", "Exchange Online - Microsoft 365 Administration"]}],
   beleg:"Informations-, Kommunikations- und Kooperationskompetenz zählen zu den grundlegenden Zukunftskompetenzen (Stifterverband 2030). 73 % schulen zu Digitalthemen, aber nur 11 % flächendeckend (Bitkom 2025) — Einführungen scheitern selten am Werkzeug, meist an der Verankerung.",
   felder:[
-    {n:"Besprechungen wirksam machen",s:"„Wir sitzen den halben Tag in Meetings ohne Ergebnis.“",z:"Jede Besprechung endet mit Entscheidungen und benannten Aufgaben.",k:"meeting besprechung jour fixe protokoll agenda zeitverschwendung teams termin runde"},
-    {n:"Dokumente gemeinsam nutzen",s:"„Angebot_final_v7_neu.docx.“",z:"Eine gültige Fassung, an der alle gemeinsam arbeiten.",k:"version dokument datei ablage sharepoint dateiversionen gemeinsam bearbeiten anhang durcheinander"},
-    {n:"Wissen auffindbar machen",s:"„Das weiß nur die Kollegin — und die ist im Urlaub.“",z:"Wissen liegt dort, wo andere es ohne Nachfragen finden.",k:"wissen suchen finden dokumentation urlaub krank wissenstransfer intranet wiki nachfragen kopf"},
-    {n:"Aufgaben klar übergeben",s:"„Ich dachte, das macht der andere.“",z:"Jede Aufgabe hat einen Namen, ein Datum und einen Status.",k:"aufgabe zustaendigkeit verantwortung todo planner nachverfolgen vergessen uebergabe wer macht"}],
+    {n:"Besprechungen wirksam machen",ku:["Copilot - KI in Word, Excel, Outlook & Co."],s:"„Wir sitzen den halben Tag in Meetings ohne Ergebnis.“",z:"Jede Besprechung endet mit Entscheidungen und benannten Aufgaben.",k:"meeting besprechung jour fixe protokoll agenda zeitverschwendung teams termin runde"},
+    {n:"Dokumente gemeinsam nutzen",ku:["SharePoint Online für Anwender"],s:"„Angebot_final_v7_neu.docx.“",z:"Eine gültige Fassung, an der alle gemeinsam arbeiten.",k:"version dokument datei ablage sharepoint dateiversionen gemeinsam bearbeiten anhang durcheinander"},
+    {n:"Wissen auffindbar machen",ku:["SharePoint Online für Anwender", "Power-Days: SharePoint Online & Designer für Anwender"],s:"„Das weiß nur die Kollegin — und die ist im Urlaub.“",z:"Wissen liegt dort, wo andere es ohne Nachfragen finden.",k:"wissen suchen finden dokumentation urlaub krank wissenstransfer intranet wiki nachfragen kopf"},
+    {n:"Aufgaben klar übergeben",ku:["Power-Woche: Microsoft Teams und Microsoft 365 (Office 365)"],s:"„Ich dachte, das macht der andere.“",z:"Jede Aufgabe hat einen Namen, ein Datum und einen Status.",k:"aufgabe zustaendigkeit verantwortung todo planner nachverfolgen vergessen uebergabe wer macht"}],
   ziel:["Mitarbeitende & Fachbereiche","Teamleitungen","Multiplikatoren & Champions","M365-Verantwortliche"],
   bau:[{n:"Microsoft 365 (Office 365) - Jump Start Administration",t:"3 Tage"},{n:"Power-Woche: Microsoft Teams und Microsoft 365 (Office 365)",t:"5 Tage"},{n:"Microsoft Teams - Grundlagen Administration",t:"2 Tage"},{n:"Microsoft Teams - Fortgeschrittene Administration",t:"1 Tag"},{n:"Power-Days: Microsoft Teams Administration",t:"3 Tage"},{n:"Exchange Online - Microsoft 365 Administration",t:"2 Tage"},{n:"SharePoint Online für Anwender",t:"2 Tage"},{n:"Power-Days: SharePoint Online & Designer für Anwender",t:"3 Tage"},{n:"SharePoint Online - Grundkurs Administration",t:"3 Tage"}]}
 ];
@@ -960,7 +1009,23 @@ const kursPreis=()=>profile.bestand?PREIS_BESTAND:PREIS;
 const euro=n=>n.toLocaleString("de-DE")+" €";
 const ALLE_KURSE=WORLDS.flatMap(w=>w.bau.map(c=>Object.assign({welt:w.id},c)));
 /* Gewählte Kurse: nur solche, deren Welt im Kundenmodell vorkommt */
-const gewaehlteKurse=()=>ALLE_KURSE.filter(c=>(profile.kurse||[]).indexOf(c.n)>-1&&skillsFor(c.welt).length);
+/* Kurse hängen an den Skills (s.ku): Vorschläge kommen automatisch, bestätigte bleiben.
+   Der Kursplan ist die Vereinigung aller Skill-Kurse plus der Pflichtkurs. */
+const PFL=new Set([KURS_SKILL.n,KURS_COPILOT.n]);
+function gewaehlteKurse(){
+  const seen=new Set(), out=[];
+  named().forEach(s=>(s.ku||[]).forEach(k=>{const c=ALLE_KURSE.find(x=>x.n===k.n);
+    if(c&&!seen.has(c.n)){seen.add(c.n); out.push(c);}}));
+  return out;
+}
+/* Team eines Kurses: aus den Skills, die ihn tragen — überschreibbar im Kursplan */
+function autoTeam(c){
+  const hasGT=()=>parseInt(profile.gesamtN,10)||skills().some(s=>(s.teams||[]).some(t=>t.all));
+  if(c.pflicht) return hasGT()?GT:teamPool().filter(t=>t!==GT).join(", ");
+  const ns=[...new Set(named().filter(s=>(s.ku||[]).some(k=>k.n===c.n))
+    .flatMap(s=>sTeams(s).map(t=>(t.name||"").trim()).filter(Boolean)))];
+  return ns.indexOf(GT)>-1?GT:ns.join(", ");
+}
 
 /* Ein Team, das alle Mitarbeitenden umfasst. Die Kopfzahl wird einmal zentral
    eingetragen (profile.gesamtN) und gilt für jeden Skill, dem es zugeordnet ist. */
@@ -978,7 +1043,7 @@ function kursListe(){
   const sorted=all.slice().sort((a,b)=>pos(a)-pos(b)), n=sorted.length, [a,b]=tlRange(2), fm=profile.format||"inhouse";
   return sorted.map((c,i)=>{
     const pl=(profile.plan||{})[kKey(c)]||{}, w=parseInt(pl.woche,10), auto=n>1?a+Math.round(i*(b-a)/(n-1)):a;
-    return Object.assign({},c,{key:kKey(c),prio:i+1,team:pl.team||"",
+    return Object.assign({},c,{key:kKey(c),prio:i+1,team:pl.team||autoTeam(c),teamAuto:!pl.team,
       ort:fm==="online"?"online":fm==="hybrid"?(pl.ort==="online"?"online":"vor Ort"):"vor Ort",
       woche:(w>=1&&w<=TLMAX())?w:Math.min(auto,TLMAX()),auto:!(w>=1&&w<=TLMAX())});});
 }
@@ -1055,7 +1120,7 @@ profile.gesamtN=""; profile.format="inhouse"; profile.anreise=""; profile.plan={
 const uid=()=>"s"+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
 function mkSkill(text,welt,teams,note){
   return {id:uid(),text:String(text||"").trim(),welt:welt||"",
-          teams:Array.isArray(teams)?teams:[],note:String(note||"")};
+          teams:Array.isArray(teams)?teams:[],note:String(note||""),ku:[],kuNo:[],kuSig:""};
 }
 /* Karteien der Vorversion waren team-first aufgebaut — hier werden sie zu Skills. */
 function skillsFromV4(st,pf){
@@ -1086,8 +1151,16 @@ function normProfile(){
     welt:(s&&WORLDS.some(w=>w.id===s.welt))?s.welt:"",
     teams:(Array.isArray(s&&s.teams)?s.teams:[]).map(t=>({
       name:String((t&&t.name)||""), n:(t&&(t.n||t.n===0))?t.n:"", all:!!(t&&t.all)})),
-    note:String((s&&s.note)||"")}));
+    note:String((s&&s.note)||""),
+    ku:(Array.isArray(s&&s.ku)?s.ku:[]).filter(k=>k&&ALLE_KURSE.some(c=>c.n===k.n)).map(k=>({n:k.n,st:k.st==="ok"?"ok":"v"})),
+    kuNo:(Array.isArray(s&&s.kuNo)?s.kuNo:[]).map(String),
+    kuSig:String((s&&s.kuSig)||"")}));
   delete profile.teams;
+  /* Vorversion: Kurse wurden je Welt von Hand gewählt — sie wandern als bestätigt an den ersten Skill der Welt */
+  (Array.isArray(profile.kurse)?profile.kurse:[]).forEach(n=>{
+    const c=ALLE_KURSE.find(x=>x.n===n); if(!c||profile.skills.some(s=>s.ku.some(k=>k.n===n))) return;
+    const s=profile.skills.find(x=>x.welt===c.welt); if(s) s.ku.push({n,st:"ok"});});
+  profile.kurse=[];
   profile.kurse=(Array.isArray(profile.kurse)?profile.kurse:[]).filter(n=>ALLE_KURSE.some(c=>c.n===n));
   profile.bestand=!!profile.bestand; profile.copilotOnly=!!profile.copilotOnly;
   if(!FORMATE[profile.format]) profile.format="inhouse";
@@ -1316,6 +1389,7 @@ const SKILLS=[]; WORLDS.forEach(w=>w.felder.forEach(s=>SKILLS.push({w,s,
 
 function termScore(t,hay,toks){
   if(hay.indexOf(" "+t+" ")>-1) return 3;
+  if(t.length<4) return 0;   /* Kürzel wie „bi“ oder „ki“ nur als ganzes Wort, sonst trifft „bi“ jede „Arbeit“ */
   if(hay.indexOf(t)>-1) return 2;
   if(t.length>=8&&toks){ for(const k of toks) if(k.length>=5&&t.indexOf(k)>-1) return 2; }
   return 0;
@@ -1346,6 +1420,70 @@ function matchSkills(tl){
     return {x,sc};
   }).filter(h=>h.sc>0).sort((a,b)=>b.sc-a.sc);
 }
+
+/* ---------- Kursvorschläge je Skill ----------
+   Stammt der Skill aus einer Kernkompetenz oder einem Gesprächsbeispiel, kommen genau
+   deren Kurse. Bei freiem Text gewinnt das Beispiel bzw. die Kernkompetenz der Welt mit
+   der größten Wortüberschneidung; Kurstitel mit Treffer kommen zuerst. */
+/* Wörter, die in vielen Kurstiteln stehen und nichts über das Thema sagen */
+const TSTOP=new Set(["entwickler","anwender","administration","grundlagen","einstieg","grundkurs","fortgeschrittene","power","woche","days","kompakt","microsoft","server","windows","verwalten","programmierung"]);
+function kursVorschlag(s){
+  const w=WORLDS.find(x=>x.id===s.welt); if(!w||!s.text.trim()) return [];
+  const clean=t=>" "+fold(t).replace(/[^a-z0-9]+/g," ")+" ", ft=clean(s.text.trim());
+  const items=[...w.komp.map(k=>({ku:k.ku||[],nam:clean(k.n),hay:clean(k.n+" "+k.d)})),
+               ...w.felder.map(f=>({ku:f.ku||[],nam:clean(f.n),hay:clean(f.n+" "+f.s+" "+f.z+" "+f.k)}))];
+  const exact=items.find(i=>i.nam===ft);
+  let ku;
+  if(exact) ku=exact.ku.slice();
+  else{
+    const tl=terms(s.text); let best=null,bs=0;
+    items.forEach(i=>{let sc=0; tl.forEach(t=>{sc+=termScore(t,i.hay,null);}); if(sc>bs){bs=sc; best=i;}});
+    const titel=w.bau.filter(c=>tl.some(t=>!TSTOP.has(t)&&termScore(t,clean(c.n),null)>=3)).map(c=>c.n);
+    ku=[...new Set([...titel.slice(0,2),...(best?best.ku.slice(0,2):[w.bau[0].n])])];
+  }
+  return ku.filter(n=>!PFL.has(n)).slice(0,3);
+}
+/* Nur neu vorschlagen, wenn sich Text oder Welt geändert haben. Bestätigte bleiben,
+   abgelehnte kommen nicht wieder. */
+function updateKu(s){
+  if(!Array.isArray(s.ku)) s.ku=[]; if(!Array.isArray(s.kuNo)) s.kuNo=[];
+  const sig=(s.welt||"")+"|"+fold((s.text||"").trim());
+  if(s.kuSig===sig) return;
+  s.kuSig=sig;
+  const keep=s.ku.filter(k=>k.st==="ok"), have=new Set(keep.map(k=>k.n));
+  s.ku=keep.concat(kursVorschlag(s).filter(n=>!have.has(n)&&s.kuNo.indexOf(n)<0).map(n=>({n,st:"v"})));
+}
+function kuChips(s){
+  if(!s.welt) return `<span class="sku-none">Kurse erscheinen, sobald eine Kompetenzwelt gewählt ist.</span>`;
+  const w=WORLDS.find(x=>x.id===s.welt), have=new Set((s.ku||[]).map(k=>k.n));
+  const opt=c=>`<option value="${esc(c.n)}">${esc(c.n)} · ${esc(c.t)}</option>`;
+  return (s.ku||[]).map(k=>`<span class="kc${k.st==="ok"?" ok":""}" title="${k.st==="ok"?"bestätigt":"Vorschlag — bestätigen oder entfernen"}">${k.st==="ok"?"":"<i>Vorschlag</i>"}${esc(k.n)}
+      ${k.st==="ok"?"":`<button type="button" data-kok="${esc(k.n)}" title="Bestätigen">✓</button>`}<button type="button" data-kx="${esc(k.n)}" title="Entfernen">&times;</button></span>`).join("")
+    +`<select class="kadd no-print" data-kadd aria-label="Kurs hinzufügen"><option value="">+ Kurs</option>
+      <optgroup label="${esc(w.title)}">${w.bau.filter(c=>!have.has(c.n)).map(opt).join("")}</optgroup>
+      <optgroup label="Weitere Kurse">${ALLE_KURSE.filter(c=>c.welt!==w.id&&!have.has(c.n)).map(opt).join("")}</optgroup></select>`;
+}
+function kuChanged(){
+  save();
+  document.querySelectorAll("[data-sku]").forEach(b=>{const s=findSkill(b.dataset.sku); if(s) b.innerHTML=kuChips(s);});
+  renderKurse(); renderSync();
+}
+document.addEventListener("click",e=>{
+  const box=e.target.closest("[data-sku]"); if(!box) return;
+  const s=findSkill(box.dataset.sku); if(!s) return;
+  const ok=e.target.closest("[data-kok]"), x=e.target.closest("[data-kx]");
+  if(ok){const k=s.ku.find(k=>k.n===ok.dataset.kok); if(k) k.st="ok";}
+  else if(x){s.ku=s.ku.filter(k=>k.n!==x.dataset.kx); if(s.kuNo.indexOf(x.dataset.kx)<0) s.kuNo.push(x.dataset.kx);}
+  else return;
+  kuChanged();
+});
+document.addEventListener("change",e=>{
+  const sel=e.target.closest("[data-kadd]"); if(!sel||!sel.value) return;
+  const s=findSkill(sel.closest("[data-sku]").dataset.sku); if(!s) return;
+  if(!s.ku.some(k=>k.n===sel.value)) s.ku.push({n:sel.value,st:"ok"});
+  s.kuNo=s.kuNo.filter(n=>n!==sel.value);
+  kuChanged();
+});
 
 let SAMPLE=null,busy=false;
 const findIn=document.getElementById("findIn"),hitsEl=document.getElementById("hits"),
@@ -1453,6 +1591,9 @@ function takeBtn(w,txt){
 }
 /* Kurse, die eine Kernkompetenz abdecken — als kurze Zeile unter der Beschreibung */
 const kuHTML=k=>(k.ku||[]).length?`<span class="ku">→ ${k.ku.map(esc).join(" · ")}</span>`:"";
+const skillOf=t=>skills().find(s=>s.text.trim().toLowerCase()===String(t).trim().toLowerCase());
+/* Noch nicht übernommen: Kurse als Hinweis. Übernommen: wählbar wie in Schritt 1. */
+const catKu=k=>{const s=skillOf(k.n); return s?`<div class="sku" data-sku="${s.id}">${kuChips(s)}</div>`:kuHTML(k);};
 
 function renderCatCards(){
   if(!catCards) return;
@@ -1461,12 +1602,12 @@ function renderCatCards(){
       <div class="h"><span class="kw">${w.kw}</span><h4>${esc(w.title)}</h4><p>${esc(w.lead)}</p></div>
       <div class="cc-b">
         <div class="cc-sec"><span class="lbl">Kernkompetenzen</span>
-          ${w.komp.map(k=>`<div class="cc-k"><b>${esc(k.n)}</b><span>${esc(k.d)}</span>${kuHTML(k)}${takeBtn(w,k.n)}</div>`).join("")}</div>
+          ${w.komp.map(k=>`<div class="cc-k"><b>${esc(k.n)}</b><span>${esc(k.d)}</span>${takeBtn(w,k.n)}${catKu(k)}</div>`).join("")}</div>
         <div class="cc-sec"><span class="lbl">So klingt es im Gespräch</span>
-          ${w.felder.map(f=>`<div class="cc-f"><i>${esc(f.s)}</i><b>${esc(f.n)}</b> &mdash; ${esc(f.z)}${takeBtn(w,f.n)}</div>`).join("")}</div>
+          ${w.felder.map(f=>`<div class="cc-f"><i>${esc(f.s)}</i><b>${esc(f.n)}</b> &mdash; ${esc(f.z)}${takeBtn(w,f.n)}${catKu(f)}</div>`).join("")}</div>
         <div class="cc-sec"><span class="lbl">Typische Zielgruppen</span>
           <div class="cc-tags">${w.ziel.map(z=>`<span>${esc(z)}</span>`).join("")}</div></div>
-        <div class="cc-sec"><span class="lbl">Kurse dafür · je ${euro(PREIS)}, Bestandskunden ${euro(PREIS_BESTAND)}</span>
+        <div class="cc-sec"><span class="lbl">Alle Kurse dieser Welt</span>
           <div class="cc-tags">${w.bau.map(b=>`<span>${esc(b.n)} <small>· ${esc(b.t)}</small></span>`).join("")}</div></div>
         <div class="cc-sec"><span class="lbl">Warum das gebraucht wird</span>
           <p class="cc-beleg">${esc(w.beleg)}</p></div>
@@ -1477,7 +1618,7 @@ catCards.addEventListener("click",e=>{
   const b=e.target.closest("[data-take-cat]"); if(!b||b.disabled) return;
   const txt=b.dataset.takeTxt;
   addSkill(txt,b.dataset.takeCat,[{name:"",n:""}],false);
-  toast(`„${txt}“ übernommen — Team und Anzahl in Schritt 1 ergänzen.`);
+  toast(`„${txt}“ übernommen — Kurse sind vorgeschlagen, Team in Schritt 1 ergänzen.`);
 });
 /* Außenbeschriftung des Katalogrings auf die Bogenlänge einpassen */
 function fitCat(){
@@ -1542,6 +1683,8 @@ function skillRow(s,i){
     <div class="wsel">${WORLDS.map(w=>`<button type="button" class="wchip" style="--wc:${w.c}" data-sw="${w.id}" aria-pressed="${s.welt===w.id}">${esc(w.title)}</button>`).join("")}</div>
     <span class="s-lbl">Teams</span>
     ${teamChips(s,i)}
+    <span class="s-lbl">Kurse</span>
+    <div class="sku" data-sku="${s.id}">${kuChips(s)}</div>
     <input class="s-note" value="${esc(s.note)}" maxlength="200" placeholder="Ergänzung (optional)" data-sf="note">
   </div>`;
 }
@@ -1553,13 +1696,14 @@ function needSummary(){
 }
 function needSum(){const n=needEl.querySelector(".need-sum"); if(n) n.textContent=needSummary();}
 function renderNeed(){
-  const ls=skills();
+  const ls=skills(); ls.forEach(updateKu);
   needEl.innerHTML=`
     <div class="need-h"><h3>Was fehlt — und wem?</h3>
       <span class="need-sum">${esc(needSummary())}</span></div>
     <div class="gt-box no-print"><label for="gesamtN"><b>${GT}</b>
       <input id="gesamtN" type="number" min="0" max="99999" value="${esc(profile.gesamtN)}" placeholder="Anzahl"> Mitarbeitende</label>
-      <span>Einmal eintragen — betrifft ein Skill alle, je Skill auf „${GT}“ klicken.</span></div>
+      <span>Einmal eintragen — betrifft ein Skill alle, je Skill auf „${GT}“ klicken.</span>
+      <label class="gt-cp"><input type="checkbox" id="copilotOnly"${profile.copilotOnly?" checked":""}> KI im Unternehmen: <b>nur Microsoft Copilot</b></label></div>
     ${ls.length?ls.map(skillRow).join("")
       :`<div class="t-empty">Noch nichts erfasst.</div>`}
     <button type="button" class="btn go need-add no-print" id="sAdd">+ Weiteren Skill erfassen</button>`;
@@ -1575,10 +1719,13 @@ function redrawAll(){
 }
 /* Leichter Durchlauf beim Tippen: keine Neuzeichnung der Eingabefelder */
 function touchSkills(){
+  skills().forEach(s=>{const before=s.kuSig; updateKu(s);
+    if(s.kuSig!==before){const b=needEl.querySelector(`[data-sku="${s.id}"]`); if(b) b.innerHTML=kuChips(s);}});
   save(); needSum(); refreshSug(); buildInner(); renderCatCards(); renderCounts(); coreDefault();
   renderNeedRing(); renderPanel(); renderNeedbar(); renderCtx(); renderCards(); renderNeedOut(); renderSync(); renderKurse();
 }
 needEl.addEventListener("input",e=>{
+  if(e.target.id==="copilotOnly"){ profile.copilotOnly=e.target.checked; save(); renderKurse(); renderSync(); return; }
   if(e.target.id==="gesamtN"){
     profile.gesamtN=e.target.value===""?"":Math.max(0,Math.min(99999,parseInt(e.target.value,10)||0));
     needEl.querySelectorAll(".gt-n").forEach(n=>n.textContent=parseInt(profile.gesamtN,10)||"?");
@@ -1653,6 +1800,7 @@ function renderPanel(){
             : `<span class="ps-none">noch ohne Team</span>`}
            <button type="button" class="mini" data-goedit="${s.id}">bearbeiten</button></div>
          ${s.note.trim()?`<p class="ps-n">${esc(s.note.trim())}</p>`:""}
+         <div class="sku" data-sku="${s.id}">${kuChips(s)}</div>
        </div>`).join("")
         :`<p class="ps-empty">Noch nichts.</p>`}
        <button type="button" class="addk no-print" id="addHere">+ Skill in „${esc(w.title)}“ erfassen</button>
@@ -1811,11 +1959,12 @@ function renderCards(){
 }
 function renderKurse(){
   const g=document.getElementById("kurse"); if(!g) return;
-  const ws=WORLDS.filter(w=>skillsFor(w.id).length), liste=kursListe(), p=kursPreis(), fm=profile.format||"inhouse";
+  const liste=kursListe(), fm=profile.format||"inhouse";
   const teams=[...((parseInt(profile.gesamtN,10)||skills().some(s=>(s.teams||[]).some(t=>t.all)))?[GT]:[]),...teamPool().filter(t=>t!==GT)];
-  const teamSel=c=>`<select data-plan="team" data-k="${esc(c.key)}" aria-label="Team"><option value="">Team wählen</option>
-    ${teams.map(t=>`<option${t===c.team?" selected":""}>${esc(t)}</option>`).join("")}
-    ${c.team&&teams.indexOf(c.team)<0?`<option selected>${esc(c.team)}</option>`:""}</select>`;
+  const teamSel=c=>{const pl=(profile.plan||{})[c.key]||{}, auto=autoTeam(c);
+    return `<select data-plan="team" data-k="${esc(c.key)}" aria-label="Team"><option value="">${auto?"automatisch: "+esc(auto):"Team wählen"}</option>
+    ${teams.map(t=>`<option${t===pl.team?" selected":""}>${esc(t)}</option>`).join("")}
+    ${pl.team&&teams.indexOf(pl.team)<0?`<option selected>${esc(pl.team)}</option>`:""}</select>`;};
   const ortSel=c=>fm==="hybrid"?`<select data-plan="ort" data-k="${esc(c.key)}" aria-label="Ort">
       <option${c.ort==="vor Ort"?" selected":""}>vor Ort</option><option${c.ort==="online"?" selected":""}>online</option></select>`
     :`<span class="kp-fix">${c.ort}</span>`;
@@ -1828,59 +1977,63 @@ function renderKurse(){
     <span class="kp-w"><span class="lbl">Woche</span><input type="number" min="1" max="${TLMAX()}" data-plan="woche" data-k="${esc(c.key)}" value="${c.woche}"
       class="tl-num${c.auto?" auto":""}" title="${c.auto?"automatisch über Phase 3 verteilt":"festgelegt"}"></span>
     <span class="kp-o"><span class="lbl">Ort</span>${ortSel(c)}</span>
-    <span class="kp-p">${profile.bestand?`<s>${euro(PREIS)}</s> `:""}${euro(p)}</span></div>`;
-  const an=anreiseText(liste);
+    <span class="kp-x">${c.pflicht?"":`<button type="button" class="no-print" data-kdrop="${esc(c.n)}" title="Kurs aus dem Plan nehmen">&times;</button>`}</span></div>`;
   g.innerHTML=`
-    <div class="kurs-opt no-print">
-      <label><input type="checkbox" data-kopt="copilotOnly"${profile.copilotOnly?" checked":""}> KI im Unternehmen: <b>nur Microsoft Copilot</b></label>
-      <label><input type="checkbox" data-kopt="bestand"${profile.bestand?" checked":""}> <b>Bestandskunde</b> — ${euro(PREIS_BESTAND)} statt ${euro(PREIS)} je Kurs</label>
-    </div>
     <div class="fmt no-print"><span class="lbl">Durchführung</span>
       <div class="fmt-b">${Object.keys(FORMATE).map(k=>`<button type="button" data-fmt="${k}" aria-pressed="${fm===k}">${FORMATE[k]}</button>`).join("")}</div>
-      ${fm!=="online"?`<label class="fmt-a">Anreise je Vor-Ort-Termin <input type="number" min="0" step="50" data-anreise value="${esc(profile.anreise)}" placeholder="nach Aufwand" class="tl-num" style="width:110px"> €</label>`:""}
-      <span class="fmt-h">${fm==="inhouse"?"Alle Kurse bei Ihnen vor Ort, zzgl. Anreise.":fm==="hybrid"?"Je Kurs wählen: vor Ort (zzgl. Anreise) oder online.":"Alle Kurse live online, keine Anreise."}</span>
+      <span class="fmt-h">${fm==="inhouse"?"Alle Kurse bei Ihnen vor Ort (mit Anreise).":fm==="hybrid"?"Je Kurs wählen: vor Ort (mit Anreise) oder online.":"Alle Kurse live online."}</span>
     </div>
-    ${ws.length?`<details class="kurs-wahl no-print"${profile.kurse.length?"":" open"}><summary><span class="lbl">Kurse auswählen</span> <span class="kw-n">${gewaehlteKurse().length} gewählt</span></summary>
-      ${ws.map(w=>`<div class="kw-w" style="--pc:${w.c}"><span class="lbl">${esc(w.title)}</span>
-      <div class="kw-c">${w.bau.map(c=>`<button type="button" class="kchip" data-kurs="${esc(c.n)}" aria-pressed="${(profile.kurse||[]).indexOf(c.n)>-1}">${esc(c.n)} <small>${esc(c.t)}</small></button>`).join("")}</div></div>`).join("")}</details>`
-      :`<p class="none no-print">Sobald Skills erfasst sind, stehen hier die passenden Kurse je Kompetenzwelt zur Auswahl.</p>`}
-    <p class="kp-hint no-print">Reihenfolge = Priorität. Je Kurs festlegen, für welches Team und in welcher Woche — die Timeline unten zieht mit.</p>
+    <p class="kp-hint no-print">Reihenfolge = Priorität. Ohne Eingabe kommt das Team aus den Skills und die Woche verteilt sich über Phase 3 — die Timeline zieht mit.</p>
     <div class="ktab">
-      <div class="kp kp-h"><span>Prio</span><span>Kurs</span><span>Team</span><span>Woche</span><span>Ort</span><span>Preis</span></div>
+      <div class="kp kp-h"><span>Prio</span><span>Kurs</span><span>Team</span><span>Woche</span><span>Ort</span><span></span></div>
       ${liste.map(zeile).join("")}
+    </div>
+    ${liste.length===1?`<p class="kurs-fuss">Noch keine weiteren Kurse — in Schritt 1 oder 2 Kompetenzen erfassen, dann kommen Vorschläge.</p>`:""}`;
+  if(typeof renderTimeline==="function"&&document.getElementById("tl")) renderTimeline();
+  renderAngebot();
+}
+function renderAngebot(){
+  const g=document.getElementById("angebot"); if(!g) return;
+  const liste=kursListe(), p=kursPreis(), an=anreiseText(liste), fm=profile.format||"inhouse";
+  g.innerHTML=`
+    <div class="ang-opt">
+      <label><input type="checkbox" data-kopt="bestand"${profile.bestand?" checked":""}> <b>Bestandskunde</b> — ${euro(PREIS_BESTAND)} statt ${euro(PREIS)} je Kurs</label>
+      ${fm!=="online"?`<label>Anreise je Vor-Ort-Termin <input type="number" min="0" step="50" data-anreise value="${esc(profile.anreise)}" placeholder="nach Aufwand" class="tl-num" style="width:110px"> €</label>`:""}
+    </div>
+    <div class="ktab">
+      ${liste.map(c=>`<div class="ksum ang"><span>${c.prio}. ${esc(c.n)}${c.pflicht?" <em>immer dabei</em>":""}<small>${esc(c.t)} · ${c.ort}</small></span><span>${profile.bestand?`<s>${euro(PREIS)}</s> `:""}${euro(p)}</span></div>`).join("")}
       <div class="ksum"><span>${liste.length} ${liste.length===1?"Kurs":"Kurse"} × ${euro(p)}${profile.bestand?" (Bestandskundenpreis)":""}</span><span>${euro(liste.length*p)}</span></div>
       ${an?`<div class="ksum"><span>${esc(an)}</span><span>${anreiseBetrag()?euro(vorOrt(liste)*anreiseBetrag()):"—"}</span></div>`:""}
       <div class="ksum tot"><span>Gesamt${an&&!anreiseBetrag()?" · zzgl. Anreise":""}</span><span>${euro(summe(liste))}</span></div>
-    </div>
-    <p class="kurs-fuss">Durchführung: ${FORMATE[fm]}. Preise je Kurs für Ihr Team.</p>`;
-  if(typeof renderTimeline==="function"&&document.getElementById("tl")) renderTimeline();
+    </div>`;
 }
-const kursBox=document.getElementById("kurse");
+const kursBox=document.getElementById("kurse"), angBox=document.getElementById("angebot");
 const planOf=k=>(profile.plan||(profile.plan={}))[k]||(profile.plan[k]={});
 const kursNeu=()=>{save(); renderKurse(); renderSync();};
 kursBox.addEventListener("click",e=>{
-  const b=e.target.closest("[data-kurs]");
-  if(b){const n=b.dataset.kurs, ks=profile.kurse||(profile.kurse=[]), i=ks.indexOf(n);
-    if(i>-1) ks.splice(i,1); else ks.push(n);
-    const open=kursBox.querySelector("details.kurs-wahl"); const wasOpen=open&&open.open;
-    kursNeu(); const d=kursBox.querySelector("details.kurs-wahl"); if(d&&wasOpen) d.open=true; return;}
   const f=e.target.closest("[data-fmt]");
   if(f){profile.format=f.dataset.fmt; kursNeu(); return;}
   const mv=e.target.closest("[data-mv]");
   if(mv){const keys=kursListe().map(c=>c.key), i=keys.indexOf(mv.dataset.k), j=i+(+mv.dataset.mv);
     if(i<0||j<0||j>=keys.length) return;
     [keys[i],keys[j]]=[keys[j],keys[i]]; profile.reihe=keys; kursNeu(); return;}
+  const dr=e.target.closest("[data-kdrop]");
+  if(dr){const n=dr.dataset.kdrop;
+    skills().forEach(s=>{if((s.ku||[]).some(k=>k.n===n)){s.ku=s.ku.filter(k=>k.n!==n); if(s.kuNo.indexOf(n)<0) s.kuNo.push(n);}});
+    kuChanged(); return;}
 });
 kursBox.addEventListener("change",e=>{
+  const pl=e.target.closest("[data-plan]"); if(!pl) return;
+  const o=planOf(pl.dataset.k), f=pl.dataset.plan;
+  if(f==="woche"){const v=parseInt(pl.value,10); o.woche=(v>=1&&v<=TLMAX())?v:"";}
+  else o[f]=pl.value;
+  kursNeu();
+});
+angBox.addEventListener("change",e=>{
   const c=e.target.closest("[data-kopt]");
-  if(c){profile[c.dataset.kopt]=c.checked; kursNeu(); return;}
+  if(c){profile[c.dataset.kopt]=c.checked; save(); renderAngebot(); return;}
   const a=e.target.closest("[data-anreise]");
-  if(a){profile.anreise=a.value===""?"":Math.max(0,parseInt(a.value,10)||0); kursNeu(); return;}
-  const pl=e.target.closest("[data-plan]");
-  if(pl){const o=planOf(pl.dataset.k), f=pl.dataset.plan;
-    if(f==="woche"){const v=parseInt(pl.value,10); o.woche=(v>=1&&v<=TLMAX())?v:"";}
-    else o[f]=pl.value;
-    kursNeu();}
+  if(a){profile.anreise=a.value===""?"":Math.max(0,parseInt(a.value,10)||0); save(); renderAngebot();}
 });
 
 function syncHTML(kind){
@@ -2029,12 +2182,13 @@ document.addEventListener("paste",e=>{const it=e.clipboardData&&e.clipboardData.
 const tabs=[...document.querySelectorAll(".stab")];
 function goStep(n){
   tabs.forEach(t=>t.setAttribute("aria-selected",t.dataset.step===String(n)));
-  [1,2,3,4].forEach(i=>document.getElementById("s"+i).classList.toggle("on",i===n));
+  [1,2,3,4,5].forEach(i=>document.getElementById("s"+i).classList.toggle("on",i===n));
   window.scrollTo({top:0,behavior:"smooth"});
   if(n===1) requestAnimationFrame(fitLabels);
   if(n===4) requestAnimationFrame(fitCat);
 }
 tabs.forEach(t=>t.addEventListener("click",()=>goStep(+t.dataset.step)));
+document.addEventListener("click",e=>{const g=e.target.closest("[data-go]"); if(g) goStep(+g.dataset.go);});
 function renderCounts(){
   const n=named().length, h=headcount();
   document.getElementById("cnt1").textContent=n;
@@ -2370,27 +2524,21 @@ async function buildPDF(scope){
     B.y+=3;
   }
 
-  /* Kurse und Investition nur im vollen Umfang */
+  /* Kursplan ohne Preise — die stehen im separaten Angebot */
   if(scope!=="model"){
-    const liste=kursListe(), p=kursPreis(), an=anreiseText(liste);
-    B.platz(30); B.titel("Kurse und Investition");
+    const liste=kursListe();
+    B.platz(30); B.titel("Kursplan");
     B.fliess("Durchführung: "+FORMATE[profile.format||"inhouse"]+" · Reihenfolge nach Priorität",9,PDFC.ink2); B.y+=1.5;
     liste.forEach(c=>{
       B.platz(12);
       B.setF(9.5,"bold",PDFC.ink);
-      const z=d.splitTextToSize(c.prio+".  "+c.n+(c.pflicht?"  (immer dabei)":""),W-2*M-30);
+      const z=d.splitTextToSize(c.prio+".  "+c.n+(c.pflicht?"  (immer dabei)":""),W-2*M);
       z.forEach((t,j)=>{d.text(t,M,B.y+j*4.3);});
-      d.text(euro(p),W-M,B.y,{align:"right"});
       B.y+=z.length*4.3;
       B.setF(8.5,"normal",PDFC.ink3);
       d.text((c.team||"Team offen")+"  ·  Woche "+c.woche+"  ·  "+c.ort+"  ·  "+c.t,M+5,B.y);
       B.y+=5.5;
     });
-    B.linie();
-    const sumZ=(l,v,bold)=>{B.platz(6); B.setF(bold?10:9,bold?"bold":"normal",bold?PDFC.ink:PDFC.ink2); d.text(l,M,B.y); d.text(v,W-M,B.y,{align:"right"}); B.y+=5;};
-    sumZ(liste.length+(liste.length===1?" Kurs":" Kurse")+" × "+euro(p)+(profile.bestand?" (Bestandskundenpreis)":""),euro(liste.length*p));
-    if(an) sumZ(an,anreiseBetrag()?euro(vorOrt(liste)*anreiseBetrag()):"—");
-    sumZ("Gesamt"+(an&&!anreiseBetrag()?" · zzgl. Anreise":""),euro(summe(liste)),true);
   }
 
   /* Umsetzung nur im vollen Umfang */
@@ -2448,6 +2596,42 @@ async function buildPDF(scope){
   return d;
 }
 
+/* Angebot: eigenes PDF mit Preisen zum Kursplan */
+async function buildAngebot(){
+  const B=pdfBuilder(), {d,W,M}=B;
+  const heute=new Date().toLocaleDateString("de-AT",{day:"2-digit",month:"long",year:"numeric"});
+  const kunde=(profile.name||"").trim(), liste=kursListe(), p=kursPreis(), an=anreiseText(liste);
+  try{ d.addImage(PPLOGO,"PNG",M,B.y,26,6.5); }
+  catch(e){ B.setF(11,"bold",PDFC.blue); d.text("ppedv",M,B.y+5); }
+  B.setF(8,"normal",PDFC.ink3); d.text(heute,W-M,B.y+4.9,{align:"right"});
+  B.y+=14;
+  B.setF(20,"bold",PDFC.ink); d.text("Angebot",M,B.y); B.y+=7.5;
+  B.setF(10.5,"normal",PDFC.ink2); d.text(kunde?"für "+kunde:"Kompetenzentwicklung mit ppedv",M,B.y); B.y+=5;
+  B.linie();
+  B.fliess("Grundlage ist das gemeinsam erarbeitete Kompetenzmodell vom "+heute+". Durchführung: "+FORMATE[profile.format||"inhouse"]+".",9.5,PDFC.ink2);
+  B.y+=3;
+  B.setF(7.5,"bold",PDFC.ink3); d.text("KURS",M,B.y); d.text("PREIS",W-M,B.y,{align:"right"}); B.y+=2.5; B.linie();
+  liste.forEach(c=>{
+    B.platz(12);
+    B.setF(9.5,"normal",PDFC.ink);
+    const z=d.splitTextToSize(c.prio+".  "+c.n+(c.pflicht?"  (immer dabei)":""),W-2*M-34);
+    z.forEach((t,j)=>{d.text(t,M,B.y+j*4.3);});
+    B.setF(9.5,"bold",PDFC.ink); d.text(euro(p),W-M,B.y,{align:"right"});
+    B.y+=z.length*4.3;
+    B.setF(8,"normal",PDFC.ink3); d.text(c.t+"  ·  "+(c.team||"Team offen")+"  ·  Woche "+c.woche+"  ·  "+c.ort,M+5,B.y);
+    B.y+=5.5;
+  });
+  B.linie();
+  const sumZ=(l,v,bold)=>{B.platz(6); B.setF(bold?10.5:9,bold?"bold":"normal",bold?PDFC.ink:PDFC.ink2); d.text(l,M,B.y); d.text(v,W-M,B.y,{align:"right"}); B.y+=5.5;};
+  sumZ(liste.length+(liste.length===1?" Kurs":" Kurse")+" × "+euro(p)+(profile.bestand?" (Bestandskundenpreis)":""),euro(liste.length*p));
+  if(an) sumZ(an,anreiseBetrag()?euro(vorOrt(liste)*anreiseBetrag()):"—");
+  sumZ("Gesamt"+(an&&!anreiseBetrag()?" · zzgl. Anreise":""),euro(summe(liste)),true);
+  B.y+=2;
+  B.fliess("Preise je Kurs für Ihr Team (bis 10 Personen je Kurs)."+(profile.bestand?" Bestandskundenpreis: "+euro(PREIS_BESTAND)+" statt "+euro(PREIS)+" je Kurs.":""),8.5,PDFC.ink3);
+  B.fuss();
+  return d;
+}
+
 /* ---------- Ausgabe ---------- */
 const toast=m=>{const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show");
   clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),2200);};
@@ -2487,7 +2671,7 @@ ${clone.innerHTML}
 function dateiname(scope,ext){
   const d=new Date(), p=n=>String(n).padStart(2,"0");
   const kunde=((profile.name||"").trim()||"Kunde").replace(/[^\wÄÖÜäöüß -]/g,"").replace(/\s+/g,"-");
-  return `Kompetenzmatrix-${kunde}-${scope==="model"?"Modell-":""}${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.${ext}`;
+  return `${scope==="angebot"?"Angebot":"Kompetenzmatrix"}-${kunde}-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.${ext}`;
 }
 /* Standard-Downloadmechanismus des Web: ein unsichtbarer <a download>-Link,
    programmatisch angeklickt. Funktioniert in jedem Browser ohne Plugin-
@@ -2521,11 +2705,11 @@ function zeigePDF(blob,name){
 }
 async function saveDoc(scope){
   if(!named().length){ toast("Noch nichts erfasst."); return; }
-  const btn=scope==="model"?document.getElementById("btnPrintModel"):document.getElementById("btnPrint");
+  const btn=document.getElementById(scope==="angebot"?"btnAngebot":"btnPrint");
   const label=btn?btn.textContent:"";
   if(btn){btn.disabled=true; btn.textContent="PDF wird gebaut …";}
   try{
-    const doc=await buildPDF(scope), name=dateiname(scope,"pdf"), blob=doc.output("blob");
+    const doc=scope==="angebot"?await buildAngebot():await buildPDF(scope), name=dateiname(scope,"pdf"), blob=doc.output("blob");
     if(DL){ await DL.save({filename:name,data:blob}); toast("PDF gesichert."); }
     else{
       try{ downloadBlob(blob,name); toast("PDF heruntergeladen."); }
@@ -2554,6 +2738,7 @@ function doPrint(scope){
   /* Das gesetzte PDF ist immer der bessere Weg — der Druckdialog nur der
      Notnagel, falls jsPDF nicht geladen werden konnte. */
   if(window.jspdf&&window.jspdf.jsPDF){ saveDoc(scope); return; }
+  if(scope==="angebot"){ toast("Das Angebot braucht den PDF-Baukasten — Seite neu laden."); return; }
   document.body.classList.toggle("pm-model",scope==="model");
   document.querySelectorAll("#phases details, .bg details, .ctx").forEach(d=>d.open=true);
   let fired=false;
@@ -2568,7 +2753,7 @@ function doPrint(scope){
   },700);
 }
 document.getElementById("btnPrint").addEventListener("click",()=>doPrint("full"));
-document.getElementById("btnPrintModel").addEventListener("click",()=>doPrint("model"));
+document.getElementById("btnAngebot").addEventListener("click",()=>doPrint("angebot"));
 document.getElementById("btnCopy").addEventListener("click",async()=>{
   const ls=named();
   if(!ls.length){toast("Noch nichts erfasst."); return;}
@@ -2592,12 +2777,9 @@ document.getElementById("btnCopy").addEventListener("click",async()=>{
   const ohne=ls.filter(s=>!s.welt);
   if(ohne.length) t+=`NOCH OHNE KOMPETENZWELT\n${ohne.map(s=>"  - "+s.text).join("\n")}\n\n`;
   if(notes.trim()) t+=`NOTIZEN\n${notes.trim()}\n\n`;
-  const kl=kursListe(), kp=kursPreis(), an=anreiseText(kl);
-  t+=`KURSE UND INVESTITION · ${FORMATE[profile.format||"inhouse"].toUpperCase()}${profile.bestand?" · BESTANDSKUNDENPREIS":""}\n`
-   +kl.map(c=>`  ${c.prio}. ${c.n} (${c.t})${c.pflicht?" — immer dabei":""}\n     ${c.team||"Team offen"} · Woche ${c.woche} · ${c.ort} · ${euro(kp)}`).join("\n")
-   +`\n  ${kl.length} ${kl.length===1?"Kurs":"Kurse"} × ${euro(kp)} = ${euro(kl.length*kp)}`
-   +(an?`\n  ${an}${anreiseBetrag()?" = "+euro(vorOrt(kl)*anreiseBetrag()):""}`:"")
-   +`\n  Gesamt: ${euro(summe(kl))}${an&&!anreiseBetrag()?" zzgl. Anreise":""}\n\n`;
+  const kl=kursListe();
+  t+=`KURSPLAN · ${FORMATE[profile.format||"inhouse"].toUpperCase()}\n`
+   +kl.map(c=>`  ${c.prio}. ${c.n} (${c.t})${c.pflicht?" — immer dabei":""}\n     ${c.team||"Team offen"} · Woche ${c.woche} · ${c.ort}`).join("\n")+`\n\n`;
   t+=`UMSETZUNG — PHASE 1 STARTET MIT DER ZUSAGE · ${TLMAX()} WOCHEN\n`
    +PHASES.map((p,i)=>{const[a,b]=tlRange(i); return `  ${p.n} (Woche ${a}–${b}): ${phTitle(i)} → ${p.ms}`;}).join("\n")
    +`\n\nDANACH — JAHRESPARTNERSCHAFT\n  4 Termine vor Ort, 12 Monate Laufzeit, Pauschalpreis\n`;
