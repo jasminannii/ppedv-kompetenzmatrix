@@ -99,6 +99,12 @@ lassen sich Kurse anklicken, darunter stehen Liste und Summe. Die Auswahl geht i
 
 Auswahl, Bestandskunde und Copilot-Häkchen werden mit der Kartei gespeichert.
 
+**Kernkompetenzen folgen dem Kursprogramm.** Jede der 18 Kernkompetenzen trägt in
+`ku` die Kurse, die sie abdecken. Sie stehen im Katalog (Schritt 4) und im Panel
+„Woran ppedv dabei denkt“ unter der Beschreibung. Regel: Eine Kernkompetenz ohne
+passenden Kurs gehört nicht ins Modell. Auch die Unterzeilen der Welten nennen nur
+Themen, die im Kursprogramm stehen.
+
 ## Anpassbarkeit (pro Kundengespräch, nicht global)
 
 **Kernkompetenzen sind Vorschläge, keine Vorgaben.** Je Welt sind drei
