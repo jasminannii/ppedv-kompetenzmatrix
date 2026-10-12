@@ -1046,11 +1046,11 @@ const GT="Gesamtes Team";
 const FORMATE={inhouse:"Inhouse – vor Ort",hybrid:"Hybrid – vor Ort und online",online:"Online"};
 const kKey=c=>c.pflicht?"PFLICHT":c.n;
 /* Kursplan in Prioritätsreihenfolge, je Kurs mit Team, Woche und Ort.
-   Ohne festgelegte Woche verteilen sich die Kurse über Phase 3 (Durchführung). */
+   Ohne festgelegte Woche verteilen sich die Kurse über die Phase „Schulungen“. */
 function kursListe(){
   const all=[Object.assign({pflicht:true},pflichtKurs()),...gewaehlteKurse()];
   const r=profile.reihe||[], pos=c=>{const i=r.indexOf(kKey(c)); return i<0?1000+all.indexOf(c):i;};
-  const sorted=all.slice().sort((a,b)=>pos(a)-pos(b)), n=sorted.length, [a,b]=tlRange(2), fm=profile.format||"inhouse";
+  const sorted=all.slice().sort((a,b)=>pos(a)-pos(b)), n=sorted.length, [a,b]=tlRange(PH_KURSE), fm=profile.format||"inhouse";
   return sorted.map((c,i)=>{
     const pl=(profile.plan||{})[kKey(c)]||{}, w=parseInt(pl.woche,10), auto=n>1?a+Math.round(i*(b-a)/(n-1)):a;
     return Object.assign({},c,{key:kKey(c),prio:i+1,team:pl.team||autoTeam(c),teamAuto:!pl.team,
@@ -1081,39 +1081,14 @@ const PFIELDS=[
 const LEGACY_PF=["teilnehmende","rollen"];
 
 const PHASES=[
- {n:"Phase 1",t:"Kick-off und Standortbestimmung",sync:"kk",
-  goal:"Das Projekt startet — und der tatsächliche Kompetenzstand wird erhoben, nicht der vermutete.",
-  steps:["Kick-off mit Leitung und Projektbeteiligten (60 Minuten)","Kurz-Assessment zu den gewählten Kompetenzen, 15–20 Minuten pro Person","3–5 Interviews mit Schlüsselpersonen","Ist-Soll-Delta auswerten und Lerngruppen bilden"],
-  pp:"Erstellt Assessment und Interviewleitfaden, wertet aus und stellt die Ergebnisse vor.",
-  ku:"Benennt die Projektverantwortlichen, liefert Teilnehmerliste und Terminfenster.",
-  out:["Kompetenz-Heatmap","Lerngruppen"],ms:"M1 — Standort abgestimmt"},
- {n:"Phase 2",t:"Lernpfade und Setup",sync:"lern",
-  goal:"Aus dem Delta wird ein konkreter Lernpfad je Rolle — mit Terminen, Trainern und startklarer Umgebung.",
-  steps:["Lernpfad je Lerngruppe aus den gewählten Skills zusammenstellen","Passende Kurse und Formate vorschlagen, Trainer zuordnen","Taktung und Termine festlegen, Lernumgebung einrichten und testen","Kommunikationspaket an die Teilnehmenden versenden"],
-  pp:"Wählt die Kurse zu den Skills, baut die Lernpfade, richtet die Umgebung ein und liefert die Kommunikationsvorlagen.",
-  ku:"Prüft die Termine gegen den Betriebsablauf und versendet die Kommunikation intern.",
-  out:["Lernpfad je Lerngruppe","Terminplan","Startklare Umgebung"],ms:"M2 — Start freigegeben"},
- {n:"Phase 3",t:"Durchführung in Wellen",sync:"ziel",
-  goal:"Die Module laufen — mit Praxisaufgaben aus dem echten Arbeitsalltag, nicht aus dem Lehrbuch.",
-  steps:["Welle 1: Fundament für alle gemeinsam","Welle 2: Vertiefung je Lerngruppe in getrennten Gruppen","Zwischen den Modulen: Praxisaufgaben am eigenen Fall","Feedback nach jedem Modul, Nachsteuern bei Bedarf"],
-  pp:"Führt die Trainings durch, betreut die Praxisaufgaben und berichtet nach jeder Welle.",
-  ku:"Schützt die Lernzeit im Kalender und benennt reale Fälle als Übungsmaterial.",
-  out:["Durchgeführte Module","Feedback je Welle","Teilnahmebestätigungen"],ms:"M3 — Kernmodule abgeschlossen"},
- {n:"Phase 4",t:"Transfer und eigene Use Cases",sync:"felder",
-  goal:"Gelerntes wird auf echte Aufgaben angewendet — messbar, nicht nur berichtet.",
-  steps:["2–5 konkrete Vorhaben aus dem Arbeitsalltag auswählen","Umsetzung mit begleitendem Coaching statt Frontalunterricht","Spielregeln dokumentieren: Datenschutz, Freigaben, Zuständigkeit","Interne Multiplikatoren aufbauen und mit Material ausstatten"],
-  pp:"Coacht die Umsetzung, prüft die Ergebnisse fachlich und liefert Vorlagen für die Spielregeln.",
-  ku:"Stellt Arbeitszeit bereit, benennt Champions und trifft die Governance-Entscheidungen.",
-  out:["Umgesetzte Use Cases","Spielregeln","Champions"],ms:"M4 — Transfer nachgewiesen"},
- {n:"Phase 5",t:"Wirkungsmessung und Abschluss",sync:"erfolg",
-  goal:"Der Fortschritt ist belegt, das Ergebnis ist an die Leitung übergeben.",
-  steps:["Re-Assessment mit demselben Instrument wie in Phase 1","Vorher-Nachher-Vergleich je Kompetenzfeld","Abschlussbericht mit Empfehlung für die nächsten 12 Monate","Management-Präsentation und Übergabe der Zertifikate"],
-  pp:"Führt das Re-Assessment durch, verfasst den Bericht und präsentiert vor der Leitung.",
-  ku:"Stellt die Teilnahme am Re-Assessment sicher und entscheidet über die Folgeschritte.",
-  out:["Abschlussbericht","Zertifikate","Empfehlung 12 Monate"],ms:"M5 — Projektabschluss"}
+ {n:"Phase 1",t:"Vorbereitung",sync:"lern",goal:"Termine, Teilnehmende und Praxisfälle stehen — die Schulungen können starten.",steps:["Abstimmungstermin (60 Minuten): Ziele, Ansprechpartner, Rahmen", "Termine je Kurs und Team festlegen", "Praxisfälle aus dem Arbeitsalltag auswählen", "Raum und Technik vor Ort bzw. Zugänge für online klären"],pp:"Plant die Termine, stimmt Trainer und Praxisfälle ab, verschickt Einladungen und Unterlagen.",ku:"Benennt Ansprechpartner und Teilnehmende, liefert Praxisfälle und stellt bei Inhouse-Terminen Raum und Technik.",out:["Terminplan", "Teilnehmerliste", "Praxisfälle"],ms:"M1 — Start freigegeben"},
+ {n:"Phase 2",t:"Schulungen",sync:"ziel",goal:"Die Kurse laufen nach Priorität — mit Beispielen aus dem eigenen Arbeitsalltag.",steps:["Kurse laut Kursplan, vor Ort oder online", "Übungen an den vorab gewählten Praxisfällen", "Kurzes Feedback nach jedem Kurs", "Bei Bedarf nachsteuern: Reihenfolge, Tempo, Schwerpunkte"],pp:"Führt die Kurse durch und passt die Beispiele an das Unternehmen an.",ku:"Hält die Lernzeit im Kalender frei.",out:["Durchgeführte Kurse", "Teilnahmebestätigungen"],ms:"M2 — Kurse abgeschlossen"},
+ {n:"Phase 3",t:"Praxistransfer",sync:"felder",goal:"Das Gelernte wird im Alltag angewendet — mit einem Ansprechpartner für Rückfragen.",steps:["Gelerntes an eigenen Aufgaben anwenden", "Termin für Rückfragen (online)", "Spielregeln festhalten: Datenschutz, Freigaben, Zuständigkeit", "Interne Ansprechpartner benennen"],pp:"Beantwortet Rückfragen und liefert Vorlagen für die Spielregeln.",ku:"Gibt Zeit für die Anwendung und benennt interne Ansprechpartner.",out:["Angewendete Beispiele", "Spielregeln"],ms:"M3 — Im Alltag angekommen"},
+ {n:"Phase 4",t:"Abschluss",sync:"erfolg",goal:"Ergebnis festhalten und die nächsten Schritte vereinbaren.",steps:["Abschlussgespräch mit der Leitung (60 Minuten)", "Rückblick: was wurde geschult, was wird genutzt", "Empfehlung für die nächsten Schritte"],pp:"Bereitet das Abschlussgespräch vor und schreibt die Empfehlung.",ku:"Nimmt mit der Leitung teil und entscheidet über die Folgeschritte.",out:["Abschlussgespräch", "Empfehlung"],ms:"M4 — Abschluss"}
 ];
-const TLSPAN=[[1,2],[3,4],[5,12],[8,14],[14,16]], TLPAR=[0,0,0,1,0];
-const TLSHORT=["Kick-off & Standort","Lernpfade & Setup","Durchführung","Transfer & Use Cases","Wirkung & Abschluss"];
+const TLSPAN=[[1,2],[3,12],[8,14],[15,16]], TLPAR=[0,0,1,0];
+const TLSHORT=["Vorbereitung","Schulungen","Praxistransfer","Abschluss"];
+const PH_KURSE=1;   /* Phase, über die sich Kurse ohne feste Woche verteilen */
 
 /* ---------- Zustand ----------
    Der Kern ist eine flache Liste von Skills. Ein Skill ist das, was der Kunde sagt,
@@ -1998,7 +1973,7 @@ function renderKurse(){
     <span class="kp-n">${esc(c.n)}${c.pflicht?` <em>immer dabei</em>`:""}<small>${esc(c.t)}</small></span>
     <span class="kp-team"><span class="lbl">Team</span>${teamSel(c)}</span>
     <span class="kp-w"><span class="lbl">Woche</span><input type="number" min="1" max="${TLMAX()}" data-plan="woche" data-k="${esc(c.key)}" value="${c.woche}"
-      class="tl-num${c.auto?" auto":""}" title="${c.auto?"automatisch über Phase 3 verteilt":"festgelegt"}"></span>
+      class="tl-num${c.auto?" auto":""}" title="${c.auto?"automatisch über die Schulungsphase verteilt":"festgelegt"}"></span>
     <span class="kp-o"><span class="lbl">Ort</span>${ortSel(c)}</span>
     <span class="kp-x">${c.pflicht?"":`<button type="button" class="no-print" data-kdrop="${esc(c.n)}" title="Kurs aus dem Plan nehmen">&times;</button>`}</span></div>`;
   g.innerHTML=`
@@ -2060,28 +2035,22 @@ angBox.addEventListener("change",e=>{
 });
 
 function syncHTML(kind){
-  const li=[], ls=named(), tm=teamMap(ls), tn=Object.keys(tm);
-  if(kind==="kk"){
-    if(ls.length) li.push(`<li><strong>${nSkill(ls.length)}</strong> ${ls.length===1?"wird":"werden"} erhoben: ${ls.map(s=>esc(s.text)).join(" · ")}</li>`);
-    if(tn.length) li.push(`<li>Assessment für <strong>${headcount()} Mitarbeitende</strong> aus ${tn.map(esc).join(" · ")}</li>`);}
-  if(kind==="lern"){
-    tn.forEach(t=>{const mine=ls.filter(s=>(s.teams||[]).some(x=>(x.name||"").trim()===t));
-      li.push(`<li>Lernpfad <strong>${esc(t)}</strong>${tm[t]?" ("+tm[t]+")":""}: ${mine.map(s=>esc(s.text)).join(" · ")}</li>`);});
-    const off=ls.filter(s=>!sTeams(s).length);
-    if(off.length) li.push(`<li>Noch ohne Team: ${off.map(s=>esc(s.text)).join(" · ")}</li>`);
-    if(profile.start) li.push(`<li>Terminplanung auf Ihren Wunschstart: <strong>${esc(profile.start)}</strong></li>`);
+  const li=[], ls=named(), kl=kursListe();
+  if(kind==="lern"){   /* Vorbereitung */
+    const byTeam={};
+    kl.forEach(c=>(c.team||"Team offen").split(", ").forEach(t=>(byTeam[t]=byTeam[t]||[]).push(kurz(c.n))));
+    Object.keys(byTeam).forEach(t=>li.push(`<li>Termine für <strong>${esc(t)}</strong>: ${byTeam[t].map(esc).join(" · ")}</li>`));
+    if(profile.start) li.push(`<li>Wunschstart: <strong>${esc(profile.start)}</strong></li>`);
     li.push(`<li>Durchführung: <strong>${FORMATE[profile.format||"inhouse"]}</strong></li>`);}
-  if(kind==="ziel"){
-    if(tn.length) li.push(`<li><strong>Lerngruppen</strong>: ${tn.map(t=>esc(t)+(tm[t]?" ("+tm[t]+")":"")).join(" · ")}</li>`);
-    const ws=WORLDS.filter(w=>skillsFor(w.id).length);
-    if(ws.length) li.push(`<li>Wellen entlang der Kompetenzwelten: ${ws.map(w=>esc(w.title)).join(" · ")}</li>`);
-    li.push(`<li>Kurse nach Priorität: ${kursListe().map(c=>`<strong>${c.prio}.</strong> ${esc(kurz(c.n))} (${esc(c.team||"Team offen")}, W ${c.woche}, ${c.ort})`).join(" · ")}</li>`);}
-  if(kind==="felder"){
-    if(ls.length) li.push(`<li>Use Cases entlang der erfassten Skills: ${ls.map(s=>esc(s.text)).join(" · ")}</li>`);}
-  if(kind==="erfolg"){
-    if(ls.length) li.push(`<li>Re-Assessment derselben <strong>${ls.length}</strong> Skills wie in Phase 1</li>`);
-    if(profile.erfolg) li.push(`<li>Gemessen gegen Ihr Erfolgsbild: <strong>${esc(profile.erfolg.slice(0,200))}</strong></li>`);
-    if(profile.entscheidung) li.push(`<li>Abschlusspräsentation für: ${esc(profile.entscheidung)}</li>`);}
+  if(kind==="ziel"){   /* Schulungen */
+    li.push(`<li>Kurse nach Priorität: ${kl.map(c=>`<strong>${c.prio}.</strong> ${esc(kurz(c.n))} (W ${c.woche}, ${c.ort})`).join(" · ")}</li>`);
+    if(headcount()) li.push(`<li>Für <strong>${headcount()} Mitarbeitende</strong></li>`);}
+  if(kind==="felder"){ /* Praxistransfer */
+    if(ls.length) li.push(`<li>Anwenden an Ihren Themen: ${ls.map(s=>esc(s.text)).join(" · ")}</li>`);}
+  if(kind==="erfolg"){ /* Abschluss */
+    if(ls.length) li.push(`<li>Rückblick auf <strong>${nSkill(ls.length)}</strong> und ${kl.length} ${kl.length===1?"Kurs":"Kurse"}</li>`);
+    if(profile.erfolg) li.push(`<li>Gemessen an Ihrem Erfolgsbild: <strong>${esc(profile.erfolg.slice(0,200))}</strong></li>`);
+    if(profile.entscheidung) li.push(`<li>Abschlussgespräch mit: ${esc(profile.entscheidung)}</li>`);}
   return `<span class="lbl">Aus Ihrer Auswahl</span>`+(li.length?`<ul>${li.join("")}</ul>`
     :`<p class="none">Sobald Sie in Schritt 1 erfassen, steht hier, was in diese Phase einfließt.</p>`);
 }
@@ -2104,7 +2073,7 @@ function renderTimeline(){
    <div class="tl-t" style="${gc}; background-size:calc(100%/${M}) 100%"><div class="bar kurs drag${c.ort==="online"?" onl":""}" data-kk="${esc(c.key)}" style="grid-column:${c.woche}/${c.woche+1}" title="${esc(c.n)} · Woche ${c.woche} · ${c.ort} — ziehen zum Verschieben"><span>${c.ort==="online"?"on":"vO"}</span></div></div></div>`).join("")}
  <div class="tl-r tl-after"><div class="tl-l"><b>Danach</b><span>Jahrespartnerschaft</span></div>
    <div class="tl-t"><div class="bar part"><span>Ab Projektabschluss · 4 Termine vor Ort · Q1–Q4 · 12 Monate</span><span class="m">Pauschalpreis</span></div></div></div>
- <p class="tl-note">Phase 4 läuft parallel zu Phase 3 (gestrichelt) · Kurse: vO = vor Ort (zzgl. Anreise), on = online</p></div>`;
+ <p class="tl-note">Praxistransfer läuft parallel zu den Schulungen (gestrichelt) · Kurse: vO = vor Ort (zzgl. Anreise), on = online</p></div>`;
 }
 renderTimeline();
 const tlWeeksIn=document.getElementById("tlWeeks");

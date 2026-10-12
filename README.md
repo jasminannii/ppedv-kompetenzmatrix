@@ -131,10 +131,17 @@ Der Betrag „Anreise je Vor-Ort-Termin“ wird im Abschluss beim Angebot einget
 **Kursplan: welcher Kurs, für welches Team, wann.** Die Reihenfolge der Tabelle ist
 die Priorität, verschoben wird mit ↑ ↓. Je Kurs werden Team (aus den erfassten Teams),
 Woche und, bei Hybrid, der Ort festgelegt. Ohne festgelegte Woche verteilen sich die
-Kurse automatisch über Phase 3; die Zahl steht dann kursiv. Der Kursplan erscheint
+Kurse automatisch über die Phase „Schulungen“; die Zahl steht dann kursiv. Der Kursplan erscheint
 als eigene Zeilen in der Timeline, im PDF (Balkenplan und Kursliste) und in der
 Textkopie. In der Timeline lassen sich alle Balken ziehen: Phasen verschieben (Mitte)
 oder Beginn und Ende ändern (Kanten), Kurse in eine andere Woche.
+
+**Phasen.** Vier Phasen bilden ab, was bei einer Schulungsreihe passiert:
+*Vorbereitung* (Termine, Teilnehmende, Praxisfälle, Raum/Technik) · *Schulungen* (die
+Kurse laut Kursplan) · *Praxistransfer* (parallel: anwenden, Rückfragen, Spielregeln) ·
+*Abschluss* (Gespräch mit der Leitung, Empfehlung). Danach die Jahrespartnerschaft.
+Inhalte in `PHASES`, Standardwochen in `TLSPAN`. Ältere Karteien mit fünf Phasen
+starten mit den Standardwochen.
 
 **Gesamtes Team.** In Schritt 1 wird die Größe des gesamten Teams einmal zentral
 eingetragen. Betrifft ein Skill alle, genügt je Skill ein Klick auf „Gesamtes Team“.
