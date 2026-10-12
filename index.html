@@ -239,6 +239,7 @@ details.more .in{padding-top:11px}
 .ue-z b{font-size:15.5px; font-weight:600; flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .ue-z span{font-family:var(--mono); font-size:11.5px; color:var(--ink-3); white-space:nowrap}
 .ue-leer{border:1px dashed var(--line-2); border-radius:7px; padding:28px; text-align:center; color:var(--ink-3); font-size:14px}
+.ue-leer a{color:var(--blue); font-weight:600}
 .gate-alt{border:0; background:none; color:var(--orange); font-size:13px; margin-top:12px; text-decoration:underline;
   text-underline-offset:3px; padding:0; align-self:flex-start}
 @media print{.uebers{display:none!important}}
@@ -2425,7 +2426,16 @@ document.getElementById("ueNeu").addEventListener("click",()=>{ modus="anlegen";
 /* Die Liste ist offen — ohne id im Pfad startet die Seite damit */
 async function ladeUebersicht(){
   try{ const j=await api("uebersicht"); zeigeUebersicht(j.karteien||[]); }
-  catch(e){ modus="anlegen"; zeigeSchleuse(); gateErr.textContent=e.message||"Liste nicht erreichbar."; }
+  catch(e){
+    /* Ohne Speicher-Server (lokale Vorschau, GitHub Pages) gibt es keine Liste — dann ein klarer Hinweis statt der Anmeldung */
+    if(!/vercel\.app$/.test(location.hostname)&&(e.status===404||e.status===405||e.status===501||!e.status)){
+      gate.hidden=true; uebers.hidden=false;
+      ueSub.textContent="Hier läuft die Matrix ohne Speicher-Server.";
+      ueListe.innerHTML=`<div class="ue-leer">Die Kartei-Übersicht gibt es auf <a href="https://ppedv-kompetenzmatrix.vercel.app/">ppedv-kompetenzmatrix.vercel.app</a>.</div>`;
+      return;
+    }
+    modus="anlegen"; zeigeSchleuse(); gateErr.textContent=e.message||"Liste nicht erreichbar.";
+  }
 }
 /* Vorbelegung: Passwort folgt dem Unternehmensnamen, solange es keiner angefasst hat */
 let pwBeruehrt=false;
@@ -2524,7 +2534,8 @@ function kundenAnsicht(){
   st("Ihre Änderungen werden automatisch gespeichert.","ok");
 }
 
-if(karteiId) zeigeSchleuse(); else ladeUebersicht();
+if(karteiId) zeigeSchleuse();
+else{ gate.hidden=true; uebers.hidden=false; ueSub.textContent="Lädt …"; ueListe.innerHTML=""; ladeUebersicht(); }
 
 
 /* ---------- PDF ----------
