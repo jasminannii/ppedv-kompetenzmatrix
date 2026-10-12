@@ -524,6 +524,9 @@ details.more .in{padding-top:11px}
 .ksum.ang{background:var(--surface);color:var(--ink)}
 .ksum s{color:var(--ink-3);font-weight:400}
 .nextbar{display:flex;justify-content:flex-end;margin-top:26px}
+.mark-link{display:inline-flex;flex:0 0 auto;cursor:pointer;border-radius:4px}
+.mark-link:hover{opacity:.8}
+body.kunde .mark-link{cursor:default;pointer-events:none}
 .pw-wrap{position:relative;display:block}
 .pw-wrap input{width:100%;padding-right:86px!important}
 .pw-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:none;font:inherit;font-size:12.5px;font-weight:600;color:var(--blue);cursor:pointer;padding:4px 8px;border-radius:4px}
@@ -730,7 +733,7 @@ body.kunde .cust{border-color:transparent!important;background:none!important;po
 <header class="top">
   <div class="wrap">
     <div class="top-row" id="setup">
-      <img class="mark" id="ppMark" alt="ppedv"><span class="fuer">für</span>
+      <a href="/" class="mark-link" id="ppHome" title="Zur Übersicht aller Karteien"><img class="mark" id="ppMark" alt="ppedv"></a><span class="fuer">für</span>
       <button class="logo-slot" id="logoSlot">Logo wählen</button>
       <button class="logo-clear" id="logoClear" hidden title="Logo entfernen">&times;</button>
       <input class="cust" id="custName" placeholder="Unternehmen eintragen">
@@ -2506,6 +2509,13 @@ document.getElementById("fbKunde").addEventListener("click",async()=>{
     try{ await navigator.clipboard.writeText(u); st("Kundenzugang aktiv · Link kopiert","ok"); }
     catch(e){ prompt("Link für den Kunden:",u); st("Kundenzugang aktiv","ok"); }
   }catch(e){ st("Kundenzugang nicht gesetzt — "+e.message,"err"); }
+});
+/* ppedv-Logo = zurück zur Übersicht; offene Änderungen vorher speichern. Kunden haben keine Übersicht. */
+document.getElementById("ppHome").addEventListener("click",async e=>{
+  e.preventDefault();
+  if(KUNDE) return;
+  if(dirty){ clearTimeout(autoT); await sichern(); }
+  dirty=false; location.href="/";
 });
 function kundenAnsicht(){
   document.body.classList.add("kunde");
