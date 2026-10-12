@@ -2599,7 +2599,14 @@ async function buildPDF(scope){
       B.y+=z.length*4.3;
       B.setF(8.5,"normal",PDFC.ink3);
       d.text((c.team||"Team offen")+"  ·  Woche "+c.woche+"  ·  "+c.ort+"  ·  "+c.t,M+5,B.y);
-      B.y+=5.5;
+      B.y+=4.6;
+      /* Agenda: Module der Kursseite als eine kompakte Zeile */
+      const mods=(AGENDA[c.n]||[])[1]||[];
+      if(mods.length){
+        B.setF(8,"italic",PDFC.ink2);
+        d.splitTextToSize("Agenda: "+mods.join(" · "),W-2*M-5).forEach(z=>{B.platz(5); d.text(z,M+5,B.y); B.y+=3.8;});
+      }
+      B.y+=2.2;
     });
   }
 
@@ -2883,7 +2890,7 @@ document.getElementById("btnCopy").addEventListener("click",async()=>{
   if(notes.trim()) t+=`NOTIZEN\n${notes.trim()}\n\n`;
   const kl=kursListe();
   t+=`KURSPLAN · ${FORMATE[profile.format||"inhouse"].toUpperCase()}\n`
-   +kl.map(c=>`  ${c.prio}. ${c.n} (${c.t})${c.pflicht?" — immer dabei":""}\n     ${c.team||"Team offen"} · Woche ${c.woche} · ${c.ort}`).join("\n")+`\n\n`;
+   +kl.map(c=>`  ${c.prio}. ${c.n} (${c.t})${c.pflicht?" — immer dabei":""}\n     ${c.team||"Team offen"} · Woche ${c.woche} · ${c.ort}${((AGENDA[c.n]||[])[1]||[]).length?`\n     Agenda: ${AGENDA[c.n][1].join(" · ")}`:""}`).join("\n")+`\n\n`;
   t+=`UMSETZUNG — PHASE 1 STARTET MIT DER ZUSAGE · ${TLMAX()} WOCHEN\n`
    +PHASES.map((p,i)=>{const[a,b]=tlRange(i); return `  ${p.n} (Woche ${a}–${b}): ${phTitle(i)} → ${p.ms}`;}).join("\n")
    +`\n\nDANACH — JAHRESPARTNERSCHAFT\n  4 Termine vor Ort, 12 Monate Laufzeit, Pauschalpreis\n`;

@@ -159,7 +159,7 @@ Themen, die im Kursprogramm stehen.
 
 **Agenda-Daten.** `AGENDA` in `index.html` enthält je Kurs den Pfad der Kursseite und die
 Modultitel des Abschnitts „Agenda“ (bzw. „Kursinhalt“) von ppedv.de, Stand 12.10.2026.
-Für die beiden Workshops stehen die vier Schritte der Landingpages. Ändern sich Kurse auf
+Für die beiden Workshops stehen die vier Schritte der Landingpages. Die Agenda steht im Word-Angebot und als kompakte Zeile je Kurs im Kundendokument (PDF) und in der Textkopie. Ändern sich Kurse auf
 ppedv.de, die Liste neu auslesen; ein Kurs ohne Agenda-Abschnitt (derzeit „Power Apps und
 Power Automate Fortgeschrittene“) erscheint mit dem Verweis auf die Kursbeschreibung.
 
