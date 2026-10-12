@@ -435,6 +435,35 @@ details.more .in{padding-top:11px}
 .card .sec.kk li::before{content:""; position:absolute; left:0; top:7px; width:7px; height:7px; border-radius:2px; background:var(--orange)}
 .empty{border:1px dashed var(--line-2); border-radius:8px; padding:30px; text-align:center; color:var(--ink-3); grid-column:1/-1}
 .block{margin-top:40px}
+.kurs-hinweis{font-size:14px;color:var(--ink-2);margin:-6px 0 18px}
+.kurs-hinweis a{color:var(--blue);font-weight:600}
+.cc-tags span small{color:var(--ink-3)}
+.kurs-opt{display:flex;flex-wrap:wrap;gap:10px 22px;margin:14px 0 16px;font-size:14px;color:var(--ink-2)}
+.kurs-opt label{display:flex;align-items:center;gap:8px;cursor:pointer}
+.kurs-opt input{width:16px;height:16px;accent-color:var(--orange)}
+.kurs-opt b{color:var(--ink)}
+.kurs-wahl{display:grid;gap:14px;margin-bottom:18px}
+.kw-w{border-left:3px solid var(--pc);padding-left:12px}
+.kw-c{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.kchip{font:inherit;font-size:12.5px;text-align:left;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:20px;padding:4px 11px;cursor:pointer}
+.kchip small{color:var(--ink-3);margin-left:3px}
+.kchip:hover{border-color:var(--blue)}
+.kchip[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.kchip[aria-pressed="true"] small{color:rgba(255,255,255,.75)}
+.ktab{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.kr{display:grid;grid-template-columns:1fr 80px 130px;gap:12px;padding:10px 15px;border-top:1px solid var(--line);font-size:14px;align-items:baseline}
+.kr:first-child{border-top:0}
+.kr-h{background:var(--surface-2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.kr-t{color:var(--ink-3)}
+.kr-p{text-align:right;font-weight:600}
+.kr-p s{color:var(--ink-3);font-weight:400;margin-right:4px}
+.kr.pflicht{background:var(--accent-soft)}
+.kr.pflicht em{font-style:normal;font-size:11px;font-weight:700;color:var(--accent-ink);border:1px solid currentColor;border-radius:20px;padding:1px 7px;margin-left:6px;white-space:nowrap}
+.kr-sum{font-weight:700;background:var(--surface-2)}
+.kr-sum span:last-child{text-align:right;font-size:16px}
+.kr-h span:last-child{text-align:right}
+.kurs-fuss{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+@media(max-width:560px){.kr{grid-template-columns:1fr 90px}.kr>:nth-child(2){display:none}}
 .block>h3{font-size:21px; margin-bottom:6px}
 .block>.sub{font-size:14.5px; color:var(--ink-2); margin-bottom:16px; max-width:74ch}
 
@@ -684,6 +713,12 @@ details.more .in{padding-top:11px}
     <h3 style="font-size:22px;margin-top:34px">Ihr Kompetenzmodell</h3>
     <div class="cards" id="cards"></div>
 
+    <div class="block" id="blockKurse">
+      <h3>Kurse und Investition</h3>
+      <p class="sub">Je Kurs 3.500 € — für Bestandskunden 2.800 €. Ein Kurs ist immer dabei.</p>
+      <div id="kurse"></div>
+    </div>
+
     <div class="block" id="blockAblauf">
       <h3>Umsetzung &mdash; ab Ihrer Zusage</h3>
       <p class="sub">Woche 1 beginnt mit der Zusage.</p>
@@ -715,6 +750,10 @@ details.more .in{padding-top:11px}
 <section class="step" id="s4">
   <div class="wrap">
     <p class="lead">Sechs Kompetenzwelten. <b>+ übernehmen</b> holt einen Punkt in die Matrix des Kunden.</p>
+    <p class="kurs-hinweis">Jeder Kurs <b>3.500 €</b>, für Bestandskunden <b>2.800 €</b>. Immer mit im Angebot: der
+      <a href="https://jasminannii.github.io/ppedv-kompetenzmatrix/ki-workshop/" target="_blank" rel="noopener">Skill-Building-Workshop</a> —
+      setzt das Unternehmen nur Microsoft Copilot ein, stattdessen der
+      <a href="https://ppedv.de/schulung/kurse/microsoft-copilot-oekosystem" target="_blank" rel="noopener">Copilot-Praxistag</a>.</p>
 
     <div class="catbox">
       <svg class="ring" viewBox="0 0 900 900" role="img" aria-label="ppedv Kompetenzwelten">
@@ -788,9 +827,10 @@ const WORLDS=[
     {n:"Entscheidungen vorbereiten",s:"„Wir diskutieren dreimal, bevor wir entscheiden.“",z:"Optionen, Risiken und eine Empfehlung aufbereiten, bevor die Runde zusammenkommt.",k:"entscheidung entscheiden vorlage geschaeftsfuehrung optionen vergleich bewertung gremium"},
     {n:"Routinearbeit beschleunigen",s:"„Das Gleiche jede Woche, immer von Hand.“",z:"Wiederkehrende Textarbeit an KI abgeben — mit Prüfschritt, nicht blind.",k:"wiederkehrend routine immer gleich manuell zeitfresser standardantwort fleissarbeit tippen"}],
   /* ziel: Vorschlaege fuer die offene „Fuer wen“-Eingabe.
-     bau: nicht mehr in der Oberflaeche — die Kursnamen bleiben als Suchmaterial im Heuhaufen. */
+     bau: Kurse der Welt aus der ppedv-Kursuebersicht (ppedv.de/Schulung/MicrosoftTraining),
+     n = Kurstitel, t = Dauer. Erscheinen im Katalog, in der Kursauswahl (Schritt 3) und im Matcher. */
   ziel:["Mitarbeitende","Fachbereiche","Führungskräfte","IT & AI Enabler"],
-  bau:["AI Driven Training","Microsoft 365 Copilot","Copilot Studio – Agenten","ChatGPT im Arbeitsalltag","Claude im Arbeitsalltag","Prompt Engineering"]},
+  bau:[{n:"Copilot - KI in Word, Excel, Outlook & Co.",t:"1 Tag"},{n:"Copilot für IT, Power-User und AI Champions",t:"2 Tage"},{n:"Prompt like a pro - KI-Anweisungen für komplexe Aufgaben optimieren",t:"210 Min."},{n:"Conversational AI",t:"1 Tag"},{n:"KI im Marketing - Content, Kampagnen & Workflows",t:"3 Std."},{n:"EU AI Act und Umsetzung in Unternehmen",t:"90 Min."}]},
 
  {id:"proz",kw:"KW 2",c:"var(--k2)",title:"Prozesse automatisieren",
   lead:"Wiederkehrende Aufgaben mit Power Automate, Skripten und Workflows effizient automatisieren",
@@ -804,7 +844,7 @@ const WORLDS=[
     {n:"Fristen im Blick behalten",s:"„Wir merken zu spät, dass ein Vertrag ausläuft.“",z:"Termine und Fristen melden sich selbst, bevor sie kritisch werden.",k:"frist termin vertrag kuendigung ablauf erinnerung wiedervorlage verpasst deadline mahnung"},
     {n:"IT-Aufgaben standardisieren",s:"„Jeder Admin macht es ein bisschen anders.“",z:"Wiederkehrende Aufgaben laufen als geprüftes Skript statt als Handarbeit.",k:"skript powershell admin benutzer anlegen onboarding standard manuell konto einrichten"}],
   ziel:["Fachbereiche","Prozessverantwortliche","IT- & Plattformteams","Führungskräfte"],
-  bau:["Power Apps & Power Automate","Microsoft Power Platform","Low Code vertiefen","Copilot Studio","PowerShell Grundkurs","PowerShell fortgeschritten","PowerShell mit AI","Python Power-Woche"]},
+  bau:[{n:"Power Apps und Power Automate Einstieg - Apps, Workflows und Automatisierung",t:"2 Tage"},{n:"Power Apps und Power Automate Fortgeschrittene - Low-Code Lösungen",t:"3 Tage"},{n:"Citizen Developer Week - Power Apps und Power Automate",t:"5 Tage"},{n:"Dataverse - Power Platform Daten verwalten",t:"1 Tag"},{n:"Copilot Studio und Power Platform AI - Agenten, Workflows, Automatisierung",t:"3 Tage"},{n:"PowerShell - Grundkurs automatisierte Administration",t:"2 Tage"},{n:"PowerShell - Fortgeschrittene Techniken",t:"2 Tage"},{n:"PowerShell Days - kompakt in 4 Tagen",t:"4 Tage"},{n:"PowerShell mit AI – Automatisierung für Clevere",t:"1 Tag"},{n:"Python Grundlagen - Einstieg in die Programmierung",t:"3 Tage"},{n:"VBA - Excel, Access, Word Makro Programmierung",t:"3 Tage"}]},
 
  {id:"daten",kw:"KW 3",c:"var(--k3)",title:"Daten besser nutzen",
   lead:"Daten analysieren, visualisieren und fundierte Entscheidungen treffen – mit SQL, Power BI und Fabric",
@@ -818,7 +858,7 @@ const WORLDS=[
     {n:"Dashboards fokussieren",s:"„Unser Bericht hat 30 Diagramme, keiner schaut rein.“",z:"Ein Bericht beantwortet genau die Fragen, die zur Entscheidung führen.",k:"dashboard bericht report diagramm auswertung visualisierung liest keiner uebersicht"},
     {n:"Zugriffe sicher steuern",s:"„Eigentlich sollte nicht jeder alle Zahlen sehen.“",z:"Rollen und Berechtigungen sind geregelt und nachvollziehbar.",k:"berechtigung zugriff rechte vertraulich gehalt sensibel sichtbar datenschutz freigeben"}],
   ziel:["Fachbereiche","Führungskräfte","Analysten & Controller","Data- & IT-Teams"],
-  bau:["Power BI","Microsoft Fabric","SQL Server","Datenmodelle & DAX","Self-Service-BI","Data Governance & Sicherheit"]},
+  bau:[{n:"Power BI und Excel - Analyse und Visualisierung von Daten",t:"2 Tage"},{n:"Power BI Days kompakt!",t:"4 Tage"},{n:"Power BI Fortgeschrittene - Deep Dive",t:"2 Tage"},{n:"Microsoft Fabric - Data Warehouse und ML",t:"4 Tage"},{n:"SQL Grundlagen - Einfache Abfragen in 1 Tag",t:"1 Tag"},{n:"SQL Server - Grundlagen Abfragesprache",t:"3 Tage"},{n:"SQL - Datenbanksprache und Fortgeschrittene Techniken",t:"3 Tage"},{n:"Power-Woche: SQL Server Abfragen",t:"5 Tage"},{n:"Power-Woche: SQL Server Data Warehouse",t:"5 Tage"},{n:"SQL Server Analysis Services (SSAS)",t:"3 Tage"},{n:"SQL Server Integration Services (SSIS)",t:"2 Tage"},{n:"Python - Machine Learning und Visualisierung",t:"2 Tage"},{n:"Power-Woche: Python - Vom Anfänger zum Data Science Profi",t:"5 Tage"}]},
 
  {id:"dev",kw:"KW 4",c:"var(--k4)",title:"Softwareentwicklung modernisieren",
   lead:"Moderne Entwicklung mit .NET, Azure, GitHub Copilot, DevOps und KI-Unterstützung",
@@ -832,7 +872,7 @@ const WORLDS=[
     {n:"Qualität früher prüfen",s:"„Fehler finden wir erst beim Kunden.“",z:"Automatisierte Tests fangen Fehler vor der Auslieferung ab.",k:"test testing bug fehler qualitaet regression abnahme testfaelle nachbessern"},
     {n:"Sicher ausliefern",s:"„Ein Release ist bei uns ein halber Feiertag.“",z:"Auslieferung läuft wiederholbar, nachvollziehbar und ohne Bauchweh.",k:"release deployment ausliefern deploy pipeline devops rollout produktiv livegang"}],
   ziel:["Entwickler","Tech Leads & Architekten","Produkt- & Requirements-Teams","QA & DevOps"],
-  bau:["AI in Requirements Engineering","Vibe Coding","KI in der Softwareentwicklung","Web Development mit AI","C# Einstieg",".NET Softwarearchitektur","ASP.NET Core & Web API","Git und GitHub"]},
+  bau:[{n:"AI in Requirements Engineering",t:"1 Tag"},{n:"Agentic Coding - KI-Agenten im Entwickleralltag",t:"1 Tag"},{n:"AI-Driven Software Development – Konzeption bis zum Test",t:"3 Tage"},{n:"GitHub Copilot und ChatGPT - besseren Code in kürzerer Zeit",t:"2 Tage"},{n:"Software verstehen im Zeitalter von Vibe Coding - Vom Blindflug zur Kontrolle",t:"1 Tag"},{n:"C# Programmierung - Sprache und .NET Grundlagen",t:"4 Tage"},{n:"C# Fortgeschrittene Programmierung",t:"3 Tage"},{n:".NET - Moderne Architekturen und Prinzipien mit AI",t:"3 Tage"},{n:"ASP.NET Core - Grundlagen",t:"3 Tage"},{n:"ASP.NET Core Web API - RESTful Webservices mit C#",t:"2 Tage"},{n:"ASP.NET Blazor - SPA mit C#",t:"2 Tage"},{n:"Power-Woche: ASP.NET Core und Blazor",t:"5 Tage"},{n:"Power-Woche: ASP.NET Core und Web API",t:"5 Tage"},{n:"Windows Presentation Foundation (WPF) - Windows-Anwendungen programmieren",t:"4 Tage"},{n:"Softwaretests mit Visual Studio",t:"2 Tage"},{n:"Power-Woche: Softwaretests und .NET Architektur mit AI",t:"5 Tage"},{n:"GIT Einstieg in die verteilte Versionskontrolle",t:"2 Tage"},{n:"Docker und Kubernetes - Grundlagen Container-Virtualisierung",t:"3 Tage"},{n:"Modernes Java – Verständlicher Code durch aktuelle Sprachfeatures",t:"2 Tage"},{n:"Skalierbare Java-Systeme mit Virtuellen Threads & Structured Concurrency",t:"3 Tage"},{n:"Power-Woche: Modernes Java & Skalierbare Java-Systeme",t:"5 Tage"},{n:"Rust Programmierung Einstieg",t:"2 Tage"},{n:"SharePoint - Einstieg Anwendungsentwicklung",t:"2 Tage"},{n:"SharePoint Framework - Lösungen entwickeln",t:"3 Tage"},{n:"Power-Woche: SharePoint für Entwickler",t:"5 Tage"},{n:"WordPress-Architekt: Planen, Bauen und Steuern der eigenen Web-Präsenz",t:"2 Tage"}]},
 
  {id:"cloud",kw:"KW 5",c:"var(--k5)",title:"Cloud-Systeme sicher betreiben",
   lead:"Azure, Microsoft 365, Security und Identitäten sicher verwalten und betreiben",
@@ -846,7 +886,7 @@ const WORLDS=[
     {n:"Wiederherstellung üben",s:"„Backups laufen — ob sie funktionieren, wissen wir nicht.“",z:"Der Ernstfall wurde geprobt, die Wiederanlaufzeit ist bekannt.",k:"backup wiederherstellung notfall ausfall ransomware desaster restore datenverlust ernstfall"},
     {n:"Standards automatisieren",s:"„Jede neue Umgebung wird von Hand gebaut.“",z:"Umgebungen entstehen reproduzierbar aus Skripten statt aus Erinnerung.",k:"automatisieren skript infrastruktur umgebung aufsetzen provisionierung wiederholbar server"}],
   ziel:["Cloud-Administratoren","Security-Verantwortliche","Architekten & Plattformteams","IT-Leitung & Service Owner"],
-  bau:["Azure Grundlagen","Azure Administrator Power-Woche","Microsoft Entra ID","Azure Security Technologies","M365 Security Administration","Microsoft Defender","Microsoft Intune"]},
+  bau:[{n:"Azure - Grundlagenkurs in 8h",t:"1 Tag"},{n:"Azure - Administration AZ-104",t:"4 Tage"},{n:"Entra ID (Azure AD) - Identitätsverwaltung",t:"1 Tag"},{n:"Power-Woche: Azure und Entra ID (Azure AD) Administration",t:"5 Tage"},{n:"Microsoft 365 Grundkurs - IT-Sicherheit Administration",t:"3 Tage"},{n:"Microsoft 365 DSGVO sicher umsetzen",t:"1 Tag"},{n:"Microsoft Defender - Bedrohungen abwehren und Endpunkte schützen",t:"2 Tage"},{n:"Microsoft Intune - Geräte verwalten",t:"2 Tage"},{n:"Power-Woche: Endpoint Manager und Intune",t:"5 Tage"},{n:"Copilot für M365 Admins - Sichere Einführung und Betrieb",t:"1 Tag"},{n:"Active Directory mit Windows Server",t:"2 Tage"},{n:"Gruppenrichtlinien (GPO) - Verwaltung in Windows",t:"2 Tage"},{n:"Netzwerk und TCP/IP Grundlagen",t:"2 Tage"},{n:"Windows Server Netzwerk - Administration",t:"3 Tage"},{n:"Power-Woche: Windows Server und Active Directory",t:"5 Tage"},{n:"Windows 11 - Administration",t:"3 Tage"},{n:"Power-Woche: Windows 11 und Intune",t:"5 Tage"},{n:"Windows Server 2025 & Windows 11 - Neuerungen",t:"1 Tag"},{n:"SQL Server - Planung, Aufbau und Verwaltung",t:"3 Tage"},{n:"Power-Woche: SQL Server Administration",t:"5 Tage"},{n:"SQL Server - Hochverfügbarkeit mit Always On",t:"2 Tage"},{n:"SQL Server - Monitoring und Performance-Tuning",t:"2 Tage"},{n:"SQL Server - Abfragen und Indizes beschleunigen",t:"2 Tage"},{n:"SQL Server - Neuerungen und Migration",t:"2 Tage"},{n:"Exchange Server - Administration",t:"3 Tage"},{n:"System Center Configuration Manager - Administration (SCCM)",t:"3 Tage"}]},
 
  {id:"zus",kw:"KW 6",c:"var(--k6)",title:"Digitale Zusammenarbeit verbessern",
   lead:"Microsoft Teams, SharePoint, Copilot und moderne Zusammenarbeit erfolgreich etablieren",
@@ -860,8 +900,25 @@ const WORLDS=[
     {n:"Wissen auffindbar machen",s:"„Das weiß nur die Kollegin — und die ist im Urlaub.“",z:"Wissen liegt dort, wo andere es ohne Nachfragen finden.",k:"wissen suchen finden dokumentation urlaub krank wissenstransfer intranet wiki nachfragen kopf"},
     {n:"Aufgaben klar übergeben",s:"„Ich dachte, das macht der andere.“",z:"Jede Aufgabe hat einen Namen, ein Datum und einen Status.",k:"aufgabe zustaendigkeit verantwortung todo planner nachverfolgen vergessen uebergabe wer macht"}],
   ziel:["Mitarbeitende & Fachbereiche","Teamleitungen","Multiplikatoren & Champions","M365-Verantwortliche"],
-  bau:["Microsoft Teams","SharePoint","Microsoft 365 Grundlagen","Microsoft 365 Copilot","Exchange Online"]}
+  bau:[{n:"Microsoft 365 (Office 365) - Jump Start Administration",t:"3 Tage"},{n:"Power-Woche: Microsoft Teams und Microsoft 365 (Office 365)",t:"5 Tage"},{n:"Microsoft Teams - Grundlagen Administration",t:"2 Tage"},{n:"Microsoft Teams - Fortgeschrittene Administration",t:"1 Tag"},{n:"Power-Days: Microsoft Teams Administration",t:"3 Tage"},{n:"Exchange Online - Microsoft 365 Administration",t:"2 Tage"},{n:"SharePoint Online für Anwender",t:"2 Tage"},{n:"Power-Days: SharePoint Online & Designer für Anwender",t:"3 Tage"},{n:"SharePoint Online - Grundkurs Administration",t:"3 Tage"}]}
 ];
+
+/* ---------- Kurse und Preise ----------
+   Jeder Kurs kostet gleich viel; Bestandskunden erhalten den reduzierten Preis.
+   Ein Kurs ist IMMER im Angebot: der Skill-Building-Workshop — oder, wenn das
+   Unternehmen bei KI ausschließlich Microsoft Copilot einsetzt, der Copilot-Praxistag. */
+const PREIS=3500, PREIS_BESTAND=2800;
+const KURS_SKILL={n:"Skill-Building-Workshop – KI-Abläufe, die funktionieren",t:"1 Tag",
+  url:"https://jasminannii.github.io/ppedv-kompetenzmatrix/ki-workshop/"};
+const KURS_COPILOT={n:"Microsoft Copilot Ökosystem – Wiederkehrende Prozesse mit Copilot automatisieren",t:"1 Tag",
+  url:"https://ppedv.de/schulung/kurse/microsoft-copilot-oekosystem"};
+const pflichtKurs=()=>profile.copilotOnly?KURS_COPILOT:KURS_SKILL;
+const kursPreis=()=>profile.bestand?PREIS_BESTAND:PREIS;
+const euro=n=>n.toLocaleString("de-DE")+" €";
+const ALLE_KURSE=WORLDS.flatMap(w=>w.bau.map(c=>Object.assign({welt:w.id},c)));
+/* Gewählte Kurse: nur solche, deren Welt im Kundenmodell vorkommt */
+const gewaehlteKurse=()=>ALLE_KURSE.filter(c=>(profile.kurse||[]).indexOf(c.n)>-1&&skillsFor(c.welt).length);
+const kursListe=()=>[pflichtKurs(),...gewaehlteKurse()];
 
 const PFIELDS=[
  {k:"anlass",l:"Was funktioniert nicht?",ph:"Seit wann, wie oft, was kostet es?",area:1,wide:1},
@@ -920,6 +977,7 @@ profile.skills=[];                       /* [{id,text,welt,teams:[{name,n}],note
 profile.tlSpan=PHASES.map(()=>null);
 profile.phTitle=PHASES.map(()=>null);
 profile.tlWeeks=16;
+profile.kurse=[]; profile.bestand=false; profile.copilotOnly=false;
 
 const uid=()=>"s"+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
 function mkSkill(text,welt,teams,note){
@@ -957,6 +1015,8 @@ function normProfile(){
       name:String((t&&t.name)||""), n:(t&&(t.n||t.n===0))?t.n:""})),
     note:String((s&&s.note)||"")}));
   delete profile.teams;
+  profile.kurse=(Array.isArray(profile.kurse)?profile.kurse:[]).filter(n=>ALLE_KURSE.some(c=>c.n===n));
+  profile.bestand=!!profile.bestand; profile.copilotOnly=!!profile.copilotOnly;
 }
 normProfile();
 
@@ -1166,7 +1226,7 @@ WORLDS.forEach(w=>{
   WHAY[w.id]=fold([w.title,w.lead,WKEY[w.id]||"",
     w.komp.map(k=>k.n+" "+k.d).join(" "),
     w.felder.map(f=>f.n+" "+f.s+" "+f.z+" "+f.k).join(" "),
-    w.bau.join(" ")].join(" ")).replace(/[^a-z0-9]+/g," ");
+    w.bau.map(c=>c.n).join(" ")].join(" ")).replace(/[^a-z0-9]+/g," ");
   WTOK[w.id]=[...new Set(WHAY[w.id].split(" ").filter(x=>x.length>=5))];
 });
 const SKILLS=[]; WORLDS.forEach(w=>w.felder.forEach(s=>SKILLS.push({w,s,
@@ -1322,8 +1382,8 @@ function renderCatCards(){
           ${w.felder.map(f=>`<div class="cc-f"><i>${esc(f.s)}</i><b>${esc(f.n)}</b> &mdash; ${esc(f.z)}${takeBtn(w,f.n)}</div>`).join("")}</div>
         <div class="cc-sec"><span class="lbl">Typische Zielgruppen</span>
           <div class="cc-tags">${w.ziel.map(z=>`<span>${esc(z)}</span>`).join("")}</div></div>
-        <div class="cc-sec"><span class="lbl">Kurse dafür</span>
-          <div class="cc-tags">${w.bau.map(b=>`<span>${esc(b)}</span>`).join("")}</div></div>
+        <div class="cc-sec"><span class="lbl">Kurse dafür · je ${euro(PREIS)}, Bestandskunden ${euro(PREIS_BESTAND)}</span>
+          <div class="cc-tags">${w.bau.map(b=>`<span>${esc(b.n)} <small>· ${esc(b.t)}</small></span>`).join("")}</div></div>
         <div class="cc-sec"><span class="lbl">Warum das gebraucht wird</span>
           <p class="cc-beleg">${esc(w.beleg)}</p></div>
       </div>
@@ -1427,7 +1487,7 @@ function redrawAll(){
 /* Leichter Durchlauf beim Tippen: keine Neuzeichnung der Eingabefelder */
 function touchSkills(){
   save(); needSum(); refreshSug(); buildInner(); renderCatCards(); renderCounts(); coreDefault();
-  renderNeedRing(); renderPanel(); renderNeedbar(); renderCtx(); renderCards(); renderNeedOut(); renderSync();
+  renderNeedRing(); renderPanel(); renderNeedbar(); renderCtx(); renderCards(); renderNeedOut(); renderSync(); renderKurse();
 }
 needEl.addEventListener("input",e=>{
   const row=e.target.closest("[data-sid]"); if(!row) return;
@@ -1508,7 +1568,7 @@ function renderPanel(){
 panel.addEventListener("input",e=>{
   const f=e.target.closest("[data-sf]"); if(!f) return;
   const s=findSkill(f.closest("[data-sid]").dataset.sid); if(!s) return;
-  s[f.dataset.sf]=f.value; save(); buildInner(); renderNeed(); renderCounts(); renderCards(); renderNeedOut(); renderSync();
+  s[f.dataset.sf]=f.value; save(); buildInner(); renderNeed(); renderCounts(); renderCards(); renderNeedOut(); renderSync(); renderKurse();
 });
 panel.addEventListener("click",e=>{
   const g=e.target.closest("[data-goedit]"); if(!g) return;
@@ -1649,6 +1709,38 @@ function renderCards(){
           ${t.length?`<span class="cz">${t.map(x=>esc((x.name||"").trim()||"Team?")+(tNum(x)?" · "+tNum(x):"")).join(" | ")}</span>`:""}
           ${s.note.trim()?`<span class="cn">${esc(s.note.trim())}</span>`:""}</li>`;}).join("")}</ul></div></div></div>`;}).join("");
 }
+function renderKurse(){
+  const g=document.getElementById("kurse"); if(!g) return;
+  const pk=pflichtKurs(), ws=WORLDS.filter(w=>skillsFor(w.id).length), liste=kursListe(), p=kursPreis();
+  const zeile=(c,pflicht)=>`<div class="kr${pflicht?" pflicht":""}"><span class="kr-n">${esc(c.n)}${pflicht?` <em>immer dabei</em>`:""}</span>
+    <span class="kr-t">${esc(c.t)}</span><span class="kr-p">${profile.bestand?`<s>${euro(PREIS)}</s> `:""}${euro(p)}</span></div>`;
+  g.innerHTML=`
+    <div class="kurs-opt no-print">
+      <label><input type="checkbox" data-kopt="copilotOnly"${profile.copilotOnly?" checked":""}> KI im Unternehmen: <b>nur Microsoft Copilot</b></label>
+      <label><input type="checkbox" data-kopt="bestand"${profile.bestand?" checked":""}> <b>Bestandskunde</b> — ${euro(PREIS_BESTAND)} statt ${euro(PREIS)} je Kurs</label>
+    </div>
+    ${ws.length?`<div class="kurs-wahl no-print">${ws.map(w=>`<div class="kw-w" style="--pc:${w.c}"><span class="lbl">${esc(w.title)}</span>
+      <div class="kw-c">${w.bau.map(c=>`<button type="button" class="kchip" data-kurs="${esc(c.n)}" aria-pressed="${(profile.kurse||[]).indexOf(c.n)>-1}">${esc(c.n)} <small>${esc(c.t)}</small></button>`).join("")}</div></div>`).join("")}</div>`
+      :`<p class="none no-print">Sobald Skills erfasst sind, stehen hier die passenden Kurse je Kompetenzwelt zur Auswahl.</p>`}
+    <div class="ktab">
+      <div class="kr kr-h"><span>Kurs</span><span>Dauer</span><span>Preis</span></div>
+      ${zeile(pk,true)}
+      ${gewaehlteKurse().map(c=>zeile(c,false)).join("")}
+      <div class="kr kr-sum"><span>${liste.length} ${liste.length===1?"Kurs":"Kurse"}${profile.bestand?" · Bestandskundenpreis":""}</span><span></span><span>${euro(liste.length*p)}</span></div>
+    </div>
+    <p class="kurs-fuss">Preise je Kurs für Ihr Team · Online, im ppedv-Trainingscenter oder bei Ihnen vor Ort · ggf. zzgl. Anreise.</p>`;
+}
+document.getElementById("kurse").addEventListener("click",e=>{
+  const b=e.target.closest("[data-kurs]"); if(!b) return;
+  const n=b.dataset.kurs, ks=profile.kurse||(profile.kurse=[]), i=ks.indexOf(n);
+  if(i>-1) ks.splice(i,1); else ks.push(n);
+  save(); renderKurse();
+});
+document.getElementById("kurse").addEventListener("change",e=>{
+  const c=e.target.closest("[data-kopt]"); if(!c) return;
+  profile[c.dataset.kopt]=c.checked; save(); renderKurse();
+});
+
 function syncHTML(kind){
   const li=[], ls=named(), tm=teamMap(ls), tn=Object.keys(tm);
   if(kind==="kk"){
@@ -1809,7 +1901,7 @@ function render(){
   paintInner();
   gSpot.querySelectorAll("[data-spot]").forEach(s=>s.style.opacity=s.dataset.spot===focusId?"1":"0");
   gOuter.querySelectorAll("[data-wlabel]").forEach(t=>t.style.opacity=t.dataset.wlabel===focusId?"1":".85");
-  renderCounts(); coreDefault(); renderNeedRing(); renderPanel(); renderNeedbar(); renderCtx(); renderCards(); renderNeedOut(); renderSync();
+  renderCounts(); coreDefault(); renderNeedRing(); renderPanel(); renderNeedbar(); renderCtx(); renderCards(); renderNeedOut(); renderSync(); renderKurse();
 }
 
 /* ---------- Karteien: eine URL je Unternehmen ----------
@@ -1837,7 +1929,7 @@ async function api(aktion,extra){
 const payload=()=>({profile:JSON.parse(JSON.stringify(profile)),notes,focusId});
 
 function blank(){
-  profile={name:"",logo:"",gesagt:"",skills:[],tlWeeks:16,
+  profile={name:"",logo:"",gesagt:"",skills:[],tlWeeks:16,kurse:[],bestand:false,copilotOnly:false,
            tlSpan:PHASES.map(()=>null),phTitle:PHASES.map(()=>null)};
   PFIELDS.forEach(f=>profile[f.k]=""); LEGACY_PF.forEach(k=>profile[k]=""); notes=""; editId=null;
 }
@@ -2131,6 +2223,26 @@ async function buildPDF(scope){
     B.y+=3;
   }
 
+  /* Kurse und Investition nur im vollen Umfang */
+  if(scope!=="model"){
+    const liste=kursListe(), p=kursPreis();
+    B.platz(30); B.titel("Kurse und Investition");
+    liste.forEach((c,i)=>{
+      B.platz(8);
+      B.setF(9.5,i?"normal":"bold",PDFC.ink);
+      const z=d.splitTextToSize(c.n+(i?"":"  (immer dabei)"),W-2*M-52);
+      z.forEach((t,j)=>{d.text(t,M,B.y+j*4.3);});
+      B.setF(8.5,"normal",PDFC.ink3); d.text(c.t,W-M-34,B.y);
+      B.setF(9.5,"bold",PDFC.ink); d.text(euro(p),W-M,B.y,{align:"right"});
+      B.y+=z.length*4.3+1.5;
+    });
+    B.linie();
+    B.setF(10,"bold",PDFC.ink); d.text(liste.length+(liste.length===1?" Kurs":" Kurse"),M,B.y);
+    d.text(euro(liste.length*p),W-M,B.y,{align:"right"}); B.y+=5;
+    B.fliess((profile.bestand?"Bestandskundenpreis: "+euro(PREIS_BESTAND)+" statt "+euro(PREIS)+" je Kurs. ":"Je Kurs "+euro(PREIS)+", für Bestandskunden "+euro(PREIS_BESTAND)+". ")
+      +"Preise je Kurs für Ihr Team · online, im ppedv-Trainingscenter oder bei Ihnen vor Ort · ggf. zzgl. Anreise.",8.5,PDFC.ink3);
+  }
+
   /* Umsetzung nur im vollen Umfang */
   if(scope!=="model"){
     B.seite();
@@ -2321,6 +2433,10 @@ document.getElementById("btnCopy").addEventListener("click",async()=>{
   const ohne=ls.filter(s=>!s.welt);
   if(ohne.length) t+=`NOCH OHNE KOMPETENZWELT\n${ohne.map(s=>"  - "+s.text).join("\n")}\n\n`;
   if(notes.trim()) t+=`NOTIZEN\n${notes.trim()}\n\n`;
+  const kl=kursListe(), kp=kursPreis();
+  t+=`KURSE UND INVESTITION${profile.bestand?" · BESTANDSKUNDENPREIS":""}\n`
+   +kl.map((c,i)=>`  - ${c.n} (${c.t})${i?"":" — immer dabei"}: ${euro(kp)}`).join("\n")
+   +`\n  Summe: ${kl.length} ${kl.length===1?"Kurs":"Kurse"} · ${euro(kl.length*kp)}\n\n`;
   t+=`UMSETZUNG — PHASE 1 STARTET MIT DER ZUSAGE · ${TLMAX()} WOCHEN\n`
    +PHASES.map((p,i)=>{const[a,b]=tlRange(i); return `  ${p.n} (Woche ${a}–${b}): ${phTitle(i)} → ${p.ms}`;}).join("\n")
    +`\n\nDANACH — JAHRESPARTNERSCHAFT\n  4 Termine vor Ort, 12 Monate Laufzeit, Pauschalpreis\n`;

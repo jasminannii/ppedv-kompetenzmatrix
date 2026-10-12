@@ -78,6 +78,27 @@ den Kunden, der Katalog würde seinen Umfang verdoppeln. Soll er mit hinein,
 genügt es, die Zeile `#s4{display:none!important}` aus dem `@media print`-Block
 zu löschen.
 
+## Kurse und Preise
+
+Die Kurse je Kompetenzwelt (`bau` in `WORLDS`) stammen aus der ppedv-Kursübersicht
+(https://ppedv.de/Schulung/MicrosoftTraining, Stand 12.10.2026), mit Titel und Dauer.
+Jeder Kurs steht in genau einer Welt. Ändert sich die Kursübersicht, wird nur diese
+Liste gepflegt.
+
+In Schritt 3 steht der Block **Kurse und Investition**: Je Kompetenzwelt des Kunden
+lassen sich Kurse anklicken, darunter stehen Liste und Summe. Die Auswahl geht ins PDF
+(„Alles als PDF“) und in „Als Text kopieren“.
+
+- **Preis:** jeder Kurs 3.500 €, für Bestandskunden 2.800 € (Häkchen „Bestandskunde“).
+  Festgelegt in `PREIS` und `PREIS_BESTAND`.
+- **Ein Kurs ist immer dabei:** der
+  [Skill-Building-Workshop](https://jasminannii.github.io/ppedv-kompetenzmatrix/ki-workshop/).
+  Ist „KI im Unternehmen: nur Microsoft Copilot“ angehakt, wird stattdessen der
+  [Copilot-Praxistag](https://ppedv.de/schulung/kurse/microsoft-copilot-oekosystem)
+  angeboten. Festgelegt in `KURS_SKILL`, `KURS_COPILOT` und `pflichtKurs()`.
+
+Auswahl, Bestandskunde und Copilot-Häkchen werden mit der Kartei gespeichert.
+
 ## Anpassbarkeit (pro Kundengespräch, nicht global)
 
 **Kernkompetenzen sind Vorschläge, keine Vorgaben.** Je Welt sind drei
