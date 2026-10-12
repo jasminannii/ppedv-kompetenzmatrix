@@ -2507,160 +2507,119 @@ function kennzahl(){
 }
 
 async function buildPDF(scope){
+  /* Kundendokument, zwei Seiten: 1 Kompetenzmodell · 2 Kursplan und Ablauf */
   const B=pdfBuilder(), {d,W,M}=B;
   const heute=new Date().toLocaleDateString("de-AT",{day:"2-digit",month:"long",year:"numeric"});
   const kunde=(profile.name||"").trim();
+  const kurzText=(t,breite)=>{const z=d.splitTextToSize(t,breite); return z.length>1?z[0].replace(/\s*\S*$/,"")+" …":z[0];};
 
-  /* Kopf */
+  /* ---------- Seite 1: Kompetenzmodell ---------- */
   try{ d.addImage(PPLOGO,"PNG",M,B.y,26,6.5); }
   catch(e){ B.setF(11,"bold",PDFC.blue); d.text("ppedv",M,B.y+5); }
   B.setF(8,"normal",PDFC.ink3); d.text(heute,W-M,B.y+4.9,{align:"right"});
   B.y+=14;
-  B.setF(20,"bold",PDFC.ink); d.text(kunde||"Kompetenzmodell",M,B.y); B.y+=7.5;
-  B.setF(10.5,"normal",PDFC.ink2);
-  d.text(kunde?"Kompetenzmodell · ppedv Kompetenzmatrix":"ppedv Kompetenzmatrix",M,B.y); B.y+=5;
-  B.setF(9.5,"bold",PDFC.softInk); d.text(kennzahl(),M,B.y); B.y+=5;
+  B.setF(20,"bold",PDFC.ink); d.text(kunde||"Kompetenzmodell",M,B.y); B.y+=6.5;
+  B.setF(9.5,"bold",PDFC.softInk); d.text("Kompetenzmodell  ·  "+kennzahl(),M,B.y); B.y+=3;
   B.linie();
 
-  /* Ring */
   try{
-    const png=await ringPNG(2.5);
-    const gr=Math.min(W-2*M,132);
+    const png=await ringPNG(2.5), gr=104;
     d.addImage(png,"PNG",(W-gr)/2,B.y,gr,gr,undefined,"FAST");
-    B.y+=gr+3;
-    B.setF(8,"normal",PDFC.ink3);
-    d.text("Außen: Kompetenzwelten · Innen: Skills · Zahl: Mitarbeitende",W/2,B.y,{align:"center"});
-    B.y+=6;
+    B.y+=gr+2;
+    B.setF(7.5,"normal",PDFC.ink3);
+    d.text("Außen: Kompetenzwelten · Innen: Ihre Themen · Zahl: Mitarbeitende",W/2,B.y,{align:"center"});
+    B.y+=7;
   }catch(e){ B.fliess("Der Kompetenzring konnte nicht eingebettet werden.",9,PDFC.ink3); }
 
-  /* Wenig Kontext: die Worte des Kunden */
   const ctx=[];
-  if((profile.gesagt||"").trim()) ctx.push(["Gesagt",profile.gesagt.trim()]);
-  if((profile.anlass||"").trim()) ctx.push(["Funktioniert nicht",profile.anlass.trim()]);
+  if((profile.anlass||"").trim()) ctx.push(["Was nicht funktioniert",profile.anlass.trim()]);
   if((profile.erfolg||"").trim()) ctx.push(["Erfolgsbild",profile.erfolg.trim()]);
-  if(ctx.length){
-    B.platz(30); B.titel("Aus dem Gespräch");
-    ctx.forEach(([l,v])=>{
-      B.platz(14);
-      B.setF(7.5,"bold",PDFC.softInk); d.text(l.toUpperCase(),M,B.y); B.y+=4;
-      B.fliess("„"+v+"“",10,PDFC.ink);
-      B.y+=2.5;
-    });
-  }
+  ctx.forEach(([l,v])=>{
+    B.platz(10);
+    B.setF(7.5,"bold",PDFC.softInk); d.text(l.toUpperCase(),M,B.y); B.y+=3.8;
+    B.fliess(v,9,PDFC.ink); B.y+=1.5;
+  });
+  if(ctx.length) B.y+=2;
 
-  /* Die Welten mit ihren Skills */
   const welten=WORLDS.filter(w=>skillsFor(w.id).length);
   if(welten.length){
-    B.platz(26); B.titel("Das Kompetenzmodell");
+    B.setF(12,"bold",PDFC.ink); d.text("Ihre Themen",M,B.y); B.y+=5.5;
     welten.forEach(w=>{
-      const ls=skillsFor(w.id), tf=teamsFor(w.id);
-      B.platz(26);   /* Überschrift nicht allein am Seitenende stehen lassen */
-      d.setFillColor(wCol(w)); d.circle(M+1.6,B.y-1.4,1.6,"F");
-      B.setF(11,"bold",PDFC.ink); d.text(w.title,M+5.5,B.y);
-      B.setF(8.5,"normal",PDFC.ink3);
-      d.text(nSkill(ls.length)+(headFor(w.id)?" · "+headFor(w.id)+" MA":""),W-M,B.y,{align:"right"});
-      B.y+=5;
+      const ls=skillsFor(w.id);
+      B.platz(10);
+      d.setFillColor(wCol(w)); d.circle(M+1.4,B.y-1.2,1.4,"F");
+      B.setF(10,"bold",PDFC.ink); d.text(w.title,M+5,B.y); B.y+=4.4;
       ls.forEach(s=>{
-        B.platz(10);
-        B.setF(9.5,"normal",PDFC.ink);
-        d.splitTextToSize("•  "+s.text,W-2*M-8).forEach((z,i)=>{d.text(z,M+5.5+(i?3:0),B.y); B.y+=4.3;});
-        const te=sTeams(s);
-        if(te.length){
-          B.setF(8,"normal",PDFC.softInk);
-          d.text(te.map(t=>((t.name||"").trim()||"Team?")+(tNum(t)?" · "+tNum(t):"")).join("   |   "),M+9,B.y);
-          B.y+=4;
-        }
-        if(s.note.trim()){B.setF(8.5,"italic",PDFC.ink3);
-          d.splitTextToSize(s.note.trim(),W-2*M-12).forEach(z=>{d.text(z,M+9,B.y); B.y+=3.8;});}
-        B.y+=1;
+        const te=sTeams(s).map(t=>((t.name||"").trim()||"Team?")+(tNum(t)?" ("+tNum(t)+")":"")).join(", ");
+        B.setF(9,"normal",PDFC.ink);
+        const z=d.splitTextToSize("•  "+s.text+(te?"  —  "+te:""),W-2*M-6);
+        z.forEach((t,k)=>{B.platz(5); d.text(t,M+5+(k?3:0),B.y); B.y+=4;});
       });
-      if(tf.length){B.setF(8,"normal",PDFC.ink3);
-        d.text("Betroffen: "+tf.map(t=>t.name+(t.n?" ("+t.n+")":"")).join(" · "),M+5.5,B.y); B.y+=4;}
-      B.y+=3;
+      B.y+=1.8;
     });
   }
   const ohne=named().filter(s=>!s.welt);
-  if(ohne.length){
-    B.platz(16); B.setF(9,"bold",PDFC.softInk); d.text("Noch ohne Kompetenzwelt",M,B.y); B.y+=4.5;
-    ohne.forEach(s=>{B.platz(6); B.setF(9.5,"normal",PDFC.ink); d.text("•  "+s.text,M+5.5,B.y); B.y+=4.3;});
-    B.y+=3;
-  }
+  if(ohne.length){ B.platz(8); B.setF(9,"normal",PDFC.ink3); d.text("Noch ohne Kompetenzwelt: "+ohne.map(s=>s.text).join(" · "),M,B.y); B.y+=5; }
 
-  /* Kursplan ohne Preise — die stehen im separaten Angebot */
-  if(scope!=="model"){
-    const liste=kursListe();
-    B.platz(30); B.titel("Kursplan");
-    B.fliess("Durchführung: "+FORMATE[profile.format||"inhouse"]+" · Reihenfolge nach Priorität",9,PDFC.ink2); B.y+=1.5;
-    liste.forEach(c=>{
-      B.platz(12);
-      B.setF(9.5,"bold",PDFC.ink);
-      const z=d.splitTextToSize(c.prio+".  "+c.n+(c.pflicht?"  (immer dabei)":""),W-2*M);
-      z.forEach((t,j)=>{d.text(t,M,B.y+j*4.3);});
-      B.y+=z.length*4.3;
-      B.setF(8.5,"normal",PDFC.ink3);
-      d.text((c.team||"Team offen")+"  ·  Woche "+c.woche+"  ·  "+c.ort+"  ·  "+c.t,M+5,B.y);
-      B.y+=4.6;
-      /* Agenda: Module der Kursseite als eine kompakte Zeile */
-      const mods=(AGENDA[c.n]||[])[1]||[];
-      if(mods.length){
-        B.setF(8,"italic",PDFC.ink2);
-        d.splitTextToSize("Agenda: "+mods.join(" · "),W-2*M-5).forEach(z=>{B.platz(5); d.text(z,M+5,B.y); B.y+=3.8;});
-      }
-      B.y+=2.2;
-    });
-  }
+  if(scope==="model"){ B.fuss(); return d; }
 
-  /* Umsetzung nur im vollen Umfang */
-  if(scope!=="model"){
-    B.seite();
-    B.setF(16,"bold",PDFC.ink); d.text("Umsetzung — ab Ihrer Zusage",M,B.y); B.y+=6;
-    B.setF(9.5,"normal",PDFC.ink2);
-    d.text("Ab Zusage · "+TLMAX()+" Wochen",M,B.y); B.y+=6;
-    B.linie();
-    /* Balkenplan */
-    const x0=M+34, breite=W-M-x0, mx=TLMAX();
-    B.setF(7,"normal",PDFC.ink3);
-    for(let i=0;i<mx;i+=Math.ceil(mx/16)) d.text(String(i+1),x0+breite*(i/mx)+0.6,B.y);
-    B.y+=2;
-    d.setDrawColor(PDFC.line); d.setLineWidth(0.15);
-    PHASES.forEach((p,i)=>{
-      const[a,b]=tlRange(i);
-      B.platz(10);
-      B.setF(8.5,"bold",PDFC.ink); d.text(p.n,M,B.y+3);
-      d.line(x0,B.y+4.2,W-M,B.y+4.2);
-      const bx=x0+breite*((a-1)/mx), bw=Math.max(3,breite*((b-a+1)/mx));
-      d.setFillColor(TLPAR[i]?"#9DB0CE":PDFC.blue); d.roundedRect(bx,B.y,bw,6,1,1,"F");
-      B.setF(7.5,"bold","#FFFFFF"); d.text("W "+a+"–"+b,bx+1.8,B.y+4);
-      B.y+=8;
-      B.setF(9,"normal",PDFC.ink2); d.text(phTitle(i),M,B.y); 
-      B.setF(7.5,"normal",PDFC.softInk); d.text(PHASES[i].ms,W-M,B.y,{align:"right"});
-      B.y+=6;
-    });
-    kursListe().forEach(c=>{
-      B.platz(8);
-      B.setF(7.5,"normal",PDFC.ink2); d.text(d.splitTextToSize(c.prio+". "+kurz(c.n),32)[0],M,B.y+3);
-      d.setDrawColor(PDFC.line); d.line(x0,B.y+4.2,W-M,B.y+4.2);
-      const bx=x0+breite*((c.woche-1)/mx), bw=Math.max(3,breite/mx);
-      d.setFillColor(c.ort==="online"?"#9DB0CE":"#EA8F13"); d.roundedRect(bx,B.y,bw,5,1,1,"F");
-      B.setF(7,"normal",PDFC.ink3); d.text((c.team||"Team offen")+" · "+c.ort,Math.min(bx+bw+1.5,W-M-30),B.y+3.6);
-      B.y+=6.5;
-    });
-    B.y+=2; B.titel("Was in welcher Phase passiert");
-    PHASES.forEach((p,i)=>{
-      B.platz(26);
-      B.setF(10,"bold",PDFC.ink); d.text(p.n+" — "+phTitle(i),M,B.y); B.y+=4.5;
-      B.fliess(p.goal,9,PDFC.ink2);
-      p.steps.forEach(st=>{B.platz(6); B.setF(8.5,"normal",PDFC.ink2);
-        d.splitTextToSize("·  "+st,W-2*M-4).forEach(z=>{d.text(z,M+3,B.y); B.y+=3.7;});});
-      B.y+=1.5;
-      B.setF(8,"normal",PDFC.ink3);
-      d.splitTextToSize("ppedv: "+p.pp,W-2*M-4).forEach(z=>{d.text(z,M+3,B.y); B.y+=3.5;});
-      d.splitTextToSize("Kunde: "+p.ku,W-2*M-4).forEach(z=>{d.text(z,M+3,B.y); B.y+=3.5;});
-      B.y+=4;
-    });
-    B.platz(34); B.titel("Danach: ein Termin pro Quartal, ein Jahr fix");
-    B.fliess("Viermal im Jahr vor Ort. 12 Monate Laufzeit, ein Pauschalpreis.",9.5,PDFC.ink2);
-  }
+  /* ---------- Seite 2: Kursplan und Ablauf ---------- */
+  B.seite();
+  const liste=kursListe(), mx=TLMAX();
+  B.setF(16,"bold",PDFC.ink); d.text("Kursplan und Ablauf",M,B.y); B.y+=5.5;
+  B.setF(9,"normal",PDFC.ink2);
+  d.text("Durchführung: "+FORMATE[profile.format||"inhouse"]+"  ·  "+mx+" Wochen ab Zusage",M,B.y); B.y+=3;
+  B.linie();
+
+  /* Balkenplan: Phasen und Kurse */
+  const x0=M+36, breite=W-M-x0, spalte=breite/mx;
+  B.setF(6.5,"normal",PDFC.ink3);
+  for(let i=0;i<mx;i+=Math.ceil(mx/16)) d.text(String(i+1),x0+spalte*i+spalte/2,B.y,{align:"center"});
+  B.y+=2.5;
+  const zeile=(label,a,b,farbe,txt,fett)=>{
+    B.setF(8,fett?"bold":"normal",PDFC.ink); d.text(kurzText(label,34),M,B.y+3.4);
+    d.setDrawColor(PDFC.line); d.setLineWidth(0.1); d.line(x0,B.y+5.2,W-M,B.y+5.2);
+    const bx=x0+spalte*(a-1), bw=Math.max(2.5,spalte*(b-a+1));
+    d.setFillColor(farbe); d.roundedRect(bx,B.y+0.6,bw,4.2,0.8,0.8,"F");
+    if(txt){ B.setF(6.5,"bold",farbe==="#EA8F13"?"#3D2402":"#FFFFFF"); if(bw>9) d.text(txt,bx+1.3,B.y+3.5); }
+    B.y+=6;
+  };
+  PHASES.forEach((p,i)=>{const[a,b]=tlRange(i); zeile(phTitle(i),a,b,TLPAR[i]?"#9DB0CE":PDFC.blue,"W "+a+"–"+b,true);});
+  B.y+=1.5;
+  liste.forEach(c=>zeile(c.prio+". "+kurz(c.n),c.woche,c.woche,c.ort==="online"?"#9DB0CE":"#EA8F13",""));
+  B.setF(7,"normal",PDFC.ink3);
+  d.text("Orange: vor Ort  ·  Hellblau: online",x0,B.y+1.5); B.y+=10;
+
+  /* Kurse mit Agenda */
+  B.setF(12,"bold",PDFC.ink); d.text("Kurse",M,B.y); B.y+=5.5;
+  liste.forEach(c=>{
+    const mods=(AGENDA[c.n]||[])[1]||[];
+    B.platz(14);
+    B.setF(9.5,"bold",PDFC.ink); d.text(kurzText(c.prio+".  "+c.n,W-2*M-62),M,B.y);
+    B.setF(8,"normal",PDFC.ink3);
+    d.text((c.team||"Team offen")+"  ·  W "+c.woche+"  ·  "+c.ort+"  ·  "+c.t,W-M,B.y,{align:"right"});
+    B.y+=4;
+    if(mods.length){
+      B.setF(8,"normal",PDFC.ink2);
+      d.splitTextToSize(mods.join("  ·  "),W-2*M-5).forEach(z=>{B.platz(5); d.text(z,M+5,B.y); B.y+=3.6;});
+    }
+    B.y+=2.2;
+  });
+
+  /* Phasen in je einer Zeile, danach die Partnerschaft */
+  B.platz(30); B.y+=4;
+  B.setF(12,"bold",PDFC.ink); d.text("Ablauf",M,B.y); B.y+=5.5;
+  PHASES.forEach((p,i)=>{
+    const[a,b]=tlRange(i);
+    B.platz(6);
+    B.setF(8.5,"bold",PDFC.ink); d.text(phTitle(i),M,B.y);
+    B.setF(8.5,"normal",PDFC.ink3); d.text("W "+a+"–"+b,M+30,B.y);
+    B.setF(8.5,"normal",PDFC.ink2); d.text(kurzText(p.goal,W-2*M-46),M+46,B.y);
+    B.y+=4.6;
+  });
+  B.platz(6);
+  B.setF(8.5,"bold",PDFC.ink); d.text("Danach",M,B.y);
+  B.setF(8.5,"normal",PDFC.ink2); d.text("Ein Termin pro Quartal vor Ort, 12 Monate, Pauschalpreis.",M+46,B.y);
   B.fuss();
   return d;
 }

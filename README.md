@@ -155,6 +155,13 @@ die Summe der Abteilungen, je nachdem, was größer ist.
 passenden Kurs gehört nicht ins Modell. Auch die Unterzeilen der Welten nennen nur
 Themen, die im Kursprogramm stehen.
 
+## Kundendokument (PDF)
+
+Zwei Seiten: **1 · Kompetenzmodell** (Kopf, Ring, ggf. „Was nicht funktioniert“ und
+Erfolgsbild, „Ihre Themen“ je Welt mit Team) und **2 · Kursplan und Ablauf** (Balkenplan mit
+Phasen und Kursen, Kursliste mit Team, Woche, Ort, Dauer und Agenda, Phasen in je einer
+Zeile, Jahrespartnerschaft). Keine Preise — die stehen im Angebot.
+
 ## Angebot (Word aus der ppedv-Vorlage)
 
 **Agenda-Daten.** `AGENDA` in `index.html` enthält je Kurs den Pfad der Kursseite und die
