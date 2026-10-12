@@ -452,19 +452,60 @@ details.more .in{padding-top:11px}
 .kchip[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
 .kchip[aria-pressed="true"] small{color:rgba(255,255,255,.75)}
 .ktab{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
-.kr{display:grid;grid-template-columns:1fr 80px 130px;gap:12px;padding:10px 15px;border-top:1px solid var(--line);font-size:14px;align-items:baseline}
-.kr:first-child{border-top:0}
-.kr-h{background:var(--surface-2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
-.kr-t{color:var(--ink-3)}
-.kr-p{text-align:right;font-weight:600}
-.kr-p s{color:var(--ink-3);font-weight:400;margin-right:4px}
-.kr.pflicht{background:var(--accent-soft)}
-.kr.pflicht em{font-style:normal;font-size:11px;font-weight:700;color:var(--accent-ink);border:1px solid currentColor;border-radius:20px;padding:1px 7px;margin-left:6px;white-space:nowrap}
-.kr-sum{font-weight:700;background:var(--surface-2)}
-.kr-sum span:last-child{text-align:right;font-size:16px}
-.kr-h span:last-child{text-align:right}
+.fmt{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin:0 0 16px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.fmt-b{display:flex;flex-wrap:wrap;gap:6px}
+.fmt-b button{font:inherit;font-size:13px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:20px;padding:6px 13px;cursor:pointer}
+.fmt-b button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.fmt-a{font-size:13px;display:flex;align-items:center;gap:7px;color:var(--ink-2)}
+.fmt-h{flex-basis:100%;font-size:12.5px;color:var(--ink-3)}
+.kurs-wahl{display:block;margin-bottom:14px;border:1px solid var(--line);border-radius:8px;padding:10px 14px;background:var(--surface)}
+.kurs-wahl summary{cursor:pointer;display:flex;align-items:center;gap:10px}
+.kurs-wahl[open] summary{margin-bottom:12px}
+.kurs-wahl .kw-w+.kw-w{margin-top:12px}
+.kw-n{font-size:12.5px;color:var(--accent-ink);font-weight:600}
+.kp-hint{font-size:12.5px;color:var(--ink-3);margin:0 0 8px}
+.kp{display:grid;grid-template-columns:64px minmax(0,1fr) 160px 72px 92px 104px;gap:10px;padding:9px 14px;border-top:1px solid var(--line);font-size:14px;align-items:center}
+.kp:first-child{border-top:0}
+.kp-h{background:var(--surface-2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.kp-h span:last-child{text-align:right}
+.kp .lbl{display:none}
+.kp-prio{display:flex;align-items:center;gap:4px}
+.kp-prio b{font-family:var(--mono);font-size:13px;min-width:16px}
+.kp-prio button{border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:4px;width:20px;height:22px;font-size:12px;line-height:1;padding:0;cursor:pointer}
+.kp-prio button[disabled]{opacity:.3;cursor:default}
+.kp-n small{display:block;font-size:12px;color:var(--ink-3)}
+.kp select{font:inherit;font-size:13px;width:100%;background:var(--surface-2);color:var(--ink);border:1px solid var(--line-2);border-radius:5px;padding:5px 6px}
+.kp .tl-num{width:60px}
+.kp .tl-num.auto{color:var(--ink-3);font-style:italic}
+.kp-fix{font-size:13px;color:var(--ink-2)}
+.kp-p{text-align:right;font-weight:600;white-space:nowrap}
+.kp-p s{color:var(--ink-3);font-weight:400;margin-right:4px}
+.kp.pflicht{background:var(--accent-soft)}
+.kp.pflicht em{font-style:normal;font-size:11px;font-weight:700;color:var(--accent-ink);border:1px solid currentColor;border-radius:20px;padding:1px 7px;margin-left:6px;white-space:nowrap}
+.ksum{display:flex;justify-content:space-between;gap:12px;padding:8px 14px;border-top:1px solid var(--line);font-size:13.5px;color:var(--ink-2);background:var(--surface-2)}
+.ksum span:last-child{font-weight:600;color:var(--ink);white-space:nowrap}
+.ksum.tot{font-weight:700;color:var(--ink);font-size:15px}
+.ksum.tot span:last-child{font-size:16px}
 .kurs-fuss{font-size:12.5px;color:var(--ink-3);margin-top:8px}
-@media(max-width:560px){.kr{grid-template-columns:1fr 90px}.kr>:nth-child(2){display:none}}
+.gt-box{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:10px 0 14px;padding:10px 14px;border:1px dashed var(--line-2);border-radius:8px;font-size:13.5px}
+.gt-box label{display:flex;align-items:center;gap:8px}
+.gt-box input{font:inherit;font-size:13.5px;width:90px;background:var(--surface-2);color:var(--ink);border:1px solid var(--line-2);border-radius:5px;padding:5px 8px}
+.gt-box span{font-size:12.5px;color:var(--ink-3)}
+.tpair.gt{background:var(--accent-soft);border-color:var(--orange)}
+.gt-l{display:flex;align-items:center;gap:7px;padding:7px 10px;font-size:13px;font-weight:600}
+.gt-l b{font-family:var(--mono);font-size:12px;color:var(--accent-ink)}
+.tp-gt{border-style:solid;border-color:var(--orange);color:var(--accent-ink)}
+.tl-k{grid-template-columns:170px 1fr}
+.bar.kurs{background:var(--orange);color:#3D2402;justify-content:center;padding:0;font-size:11px;font-weight:700;min-width:22px}
+.bar.kurs.onl{background:color-mix(in srgb,var(--blue) 35%,var(--surface));color:var(--ink);border:1px dashed var(--blue)}
+@media(max-width:760px){
+  .kp{grid-template-columns:52px 1fr 1fr;row-gap:6px}
+  .kp-h{display:none}
+  .kp-n{grid-column:2/-1}
+  .kp-team{grid-column:2/3}.kp-w{grid-column:3/4}.kp-o{grid-column:2/3}.kp-p{grid-column:3/4}
+  .kp .lbl{display:block;font-size:10px;margin-bottom:2px}
+}
+@media print{.kp select,.kp input{border:0;background:none;appearance:none;-webkit-appearance:none;padding:0}}
 .block>h3{font-size:21px; margin-bottom:6px}
 .block>.sub{font-size:14.5px; color:var(--ink-2); margin-bottom:16px; max-width:74ch}
 
@@ -919,7 +960,36 @@ const euro=n=>n.toLocaleString("de-DE")+" €";
 const ALLE_KURSE=WORLDS.flatMap(w=>w.bau.map(c=>Object.assign({welt:w.id},c)));
 /* Gewählte Kurse: nur solche, deren Welt im Kundenmodell vorkommt */
 const gewaehlteKurse=()=>ALLE_KURSE.filter(c=>(profile.kurse||[]).indexOf(c.n)>-1&&skillsFor(c.welt).length);
-const kursListe=()=>[pflichtKurs(),...gewaehlteKurse()];
+
+/* Ein Team, das alle Mitarbeitenden umfasst. Die Kopfzahl wird einmal zentral
+   eingetragen (profile.gesamtN) und gilt für jeden Skill, dem es zugeordnet ist. */
+const GT="Gesamtes Team";
+
+/* Durchführung: Inhouse heißt Anreise je Vor-Ort-Termin. Bei Hybrid wird je Kurs
+   gewählt, ob er vor Ort oder online läuft — nur Vor-Ort-Termine kosten Anreise. */
+const FORMATE={inhouse:"Inhouse – vor Ort",hybrid:"Hybrid – vor Ort und online",online:"Online"};
+const kKey=c=>c.pflicht?"PFLICHT":c.n;
+/* Kursplan in Prioritätsreihenfolge, je Kurs mit Team, Woche und Ort.
+   Ohne festgelegte Woche verteilen sich die Kurse über Phase 3 (Durchführung). */
+function kursListe(){
+  const all=[Object.assign({pflicht:true},pflichtKurs()),...gewaehlteKurse()];
+  const r=profile.reihe||[], pos=c=>{const i=r.indexOf(kKey(c)); return i<0?1000+all.indexOf(c):i;};
+  const sorted=all.slice().sort((a,b)=>pos(a)-pos(b)), n=sorted.length, [a,b]=tlRange(2), fm=profile.format||"inhouse";
+  return sorted.map((c,i)=>{
+    const pl=(profile.plan||{})[kKey(c)]||{}, w=parseInt(pl.woche,10), auto=n>1?a+Math.round(i*(b-a)/(n-1)):a;
+    return Object.assign({},c,{key:kKey(c),prio:i+1,team:pl.team||"",
+      ort:fm==="online"?"online":fm==="hybrid"?(pl.ort==="online"?"online":"vor Ort"):"vor Ort",
+      woche:(w>=1&&w<=TLMAX())?w:Math.min(auto,TLMAX()),auto:!(w>=1&&w<=TLMAX())});});
+}
+const vorOrt=l=>l.filter(c=>c.ort==="vor Ort").length;
+const anreiseBetrag=()=>{const v=parseInt(profile.anreise,10); return v>0?v:0;};
+function anreiseText(l){
+  const n=vorOrt(l); if(!n) return "";
+  const a=anreiseBetrag(), t=n+" Vor-Ort-"+(n===1?"Termin":"Termine");
+  return a?`Anreise: ${t} × ${euro(a)}`:`zzgl. Anreise für ${t} (nach Aufwand)`;
+}
+const summe=l=>l.length*kursPreis()+vorOrt(l)*anreiseBetrag();
+const kurz=n=>n.split(/ [–-] /)[0];
 
 const PFIELDS=[
  {k:"anlass",l:"Was funktioniert nicht?",ph:"Seit wann, wie oft, was kostet es?",area:1,wide:1},
@@ -979,6 +1049,7 @@ profile.tlSpan=PHASES.map(()=>null);
 profile.phTitle=PHASES.map(()=>null);
 profile.tlWeeks=16;
 profile.kurse=[]; profile.bestand=false; profile.copilotOnly=false;
+profile.gesamtN=""; profile.format="inhouse"; profile.anreise=""; profile.plan={}; profile.reihe=[];
 
 const uid=()=>"s"+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
 function mkSkill(text,welt,teams,note){
@@ -1013,11 +1084,16 @@ function normProfile(){
     text:String((s&&s.text)||""),
     welt:(s&&WORLDS.some(w=>w.id===s.welt))?s.welt:"",
     teams:(Array.isArray(s&&s.teams)?s.teams:[]).map(t=>({
-      name:String((t&&t.name)||""), n:(t&&(t.n||t.n===0))?t.n:""})),
+      name:String((t&&t.name)||""), n:(t&&(t.n||t.n===0))?t.n:"", all:!!(t&&t.all)})),
     note:String((s&&s.note)||"")}));
   delete profile.teams;
   profile.kurse=(Array.isArray(profile.kurse)?profile.kurse:[]).filter(n=>ALLE_KURSE.some(c=>c.n===n));
   profile.bestand=!!profile.bestand; profile.copilotOnly=!!profile.copilotOnly;
+  if(!FORMATE[profile.format]) profile.format="inhouse";
+  if(!profile.plan||typeof profile.plan!=="object"||Array.isArray(profile.plan)) profile.plan={};
+  profile.reihe=Array.isArray(profile.reihe)?profile.reihe.map(String):[];
+  profile.gesamtN=profile.gesamtN===0||profile.gesamtN?profile.gesamtN:"";
+  profile.anreise=profile.anreise||"";
 }
 normProfile();
 
@@ -1036,7 +1112,7 @@ const skills=()=>Array.isArray(profile.skills)?profile.skills:(profile.skills=[]
 const named=()=>skills().filter(s=>s.text.trim());
 const skillsFor=wid=>skills().filter(s=>s.welt===wid&&s.text.trim());
 const sTeams=s=>(s.teams||[]).filter(t=>(t.name||"").trim()||parseInt(t.n,10));
-const tNum=t=>parseInt(t&&t.n,10)||0;
+const tNum=t=>t&&t.all?(parseInt(profile.gesamtN,10)||0):(parseInt(t&&t.n,10)||0);
 /* Ein Mensch kann bei mehreren Skills fehlen — je Team zählt die größte Nennung,
    sonst zählt man dieselben Leute mehrfach. */
 function teamMap(list){
@@ -1047,9 +1123,12 @@ function teamMap(list){
   return m;
 }
 const teamList=m=>Object.keys(m).map(n=>({name:n,n:m[n]}));
-const headcount=()=>{const m=teamMap(named()); return Object.keys(m).reduce((a,k)=>a+m[k],0);};
+/* Das Gesamte Team enthält alle Abteilungen: gezählt wird es oder die Summe der Abteilungen, je nachdem was größer ist */
+const sumTeams=m=>{const k=Object.keys(m), rest=k.filter(x=>x!==GT).reduce((a,x)=>a+m[x],0);
+  return k.indexOf(GT)<0?rest:Math.max(m[GT],rest);};
+const headcount=()=>sumTeams(teamMap(named()));
 const teamsFor=wid=>teamList(teamMap(skillsFor(wid)));
-const headFor=wid=>teamsFor(wid).reduce((a,t)=>a+t.n,0);
+const headFor=wid=>sumTeams(teamMap(skillsFor(wid)));
 const teamPool=()=>Object.keys(teamMap(skills())).sort();
 const nSkill=n=>n+(n===1?" Skill":" Skills");
 const nTeam=n=>n+(n===1?" Team":" Teams");
@@ -1439,11 +1518,13 @@ function suggestWorld(text){
 function teamChips(s,i){
   const pool=teamPool();
   return `<div class="tlist">
-    ${(s.teams||[]).map((t,j)=>`<span class="tpair">
+    ${(s.teams||[]).map((t,j)=>t.all?`<span class="tpair gt"><span class="gt-l">${GT}<b class="gt-n">${parseInt(profile.gesamtN,10)||"?"}</b></span>
+      <button type="button" class="tp-x" data-tdel="${j}" title="Team entfernen">&times;</button></span>`:`<span class="tpair">
       <input class="tp-n" list="teamsug" value="${esc(t.name||"")}" placeholder="Team oder Abteilung" data-tf="name" data-ti="${j}" maxlength="60">
       <input class="tp-c" type="number" min="0" max="9999" value="${esc(t.n===0||t.n?t.n:"")}" placeholder="MA" title="Wie viele Mitarbeitende betrifft es?" data-tf="n" data-ti="${j}">
       <button type="button" class="tp-x" data-tdel="${j}" title="Team entfernen">&times;</button></span>`).join("")}
     <button type="button" class="tp-add" data-tadd="1">+ Team</button>
+    ${(s.teams||[]).some(t=>t.all)?"":`<button type="button" class="tp-add tp-gt" data-tall="1">${GT}</button>`}
     ${sSum(s)?`<span class="tp-sum">zusammen ${sSum(s)}</span>`:""}
   </div>`;
 }
@@ -1475,6 +1556,9 @@ function renderNeed(){
   needEl.innerHTML=`
     <div class="need-h"><h3>Was fehlt — und wem?</h3>
       <span class="need-sum">${esc(needSummary())}</span></div>
+    <div class="gt-box no-print"><label for="gesamtN"><b>${GT}</b>
+      <input id="gesamtN" type="number" min="0" max="99999" value="${esc(profile.gesamtN)}" placeholder="Anzahl"> Mitarbeitende</label>
+      <span>Einmal eintragen — betrifft ein Skill alle, je Skill auf „${GT}“ klicken.</span></div>
     ${ls.length?ls.map(skillRow).join("")
       :`<div class="t-empty">Noch nichts erfasst.</div>`}
     <button type="button" class="btn go need-add no-print" id="sAdd">+ Weiteren Skill erfassen</button>`;
@@ -1494,6 +1578,11 @@ function touchSkills(){
   renderNeedRing(); renderPanel(); renderNeedbar(); renderCtx(); renderCards(); renderNeedOut(); renderSync(); renderKurse();
 }
 needEl.addEventListener("input",e=>{
+  if(e.target.id==="gesamtN"){
+    profile.gesamtN=e.target.value===""?"":Math.max(0,Math.min(99999,parseInt(e.target.value,10)||0));
+    needEl.querySelectorAll(".gt-n").forEach(n=>n.textContent=parseInt(profile.gesamtN,10)||"?");
+    touchSkills(); return;
+  }
   const row=e.target.closest("[data-sid]"); if(!row) return;
   const s=findSkill(row.dataset.sid); if(!s) return;
   const tf=e.target.closest("[data-tf]");
@@ -1528,6 +1617,12 @@ needEl.addEventListener("click",e=>{
   const s=findSkill(row.dataset.sid); if(!s) return;
   const wb=e.target.closest("[data-sw]");
   if(wb){ s.welt=(s.welt===wb.dataset.sw)?"":wb.dataset.sw; save(); renderNeed(); render(); return; }
+  if(e.target.closest("[data-tall]")){
+    /* ein leeres Team-Feld ersetzen statt daneben zu stellen */
+    s.teams=(s.teams||[]).filter(t=>t.all||(t.name||"").trim()||tNum(t));
+    s.teams.push({name:GT,n:"",all:true}); save(); renderNeed(); render(); refreshSug();
+    if(!parseInt(profile.gesamtN,10)){const g=document.getElementById("gesamtN"); if(g){g.focus(); toast("Bitte die Größe des gesamten Teams einmal oben eintragen.");}}
+    return; }
   const ta=e.target.closest("[data-tadd]");
   if(ta){ s.teams.push({name:"",n:""}); save(); renderNeed();
     requestAnimationFrame(()=>{const r=needEl.querySelector(`.srow[data-sid="${s.id}"]`);
@@ -1715,34 +1810,76 @@ function renderCards(){
 }
 function renderKurse(){
   const g=document.getElementById("kurse"); if(!g) return;
-  const pk=pflichtKurs(), ws=WORLDS.filter(w=>skillsFor(w.id).length), liste=kursListe(), p=kursPreis();
-  const zeile=(c,pflicht)=>`<div class="kr${pflicht?" pflicht":""}"><span class="kr-n">${esc(c.n)}${pflicht?` <em>immer dabei</em>`:""}</span>
-    <span class="kr-t">${esc(c.t)}</span><span class="kr-p">${profile.bestand?`<s>${euro(PREIS)}</s> `:""}${euro(p)}</span></div>`;
+  const ws=WORLDS.filter(w=>skillsFor(w.id).length), liste=kursListe(), p=kursPreis(), fm=profile.format||"inhouse";
+  const teams=[...((parseInt(profile.gesamtN,10)||skills().some(s=>(s.teams||[]).some(t=>t.all)))?[GT]:[]),...teamPool().filter(t=>t!==GT)];
+  const teamSel=c=>`<select data-plan="team" data-k="${esc(c.key)}" aria-label="Team"><option value="">Team wählen</option>
+    ${teams.map(t=>`<option${t===c.team?" selected":""}>${esc(t)}</option>`).join("")}
+    ${c.team&&teams.indexOf(c.team)<0?`<option selected>${esc(c.team)}</option>`:""}</select>`;
+  const ortSel=c=>fm==="hybrid"?`<select data-plan="ort" data-k="${esc(c.key)}" aria-label="Ort">
+      <option${c.ort==="vor Ort"?" selected":""}>vor Ort</option><option${c.ort==="online"?" selected":""}>online</option></select>`
+    :`<span class="kp-fix">${c.ort}</span>`;
+  const zeile=c=>`<div class="kp${c.pflicht?" pflicht":""}">
+    <span class="kp-prio"><b>${c.prio}</b><span class="no-print">
+      <button type="button" data-mv="-1" data-k="${esc(c.key)}" title="Priorität höher"${c.prio===1?" disabled":""}>&uarr;</button>
+      <button type="button" data-mv="1" data-k="${esc(c.key)}" title="Priorität niedriger"${c.prio===liste.length?" disabled":""}>&darr;</button></span></span>
+    <span class="kp-n">${esc(c.n)}${c.pflicht?` <em>immer dabei</em>`:""}<small>${esc(c.t)}</small></span>
+    <span class="kp-team"><span class="lbl">Team</span>${teamSel(c)}</span>
+    <span class="kp-w"><span class="lbl">Woche</span><input type="number" min="1" max="${TLMAX()}" data-plan="woche" data-k="${esc(c.key)}" value="${c.woche}"
+      class="tl-num${c.auto?" auto":""}" title="${c.auto?"automatisch über Phase 3 verteilt":"festgelegt"}"></span>
+    <span class="kp-o"><span class="lbl">Ort</span>${ortSel(c)}</span>
+    <span class="kp-p">${profile.bestand?`<s>${euro(PREIS)}</s> `:""}${euro(p)}</span></div>`;
+  const an=anreiseText(liste);
   g.innerHTML=`
     <div class="kurs-opt no-print">
       <label><input type="checkbox" data-kopt="copilotOnly"${profile.copilotOnly?" checked":""}> KI im Unternehmen: <b>nur Microsoft Copilot</b></label>
       <label><input type="checkbox" data-kopt="bestand"${profile.bestand?" checked":""}> <b>Bestandskunde</b> — ${euro(PREIS_BESTAND)} statt ${euro(PREIS)} je Kurs</label>
     </div>
-    ${ws.length?`<div class="kurs-wahl no-print">${ws.map(w=>`<div class="kw-w" style="--pc:${w.c}"><span class="lbl">${esc(w.title)}</span>
-      <div class="kw-c">${w.bau.map(c=>`<button type="button" class="kchip" data-kurs="${esc(c.n)}" aria-pressed="${(profile.kurse||[]).indexOf(c.n)>-1}">${esc(c.n)} <small>${esc(c.t)}</small></button>`).join("")}</div></div>`).join("")}</div>`
-      :`<p class="none no-print">Sobald Skills erfasst sind, stehen hier die passenden Kurse je Kompetenzwelt zur Auswahl.</p>`}
-    <div class="ktab">
-      <div class="kr kr-h"><span>Kurs</span><span>Dauer</span><span>Preis</span></div>
-      ${zeile(pk,true)}
-      ${gewaehlteKurse().map(c=>zeile(c,false)).join("")}
-      <div class="kr kr-sum"><span>${liste.length} ${liste.length===1?"Kurs":"Kurse"}${profile.bestand?" · Bestandskundenpreis":""}</span><span></span><span>${euro(liste.length*p)}</span></div>
+    <div class="fmt no-print"><span class="lbl">Durchführung</span>
+      <div class="fmt-b">${Object.keys(FORMATE).map(k=>`<button type="button" data-fmt="${k}" aria-pressed="${fm===k}">${FORMATE[k]}</button>`).join("")}</div>
+      ${fm!=="online"?`<label class="fmt-a">Anreise je Vor-Ort-Termin <input type="number" min="0" step="50" data-anreise value="${esc(profile.anreise)}" placeholder="nach Aufwand" class="tl-num" style="width:110px"> €</label>`:""}
+      <span class="fmt-h">${fm==="inhouse"?"Alle Kurse bei Ihnen vor Ort, zzgl. Anreise.":fm==="hybrid"?"Je Kurs wählen: vor Ort (zzgl. Anreise) oder online.":"Alle Kurse live online, keine Anreise."}</span>
     </div>
-    <p class="kurs-fuss">Preise je Kurs für Ihr Team · Online, im ppedv-Trainingscenter oder bei Ihnen vor Ort · ggf. zzgl. Anreise.</p>`;
+    ${ws.length?`<details class="kurs-wahl no-print"${profile.kurse.length?"":" open"}><summary><span class="lbl">Kurse auswählen</span> <span class="kw-n">${gewaehlteKurse().length} gewählt</span></summary>
+      ${ws.map(w=>`<div class="kw-w" style="--pc:${w.c}"><span class="lbl">${esc(w.title)}</span>
+      <div class="kw-c">${w.bau.map(c=>`<button type="button" class="kchip" data-kurs="${esc(c.n)}" aria-pressed="${(profile.kurse||[]).indexOf(c.n)>-1}">${esc(c.n)} <small>${esc(c.t)}</small></button>`).join("")}</div></div>`).join("")}</details>`
+      :`<p class="none no-print">Sobald Skills erfasst sind, stehen hier die passenden Kurse je Kompetenzwelt zur Auswahl.</p>`}
+    <p class="kp-hint no-print">Reihenfolge = Priorität. Je Kurs festlegen, für welches Team und in welcher Woche — die Timeline unten zieht mit.</p>
+    <div class="ktab">
+      <div class="kp kp-h"><span>Prio</span><span>Kurs</span><span>Team</span><span>Woche</span><span>Ort</span><span>Preis</span></div>
+      ${liste.map(zeile).join("")}
+      <div class="ksum"><span>${liste.length} ${liste.length===1?"Kurs":"Kurse"} × ${euro(p)}${profile.bestand?" (Bestandskundenpreis)":""}</span><span>${euro(liste.length*p)}</span></div>
+      ${an?`<div class="ksum"><span>${esc(an)}</span><span>${anreiseBetrag()?euro(vorOrt(liste)*anreiseBetrag()):"—"}</span></div>`:""}
+      <div class="ksum tot"><span>Gesamt${an&&!anreiseBetrag()?" · zzgl. Anreise":""}</span><span>${euro(summe(liste))}</span></div>
+    </div>
+    <p class="kurs-fuss">Durchführung: ${FORMATE[fm]}. Preise je Kurs für Ihr Team.</p>`;
+  if(typeof renderTimeline==="function"&&document.getElementById("tl")) renderTimeline();
 }
-document.getElementById("kurse").addEventListener("click",e=>{
-  const b=e.target.closest("[data-kurs]"); if(!b) return;
-  const n=b.dataset.kurs, ks=profile.kurse||(profile.kurse=[]), i=ks.indexOf(n);
-  if(i>-1) ks.splice(i,1); else ks.push(n);
-  save(); renderKurse();
+const kursBox=document.getElementById("kurse");
+const planOf=k=>(profile.plan||(profile.plan={}))[k]||(profile.plan[k]={});
+const kursNeu=()=>{save(); renderKurse(); renderSync();};
+kursBox.addEventListener("click",e=>{
+  const b=e.target.closest("[data-kurs]");
+  if(b){const n=b.dataset.kurs, ks=profile.kurse||(profile.kurse=[]), i=ks.indexOf(n);
+    if(i>-1) ks.splice(i,1); else ks.push(n);
+    const open=kursBox.querySelector("details.kurs-wahl"); const wasOpen=open&&open.open;
+    kursNeu(); const d=kursBox.querySelector("details.kurs-wahl"); if(d&&wasOpen) d.open=true; return;}
+  const f=e.target.closest("[data-fmt]");
+  if(f){profile.format=f.dataset.fmt; kursNeu(); return;}
+  const mv=e.target.closest("[data-mv]");
+  if(mv){const keys=kursListe().map(c=>c.key), i=keys.indexOf(mv.dataset.k), j=i+(+mv.dataset.mv);
+    if(i<0||j<0||j>=keys.length) return;
+    [keys[i],keys[j]]=[keys[j],keys[i]]; profile.reihe=keys; kursNeu(); return;}
 });
-document.getElementById("kurse").addEventListener("change",e=>{
-  const c=e.target.closest("[data-kopt]"); if(!c) return;
-  profile[c.dataset.kopt]=c.checked; save(); renderKurse();
+kursBox.addEventListener("change",e=>{
+  const c=e.target.closest("[data-kopt]");
+  if(c){profile[c.dataset.kopt]=c.checked; kursNeu(); return;}
+  const a=e.target.closest("[data-anreise]");
+  if(a){profile.anreise=a.value===""?"":Math.max(0,parseInt(a.value,10)||0); kursNeu(); return;}
+  const pl=e.target.closest("[data-plan]");
+  if(pl){const o=planOf(pl.dataset.k), f=pl.dataset.plan;
+    if(f==="woche"){const v=parseInt(pl.value,10); o.woche=(v>=1&&v<=TLMAX())?v:"";}
+    else o[f]=pl.value;
+    kursNeu();}
 });
 
 function syncHTML(kind){
@@ -1755,11 +1892,13 @@ function syncHTML(kind){
       li.push(`<li>Lernpfad <strong>${esc(t)}</strong>${tm[t]?" ("+tm[t]+")":""}: ${mine.map(s=>esc(s.text)).join(" · ")}</li>`);});
     const off=ls.filter(s=>!sTeams(s).length);
     if(off.length) li.push(`<li>Noch ohne Team: ${off.map(s=>esc(s.text)).join(" · ")}</li>`);
-    if(profile.start) li.push(`<li>Terminplanung auf Ihren Wunschstart: <strong>${esc(profile.start)}</strong></li>`);}
+    if(profile.start) li.push(`<li>Terminplanung auf Ihren Wunschstart: <strong>${esc(profile.start)}</strong></li>`);
+    li.push(`<li>Durchführung: <strong>${FORMATE[profile.format||"inhouse"]}</strong></li>`);}
   if(kind==="ziel"){
     if(tn.length) li.push(`<li><strong>Lerngruppen</strong>: ${tn.map(t=>esc(t)+(tm[t]?" ("+tm[t]+")":"")).join(" · ")}</li>`);
     const ws=WORLDS.filter(w=>skillsFor(w.id).length);
-    if(ws.length) li.push(`<li>Wellen entlang der Kompetenzwelten: ${ws.map(w=>esc(w.title)).join(" · ")}</li>`);}
+    if(ws.length) li.push(`<li>Wellen entlang der Kompetenzwelten: ${ws.map(w=>esc(w.title)).join(" · ")}</li>`);
+    li.push(`<li>Kurse nach Priorität: ${kursListe().map(c=>`<strong>${c.prio}.</strong> ${esc(kurz(c.n))} (${esc(c.team||"Team offen")}, W ${c.woche}, ${c.ort})`).join(" · ")}</li>`);}
   if(kind==="felder"){
     if(ls.length) li.push(`<li>Use Cases entlang der erfassten Skills: ${ls.map(s=>esc(s.text)).join(" · ")}</li>`);}
   if(kind==="erfolg"){
@@ -1783,15 +1922,18 @@ function renderTimeline(){
    return `<div class="tl-r"><div class="tl-l"><b>${p.n}</b><span>${esc(phShort(i))}</span></div>
      <div class="tl-t" style="${gc}; background-size:calc(100%/${M}) 100%"><button type="button" class="bar${TLPAR[i]?" par":""}" data-goto="${i}" style="grid-column:${a}/${b+1}">
        <span>W ${a}–${b}</span><span class="m">${p.ms.split(" ")[0]}</span></button></div></div>`;}).join("")}
+ <div class="tl-r tl-after tl-k"><div class="tl-l"><b>Kursplan</b><span>${FORMATE[profile.format||"inhouse"]}</span></div><div></div></div>
+ ${kursListe().map(c=>`<div class="tl-r"><div class="tl-l"><b>${c.prio}. ${esc(c.team||"Team offen")}</b><span title="${esc(c.n)}">${esc(kurz(c.n))}</span></div>
+   <div class="tl-t" style="${gc}; background-size:calc(100%/${M}) 100%"><div class="bar kurs${c.ort==="online"?" onl":""}" style="grid-column:${c.woche}/${c.woche+1}" title="${esc(c.n)} · Woche ${c.woche} · ${c.ort}"><span>${c.ort==="online"?"on":"vO"}</span></div></div></div>`).join("")}
  <div class="tl-r tl-after"><div class="tl-l"><b>Danach</b><span>Jahrespartnerschaft</span></div>
    <div class="tl-t"><div class="bar part"><span>Ab Projektabschluss · 4 Termine vor Ort · Q1–Q4 · 12 Monate</span><span class="m">Pauschalpreis</span></div></div></div>
- <p class="tl-note">Phase 4 läuft parallel zu Phase 3 (gestrichelt)</p></div>`;
+ <p class="tl-note">Phase 4 läuft parallel zu Phase 3 (gestrichelt) · Kurse: vO = vor Ort (zzgl. Anreise), on = online</p></div>`;
 }
 renderTimeline();
 const tlWeeksIn=document.getElementById("tlWeeks");
 tlWeeksIn.addEventListener("change",()=>{
   profile.tlWeeks=Math.max(4,Math.min(52,parseInt(tlWeeksIn.value,10)||16));
-  tlWeeksIn.value=profile.tlWeeks; save(); renderTimeline(); renderPhases();});
+  tlWeeksIn.value=profile.tlWeeks; save(); renderTimeline(); renderPhases(); renderKurse();});
 document.getElementById("tlWeeksReset").addEventListener("click",()=>{
   profile.tlWeeks=16; profile.tlSpan=PHASES.map(()=>null); profile.phTitle=PHASES.map(()=>null);
   save(); renderTimeline(); renderPhases();});
@@ -1835,10 +1977,10 @@ document.getElementById("phases").addEventListener("click",e=>{
     profile.phTitle[i]=(tt&&tt!==PHASES[i].t)?tt:null;
     const s=+document.getElementById("tl-start-"+i).value, en=+document.getElementById("tl-end-"+i).value;
     if(s&&en&&en>=s) profile.tlSpan[i]=[Math.max(1,Math.min(M,s)),Math.max(1,Math.min(M,en))];
-    save(); renderTimeline(); renderPhases(); return;
+    save(); renderTimeline(); renderPhases(); renderKurse(); return;
   }
   const rs=e.target.closest("[data-tlreset]");
-  if(rs){ const i=+rs.dataset.tlreset; profile.tlSpan[i]=null; profile.phTitle[i]=null; save(); renderTimeline(); renderPhases(); }
+  if(rs){ const i=+rs.dataset.tlreset; profile.tlSpan[i]=null; profile.phTitle[i]=null; save(); renderTimeline(); renderPhases(); renderKurse(); }
 });
 /* ---------- Kunde + Logo ---------- */
 const custName=document.getElementById("custName"),logoSlot=document.getElementById("logoSlot"),
@@ -1933,7 +2075,7 @@ async function api(aktion,extra){
 const payload=()=>({profile:JSON.parse(JSON.stringify(profile)),notes,focusId});
 
 function blank(){
-  profile={name:"",logo:"",gesagt:"",skills:[],tlWeeks:16,kurse:[],bestand:false,copilotOnly:false,
+  profile={name:"",logo:"",gesagt:"",skills:[],tlWeeks:16,kurse:[],bestand:false,copilotOnly:false,gesamtN:"",format:"inhouse",anreise:"",plan:{},reihe:[],
            tlSpan:PHASES.map(()=>null),phTitle:PHASES.map(()=>null)};
   PFIELDS.forEach(f=>profile[f.k]=""); LEGACY_PF.forEach(k=>profile[k]=""); notes=""; editId=null;
 }
@@ -2229,22 +2371,25 @@ async function buildPDF(scope){
 
   /* Kurse und Investition nur im vollen Umfang */
   if(scope!=="model"){
-    const liste=kursListe(), p=kursPreis();
+    const liste=kursListe(), p=kursPreis(), an=anreiseText(liste);
     B.platz(30); B.titel("Kurse und Investition");
-    liste.forEach((c,i)=>{
-      B.platz(8);
-      B.setF(9.5,i?"normal":"bold",PDFC.ink);
-      const z=d.splitTextToSize(c.n+(i?"":"  (immer dabei)"),W-2*M-52);
+    B.fliess("Durchführung: "+FORMATE[profile.format||"inhouse"]+" · Reihenfolge nach Priorität",9,PDFC.ink2); B.y+=1.5;
+    liste.forEach(c=>{
+      B.platz(12);
+      B.setF(9.5,"bold",PDFC.ink);
+      const z=d.splitTextToSize(c.prio+".  "+c.n+(c.pflicht?"  (immer dabei)":""),W-2*M-30);
       z.forEach((t,j)=>{d.text(t,M,B.y+j*4.3);});
-      B.setF(8.5,"normal",PDFC.ink3); d.text(c.t,W-M-34,B.y);
-      B.setF(9.5,"bold",PDFC.ink); d.text(euro(p),W-M,B.y,{align:"right"});
-      B.y+=z.length*4.3+1.5;
+      d.text(euro(p),W-M,B.y,{align:"right"});
+      B.y+=z.length*4.3;
+      B.setF(8.5,"normal",PDFC.ink3);
+      d.text((c.team||"Team offen")+"  ·  Woche "+c.woche+"  ·  "+c.ort+"  ·  "+c.t,M+5,B.y);
+      B.y+=5.5;
     });
     B.linie();
-    B.setF(10,"bold",PDFC.ink); d.text(liste.length+(liste.length===1?" Kurs":" Kurse"),M,B.y);
-    d.text(euro(liste.length*p),W-M,B.y,{align:"right"}); B.y+=5;
-    B.fliess((profile.bestand?"Bestandskundenpreis: "+euro(PREIS_BESTAND)+" statt "+euro(PREIS)+" je Kurs. ":"Je Kurs "+euro(PREIS)+", für Bestandskunden "+euro(PREIS_BESTAND)+". ")
-      +"Preise je Kurs für Ihr Team · online, im ppedv-Trainingscenter oder bei Ihnen vor Ort · ggf. zzgl. Anreise.",8.5,PDFC.ink3);
+    const sumZ=(l,v,bold)=>{B.platz(6); B.setF(bold?10:9,bold?"bold":"normal",bold?PDFC.ink:PDFC.ink2); d.text(l,M,B.y); d.text(v,W-M,B.y,{align:"right"}); B.y+=5;};
+    sumZ(liste.length+(liste.length===1?" Kurs":" Kurse")+" × "+euro(p)+(profile.bestand?" (Bestandskundenpreis)":""),euro(liste.length*p));
+    if(an) sumZ(an,anreiseBetrag()?euro(vorOrt(liste)*anreiseBetrag()):"—");
+    sumZ("Gesamt"+(an&&!anreiseBetrag()?" · zzgl. Anreise":""),euro(summe(liste)),true);
   }
 
   /* Umsetzung nur im vollen Umfang */
@@ -2272,6 +2417,15 @@ async function buildPDF(scope){
       B.setF(9,"normal",PDFC.ink2); d.text(phTitle(i),M,B.y); 
       B.setF(7.5,"normal",PDFC.softInk); d.text(PHASES[i].ms,W-M,B.y,{align:"right"});
       B.y+=6;
+    });
+    kursListe().forEach(c=>{
+      B.platz(8);
+      B.setF(7.5,"normal",PDFC.ink2); d.text(d.splitTextToSize(c.prio+". "+kurz(c.n),32)[0],M,B.y+3);
+      d.setDrawColor(PDFC.line); d.line(x0,B.y+4.2,W-M,B.y+4.2);
+      const bx=x0+breite*((c.woche-1)/mx), bw=Math.max(3,breite/mx);
+      d.setFillColor(c.ort==="online"?"#9DB0CE":"#EA8F13"); d.roundedRect(bx,B.y,bw,5,1,1,"F");
+      B.setF(7,"normal",PDFC.ink3); d.text((c.team||"Team offen")+" · "+c.ort,Math.min(bx+bw+1.5,W-M-30),B.y+3.6);
+      B.y+=6.5;
     });
     B.y+=2; B.titel("Was in welcher Phase passiert");
     PHASES.forEach((p,i)=>{
@@ -2437,10 +2591,12 @@ document.getElementById("btnCopy").addEventListener("click",async()=>{
   const ohne=ls.filter(s=>!s.welt);
   if(ohne.length) t+=`NOCH OHNE KOMPETENZWELT\n${ohne.map(s=>"  - "+s.text).join("\n")}\n\n`;
   if(notes.trim()) t+=`NOTIZEN\n${notes.trim()}\n\n`;
-  const kl=kursListe(), kp=kursPreis();
-  t+=`KURSE UND INVESTITION${profile.bestand?" · BESTANDSKUNDENPREIS":""}\n`
-   +kl.map((c,i)=>`  - ${c.n} (${c.t})${i?"":" — immer dabei"}: ${euro(kp)}`).join("\n")
-   +`\n  Summe: ${kl.length} ${kl.length===1?"Kurs":"Kurse"} · ${euro(kl.length*kp)}\n\n`;
+  const kl=kursListe(), kp=kursPreis(), an=anreiseText(kl);
+  t+=`KURSE UND INVESTITION · ${FORMATE[profile.format||"inhouse"].toUpperCase()}${profile.bestand?" · BESTANDSKUNDENPREIS":""}\n`
+   +kl.map(c=>`  ${c.prio}. ${c.n} (${c.t})${c.pflicht?" — immer dabei":""}\n     ${c.team||"Team offen"} · Woche ${c.woche} · ${c.ort} · ${euro(kp)}`).join("\n")
+   +`\n  ${kl.length} ${kl.length===1?"Kurs":"Kurse"} × ${euro(kp)} = ${euro(kl.length*kp)}`
+   +(an?`\n  ${an}${anreiseBetrag()?" = "+euro(vorOrt(kl)*anreiseBetrag()):""}`:"")
+   +`\n  Gesamt: ${euro(summe(kl))}${an&&!anreiseBetrag()?" zzgl. Anreise":""}\n\n`;
   t+=`UMSETZUNG — PHASE 1 STARTET MIT DER ZUSAGE · ${TLMAX()} WOCHEN\n`
    +PHASES.map((p,i)=>{const[a,b]=tlRange(i); return `  ${p.n} (Woche ${a}–${b}): ${phTitle(i)} → ${p.ms}`;}).join("\n")
    +`\n\nDANACH — JAHRESPARTNERSCHAFT\n  4 Termine vor Ort, 12 Monate Laufzeit, Pauschalpreis\n`;

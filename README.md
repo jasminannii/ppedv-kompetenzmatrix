@@ -99,6 +99,27 @@ lassen sich Kurse anklicken, darunter stehen Liste und Summe. Die Auswahl geht i
 
 Auswahl, Bestandskunde und Copilot-Häkchen werden mit der Kartei gespeichert.
 
+**Durchführung und Anreise.** Oben im Block wird die Durchführung gewählt:
+- *Inhouse – vor Ort* (Standard): Alle Kurse finden beim Kunden statt, und jeder Kurs ist ein Vor-Ort-Termin mit Anreise.
+- *Hybrid – vor Ort und online*: Je Kurs wird gewählt, ob er vor Ort oder online läuft. Nur die Vor-Ort-Termine kosten Anreise.
+- *Online*: keine Anreise.
+
+Der Betrag „Anreise je Vor-Ort-Termin“ geht in die Summe ein. Bleibt er leer, steht
+„zzgl. Anreise (nach Aufwand)“ da.
+
+**Kursplan: welcher Kurs, für welches Team, wann.** Die Reihenfolge der Tabelle ist
+die Priorität, verschoben wird mit ↑ ↓. Je Kurs werden Team (aus den erfassten Teams),
+Woche und, bei Hybrid, der Ort festgelegt. Ohne festgelegte Woche verteilen sich die
+Kurse automatisch über Phase 3; die Zahl steht dann kursiv. Der Kursplan erscheint
+als eigene Zeilen in der Timeline, im PDF (Balkenplan und Kursliste) und in der
+Textkopie.
+
+**Gesamtes Team.** In Schritt 1 wird die Größe des gesamten Teams einmal zentral
+eingetragen. Betrifft ein Skill alle, genügt je Skill ein Klick auf „Gesamtes Team“.
+Die Zahl gilt überall, wo dieses Team zugeordnet ist. Weil das gesamte Team die
+Abteilungen bereits enthält, wird nicht addiert: Gezählt wird das gesamte Team oder
+die Summe der Abteilungen, je nachdem, was größer ist.
+
 **Kernkompetenzen folgen dem Kursprogramm.** Jede der 18 Kernkompetenzen trägt in
 `ku` die Kurse, die sie abdecken. Sie stehen im Katalog (Schritt 4) und im Panel
 „Woran ppedv dabei denkt“ unter der Beschreibung. Regel: Eine Kernkompetenz ohne
