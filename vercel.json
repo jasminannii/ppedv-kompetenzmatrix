@@ -1,13 +1,26 @@
 {
   "rewrites": [
-    { "source": "/k/:id", "destination": "/index.html" }
+    {
+      "source": "/k/:id",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/kunde/:id",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "same-origin" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "same-origin"
+        }
       ]
     }
   ]

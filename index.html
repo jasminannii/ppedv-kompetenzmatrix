@@ -522,6 +522,12 @@ details.more .in{padding-top:11px}
 .ksum.ang{background:var(--surface);color:var(--ink)}
 .ksum s{color:var(--ink-3);font-weight:400}
 .nextbar{display:flex;justify-content:flex-end;margin-top:26px}
+/* Kundenzugang: nur Bedarf & Kontext, ppedv-Modell, Kompetenzwelt — ohne Kartei-Verwaltung, Name, Logo, Ablauf, Abschluss */
+body.kunde .stab[data-step="3"],body.kunde .stab[data-step="5"],body.kunde #s3,body.kunde #s5,
+body.kunde [data-go="3"],body.kunde #fbLink,body.kunde #fbNew,body.kunde #fbDel,body.kunde #fbKunde,
+body.kunde #logoClear,body.kunde #fields,body.kunde #logoSlot:not(.set){display:none!important}
+body.kunde #logoSlot{pointer-events:none;border-color:transparent!important}
+body.kunde .cust{border-color:transparent!important;background:none!important;pointer-events:none}
 .ang-f{display:grid;grid-template-columns:110px 1fr;gap:6px 8px;margin-top:14px;align-items:center}
 .ang-f .lbl{grid-column:1/-1;margin-top:6px}
 .ang-f input,.ang-f select{font:inherit;font-size:13.5px;background:var(--surface-2);color:var(--ink);border:1px solid var(--line-2);border-radius:5px;padding:6px 8px;min-width:0}
@@ -724,6 +730,7 @@ details.more .in{padding-top:11px}
       <input type="file" id="logoFile" accept="image/*" hidden>
       <div class="kartei no-print">
         <button class="btn" id="fbLink">Link kopieren</button>
+        <button class="btn" id="fbKunde" title="Eigenen Zugang für den Kunden vergeben">Kundenzugang</button>
         <button class="btn" id="fbNew">Neue Kartei</button>
         <button class="btn" id="fbDel">Löschen</button>
         <span class="fb-status" id="fbStatus"></span>
@@ -2216,6 +2223,7 @@ function renderCust(){
 }
 custName.addEventListener("input",()=>{profile.name=custName.value; renderCust(); save();});
 function setLogo(f){
+  if(KUNDE) return;   /* Logo setzt nur ppedv */
   if(!f||!/^image\//.test(f.type||"")) return;
   const rd=new FileReader();
   rd.onload=()=>{const img=new Image();
@@ -2271,7 +2279,9 @@ function render(){
    hält nichts dauerhaft — weder Daten noch Passwort. Die Adresse /k/<id> ist
    nicht zu erraten, das Passwort prüft die Funktion unter /api/kartei. */
 const fbStatus=document.getElementById("fbStatus");
-let karteiId=(location.pathname.match(/^\/k\/([A-Za-z0-9_-]+)/)||[])[1]||"";
+/* /k/<id> = intern (Team), /kunde/<id> = Kundenzugang mit eigenem Passwort und eingeschränkter Ansicht */
+const KUNDE=/^\/kunde\//.test(location.pathname);
+let karteiId=(location.pathname.match(/^\/(?:k|kunde)\/([A-Za-z0-9_-]+)/)||[])[1]||"";
 let pw="", offen=false, dirty=false, autoT=null;
 
 const st=(m,k)=>{fbStatus.className="fb-status"+(k?" "+k:""); fbStatus.textContent=m||"";};
@@ -2279,7 +2289,7 @@ const hhmm=()=>new Date().toLocaleTimeString("de-AT",{hour:"2-digit",minute:"2-d
 
 async function api(aktion,extra){
   const r=await fetch("/api/kartei",{method:"POST",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(Object.assign({aktion,id:karteiId,passwort:pw},extra||{}))});
+    body:JSON.stringify(Object.assign({aktion,id:karteiId,passwort:pw},KUNDE?{rolle:"kunde"}:{},extra||{}))});
   let j={}; try{j=await r.json()}catch(e){}
   if(!r.ok){
     /* Die Diagnose des Servers mitnehmen — sonst steht nur „Serverfehler“ da */
@@ -2345,6 +2355,11 @@ function zeigeSchleuse(){
     gateText.textContent="Unternehmen eintragen. Das Passwort schützt diese Kartei — voreingestellt ist der Unternehmensname.";
     gateGo.textContent="Anlegen";
     gateAlt.hidden=false; gateAlt.textContent="Zurück zur Übersicht";
+  }else if(KUNDE){
+    gateTitel.textContent="Ihre Kompetenzwelt";
+    gateText.textContent="Bitte geben Sie das Passwort ein, das Sie von ppedv erhalten haben.";
+    gateGo.textContent="Öffnen";
+    gateAlt.hidden=true;
   }else{
     gateTitel.textContent="Kartei öffnen";
     gateText.textContent="Diese Kartei ist mit einem Passwort geschützt.";
@@ -2400,6 +2415,7 @@ gateForm.addEventListener("submit",async e=>{
       offen=true; gate.hidden=true; uebers.hidden=true;
       uebernehmen(j.data);
       if(!((profile.name||"").trim()) && j.titel){ profile.name=j.titel; renderCust(); }
+      if(KUNDE) kundenAnsicht(); else zeigeKundenzugang(j.kundenzugang);
       st("Geöffnet · zuletzt "+(j.updatedAt?new Date(j.updatedAt).toLocaleString("de-AT",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}):"—"));
     }
     gateP.value=""; gateU.value="";
@@ -2427,6 +2443,34 @@ document.getElementById("fbDel").addEventListener("click",async()=>{
   try{ await api("loeschen"); location.href="/"; }
   catch(e){ st("Nicht gelöscht — "+e.message,"err"); }
 });
+
+/* ---------- Kundenzugang ----------
+   Admin vergibt ein Kundenpasswort; der Kunde öffnet /kunde/<id> und sieht nur
+   Bedarf & Kontext, das ppedv-Modell und seine Kompetenzwelt. Was er sieht und
+   speichern darf, begrenzt der Server — die Ansicht hier ist nur die Oberfläche. */
+function zeigeKundenzugang(an){
+  const b=document.getElementById("fbKunde"); if(b) b.textContent=an?"Kundenzugang ✓":"Kundenzugang";
+}
+document.getElementById("fbKunde").addEventListener("click",async()=>{
+  if(!offen||!karteiId){ st("Erst die Kartei öffnen.","err"); return; }
+  const vorschlag=Array.from(crypto.getRandomValues(new Uint8Array(6)),b=>"abcdefghjkmnpqrstuvwxyz23456789"[b%31]).join("");
+  const k=prompt("Kundenpasswort für „"+((profile.name||"").trim()||"diese Kartei")+"“ (mind. 6 Zeichen).\nLeer lassen und OK = Kundenzugang entziehen.",vorschlag);
+  if(k===null) return;
+  try{
+    const j=await api("kundenzugang",k.trim()?{kundenPasswort:k.trim()}:{entziehen:true});
+    zeigeKundenzugang(j.kundenzugang);
+    if(!j.kundenzugang){ st("Kundenzugang entzogen","ok"); return; }
+    const u=location.origin+"/kunde/"+karteiId;
+    try{ await navigator.clipboard.writeText(u); st("Kundenzugang aktiv · Link kopiert","ok"); }
+    catch(e){ prompt("Link für den Kunden:",u); st("Kundenzugang aktiv","ok"); }
+  }catch(e){ st("Kundenzugang nicht gesetzt — "+e.message,"err"); }
+});
+function kundenAnsicht(){
+  document.body.classList.add("kunde");
+  custName.readOnly=true; custName.placeholder="";
+  goStep(2);
+  st("Ihre Änderungen werden automatisch gespeichert.","ok");
+}
 
 if(karteiId) zeigeSchleuse(); else ladeUebersicht();
 

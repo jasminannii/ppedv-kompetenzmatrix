@@ -67,6 +67,25 @@ async function indexPflegen(id, titel, weg) {
 }
 
 
+/* ---------- Kundenzugang ----------
+   Eigenes Kundenpasswort je Kartei (kundeSalt/kundeHash). Der Kunde sieht und ändert
+   nur seine Themen: Skills (mit Teams und Kursauswahl), Größe des gesamten Teams und
+   die Workshop-Wahl. Name, Logo, Kursplan, Preise, Angebot und Notizen bleiben intern. */
+const KUNDE_PROFIL = ["name", "logo", "skills", "gesamtN", "copilotOnly"];   // darf er sehen
+const KUNDE_SCHREIBT = ["skills", "gesamtN", "copilotOnly"];                 // darf er ändern
+function fuerKunde(data) {
+  const p = (data && data.profile) || {}, out = {};
+  KUNDE_PROFIL.forEach(k => { if (k in p) out[k] = p[k]; });
+  return { profile: out, focusId: data && data.focusId };
+}
+function vomKunden(alt, neu) {
+  const a = alt || { profile: {} }, p = Object.assign({}, a.profile || {}), np = (neu && neu.profile) || {};
+  KUNDE_SCHREIBT.forEach(k => { if (k in np) p[k] = np[k]; });
+  if (!Array.isArray(p.skills)) p.skills = [];
+  p.skills = p.skills.slice(0, 200);                                 // Obergrenze gegen Missbrauch
+  return Object.assign({}, a, { profile: p, focusId: (neu && neu.focusId) || a.focusId });
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ fehler: "Nur POST." });
   let b = req.body;
@@ -100,13 +119,43 @@ export default async function handler(req, res) {
     const satz = await lesen(id);
     /* Gleiche Antwort wie bei falschem Passwort: sonst verrät der Server,
        welche Karteien es gibt. */
-    if (!satz || !stimmt(passwort, satz.salt, satz.hash)) {
+    const kunde = b.rolle === "kunde";
+    const ok = satz && (kunde
+      ? (satz.kundeHash && stimmt(passwort, satz.kundeSalt, satz.kundeHash))
+      : stimmt(passwort, satz.salt, satz.hash));
+    if (!ok) {
       await new Promise(r => setTimeout(r, 400));        // bremst Rateversuche
       return res.status(401).json({ fehler: "Passwort stimmt nicht." });
     }
 
     if (aktion === "oeffnen")
-      return res.status(200).json({ titel: satz.titel, data: satz.data, updatedAt: satz.updatedAt });
+      return res.status(200).json({ titel: satz.titel, data: kunde ? fuerKunde(satz.data) : satz.data,
+        updatedAt: satz.updatedAt, kundenzugang: kunde ? undefined : !!satz.kundeHash });
+
+    if (kunde && aktion !== "sichern")
+      return res.status(403).json({ fehler: "Für den Kundenzugang nicht erlaubt." });
+
+    if (aktion === "sichern" && kunde) {
+      satz.data = vomKunden(satz.data, b.data);
+      satz.updatedAt = new Date().toISOString();
+      satz.kundeGeaendertAm = satz.updatedAt;
+      await schreiben(id, satz);
+      await indexPflegen(id, satz.titel, false);
+      return res.status(200).json({ updatedAt: satz.updatedAt });
+    }
+
+    /* Admin vergibt oder entzieht den Kundenzugang */
+    if (aktion === "kundenzugang") {
+      const kpw = String(b.kundenPasswort || "");
+      if (b.entziehen) { delete satz.kundeSalt; delete satz.kundeHash; }
+      else {
+        if (kpw.length < 6) return res.status(400).json({ fehler: "Kundenpasswort braucht mindestens 6 Zeichen." });
+        satz.kundeSalt = randomBytes(16).toString("base64");
+        satz.kundeHash = hashen(kpw, satz.kundeSalt);
+      }
+      await schreiben(id, satz);
+      return res.status(200).json({ kundenzugang: !!satz.kundeHash });
+    }
 
     if (aktion === "sichern") {
       satz.data = b.data ?? satz.data;

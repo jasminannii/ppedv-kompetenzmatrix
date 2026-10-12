@@ -303,6 +303,32 @@ der Fehler landet im Log, nicht beim Nutzer.
 > Wer mehr Schutz will: beim Anlegen ein eigenes Passwort vergeben, oder die
 > Prüfung des Team-Passworts wieder einbauen (war in Commit c2879e8).
 
+### Kundenzugang
+
+Kunden können ihre eigene Kompetenzwelt selbst anpassen — über einen eigenen Link mit
+eigenem Passwort, getrennt vom internen Zugang.
+
+1. Kartei intern öffnen (`/k/<id>`), oben **Kundenzugang** klicken, Passwort bestätigen
+   (ein zufälliger Vorschlag ist vorbelegt, mind. 6 Zeichen). Der Link `/kunde/<id>` wird
+   kopiert; Link und Passwort getrennt an den Kunden schicken. Ist ein Zugang aktiv, steht
+   „Kundenzugang ✓“. Erneut klicken vergibt ein neues Passwort; leer lassen entzieht ihn.
+2. Der Kunde sieht nur **Bedarf & Kontext**, **das ppedv-Modell** und **Eure
+   Kompetenzwelt**: Themen, Teams, Kurse an den Themen, Größe des gesamten Teams, Wahl des
+   Workshops. Keine Kartei-Knöpfe, keine Übersicht, Name und Logo nur zur Anzeige, keine
+   Gesprächsnotizen, kein Ablauf, kein Abschluss, keine Preise.
+
+**Durchgesetzt wird das auf dem Server** (`api/kartei.js`), nicht nur in der Oberfläche:
+- Mit `rolle: "kunde"` prüft die Funktion das Kundenpasswort (`kundeSalt`/`kundeHash`),
+  nie das interne. Das Kundenpasswort öffnet keine andere Kartei und nicht die interne
+  Ansicht.
+- `oeffnen` liefert dem Kunden nur `name`, `logo`, `skills`, `gesamtN`, `copilotOnly`.
+- `sichern` übernimmt vom Kunden nur `skills`, `gesamtN`, `copilotOnly`; alles andere
+  (Name, Logo, Kursplan, Preise, Angebot, Notizen) bleibt wie gespeichert.
+- `loeschen` und `kundenzugang` sind für Kunden gesperrt (403).
+
+Bearbeiten Kunde und ppedv gleichzeitig, gewinnt die zuletzt gespeicherte Fassung. Vor
+eigenen Änderungen die Kartei deshalb neu laden, wenn der Kunde gerade daran war.
+
 ### Kein Browser-Speicher mehr
 
 `localStorage` kommt nicht mehr vor. Der Zustand lebt im Arbeitsspeicher der
@@ -315,7 +341,7 @@ Arbeitsspeicher: nach dem Neuladen fragt die Schleuse erneut.
 ```
 index.html        die Anwendung, eine Datei
 api/kartei.js     anlegen / oeffnen / sichern / loeschen / uebersicht, per POST
-vercel.json       Rewrite /k/:id → /index.html
+vercel.json       Rewrites /k/:id und /kunde/:id → /index.html
 package.json      @vercel/blob
 ```
 
