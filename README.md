@@ -157,6 +157,13 @@ Themen, die im Kursprogramm stehen.
 
 ## Angebot (Word aus der ppedv-Vorlage)
 
+**Agenda-Daten.** `AGENDA` in `index.html` enthält je Kurs den Pfad der Kursseite und die
+Modultitel des Abschnitts „Agenda“ (bzw. „Kursinhalt“) von ppedv.de, Stand 12.10.2026.
+Für die beiden Workshops stehen die vier Schritte der Landingpages. Ändern sich Kurse auf
+ppedv.de, die Liste neu auslesen; ein Kurs ohne Agenda-Abschnitt (derzeit „Power Apps und
+Power Automate Fortgeschrittene“) erscheint mit dem Verweis auf die Kursbeschreibung.
+
+
 „Angebot als Word“ in Schritt 5 füllt `angebot-vorlage.docx` und lädt eine .docx herunter,
 die vor dem Versand in Word angepasst werden kann. Die Vorlage ist die bereinigte
 ppedv-Inhouse-Vorlage: Briefkopf, Fußzeile und Schlusstext wie im Original, ohne Kunden-
@@ -166,8 +173,8 @@ und Mitarbeiterdaten, mit Platzhaltern `{{…}}` (je Platzhalter genau ein Textl
   Kartei gespeichert; die Firma kommt aus dem Kundennamen.
 - **Unterzeichner** (Name, Funktion, Durchwahl) bleibt im Browser der Person, die das
   Angebot schreibt (`localStorage`), nicht in der Kartei.
-- **Je Kurs eine Tabelle** wie in der Vorlage: Kurs, Agenda (die Themen des Kunden, die
-  diesen Kurs tragen), Dauer, Termin (Woche ab Zusage), Teilnehmer (Team und Kopfzahl),
+- **Je Kurs eine Tabelle** wie in der Vorlage: Kurs, Agenda (die Module der Kursseite
+  auf ppedv.de, darunter „Schwerpunkt auf Ihre Themen“ und der Link zur Kursseite), Dauer, Termin (Woche ab Zusage), Teilnehmer (Team und Kopfzahl),
   Ort (Inhouse oder Virtual Classroom), Hardwarebereitstellung, Preis pauschal
   (3.500 € bzw. 2.800 € Bestandskunden). Die Zusatzposten der Vorlage (Vorbereitungszeit,
   zusätzliche Teilnehmer, virtuelle Maschinen) bleiben als „zuzüglich“ stehen.
