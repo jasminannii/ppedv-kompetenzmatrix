@@ -1,3 +1,8 @@
 node_modules/
 .vercel/
 .env*.local
+
+# Interne Vorlagen und echte Angebote — nie ins öffentliche Repo
+*.docx
+vorlagen/
+!angebot-vorlage.docx

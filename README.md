@@ -155,6 +155,31 @@ die Summe der Abteilungen, je nachdem, was größer ist.
 passenden Kurs gehört nicht ins Modell. Auch die Unterzeilen der Welten nennen nur
 Themen, die im Kursprogramm stehen.
 
+## Angebot (Word aus der ppedv-Vorlage)
+
+„Angebot als Word“ in Schritt 5 füllt `angebot-vorlage.docx` und lädt eine .docx herunter,
+die vor dem Versand in Word angepasst werden kann. Die Vorlage ist die bereinigte
+ppedv-Inhouse-Vorlage: Briefkopf, Fußzeile und Schlusstext wie im Original, ohne Kunden-
+und Mitarbeiterdaten, mit Platzhaltern `{{…}}` (je Platzhalter genau ein Textlauf).
+
+- **Empfänger** (Anrede, Name, Straße, PLZ/Ort) wird im Abschluss eingetragen und mit der
+  Kartei gespeichert; die Firma kommt aus dem Kundennamen.
+- **Unterzeichner** (Name, Funktion, Durchwahl) bleibt im Browser der Person, die das
+  Angebot schreibt (`localStorage`), nicht in der Kartei.
+- **Je Kurs eine Tabelle** wie in der Vorlage: Kurs, Agenda (die Themen des Kunden, die
+  diesen Kurs tragen), Dauer, Termin (Woche ab Zusage), Teilnehmer (Team und Kopfzahl),
+  Ort (Inhouse oder Virtual Classroom), Hardwarebereitstellung, Preis pauschal
+  (3.500 € bzw. 2.800 € Bestandskunden). Die Zusatzposten der Vorlage (Vorbereitungszeit,
+  zusätzliche Teilnehmer, virtuelle Maschinen) bleiben als „zuzüglich“ stehen.
+- Darunter die **Zusammenfassung**: Kurse × Preis, Reisekosten, Gesamt.
+
+Die Original-Vorlage (`*.docx`) ist per `.gitignore` vom Repo ausgeschlossen — das Repo
+ist öffentlich. Nur `angebot-vorlage.docx` ist freigegeben. Ändert ppedv die Vorlage, in der neuen
+Fassung dieselben Platzhalter setzen: `{{FIRMA}} {{PERSON}} {{STRASSE}} {{PLZORT}} {{DATUM}}
+{{ANREDE}} {{TELEFON}} {{BEARBEITER}}`, in der (einzigen) Kurstabelle `{{ART}} {{KURS}}
+{{AGENDA}} {{DAUER}} {{TERMIN}} {{TEILNEHMER}} {{ORT}} {{HARDWARE}} {{PREIS_LABEL}}
+{{PREIS_INFO}} {{PREIS}}` und direkt unter der Tabelle ein Absatz `{{SUMME}}`.
+
 ## Anpassbarkeit (pro Kundengespräch, nicht global)
 
 **Kernkompetenzen sind Vorschläge, keine Vorgaben.** Je Welt sind drei
