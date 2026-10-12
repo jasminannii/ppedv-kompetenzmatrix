@@ -188,7 +188,10 @@ details.more .in{padding-top:11px}
 .cc-b{padding:14px 16px 17px}
 .cc-sec+.cc-sec{margin-top:15px; padding-top:14px; border-top:1px solid var(--line)}
 .cc-sec>.lbl{display:block; margin-bottom:8px}
-.cc-k{margin-bottom:10px; padding-left:12px; border-left:2px solid var(--pc)}
+.cc-k{padding:9px 0 9px 12px; border-left:2px solid var(--pc)}
+.cc-k+.cc-k{margin-top:6px}
+.cc-kh{display:flex; justify-content:space-between; align-items:center; gap:10px}
+.cc-kh .cc-take{margin-top:0; flex:none}
 .cc-k b{display:block; font-size:14.5px; font-weight:600; line-height:1.35}
 .cc-k span{display:block; font-size:13px; color:var(--ink-2); line-height:1.45; margin-top:2px}
 .cc-f{margin-bottom:9px}
@@ -437,7 +440,8 @@ details.more .in{padding-top:11px}
 .card .sec.kk li::before{content:""; position:absolute; left:0; top:7px; width:7px; height:7px; border-radius:2px; background:var(--orange)}
 .empty{border:1px dashed var(--line-2); border-radius:8px; padding:30px; text-align:center; color:var(--ink-3); grid-column:1/-1}
 .block{margin-top:40px}
-.ku{display:block;font-size:12.5px;color:var(--accent-ink);margin-top:3px;font-weight:500}
+.ku{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.ku i{font-style:normal;font-size:12px;background:var(--surface-2);border:1px solid var(--line);border-radius:20px;padding:2px 9px;color:var(--ink-2)}
 .kurs-hinweis{font-size:14px;color:var(--ink-2);margin:-6px 0 18px}
 .kurs-hinweis a{color:var(--blue);font-weight:600}
 .cc-tags span small{color:var(--ink-3)}
@@ -493,12 +497,9 @@ details.more .in{padding-top:11px}
 .kp-x button:hover{color:#B3261E}
 .sku{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}
 .sku-none{font-size:12.5px;color:var(--ink-3)}
-.kc{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;border:1px dashed var(--orange);background:var(--surface);color:var(--ink);border-radius:20px;padding:3px 4px 3px 10px}
-.kc i{font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);margin-right:2px}
-.kc.ok{border-style:solid;border-color:var(--blue);background:color-mix(in srgb,var(--blue) 9%,var(--surface))}
-.kc button{border:0;background:none;color:var(--ink-3);font-size:14px;line-height:1;width:20px;height:20px;border-radius:50%;cursor:pointer;padding:0}
-.kc button[data-kok]{color:var(--ok,#1E8E5A);font-weight:700}
-.kc button:hover{background:var(--surface-3)}
+.kc{font:inherit;font-size:12.5px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-3);border-radius:20px;padding:4px 11px;cursor:pointer;transition:.12s}
+.kc:hover{border-color:var(--orange);color:var(--ink)}
+.kc.on{background:var(--orange);border-color:var(--orange);color:#3D2402;font-weight:600}
 .kadd{font:inherit;font-size:12.5px;max-width:200px;border:1px dashed var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:20px;padding:3px 8px}
 .cc-k .sku,.cc-f .sku{margin-top:6px}
 .pskill .sku{margin-top:6px}
@@ -1019,7 +1020,7 @@ const PFL=new Set([KURS_SKILL.n,KURS_COPILOT.n]);
 function gewaehlteKurse(){
   const seen=new Set(), out=[];
   named().forEach(s=>(s.ku||[]).forEach(k=>{const c=ALLE_KURSE.find(x=>x.n===k.n);
-    if(c&&!seen.has(c.n)){seen.add(c.n); out.push(c);}}));
+    if(k.on&&c&&!seen.has(c.n)){seen.add(c.n); out.push(c);}}));
   return out;
 }
 /* Team eines Kurses: aus den Skills, die ihn tragen — überschreibbar im Kursplan */
@@ -1059,7 +1060,10 @@ function anreiseText(l){
   return a?`Anreise: ${t} × ${euro(a)}`:`zzgl. Anreise für ${t} (nach Aufwand)`;
 }
 const summe=l=>l.length*kursPreis()+vorOrt(l)*anreiseBetrag();
-const kurz=n=>n.split(/ [–-] /)[0];
+/* Kurztitel für Chips: Teil vor dem Bindestrich — außer er ist mehrdeutig
+   („Microsoft Teams“, „SQL Server“), dann mit dem unterscheidenden Teil */
+const PREFIX_N={}; ALLE_KURSE.forEach(c=>{const x=c.n.split(/ [–-] /)[0]; PREFIX_N[x]=(PREFIX_N[x]||0)+1;});
+const kurz=n=>{const t=n.split(/ [–-] /); return t.length>1&&PREFIX_N[t[0]]>1?t[0]+": "+t.slice(1).join(" – "):t[0];};
 
 const PFIELDS=[
  {k:"anlass",l:"Was funktioniert nicht?",ph:"Seit wann, wie oft, was kostet es?",area:1,wide:1},
@@ -1147,6 +1151,7 @@ function skillsFromV4(st,pf){
 }
 /* Der Workshop ist immer dabei — und steht als Skill in der Matrix, nicht nur im Angebot.
    Am Skill wird gewählt: allgemein (Skill-Building-Workshop) oder Copilot (Praxistag). */
+const WSHORT={ki:"KI",proz:"Prozesse",daten:"Daten",dev:"Entwicklung",cloud:"Cloud & Security",zus:"Zusammenarbeit"};
 const PFLICHT_TEXT="Eigene Arbeitsabläufe mit KI umbauen";
 function ensurePflicht(){
   const ls=Array.isArray(profile.skills)?profile.skills:(profile.skills=[]);
@@ -1166,7 +1171,8 @@ function normProfile(){
     teams:(Array.isArray(s&&s.teams)?s.teams:[]).map(t=>({
       name:String((t&&t.name)||""), n:(t&&(t.n||t.n===0))?t.n:"", all:!!(t&&t.all)})),
     note:String((s&&s.note)||""),
-    ku:(Array.isArray(s&&s.ku)?s.ku:[]).filter(k=>k&&ALLE_KURSE.some(c=>c.n===k.n)).map(k=>({n:k.n,st:k.st==="ok"?"ok":"v"})),
+    ku:(Array.isArray(s&&s.ku)?s.ku:[]).filter(k=>k&&ALLE_KURSE.some(c=>c.n===k.n))
+      .map(k=>({n:k.n,on:k.on!==undefined?!!k.on:true,auto:k.auto!==undefined?!!k.auto:k.st==="v"})),
     kuNo:(Array.isArray(s&&s.kuNo)?s.kuNo:[]).map(String),
     kuSig:String((s&&s.kuSig)||""),
     pflicht:!!(s&&s.pflicht)}));
@@ -1174,7 +1180,7 @@ function normProfile(){
   /* Vorversion: Kurse wurden je Welt von Hand gewählt — sie wandern als bestätigt an den ersten Skill der Welt */
   (Array.isArray(profile.kurse)?profile.kurse:[]).forEach(n=>{
     const c=ALLE_KURSE.find(x=>x.n===n); if(!c||profile.skills.some(s=>s.ku.some(k=>k.n===n))) return;
-    const s=profile.skills.find(x=>x.welt===c.welt); if(s) s.ku.push({n,st:"ok"});});
+    const s=profile.skills.find(x=>x.welt===c.welt); if(s) s.ku.push({n,on:true,auto:false});});
   profile.kurse=[];
   ensurePflicht();
   profile.kurse=(Array.isArray(profile.kurse)?profile.kurse:[]).filter(n=>ALLE_KURSE.some(c=>c.n===n));
@@ -1459,16 +1465,17 @@ function kursVorschlag(s){
   }
   return ku.filter(n=>!PFL.has(n)).slice(0,3);
 }
-/* Nur neu vorschlagen, wenn sich Text oder Welt geändert haben. Bestätigte bleiben,
-   abgelehnte kommen nicht wieder. */
+/* Nur neu vorschlagen, wenn sich Text oder Welt geändert haben. Vorschläge kommen
+   ausgewählt (orange); ein Klick schaltet einen Kurs aus und wieder ein. */
 function updateKu(s){
   if(!Array.isArray(s.ku)) s.ku=[]; if(!Array.isArray(s.kuNo)) s.kuNo=[];
   if(s.pflicht){s.ku=[]; return;}
   const sig=(s.welt||"")+"|"+fold((s.text||"").trim());
   if(s.kuSig===sig) return;
   s.kuSig=sig;
-  const keep=s.ku.filter(k=>k.st==="ok"), have=new Set(keep.map(k=>k.n));
-  s.ku=keep.concat(kursVorschlag(s).filter(n=>!have.has(n)&&s.kuNo.indexOf(n)<0).map(n=>({n,st:"v"})));
+  /* Angeklickte Kurse bleiben (an oder aus), unberührte Vorschläge werden ersetzt */
+  const keep=s.ku.filter(k=>!k.auto), have=new Set(keep.map(k=>k.n));
+  s.ku=keep.concat(kursVorschlag(s).filter(n=>!have.has(n)).map(n=>({n,on:true,auto:true})));
 }
 function kuChips(s){
   if(s.pflicht) return `<span class="pws-l">Immer dabei — welcher Workshop?</span>
@@ -1478,8 +1485,8 @@ function kuChips(s){
   if(!s.welt) return `<span class="sku-none">Kurse erscheinen, sobald eine Kompetenzwelt gewählt ist.</span>`;
   const w=WORLDS.find(x=>x.id===s.welt), have=new Set((s.ku||[]).map(k=>k.n));
   const opt=c=>`<option value="${esc(c.n)}">${esc(c.n)} · ${esc(c.t)}</option>`;
-  return (s.ku||[]).map(k=>`<span class="kc${k.st==="ok"?" ok":""}" title="${k.st==="ok"?"bestätigt":"Vorschlag — bestätigen oder entfernen"}">${k.st==="ok"?"":"<i>Vorschlag</i>"}${esc(k.n)}
-      ${k.st==="ok"?"":`<button type="button" data-kok="${esc(k.n)}" title="Bestätigen">✓</button>`}<button type="button" data-kx="${esc(k.n)}" title="Entfernen">&times;</button></span>`).join("")
+  return (s.ku||[]).map(k=>`<button type="button" class="kc${k.on?" on":""}" data-ktog="${esc(k.n)}" aria-pressed="${!!k.on}"
+      title="${esc(k.n)} — ${k.on?"dabei, klicken zum Abwählen":"klicken, um ihn dazuzunehmen"}">${esc(kurz(k.n))}</button>`).join("")
     +`<select class="kadd no-print" data-kadd aria-label="Kurs hinzufügen"><option value="">+ Kurs</option>
       <optgroup label="${esc(w.title)}">${w.bau.filter(c=>!have.has(c.n)).map(opt).join("")}</optgroup>
       <optgroup label="Weitere Kurse">${ALLE_KURSE.filter(c=>c.welt!==w.id&&!have.has(c.n)).map(opt).join("")}</optgroup></select>`;
@@ -1494,17 +1501,16 @@ document.addEventListener("click",e=>{
   const s=findSkill(box.dataset.sku); if(!s) return;
   const pw=e.target.closest("[data-pws]");
   if(pw){profile.copilotOnly=pw.dataset.pws==="copilot"; kuChanged(); return;}
-  const ok=e.target.closest("[data-kok]"), x=e.target.closest("[data-kx]");
-  if(ok){const k=s.ku.find(k=>k.n===ok.dataset.kok); if(k) k.st="ok";}
-  else if(x){s.ku=s.ku.filter(k=>k.n!==x.dataset.kx); if(s.kuNo.indexOf(x.dataset.kx)<0) s.kuNo.push(x.dataset.kx);}
-  else return;
+  const tg=e.target.closest("[data-ktog]"); if(!tg) return;
+  const k=s.ku.find(k=>k.n===tg.dataset.ktog); if(!k) return;
+  k.on=!k.on; k.auto=false;
   kuChanged();
 });
 document.addEventListener("change",e=>{
   const sel=e.target.closest("[data-kadd]"); if(!sel||!sel.value) return;
   const s=findSkill(sel.closest("[data-sku]").dataset.sku); if(!s) return;
-  if(!s.ku.some(k=>k.n===sel.value)) s.ku.push({n:sel.value,st:"ok"});
-  s.kuNo=s.kuNo.filter(n=>n!==sel.value);
+  const k=s.ku.find(k=>k.n===sel.value);
+  if(k){k.on=true; k.auto=false;} else s.ku.push({n:sel.value,on:true,auto:false});
   kuChanged();
 });
 
@@ -1613,7 +1619,7 @@ function takeBtn(w,txt){
   return `<button type="button" class="cc-take${on?" on":""}" data-take-cat="${esc(w.id)}" data-take-txt="${esc(txt)}"${on?" disabled":""}>${on?"✓ übernommen":"+ übernehmen"}</button>`;
 }
 /* Kurse, die eine Kernkompetenz abdecken — als kurze Zeile unter der Beschreibung */
-const kuHTML=k=>(k.ku||[]).length?`<span class="ku">→ ${k.ku.map(esc).join(" · ")}</span>`:"";
+const kuHTML=k=>(k.ku||[]).length?`<span class="ku">${k.ku.map(n=>`<i title="${esc(n)}">${esc(kurz(n))}</i>`).join("")}</span>`:"";
 const skillOf=t=>skills().find(s=>s.text.trim().toLowerCase()===String(t).trim().toLowerCase());
 /* Noch nicht übernommen: Kurse als Hinweis. Übernommen: wählbar wie in Schritt 1. */
 const catKu=k=>{const s=skillOf(k.n); return s?`<div class="sku" data-sku="${s.id}">${kuChips(s)}</div>`:kuHTML(k);};
@@ -1624,14 +1630,7 @@ function renderCatCards(){
     <div class="catcard" id="cc-${w.id}" style="--pc:${w.c}">
       <div class="h"><span class="kw">${w.kw}</span><h4>${esc(w.title)}</h4><p>${esc(w.lead)}</p></div>
       <div class="cc-b">
-        <div class="cc-sec"><span class="lbl">Kernkompetenzen</span>
-          ${w.komp.map(k=>`<div class="cc-k"><b>${esc(k.n)}</b><span>${esc(k.d)}</span>${takeBtn(w,k.n)}${catKu(k)}</div>`).join("")}</div>
-        <div class="cc-sec"><span class="lbl">Typische Zielgruppen</span>
-          <div class="cc-tags">${w.ziel.map(z=>`<span>${esc(z)}</span>`).join("")}</div></div>
-        <div class="cc-sec"><span class="lbl">Alle Kurse dieser Welt</span>
-          <div class="cc-tags">${w.bau.map(b=>`<span>${esc(b.n)} <small>· ${esc(b.t)}</small></span>`).join("")}</div></div>
-        <div class="cc-sec"><span class="lbl">Warum das gebraucht wird</span>
-          <p class="cc-beleg">${esc(w.beleg)}</p></div>
+        ${w.komp.map(k=>`<div class="cc-k"><div class="cc-kh"><b title="${esc(k.d)}">${esc(k.n)}</b>${takeBtn(w,k.n)}</div>${catKu(k)}</div>`).join("")}
       </div>
     </div>`).join("");
 }
@@ -1702,7 +1701,7 @@ function skillRow(s,i){
       ${s.pflicht?`<span class="s-pfl" title="Gehört immer zum Angebot">immer dabei</span>`:`<button type="button" class="t-del no-print" data-sdel="${s.id}" title="Skill entfernen">&times;</button>`}
     </div>
     <span class="s-lbl">Kompetenzwelt${sug?` <i>· ${esc(sug.title)}?</i>`:""}</span>
-    <div class="wsel">${WORLDS.map(w=>`<button type="button" class="wchip" style="--wc:${w.c}" data-sw="${w.id}" aria-pressed="${s.welt===w.id}">${esc(w.title)}</button>`).join("")}</div>
+    <div class="wsel">${WORLDS.map(w=>`<button type="button" class="wchip" style="--wc:${w.c}" data-sw="${w.id}" aria-pressed="${s.welt===w.id}">${esc(WSHORT[w.id])}</button>`).join("")}</div>
     <span class="s-lbl">Teams</span>
     ${teamChips(s,i)}
     <span class="s-lbl">Kurse</span>
@@ -1723,8 +1722,7 @@ function renderNeed(){
     <div class="need-h"><h3>Was fehlt — und wem?</h3>
       <span class="need-sum">${esc(needSummary())}</span></div>
     <div class="gt-box no-print"><label for="gesamtN"><b>${GT}</b>
-      <input id="gesamtN" type="number" min="0" max="99999" value="${esc(profile.gesamtN)}" placeholder="Anzahl"> Mitarbeitende</label>
-      <span>Einmal eintragen — betrifft ein Skill alle, je Skill auf „${GT}“ klicken.</span></div>
+      <input id="gesamtN" type="number" min="0" max="99999" value="${esc(profile.gesamtN)}" placeholder="Anzahl"> Mitarbeitende</label></div>
     ${ls.length?ls.map(skillRow).join("")
       :`<div class="t-empty">Noch nichts erfasst.</div>`}
     <button type="button" class="btn go need-add no-print" id="sAdd">+ Weiteren Skill erfassen</button>`;
@@ -2003,7 +2001,7 @@ function renderKurse(){
       <div class="fmt-b">${Object.keys(FORMATE).map(k=>`<button type="button" data-fmt="${k}" aria-pressed="${fm===k}">${FORMATE[k]}</button>`).join("")}</div>
       <span class="fmt-h">${fm==="inhouse"?"Alle Kurse bei Ihnen vor Ort (mit Anreise).":fm==="hybrid"?"Je Kurs wählen: vor Ort (mit Anreise) oder online.":"Alle Kurse live online."}</span>
     </div>
-    <p class="kp-hint no-print">Reihenfolge = Priorität. Ohne Eingabe kommt das Team aus den Skills und die Woche verteilt sich über Phase 3 — die Timeline zieht mit.</p>
+    <p class="kp-hint no-print">Reihenfolge = Priorität.</p>
     <div class="ktab">
       <div class="kp kp-h"><span>Prio</span><span>Kurs</span><span>Team</span><span>Woche</span><span>Ort</span><span></span></div>
       ${liste.map(zeile).join("")}
@@ -2039,7 +2037,7 @@ kursBox.addEventListener("click",e=>{
     [keys[i],keys[j]]=[keys[j],keys[i]]; profile.reihe=keys; kursNeu(); return;}
   const dr=e.target.closest("[data-kdrop]");
   if(dr){const n=dr.dataset.kdrop;
-    skills().forEach(s=>{if((s.ku||[]).some(k=>k.n===n)){s.ku=s.ku.filter(k=>k.n!==n); if(s.kuNo.indexOf(n)<0) s.kuNo.push(n);}});
+    skills().forEach(s=>(s.ku||[]).forEach(k=>{if(k.n===n){k.on=false; k.auto=false;}}));
     kuChanged(); return;}
 });
 kursBox.addEventListener("change",e=>{

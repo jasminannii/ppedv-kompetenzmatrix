@@ -22,12 +22,14 @@ Die fünf Reiter folgen dem Termin. Jeder Schritt endet mit „Weiter: …“.
 
 1. **Bedarf & Kontext.** Der Kunde spricht Themen an, sie werden als **Skills**
    mitgeschrieben, in seinen Worten. Jeder Skill bekommt automatisch eine
-   Kompetenzwelt und **Kursvorschläge**. Vorschläge werden mit ✓ bestätigt, mit ×
-   entfernt oder über „+ Kurs“ ergänzt. Dazu kommen die Teams und die zentrale Größe des
+   Kompetenzwelt und **Kursvorschläge**. Ein Kurs ist dabei, wenn er **orange** ist —
+   Vorschläge kommen bereits orange, ein Klick schaltet einen Kurs aus (grau) und
+   wieder ein. „+ Kurs“ ergänzt weitere. Dazu kommen die Teams und die zentrale Größe des
    gesamten Teams. Ganz oben steht immer der Workshop-Skill (siehe „Kurse und Preise“).
 2. **Das ppedv-Modell.** Gemeinsam die sechs Welten durchgehen. „+ übernehmen“ legt
    eine Kernkompetenz oder ein Gesprächsbeispiel als Skill an; deren Kurse erscheinen
-   sofort darunter und lassen sich dort bestätigen oder entfernen.
+   sofort darunter, orange = dabei, Klick schaltet um. Die Karten zeigen je
+   Kernkompetenz nur Titel und Kurse; Beschreibung und volle Kurstitel beim Darüberfahren.
 3. **Eure Kompetenzwelt.** Ring und Panel gemeinsam sichten und anpassen, auch die
    Kurse je Skill.
 4. **Ablauf.** Durchführung (Inhouse, Hybrid, Online), Kursplan mit Priorität, Team,
@@ -89,9 +91,10 @@ Die Kurse je Kompetenzwelt (`bau` in `WORLDS`) stammen aus der ppedv-Kursübersi
 Jeder Kurs steht in genau einer Welt. Ändert sich die Kursübersicht, wird nur diese
 Liste gepflegt.
 
-**Kurse hängen an den Skills.** Jeder Skill trägt seine Kurse (`ku`): Vorschläge
-kommen automatisch, sobald Text und Kompetenzwelt stehen; bestätigte bleiben,
-abgelehnte kommen nicht wieder (`kuNo`). So entstehen die Vorschläge:
+**Kurse hängen an den Skills.** Jeder Skill trägt seine Kurse (`ku`, je Kurs `on` = dabei).
+Vorschläge kommen automatisch und ausgewählt, sobald Text und Kompetenzwelt stehen.
+Angeklickte Kurse (an oder aus) bleiben; nur unberührte Vorschläge (`auto`) werden
+neu berechnet, wenn sich Text oder Welt ändern. So entstehen die Vorschläge:
 - Skill aus einer Kernkompetenz oder einem Gesprächsbeispiel: genau deren Kurse
   (`ku` an `komp` und `felder`).
 - Freier Text: das Beispiel bzw. die Kernkompetenz der Welt mit der größten
@@ -102,7 +105,7 @@ abgelehnte kommen nicht wieder (`kuNo`). So entstehen die Vorschläge:
 
 Der Kursplan in Schritt 4 ist die Vereinigung aller Skill-Kurse plus Pflichtkurs.
 Das Team eines Kurses ergibt sich aus den Skills, die ihn tragen, und lässt sich
-überschreiben. „×“ im Kursplan nimmt einen Kurs aus allen Skills.
+überschreiben. „×“ im Kursplan schaltet einen Kurs in allen Skills aus.
 
 Preise erscheinen nur im Abschluss (Schritt 5) und im Angebots-PDF.
 
