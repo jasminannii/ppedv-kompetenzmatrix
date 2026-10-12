@@ -275,13 +275,13 @@ unsere Funktion, nie über eine Blob-URL.
 
 - Anlegen auf `/` → Unternehmen und Passwort → Weiterleitung auf `/k/<id>`
 - `<id>` sind 12 Zeichen aus `randomBytes(9)` — nicht zu erraten
-- Das Passwort ist voreingestellt der Unternehmensname, aber frei änderbar
+- Das Passwort ist voreingestellt Unternehmensname + Jahr (z. B. PPEDV2026), aber frei änderbar
 - Gespeichert wird nur ein **scrypt-Hash** mit eigenem Salt, nie das Passwort
 - Falsches Passwort und unbekannte Kartei liefern **dieselbe** 401-Antwort,
   sonst verriete der Server, welche Karteien existieren
 - Nach einem Fehlversuch wartet die Funktion 400 ms — bremst Rateversuche
 
-**Zur Stärke dieses Schutzes:** Der Unternehmensname als Passwort ist schwach;
+**Zur Stärke dieses Schutzes:** Unternehmensname + Jahr ist leicht zu erraten;
 wer die URL hat und den Kunden kennt, kommt hinein. Die eigentliche Hürde ist
 die nicht erratbare URL. Für höheren Schutz ein eigenes Passwort vergeben.
 

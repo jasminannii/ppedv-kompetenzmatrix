@@ -2358,7 +2358,7 @@ function zeigeSchleuse(){
     gateAlt.hidden=true;
   }else if(modus==="anlegen"){
     gateTitel.textContent="Neue Kartei";
-    gateText.textContent="Unternehmen eintragen. Das Passwort schützt diese Kartei — voreingestellt ist der Unternehmensname.";
+    gateText.textContent="Unternehmen eintragen. Das Passwort schützt diese Kartei — voreingestellt ist Unternehmensname + Jahr, z. B. PPEDV"+new Date().getFullYear()+".";
     gateGo.textContent="Anlegen";
     gateAlt.hidden=false; gateAlt.textContent="Zurück zur Übersicht";
   }else if(KUNDE){
@@ -2399,7 +2399,10 @@ async function ladeUebersicht(){
 /* Vorbelegung: Passwort folgt dem Unternehmensnamen, solange es keiner angefasst hat */
 let pwBeruehrt=false;
 gateP.addEventListener("input",()=>{pwBeruehrt=true;});
-gateU.addEventListener("input",()=>{ if(!pwBeruehrt) gateP.value=gateU.value; });
+/* Vorschlag: Unternehmensname in Großbuchstaben ohne Leer- und Sonderzeichen + Jahr, z. B. PPEDV2026 */
+const pwVorschlag=n=>{const k=String(n||"").toUpperCase().replace(/Ä/g,"AE").replace(/Ö/g,"OE").replace(/Ü/g,"UE").replace(/ß/g,"SS").replace(/[^A-Z0-9]/g,"");
+  return k?k+new Date().getFullYear():"";};
+gateU.addEventListener("input",()=>{ if(!pwBeruehrt) gateP.value=pwVorschlag(gateU.value); });
 
 gateForm.addEventListener("submit",async e=>{
   e.preventDefault();
