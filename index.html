@@ -726,7 +726,8 @@ details.more .in{padding-top:11px}
 
 <section class="step on" id="s2">
   <div class="wrap">
-    <div class="find">
+    <!-- Eingabe „Was sagt der Kunde?“ ausgeblendet; bleibt im DOM, weil Matcher und alte Karteien darauf zugreifen -->
+    <div class="find" style="display:none">
       <label for="findIn">Was sagt der Kunde?</label>
       <div class="find-row">
         <textarea id="findIn" rows="1" placeholder="z. B. Angebote dauern zu lange · niemand weiß, welche Zahl stimmt · neue Kollegen finden nichts"></textarea>
