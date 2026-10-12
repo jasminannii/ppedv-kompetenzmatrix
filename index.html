@@ -557,6 +557,11 @@ details.more .in{padding-top:11px}
 .tl-w i{font-family:var(--mono); font-size:11px; font-style:normal; color:var(--ink-3); text-align:center; border-left:1px solid var(--line); padding:3px 0}
 .tl-t{display:grid; grid-template-columns:repeat(16,1fr); align-items:center; min-height:32px;
   background-image:repeating-linear-gradient(to right,var(--line) 0 1px,transparent 1px 100%); background-size:calc(100%/16) 100%}
+.bar.drag{cursor:grab; touch-action:none; position:relative; user-select:none}
+.bar.dragging{cursor:grabbing; box-shadow:0 0 0 2px var(--orange); z-index:2}
+.bar .hd{position:absolute; top:0; bottom:0; width:8px; cursor:ew-resize}
+.bar .hd.l{left:0} .bar .hd.r{right:0}
+.bar .hd:hover{background:rgba(255,255,255,.25)}
 .bar{height:30px; border-radius:5px; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:0 9px;
   background:var(--blue); color:#fff; border:0; overflow:hidden; font-family:var(--mono); font-size:11.5px}
 .bar.par{background:color-mix(in srgb,var(--blue) 42%,var(--surface)); color:var(--ink); border:1px dashed var(--blue)}
@@ -2092,11 +2097,11 @@ function renderTimeline(){
  <div class="tl-r tl-head"><div class="tl-l">ab Zusage &rarr;</div><div class="tl-w" style="${gc}">${Array.from({length:M},(_,n)=>`<i>${n+1}</i>`).join("")}</div></div>
  ${PHASES.map((p,i)=>{const[a,b]=tlRange(i);
    return `<div class="tl-r"><div class="tl-l"><b>${p.n}</b><span>${esc(phShort(i))}</span></div>
-     <div class="tl-t" style="${gc}; background-size:calc(100%/${M}) 100%"><button type="button" class="bar${TLPAR[i]?" par":""}" data-goto="${i}" style="grid-column:${a}/${b+1}">
-       <span>W ${a}–${b}</span><span class="m">${p.ms.split(" ")[0]}</span></button></div></div>`;}).join("")}
+     <div class="tl-t" style="${gc}; background-size:calc(100%/${M}) 100%"><button type="button" class="bar drag${TLPAR[i]?" par":""}" data-goto="${i}" data-ph="${i}" style="grid-column:${a}/${b+1}" title="Ziehen verschiebt, Kanten ziehen ändert die Dauer">
+       <i class="hd l" data-h="l"></i><i class="hd r" data-h="r"></i><span>W ${a}–${b}</span><span class="m">${p.ms.split(" ")[0]}</span></button></div></div>`;}).join("")}
  <div class="tl-r tl-after tl-k"><div class="tl-l"><b>Kursplan</b><span>${FORMATE[profile.format||"inhouse"]}</span></div><div></div></div>
  ${kursListe().map(c=>`<div class="tl-r"><div class="tl-l"><b>${c.prio}. ${esc(c.team||"Team offen")}</b><span title="${esc(c.n)}">${esc(kurz(c.n))}</span></div>
-   <div class="tl-t" style="${gc}; background-size:calc(100%/${M}) 100%"><div class="bar kurs${c.ort==="online"?" onl":""}" style="grid-column:${c.woche}/${c.woche+1}" title="${esc(c.n)} · Woche ${c.woche} · ${c.ort}"><span>${c.ort==="online"?"on":"vO"}</span></div></div></div>`).join("")}
+   <div class="tl-t" style="${gc}; background-size:calc(100%/${M}) 100%"><div class="bar kurs drag${c.ort==="online"?" onl":""}" data-kk="${esc(c.key)}" style="grid-column:${c.woche}/${c.woche+1}" title="${esc(c.n)} · Woche ${c.woche} · ${c.ort} — ziehen zum Verschieben"><span>${c.ort==="online"?"on":"vO"}</span></div></div></div>`).join("")}
  <div class="tl-r tl-after"><div class="tl-l"><b>Danach</b><span>Jahrespartnerschaft</span></div>
    <div class="tl-t"><div class="bar part"><span>Ab Projektabschluss · 4 Termine vor Ort · Q1–Q4 · 12 Monate</span><span class="m">Pauschalpreis</span></div></div></div>
  <p class="tl-note">Phase 4 läuft parallel zu Phase 3 (gestrichelt) · Kurse: vO = vor Ort (zzgl. Anreise), on = online</p></div>`;
@@ -2109,7 +2114,39 @@ tlWeeksIn.addEventListener("change",()=>{
 document.getElementById("tlWeeksReset").addEventListener("click",()=>{
   profile.tlWeeks=16; profile.tlSpan=PHASES.map(()=>null); profile.phTitle=PHASES.map(()=>null);
   save(); renderTimeline(); renderPhases();});
-document.getElementById("tl").addEventListener("click",e=>{const b=e.target.closest("[data-goto]"); if(!b) return;
+/* Balken ziehen: Phasen verschieben oder an den Kanten Beginn/Ende ändern, Kurse in eine andere Woche */
+let tlDrag=null, tlMoved=false;
+const tlEl=document.getElementById("tl");
+tlEl.addEventListener("pointerdown",e=>{
+  const bar=e.target.closest(".bar.drag"); if(!bar||e.button!==0) return;
+  const track=bar.parentElement, M=TLMAX(), col=track.getBoundingClientRect().width/M;
+  const ph=bar.dataset.ph!==undefined?+bar.dataset.ph:null;
+  const h=e.target.closest("[data-h]");
+  const r=ph!==null?tlRange(ph):(()=>{const c=kursListe().find(x=>x.key===bar.dataset.kk); return [c.woche,c.woche];})();
+  tlDrag={bar,ph,kk:bar.dataset.kk,mode:h?h.dataset.h:"m",x:e.clientX,col,M,a0:r[0],b0:r[1],a:r[0],b:r[1]};
+  tlMoved=false; bar.setPointerCapture(e.pointerId); bar.classList.add("dragging"); e.preventDefault();
+});
+tlEl.addEventListener("pointermove",e=>{
+  const d=tlDrag; if(!d) return;
+  const dw=Math.round((e.clientX-d.x)/d.col); let a=d.a0,b=d.b0;
+  if(d.mode==="l") a=Math.max(1,Math.min(d.b0,d.a0+dw));
+  else if(d.mode==="r") b=Math.min(d.M,Math.max(d.a0,d.b0+dw));
+  else{const len=d.b0-d.a0; a=Math.max(1,Math.min(d.M-len,d.a0+dw)); b=a+len;}
+  if(a===d.a&&b===d.b) return;
+  d.a=a; d.b=b; tlMoved=true;
+  d.bar.style.gridColumn=a+"/"+(b+1);
+  const l=d.bar.querySelector("span"); if(l&&d.ph!==null) l.textContent="W "+a+"–"+b;
+});
+const tlEnd=()=>{
+  const d=tlDrag; if(!d) return; tlDrag=null; d.bar.classList.remove("dragging");
+  if(!tlMoved) return;
+  if(d.ph!==null) profile.tlSpan[d.ph]=[d.a,d.b];
+  else planOf(d.kk).woche=d.a;
+  save(); renderPhases(); renderKurse(); renderSync();
+};
+tlEl.addEventListener("pointerup",tlEnd);
+tlEl.addEventListener("pointercancel",tlEnd);
+tlEl.addEventListener("click",e=>{if(tlMoved){tlMoved=false; return;} const b=e.target.closest("[data-goto]"); if(!b) return;
   const d=document.querySelectorAll("#phases details")[+b.dataset.goto]; if(d){d.open=true; d.scrollIntoView({behavior:"smooth",block:"center"});}});
 
 function renderPhases(){

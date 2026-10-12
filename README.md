@@ -132,7 +132,9 @@ Der Betrag „Anreise je Vor-Ort-Termin“ wird im Abschluss beim Angebot einget
 die Priorität, verschoben wird mit ↑ ↓. Je Kurs werden Team (aus den erfassten Teams),
 Woche und, bei Hybrid, der Ort festgelegt. Ohne festgelegte Woche verteilen sich die
 Kurse automatisch über Phase 3; die Zahl steht dann kursiv. Der Kursplan erscheint
-als eigene Zeilen in der Timeline, im PDF (Balkenplan und Kursliste) und in der
+als eigene Zeilen in der Timeline. In der Timeline lassen sich Balken ziehen: Phasen
+verschieben (Mitte) oder Beginn/Ende ändern (Kanten), Kurse in eine andere Woche.
+Die Timeline-Zeilen erscheinen, im PDF (Balkenplan und Kursliste) und in der
 Textkopie.
 
 **Gesamtes Team.** In Schritt 1 wird die Größe des gesamten Teams einmal zentral
