@@ -2345,18 +2345,12 @@ const gate=document.getElementById("gate"),gateForm=document.getElementById("gat
       ueSub=document.getElementById("ueSub");
 
 /* Drei Zustände: Übersicht entsperren, Kartei anlegen, Kartei öffnen */
-let modus = karteiId ? "oeffnen" : "uebersicht";
-let teamPw="";   /* Team-Passwort nur im Arbeitsspeicher, nach dem Neuladen fragt die Schleuse erneut */
+let modus = karteiId ? "oeffnen" : "anlegen";
 
 function zeigeSchleuse(){
   uebers.hidden=true; gate.hidden=false;
   gateLblU.hidden = modus!=="anlegen";
-  if(modus==="uebersicht"){
-    gateTitel.textContent="Karteien";
-    gateText.textContent="Die Übersicht ist mit dem Team-Passwort geschützt.";
-    gateGo.textContent="Übersicht öffnen";
-    gateAlt.hidden=true;
-  }else if(modus==="anlegen"){
+  if(modus==="anlegen"){
     gateTitel.textContent="Neue Kartei";
     gateText.textContent="Unternehmen eintragen. Das Passwort schützt diese Kartei — voreingestellt ist Unternehmensname + Jahr, z. B. PPEDV"+new Date().getFullYear()+".";
     gateGo.textContent="Anlegen";
@@ -2393,8 +2387,8 @@ document.getElementById("ueNeu").addEventListener("click",()=>{ modus="anlegen";
 
 /* Die Liste ist offen — ohne id im Pfad startet die Seite damit */
 async function ladeUebersicht(){
-  try{ const j=await api("uebersicht",{teamPasswort:teamPw}); zeigeUebersicht(j.karteien||[]); }
-  catch(e){ teamPw=""; modus="uebersicht"; zeigeSchleuse(); gateErr.textContent=e.message||"Liste nicht erreichbar."; }
+  try{ const j=await api("uebersicht"); zeigeUebersicht(j.karteien||[]); }
+  catch(e){ modus="anlegen"; zeigeSchleuse(); gateErr.textContent=e.message||"Liste nicht erreichbar."; }
 }
 /* Vorbelegung: Passwort folgt dem Unternehmensnamen, solange es keiner angefasst hat */
 let pwBeruehrt=false;
@@ -2409,17 +2403,12 @@ gateForm.addEventListener("submit",async e=>{
   gateErr.textContent=""; gateGo.disabled=true;
   const label=gateGo.textContent; gateGo.textContent="…";
   try{
-    if(modus==="uebersicht"){
-      teamPw=gateP.value; gateP.value="";
-      await ladeUebersicht();
-      return;
-    }
     pw=gateP.value;
     if(!karteiId){
       const titel=gateU.value.trim();
       if(!titel) throw new Error("Unternehmen fehlt.");
       profile.name=titel;
-      const j=await api("anlegen",{titel,data:payload(),teamPasswort:teamPw});
+      const j=await api("anlegen",{titel,data:payload()});
       karteiId=j.id;
       history.replaceState({},"","/k/"+karteiId);
       offen=true; modus="oeffnen"; gate.hidden=true; uebers.hidden=true;
@@ -2486,7 +2475,7 @@ function kundenAnsicht(){
   st("Ihre Änderungen werden automatisch gespeichert.","ok");
 }
 
-zeigeSchleuse();   /* mit Kartei-Adresse: Kartei öffnen, sonst: Team-Passwort für die Übersicht */
+if(karteiId) zeigeSchleuse(); else ladeUebersicht();
 
 
 /* ---------- PDF ----------

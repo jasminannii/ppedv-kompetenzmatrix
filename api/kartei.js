@@ -2,7 +2,7 @@
    Privat heißt: lesen geht nur über diese Funktion, nie über eine Blob-URL.
    Das Passwort verlässt den Server nie — gespeichert wird nur ein scrypt-Hash. */
 import { put, get, del } from "@vercel/blob";
-import { randomBytes, scryptSync, timingSafeEqual, createHash } from "node:crypto";
+import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 
 const pfad = id => `karteien/${id}.json`;
 const neueId = () => randomBytes(9).toString("base64url");       // 12 Zeichen, nicht zu erraten
@@ -67,17 +67,6 @@ async function indexPflegen(id, titel, weg) {
 }
 
 
-/* ---------- Team-Passwort ----------
-   Übersicht und Anlegen nur fürs Team. Das Passwort steht in der Vercel-Umgebungsvariablen
-   UEBERSICHT_PASSWORT; ohne sie bleibt beides gesperrt (503) — eine offene Liste wäre die
-   schlechtere Voreinstellung, weil sonst Kunden alle Kundennamen sehen. */
-const digest = v => createHash("sha256").update(String(v)).digest();
-function teamStimmt(eingabe) {
-  const soll = process.env.UEBERSICHT_PASSWORT || "";
-  if (!soll) return null;
-  return timingSafeEqual(digest(eingabe || ""), digest(soll));
-}
-
 /* ---------- Kundenzugang ----------
    Eigenes Kundenpasswort je Kartei (kundeSalt/kundeHash). Der Kunde sieht und ändert
    nur seine Themen: Skills (mit Teams und Kursauswahl), Größe des gesamten Teams und
@@ -105,13 +94,6 @@ export default async function handler(req, res) {
   const { aktion, id, passwort } = b;
 
   try {
-    if (aktion === "uebersicht" || aktion === "anlegen") {
-      const ok = teamStimmt(b.teamPasswort);
-      if (ok === null) return res.status(503).json({
-        fehler: "Das Team-Passwort ist nicht eingerichtet — in Vercel die Umgebungsvariable UEBERSICHT_PASSWORT setzen und neu deployen." });
-      if (!ok) { await new Promise(r => setTimeout(r, 400)); return res.status(401).json({ fehler: "Team-Passwort stimmt nicht." }); }
-    }
-
     if (aktion === "anlegen") {
       const titel = String(b.titel || "").trim();
       const pw = String(passwort || "");
@@ -128,6 +110,8 @@ export default async function handler(req, res) {
       return res.status(200).json({ id: neu, titel });
     }
 
+    /* Offen, ohne Passwort — ausdrücklich so gewollt. Die Liste trägt nur
+       Unternehmensnamen und Daten, der Inhalt jeder Kartei bleibt geschützt. */
     if (aktion === "uebersicht")
       return res.status(200).json({ karteien: await indexLesen() });
 
