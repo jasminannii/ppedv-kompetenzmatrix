@@ -287,21 +287,18 @@ die nicht erratbare URL. Für höheren Schutz ein eigenes Passwort vergeben.
 
 ### Übersicht über alle Karteien
 
-`/` zeigt ohne weitere Abfrage die Liste aller Karteien — Unternehmen, letzte
-Änderung, Link, nach Datum sortiert. Dazu „+ Neue Kartei".
+`/` zeigt die Liste aller Karteien (Unternehmen, letzte Änderung, Link) — erst nach dem
+**Team-Passwort**. Auch **„+ Neue Kartei“** braucht es: Kunden sollen weder die Namen
+anderer Kunden sehen noch Karteien anlegen können. Kartei-Links (`/k/<id>`, mit dem
+Kartei-Passwort) und Kundenlinks (`/kunde/<id>`, mit dem Kundenpasswort) gehen ohne.
 
-Die Liste kommt aus einem Verzeichnis-Blob `karteien/_index.json`, das bei
-Anlegen, Sichern und Löschen nachgeführt wird: ein Lesevorgang statt einem je
-Kartei. Es enthält nur `id`, `titel` und `updatedAt` — keine Passwörter, keine
-Kundendaten. Schlägt die Nachführung fehl, ist die Kartei trotzdem gespeichert;
-der Fehler landet im Log, nicht beim Nutzer.
+Das Team-Passwort steht in der Vercel-Umgebungsvariablen **`UEBERSICHT_PASSWORT`**. Ist sie
+nicht gesetzt, antwortet die Funktion mit 503 und Übersicht und Anlegen bleiben gesperrt —
+eine offene Liste wäre die schlechtere Voreinstellung. Im Browser bleibt das Passwort nur
+im Arbeitsspeicher; nach dem Neuladen fragt die Schleuse erneut.
 
-> **Die Liste ist offen — bewusst so entschieden.** Wer die Adresse der
-> Anwendung kennt, sieht alle Kundennamen. Der *Inhalt* jeder Kartei bleibt
-> hinter ihrem Passwort. Da dieses voreingestellt der Unternehmensname ist und
-> in der Liste steht, ist das praktisch nur eine Hürde gegen Zufallsbesucher.
-> Wer mehr Schutz will: beim Anlegen ein eigenes Passwort vergeben, oder die
-> Prüfung des Team-Passworts wieder einbauen (war in Commit c2879e8).
+Die Liste kommt aus einem Verzeichnis-Blob `karteien/_index.json`, das bei Anlegen,
+Sichern und Löschen nachgeführt wird. Es enthält nur `id`, `titel` und `updatedAt`.
 
 ### Kundenzugang
 
@@ -352,7 +349,9 @@ Blobs: `karteien/<id>.json` je Kartei, `karteien/_index.json` als Verzeichnis.
 1. Repository mit Vercel verbinden
 2. Im Vercel-Dashboard einen **Blob-Store mit Zugriffsmodus „private"** anlegen
    (der Modus lässt sich später nicht ändern) und mit dem Projekt verbinden
-3. Deployen — die Funktion authentifiziert sich über OIDC, es ist kein Token
+3. Unter **Settings → Environment Variables** `UEBERSICHT_PASSWORT` setzen (Team-Passwort
+   für Übersicht und Anlegen), für „Production“
+4. Deployen — die Funktion authentifiziert sich über OIDC, es ist kein Token
    im Code nötig
 
 Lokal testen ohne Vercel-Konto: `api/kartei.js` lässt sich gegen eine
