@@ -100,8 +100,15 @@ neu berechnet, wenn sich Text oder Welt ändern. So entstehen die Vorschläge:
 - Freier Text: das Beispiel bzw. die Kernkompetenz der Welt mit der größten
   Wortüberschneidung; Kurstitel, die ein Stichwort des Kunden enthalten, zuerst.
   Allgemeine Titelwörter („Grundlagen“, „Administration“ …) zählen dabei nicht.
-- Höchstens drei Vorschläge je Skill. Die Pflichtkurse werden nie vorgeschlagen,
-  sie sind ohnehin immer dabei.
+- Freier Text: Stichwörter werden außerdem gegen **Kurstitel und Agenda-Module** der Welt
+  geprüft — ein Treffer im Titel zählt doppelt, Kurse der passenden Kernkompetenz bekommen
+  einen Bonus; schwache Treffer (nur Agenda) stehen hinter den Kernkompetenz-Kursen.
+- Höchstens drei Vorschläge je Skill. Die beiden **Workshops** werden nicht als
+  wählbarer Kurs vorgeschlagen — gehören sie zur Kernkompetenz bzw. zum Beispiel (z. B.
+  „Workflows und Agenten selbst bauen“, „Routinearbeit beschleunigen“), erscheint der
+  gewählte Workshop als fester oranger Chip „immer dabei“.
+- `KU_VER` erhöhen, wenn sich die Zuordnung ändert: unberührte Vorschläge in bestehenden
+  Karteien werden dann neu berechnet, angeklickte bleiben.
 
 Der Kursplan in Schritt 4 ist die Vereinigung aller Skill-Kurse plus Pflichtkurs.
 Das Team eines Kurses ergibt sich aus den Skills, die ihn tragen, und lässt sich

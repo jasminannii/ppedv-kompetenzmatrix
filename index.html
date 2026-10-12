@@ -500,6 +500,8 @@ details.more .in{padding-top:11px}
 .kc{font:inherit;font-size:12.5px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-3);border-radius:20px;padding:4px 11px;cursor:pointer;transition:.12s}
 .kc:hover{border-color:var(--orange);color:var(--ink)}
 .kc.on{background:var(--orange);border-color:var(--orange);color:#3D2402;font-weight:600}
+.kc.fix{cursor:default;border-style:dashed}
+.ku i.fix{background:var(--accent-soft);border-color:var(--orange);color:var(--accent-ink);font-weight:600}
 .kadd{font:inherit;font-size:12.5px;max-width:200px;border:1px dashed var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:20px;padding:3px 8px}
 .cc-k .sku,.cc-f .sku{margin-top:6px}
 .pskill .sku{margin-top:6px}
@@ -949,15 +951,15 @@ const PPLOGO="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAACgCAYAAACc/t08
 const WORLDS=[
  {id:"ki",kw:"KW 1",c:"var(--k1)",title:"KI produktiv einsetzen",
   lead:"Copilot, Prompting und eigene KI-Abläufe sinnvoll in den Arbeitsalltag integrieren",
-  komp:[{n:"KI verstehen und rechtssicher einordnen",d:"Weiß, was ein Sprachmodell leisten kann und was nicht, kennt die Regeln des Hauses und die Pflichten aus dem EU AI Act.",l:["KI verstehen", "und einordnen"],ku:["EU AI Act und Umsetzung in Unternehmen", "Copilot - KI in Word, Excel, Outlook & Co."]},
-        {n:"Wirksam prompten und Ergebnisse prüfen",d:"Formuliert Aufgabe, Kontext und Format so, dass ein brauchbares Ergebnis entsteht — und erkennt, wenn es falsch ist.",l:["Prompten und", "Ergebnisse", "prüfen"],ku:["Prompt like a pro - KI-Anweisungen für komplexe Aufgaben optimieren", "Copilot - KI in Word, Excel, Outlook & Co."]},
-        {n:"Eigene Arbeitsabläufe mit KI umbauen",d:"Erkennt im eigenen Alltag, welche Schritte KI übernehmen kann, und macht daraus einen wiederholbaren Ablauf.",l:["Abläufe mit", "KI umbauen"],ku:["Skill-Building-Workshop – KI-Abläufe, die funktionieren", "Microsoft Copilot Ökosystem – Wiederkehrende Prozesse mit Copilot automatisieren", "Copilot für IT, Power-User und AI Champions"]}],
+  komp:[{n:"KI verstehen und rechtssicher einordnen",d:"Weiß, was ein Sprachmodell leisten kann und was nicht, kennt die Regeln des Hauses und die Pflichten aus dem EU AI Act.",l:["KI verstehen", "und einordnen"],ku:["EU AI Act und Umsetzung in Unternehmen", "Copilot - KI in Word, Excel, Outlook & Co.", "Copilot für M365 Admins - Sichere Einführung und Betrieb"]},
+        {n:"Wirksam prompten und Ergebnisse prüfen",d:"Formuliert Aufgabe, Kontext und Format so, dass ein brauchbares Ergebnis entsteht — und erkennt, wenn es falsch ist.",l:["Prompten und", "Ergebnisse", "prüfen"],ku:["Prompt like a pro - KI-Anweisungen für komplexe Aufgaben optimieren", "Copilot - KI in Word, Excel, Outlook & Co.", "Copilot für IT, Power-User und AI Champions"]},
+        {n:"Eigene Arbeitsabläufe mit KI umbauen",d:"Erkennt im eigenen Alltag, welche Schritte KI übernehmen kann, und macht daraus einen wiederholbaren Ablauf.",l:["Abläufe mit", "KI umbauen"],ku:["Skill-Building-Workshop – KI-Abläufe, die funktionieren", "Microsoft Copilot Ökosystem – Wiederkehrende Prozesse mit Copilot automatisieren", "Copilot für IT, Power-User und AI Champions", "Copilot Studio und Power Platform AI - Agenten, Workflows, Automatisierung"]}],
   beleg:"79 % der Unternehmen fehlen grundlegende KI-Kompetenzen, 86 % schöpfen das Potenzial kaum aus (Stifterverband 2025). Seit 02/2025 verpflichtet Art. 4 EU AI Act Betreiber zu nachweisbarer KI-Kompetenz.",
   felder:[
-    {n:"Informationen verdichten",ku:["Copilot - KI in Word, Excel, Outlook & Co.", "Prompt like a pro - KI-Anweisungen für komplexe Aufgaben optimieren"],s:"„Ich lese mich durch 40 Seiten, bevor ich antworten kann.“",z:"Aus langen Dokumenten und Mailverläufen in Minuten eine belastbare Zusammenfassung ziehen.",k:"zusammenfassung protokoll unterlagen recherche dokumente mails lange texte einlesen lesen bericht"},
-    {n:"Texte auf den Punkt bringen",ku:["Copilot - KI in Word, Excel, Outlook & Co.", "Prompt like a pro - KI-Anweisungen für komplexe Aufgaben optimieren"],s:"„Jedes Angebot schreibt bei uns jemand von Null.“",z:"Entwürfe für Angebote, Mails und Berichte in der eigenen Tonlage erzeugen — und sicher prüfen.",k:"schreiben formulieren angebot mail newsletter entwurf textbaustein korrektur antwort"},
-    {n:"Entscheidungen vorbereiten",ku:["Copilot für IT, Power-User und AI Champions", "Prompt like a pro - KI-Anweisungen für komplexe Aufgaben optimieren"],s:"„Wir diskutieren dreimal, bevor wir entscheiden.“",z:"Optionen, Risiken und eine Empfehlung aufbereiten, bevor die Runde zusammenkommt.",k:"entscheidung entscheiden vorlage geschaeftsfuehrung optionen vergleich bewertung gremium"},
-    {n:"Routinearbeit beschleunigen",ku:["Copilot für IT, Power-User und AI Champions", "Copilot - KI in Word, Excel, Outlook & Co."],s:"„Das Gleiche jede Woche, immer von Hand.“",z:"Wiederkehrende Textarbeit an KI abgeben — mit Prüfschritt, nicht blind.",k:"wiederkehrend routine immer gleich manuell zeitfresser standardantwort fleissarbeit tippen"}],
+    {n:"Informationen verdichten",ku:["Copilot - KI in Word, Excel, Outlook & Co.", "Copilot für IT, Power-User und AI Champions", "Prompt like a pro - KI-Anweisungen für komplexe Aufgaben optimieren"],s:"„Ich lese mich durch 40 Seiten, bevor ich antworten kann.“",z:"Aus langen Dokumenten und Mailverläufen in Minuten eine belastbare Zusammenfassung ziehen.",k:"zusammenfassung protokoll unterlagen recherche dokumente mails lange texte einlesen lesen bericht"},
+    {n:"Texte auf den Punkt bringen",ku:["Copilot - KI in Word, Excel, Outlook & Co.", "Prompt like a pro - KI-Anweisungen für komplexe Aufgaben optimieren", "KI im Marketing - Content, Kampagnen & Workflows"],s:"„Jedes Angebot schreibt bei uns jemand von Null.“",z:"Entwürfe für Angebote, Mails und Berichte in der eigenen Tonlage erzeugen — und sicher prüfen.",k:"schreiben formulieren angebot mail newsletter entwurf textbaustein korrektur antwort"},
+    {n:"Entscheidungen vorbereiten",ku:["Skill-Building-Workshop – KI-Abläufe, die funktionieren", "Copilot für IT, Power-User und AI Champions", "Prompt like a pro - KI-Anweisungen für komplexe Aufgaben optimieren"],s:"„Wir diskutieren dreimal, bevor wir entscheiden.“",z:"Optionen, Risiken und eine Empfehlung aufbereiten, bevor die Runde zusammenkommt.",k:"entscheidung entscheiden vorlage geschaeftsfuehrung optionen vergleich bewertung gremium"},
+    {n:"Routinearbeit beschleunigen",ku:["Skill-Building-Workshop – KI-Abläufe, die funktionieren", "Microsoft Copilot Ökosystem – Wiederkehrende Prozesse mit Copilot automatisieren", "Copilot für IT, Power-User und AI Champions"],s:"„Das Gleiche jede Woche, immer von Hand.“",z:"Wiederkehrende Textarbeit an KI abgeben — mit Prüfschritt, nicht blind.",k:"wiederkehrend routine immer gleich manuell zeitfresser standardantwort fleissarbeit tippen"}],
   /* ziel: Vorschlaege fuer die offene „Fuer wen“-Eingabe.
      bau: Kurse der Welt aus der ppedv-Kursuebersicht (ppedv.de/Schulung/MicrosoftTraining),
      n = Kurstitel, t = Dauer. Erscheinen im Katalog, in der Kursauswahl (Schritt 3) und im Matcher. */
@@ -966,12 +968,12 @@ const WORLDS=[
 
  {id:"proz",kw:"KW 2",c:"var(--k2)",title:"Prozesse automatisieren",
   lead:"Wiederkehrende Aufgaben mit Power Apps, Power Automate, Copilot Studio und Skripten automatisieren",
-  komp:[{n:"Apps und Datenbasis selbst aufbauen",d:"Baut mit Power Apps und Dataverse eine kleine Anwendung samt sauberer Datenbasis, statt Listen per Mail herumzuschicken.",l:["Apps und", "Daten", "aufbauen"],ku:["Power Apps und Power Automate Einstieg - Apps, Workflows und Automatisierung", "Dataverse - Power Platform Daten verwalten", "Citizen Developer Week - Power Apps und Power Automate"]},
-        {n:"Workflows und Agenten selbst bauen",d:"Setzt einen Ablauf mit Power Automate oder Copilot Studio um — samt Fehlerfällen, Test und Dokumentation.",l:["Workflows", "selbst bauen"],ku:["Power Apps und Power Automate Fortgeschrittene - Low-Code Lösungen", "Copilot Studio und Power Platform AI - Agenten, Workflows, Automatisierung"]},
+  komp:[{n:"Apps und Datenbasis selbst aufbauen",d:"Baut mit Power Apps und Dataverse eine kleine Anwendung samt sauberer Datenbasis, statt Listen per Mail herumzuschicken.",l:["Apps und", "Daten", "aufbauen"],ku:["Power Apps und Power Automate Einstieg - Apps, Workflows und Automatisierung", "Dataverse - Power Platform Daten verwalten", "Citizen Developer Week - Power Apps und Power Automate", "Power Apps und Power Automate Fortgeschrittene - Low-Code Lösungen"]},
+        {n:"Workflows und Agenten selbst bauen",d:"Setzt einen Ablauf mit Power Automate oder Copilot Studio um — samt Fehlerfällen, Test und Dokumentation.",l:["Workflows", "selbst bauen"],ku:["Skill-Building-Workshop – KI-Abläufe, die funktionieren", "Microsoft Copilot Ökosystem – Wiederkehrende Prozesse mit Copilot automatisieren", "Copilot Studio und Power Platform AI - Agenten, Workflows, Automatisierung", "Power Apps und Power Automate Fortgeschrittene - Low-Code Lösungen", "Citizen Developer Week - Power Apps und Power Automate"]},
         {n:"Administration per Skript automatisieren",d:"Erledigt wiederkehrende Admin-Aufgaben mit PowerShell oder Python reproduzierbar statt per Hand.",l:["Admin per", "Skript"],ku:["PowerShell - Grundkurs automatisierte Administration", "PowerShell mit AI – Automatisierung für Clevere", "PowerShell - Fortgeschrittene Techniken", "Python Grundlagen - Einstieg in die Programmierung"]}],
   beleg:"Digitalisierung und Automatisierung gelten als zentraler Hebel gegen Personalengpässe (DIHK 2025/26). Über ein Drittel der Unternehmen meldet Lücken bei der Automatisierung von Arbeitsprozessen (Stifterverband 2025).",
   felder:[
-    {n:"Freigaben beschleunigen",ku:["Power Apps und Power Automate Einstieg - Apps, Workflows und Automatisierung", "Copilot Studio und Power Platform AI - Agenten, Workflows, Automatisierung"],s:"„Der Antrag liegt drei Tage im Postfach.“",z:"Genehmigungen laufen als Workflow mit Erinnerung und Nachweis statt per Mail.",k:"freigabe genehmigung urlaubsantrag urlaub antrag unterschrift abzeichnen workflow liegenbleiben postfach bestellung"},
+    {n:"Freigaben beschleunigen",ku:["Power Apps und Power Automate Einstieg - Apps, Workflows und Automatisierung", "Copilot Studio und Power Platform AI - Agenten, Workflows, Automatisierung", "Microsoft Copilot Ökosystem – Wiederkehrende Prozesse mit Copilot automatisieren"],s:"„Der Antrag liegt drei Tage im Postfach.“",z:"Genehmigungen laufen als Workflow mit Erinnerung und Nachweis statt per Mail.",k:"freigabe genehmigung urlaubsantrag urlaub antrag unterschrift abzeichnen workflow liegenbleiben postfach bestellung"},
     {n:"Daten zwischen Systemen übertragen",ku:["Power Apps und Power Automate Fortgeschrittene - Low-Code Lösungen", "Dataverse - Power Platform Daten verwalten"],s:"„Wir tippen dieselben Zahlen in zwei Systeme.“",z:"Übertragungen laufen automatisch, Doppelerfassung entfällt.",k:"doppelerfassung schnittstelle export import excel abtippen systeme uebertragen crm erp synchron"},
     {n:"Fristen im Blick behalten",ku:["Power Apps und Power Automate Einstieg - Apps, Workflows und Automatisierung"],s:"„Wir merken zu spät, dass ein Vertrag ausläuft.“",z:"Termine und Fristen melden sich selbst, bevor sie kritisch werden.",k:"frist termin vertrag kuendigung ablauf erinnerung wiedervorlage verpasst deadline mahnung"},
     {n:"IT-Aufgaben standardisieren",ku:["PowerShell - Grundkurs automatisierte Administration", "PowerShell mit AI – Automatisierung für Clevere"],s:"„Jeder Admin macht es ein bisschen anders.“",z:"Wiederkehrende Aufgaben laufen als geprüftes Skript statt als Handarbeit.",k:"skript powershell admin benutzer anlegen onboarding standard manuell konto einrichten"}],
@@ -985,18 +987,18 @@ const WORLDS=[
         {n:"Mit Daten entscheiden und begründen",d:"Führt von der Zahl zur Entscheidung — adressatengerecht dargestellt und nachvollziehbar begründet.",l:["Mit Daten", "entscheiden"],ku:["Power BI Fortgeschrittene - Deep Dive", "Python - Machine Learning und Visualisierung"]}],
   beleg:"Data Literacy zählt zu den fünf digitalen Zukunftskompetenzen (Stifterverband, Future Skills 2030). Rund 20 % melden Lücken beim datengetriebenen Entscheiden; Datenbanken und SQL führen die gefragtesten IT-Qualifikationen in Österreich an (WKO 2025).",
   felder:[
-    {n:"Kennzahlen vereinheitlichen",ku:["Power BI Days kompakt!", "Microsoft Fabric - Data Warehouse und ML"],s:"„Drei Abteilungen, drei Umsatzzahlen.“",z:"Eine verbindliche Definition je Kennzahl, an die sich alle halten.",k:"kennzahl kpi umsatz definition zahlen abweichung berichtswesen controlling unterschiedlich"},
+    {n:"Kennzahlen vereinheitlichen",ku:["Power BI Days kompakt!", "Power BI und Excel - Analyse und Visualisierung von Daten", "Microsoft Fabric - Data Warehouse und ML"],s:"„Drei Abteilungen, drei Umsatzzahlen.“",z:"Eine verbindliche Definition je Kennzahl, an die sich alle halten.",k:"kennzahl kpi umsatz definition zahlen abweichung berichtswesen controlling unterschiedlich"},
     {n:"Daten aufbereiten",ku:["Power BI und Excel - Analyse und Visualisierung von Daten", "SQL Grundlagen - Einfache Abfragen in 1 Tag"],s:"„Vor jedem Report kommt der Excel-Marathon.“",z:"Rohdaten werden einmal sauber modelliert und danach wiederverwendet.",k:"excel datenqualitaet aufbereiten rohdaten monatsabschluss report datenmodell pivot bereinigen"},
     {n:"Dashboards fokussieren",ku:["Power BI und Excel - Analyse und Visualisierung von Daten", "Power BI Fortgeschrittene - Deep Dive"],s:"„Unser Bericht hat 30 Diagramme, keiner schaut rein.“",z:"Ein Bericht beantwortet genau die Fragen, die zur Entscheidung führen.",k:"dashboard bericht report diagramm auswertung visualisierung liest keiner uebersicht"},
-    {n:"Zugriffe sicher steuern",ku:["Power BI Fortgeschrittene - Deep Dive", "SQL Server - Planung, Aufbau und Verwaltung"],s:"„Eigentlich sollte nicht jeder alle Zahlen sehen.“",z:"Rollen und Berechtigungen sind geregelt und nachvollziehbar.",k:"berechtigung zugriff rechte vertraulich gehalt sensibel sichtbar datenschutz freigeben"}],
+    {n:"Zugriffe sicher steuern",ku:["Power BI Fortgeschrittene - Deep Dive", "SQL Server - Planung, Aufbau und Verwaltung", "Microsoft 365 DSGVO sicher umsetzen"],s:"„Eigentlich sollte nicht jeder alle Zahlen sehen.“",z:"Rollen und Berechtigungen sind geregelt und nachvollziehbar.",k:"berechtigung zugriff rechte vertraulich gehalt sensibel sichtbar datenschutz freigeben"}],
   ziel:["Fachbereiche","Führungskräfte","Analysten & Controller","Data- & IT-Teams"],
   bau:[{n:"Power BI und Excel - Analyse und Visualisierung von Daten",t:"2 Tage"},{n:"Power BI Days kompakt!",t:"4 Tage"},{n:"Power BI Fortgeschrittene - Deep Dive",t:"2 Tage"},{n:"Microsoft Fabric - Data Warehouse und ML",t:"4 Tage"},{n:"SQL Grundlagen - Einfache Abfragen in 1 Tag",t:"1 Tag"},{n:"SQL Server - Grundlagen Abfragesprache",t:"3 Tage"},{n:"SQL - Datenbanksprache und Fortgeschrittene Techniken",t:"3 Tage"},{n:"Power-Woche: SQL Server Abfragen",t:"5 Tage"},{n:"Power-Woche: SQL Server Data Warehouse",t:"5 Tage"},{n:"SQL Server Analysis Services (SSAS)",t:"3 Tage"},{n:"SQL Server Integration Services (SSIS)",t:"2 Tage"},{n:"Python - Machine Learning und Visualisierung",t:"2 Tage"},{n:"Power-Woche: Python - Vom Anfänger zum Data Science Profi",t:"5 Tage"}]},
 
  {id:"dev",kw:"KW 4",c:"var(--k4)",title:"Softwareentwicklung modernisieren",
   lead:"Moderne Entwicklung mit C#, .NET, ASP.NET, GitHub Copilot und KI-Unterstützung",
-  komp:[{n:"Anforderungen testbar formulieren",d:"Schneidet Anforderungen so, dass vor der ersten Zeile Code klar ist, woran „fertig“ gemessen wird.",l:["Anforderungen", "testbar", "formulieren"],ku:["AI in Requirements Engineering"]},
+  komp:[{n:"Anforderungen testbar formulieren",d:"Schneidet Anforderungen so, dass vor der ersten Zeile Code klar ist, woran „fertig“ gemessen wird.",l:["Anforderungen", "testbar", "formulieren"],ku:["AI in Requirements Engineering", "AI-Driven Software Development – Konzeption bis zum Test"]},
         {n:"Mit KI entwickeln und Code verantworten",d:"Nutzt Copilot & Co produktiv und bleibt für Qualität, Lizenzlage und Sicherheit des Ergebnisses geradestehen.",l:["Mit KI", "entwickeln", "und prüfen"],ku:["GitHub Copilot und ChatGPT - besseren Code in kürzerer Zeit", "Agentic Coding - KI-Agenten im Entwickleralltag", "AI-Driven Software Development – Konzeption bis zum Test", "Software verstehen im Zeitalter von Vibe Coding - Vom Blindflug zur Kontrolle"]},
-        {n:"Automatisiert testen und sauber ausliefern",d:"Sichert Code mit automatisierten Tests ab, versioniert mit Git und stellt in Containern reproduzierbar bereit.",l:["Testen und", "sauber", "ausliefern"],ku:["Softwaretests mit Visual Studio", "GIT Einstieg in die verteilte Versionskontrolle", "Docker und Kubernetes - Grundlagen Container-Virtualisierung"]}],
+        {n:"Automatisiert testen und sauber ausliefern",d:"Sichert Code mit automatisierten Tests ab, versioniert mit Git und stellt in Containern reproduzierbar bereit.",l:["Testen und", "sauber", "ausliefern"],ku:["Softwaretests mit Visual Studio", "Power-Woche: Softwaretests und .NET Architektur mit AI", "GIT Einstieg in die verteilte Versionskontrolle", "Docker und Kubernetes - Grundlagen Container-Virtualisierung"]}],
   beleg:"AI Engineering und Change Management & AI Leadership zählen zu den technologischen Zukunftskompetenzen (Stifterverband 2030). 53 % nennen fehlendes technisches Know-how als größte KI-Hürde (Bitkom 2025).",
   felder:[
     {n:"Anforderungen schärfen",ku:["AI in Requirements Engineering"],s:"„Am Ende war es doch nicht das, was gemeint war.“",z:"Anforderungen sind früh testbar formuliert — Missverständnisse fallen vor dem Code auf.",k:"anforderung spezifikation lastenheft missverstaendnis fachbereich requirements story pflichtenheft"},
@@ -1010,13 +1012,13 @@ const WORLDS=[
   lead:"Azure, Microsoft 365, Windows Server und Endgeräte sicher verwalten und betreiben",
   komp:[{n:"Identitäten und Berechtigungen beherrschen",d:"Weiß jederzeit, wer worauf zugreifen darf, und setzt es technisch durch statt per Zuruf.",l:["Identitäten", "beherrschen"],ku:["Entra ID (Azure AD) - Identitätsverwaltung", "Active Directory mit Windows Server", "Gruppenrichtlinien (GPO) - Verwaltung in Windows"]},
         {n:"Angriffe erkennen und abwehren",d:"Erkennt auffälliges Verhalten, priorisiert Alarme und weiß, was im Ernstfall in welcher Reihenfolge zu tun ist.",l:["Angriffe", "erkennen und", "abwehren"],ku:["Microsoft Defender - Bedrohungen abwehren und Endpunkte schützen", "Microsoft 365 Grundkurs - IT-Sicherheit Administration", "Microsoft 365 DSGVO sicher umsetzen"]},
-        {n:"Cloud und Endgeräte zentral betreiben",d:"Verwaltet Azure-Ressourcen und Geräte zentral und nachvollziehbar — statt jede Umgebung von Hand einzurichten.",l:["Cloud und", "Geräte", "betreiben"],ku:["Azure - Administration AZ-104", "Microsoft Intune - Geräte verwalten", "Windows 11 - Administration"]}],
+        {n:"Cloud und Endgeräte zentral betreiben",d:"Verwaltet Azure-Ressourcen und Geräte zentral und nachvollziehbar — statt jede Umgebung von Hand einzurichten.",l:["Cloud und", "Geräte", "betreiben"],ku:["Azure - Administration AZ-104", "Microsoft Intune - Geräte verwalten", "Windows 11 - Administration", "Power-Woche: Endpoint Manager und Intune"]}],
   beleg:"Cybersecurity ist eine der technologischen Zukunftskompetenzen (Stifterverband 2030); Security zählt zu den Top-IT-Qualifikationen in Österreich (WKO 2025). 48 % nennen Datenschutzanforderungen, 39 % die Sorge um eigene Daten als Bremse (Bitkom 2025).",
   felder:[
     {n:"Identitäten schützen",ku:["Entra ID (Azure AD) - Identitätsverwaltung", "Active Directory mit Windows Server"],s:"„Wir wissen nicht genau, wer worauf Zugriff hat.“",z:"Rollen, Rechte und Zugriffsregeln sind dokumentiert und technisch durchgesetzt.",k:"zugriff berechtigung passwort mfa entra directory rollen konten admin anmeldung identitaet"},
-    {n:"Betrieb überwachen",ku:["SQL Server - Monitoring und Performance-Tuning", "Azure - Administration AZ-104"],s:"„Von Störungen erfahren wir durch Anrufe.“",z:"Probleme melden sich selbst, Alarme sind nach Wichtigkeit sortiert.",k:"monitoring stoerung ausfall alarm verfuegbarkeit meldung ueberwachung langsam performance"},
+    {n:"Betrieb überwachen",ku:["Azure - Administration AZ-104", "SQL Server - Monitoring und Performance-Tuning"],s:"„Von Störungen erfahren wir durch Anrufe.“",z:"Probleme melden sich selbst, Alarme sind nach Wichtigkeit sortiert.",k:"monitoring stoerung ausfall alarm verfuegbarkeit meldung ueberwachung langsam performance"},
     {n:"Geräte zentral verwalten",ku:["Microsoft Intune - Geräte verwalten", "Windows 11 - Administration"],s:"„Jeder Laptop ist ein bisschen anders eingerichtet.“",z:"Geräte, Updates und Richtlinien laufen zentral über Intune statt von Hand.",k:"geraete laptop client intune update richtlinie einrichten handy mobil endgeraet windows"},
-    {n:"Standards automatisieren",ku:["Azure - Administration AZ-104", "PowerShell - Grundkurs automatisierte Administration"],s:"„Jede neue Umgebung wird von Hand gebaut.“",z:"Umgebungen entstehen reproduzierbar aus Skripten statt aus Erinnerung.",k:"automatisieren skript infrastruktur umgebung aufsetzen provisionierung wiederholbar server"}],
+    {n:"Standards automatisieren",ku:["Azure - Administration AZ-104", "PowerShell - Grundkurs automatisierte Administration", "PowerShell Days - kompakt in 4 Tagen"],s:"„Jede neue Umgebung wird von Hand gebaut.“",z:"Umgebungen entstehen reproduzierbar aus Skripten statt aus Erinnerung.",k:"automatisieren skript infrastruktur umgebung aufsetzen provisionierung wiederholbar server"}],
   ziel:["Cloud-Administratoren","Security-Verantwortliche","Architekten & Plattformteams","IT-Leitung & Service Owner"],
   bau:[{n:"Azure - Grundlagenkurs in 8h",t:"1 Tag"},{n:"Azure - Administration AZ-104",t:"4 Tage"},{n:"Entra ID (Azure AD) - Identitätsverwaltung",t:"1 Tag"},{n:"Power-Woche: Azure und Entra ID (Azure AD) Administration",t:"5 Tage"},{n:"Microsoft 365 Grundkurs - IT-Sicherheit Administration",t:"3 Tage"},{n:"Microsoft 365 DSGVO sicher umsetzen",t:"1 Tag"},{n:"Microsoft Defender - Bedrohungen abwehren und Endpunkte schützen",t:"2 Tage"},{n:"Microsoft Intune - Geräte verwalten",t:"2 Tage"},{n:"Power-Woche: Endpoint Manager und Intune",t:"5 Tage"},{n:"Copilot für M365 Admins - Sichere Einführung und Betrieb",t:"1 Tag"},{n:"Active Directory mit Windows Server",t:"2 Tage"},{n:"Gruppenrichtlinien (GPO) - Verwaltung in Windows",t:"2 Tage"},{n:"Netzwerk und TCP/IP Grundlagen",t:"2 Tage"},{n:"Windows Server Netzwerk - Administration",t:"3 Tage"},{n:"Power-Woche: Windows Server und Active Directory",t:"5 Tage"},{n:"Windows 11 - Administration",t:"3 Tage"},{n:"Power-Woche: Windows 11 und Intune",t:"5 Tage"},{n:"Windows Server 2025 & Windows 11 - Neuerungen",t:"1 Tag"},{n:"SQL Server - Planung, Aufbau und Verwaltung",t:"3 Tage"},{n:"Power-Woche: SQL Server Administration",t:"5 Tage"},{n:"SQL Server - Hochverfügbarkeit mit Always On",t:"2 Tage"},{n:"SQL Server - Monitoring und Performance-Tuning",t:"2 Tage"},{n:"SQL Server - Abfragen und Indizes beschleunigen",t:"2 Tage"},{n:"SQL Server - Neuerungen und Migration",t:"2 Tage"},{n:"Exchange Server - Administration",t:"3 Tage"},{n:"System Center Configuration Manager - Administration (SCCM)",t:"3 Tage"}]},
 
@@ -1027,10 +1029,10 @@ const WORLDS=[
         {n:"Teams und Exchange sicher betreiben",d:"Hält Teams, Postfächer und Freigaben im Alltag sauber, sicher und für alle verlässlich verfügbar.",l:["Teams & Exchange", "betreiben"],ku:["Microsoft Teams - Grundlagen Administration", "Microsoft Teams - Fortgeschrittene Administration", "Exchange Online - Microsoft 365 Administration"]}],
   beleg:"Informations-, Kommunikations- und Kooperationskompetenz zählen zu den grundlegenden Zukunftskompetenzen (Stifterverband 2030). 73 % schulen zu Digitalthemen, aber nur 11 % flächendeckend (Bitkom 2025) — Einführungen scheitern selten am Werkzeug, meist an der Verankerung.",
   felder:[
-    {n:"Besprechungen wirksam machen",ku:["Copilot - KI in Word, Excel, Outlook & Co."],s:"„Wir sitzen den halben Tag in Meetings ohne Ergebnis.“",z:"Jede Besprechung endet mit Entscheidungen und benannten Aufgaben.",k:"meeting besprechung jour fixe protokoll agenda zeitverschwendung teams termin runde"},
-    {n:"Dokumente gemeinsam nutzen",ku:["SharePoint Online für Anwender"],s:"„Angebot_final_v7_neu.docx.“",z:"Eine gültige Fassung, an der alle gemeinsam arbeiten.",k:"version dokument datei ablage sharepoint dateiversionen gemeinsam bearbeiten anhang durcheinander"},
+    {n:"Besprechungen wirksam machen",ku:["Copilot - KI in Word, Excel, Outlook & Co.", "Copilot für IT, Power-User und AI Champions"],s:"„Wir sitzen den halben Tag in Meetings ohne Ergebnis.“",z:"Jede Besprechung endet mit Entscheidungen und benannten Aufgaben.",k:"meeting besprechung jour fixe protokoll agenda zeitverschwendung teams termin runde"},
+    {n:"Dokumente gemeinsam nutzen",ku:["SharePoint Online für Anwender", "Power-Days: SharePoint Online & Designer für Anwender", "Microsoft 365 (Office 365) - Jump Start Administration"],s:"„Angebot_final_v7_neu.docx.“",z:"Eine gültige Fassung, an der alle gemeinsam arbeiten.",k:"version dokument datei ablage sharepoint dateiversionen gemeinsam bearbeiten anhang durcheinander"},
     {n:"Wissen auffindbar machen",ku:["SharePoint Online für Anwender", "Power-Days: SharePoint Online & Designer für Anwender"],s:"„Das weiß nur die Kollegin — und die ist im Urlaub.“",z:"Wissen liegt dort, wo andere es ohne Nachfragen finden.",k:"wissen suchen finden dokumentation urlaub krank wissenstransfer intranet wiki nachfragen kopf"},
-    {n:"Aufgaben klar übergeben",ku:["Power-Woche: Microsoft Teams und Microsoft 365 (Office 365)"],s:"„Ich dachte, das macht der andere.“",z:"Jede Aufgabe hat einen Namen, ein Datum und einen Status.",k:"aufgabe zustaendigkeit verantwortung todo planner nachverfolgen vergessen uebergabe wer macht"}],
+    {n:"Aufgaben klar übergeben",ku:["Power-Woche: Microsoft Teams und Microsoft 365 (Office 365)", "Microsoft Teams - Grundlagen Administration", "Power Apps und Power Automate Einstieg - Apps, Workflows und Automatisierung"],s:"„Ich dachte, das macht der andere.“",z:"Jede Aufgabe hat einen Namen, ein Datum und einen Status.",k:"aufgabe zustaendigkeit verantwortung todo planner nachverfolgen vergessen uebergabe wer macht"}],
   ziel:["Mitarbeitende & Fachbereiche","Teamleitungen","Multiplikatoren & Champions","M365-Verantwortliche"],
   bau:[{n:"Microsoft 365 (Office 365) - Jump Start Administration",t:"3 Tage"},{n:"Power-Woche: Microsoft Teams und Microsoft 365 (Office 365)",t:"5 Tage"},{n:"Microsoft Teams - Grundlagen Administration",t:"2 Tage"},{n:"Microsoft Teams - Fortgeschrittene Administration",t:"1 Tag"},{n:"Power-Days: Microsoft Teams Administration",t:"3 Tage"},{n:"Exchange Online - Microsoft 365 Administration",t:"2 Tage"},{n:"SharePoint Online für Anwender",t:"2 Tage"},{n:"Power-Days: SharePoint Online & Designer für Anwender",t:"3 Tage"},{n:"SharePoint Online - Grundkurs Administration",t:"3 Tage"}]}
 ];
@@ -1406,6 +1408,7 @@ const STOP=new Set(["und","oder","der","die","das","ein","eine","einen","einem",
  "liegt","liegen","sitzen","sitzt","steht","stehen","macht","machen","geht","gehen","kommt","kommen","gibt","geben","traut","trauen",
  "will","wollen","muss","muessen","kann","koennen","soll","sollen","laeuft","laufen","bleibt","bleiben",
  "zwei","drei","vier","fuenf","sechs","sieben","acht","neun","zehn","halb","halbe","halben","tag","tage","tagen","woche","wochen","monat","monate",
+ "lange","langen","dauern","dauert","dauerte","immer","wieder","wollen","moechten","sollen","gerne",
  "ran","erst","erste","ersten","keiner","jemand","niemand","wieder","eben","ganz","ganze","ganzen","oft","selten","meist","teils"]);
 
 const tok=t=>fold(String(t||"")).replace(/[^a-z0-9]+/g," ").split(/\s+/).filter(Boolean);
@@ -1425,7 +1428,10 @@ const SKILLS=[]; WORLDS.forEach(w=>w.felder.forEach(s=>SKILLS.push({w,s,
 
 function termScore(t,hay,toks){
   if(hay.indexOf(" "+t+" ")>-1) return 3;
-  if(t.length<4) return 0;   /* Kürzel wie „bi“ oder „ki“ nur als ganzes Wort, sonst trifft „bi“ jede „Arbeit“ */
+  if(t.length<4) return 0;
+  /* Mehrzahl/Endung abschneiden: „laptops“ → „laptop“, „freigaben“ → „freigabe“ */
+  const st=t.replace(/(en|n|s|e)$/,"");
+  if(st.length>=5&&st!==t&&hay.indexOf(" "+st)>-1) return 2;   /* Kürzel wie „bi“ oder „ki“ nur als ganzes Wort, sonst trifft „bi“ jede „Arbeit“ */
   if(hay.indexOf(t)>-1) return 2;
   if(t.length>=8&&toks){ for(const k of toks) if(k.length>=5&&t.indexOf(k)>-1) return 2; }
   return 0;
@@ -1462,8 +1468,10 @@ function matchSkills(tl){
    deren Kurse. Bei freiem Text gewinnt das Beispiel bzw. die Kernkompetenz der Welt mit
    der größten Wortüberschneidung; Kurstitel mit Treffer kommen zuerst. */
 /* Wörter, die in vielen Kurstiteln stehen und nichts über das Thema sagen */
-const TSTOP=new Set(["entwickler","anwender","administration","grundlagen","einstieg","grundkurs","fortgeschrittene","power","woche","days","kompakt","microsoft","server","windows","verwalten","programmierung"]);
-function kursVorschlag(s){
+const TSTOP=new Set(["ki","ai","praxis","einfuehrung","ueberblick","tipps","entwickler","anwender","administration","grundlagen","einstieg","grundkurs","fortgeschrittene","power","woche","days","kompakt","microsoft","server","windows","verwalten","programmierung"]);
+function kursVorschlag(s){ return quellKurse(s).filter(n=>!PFL.has(n)).slice(0,3); }
+/* Kurse der passenden Kernkompetenz bzw. des Gesprächsbeispiels — inklusive Workshops */
+function quellKurse(s){
   const w=WORLDS.find(x=>x.id===s.welt); if(!w||!s.text.trim()) return [];
   const clean=t=>" "+fold(t).replace(/[^a-z0-9]+/g," ")+" ", ft=clean(s.text.trim());
   const items=[...w.komp.map(k=>({ku:k.ku||[],nam:clean(k.n),hay:clean(k.n+" "+k.d)})),
@@ -1473,18 +1481,32 @@ function kursVorschlag(s){
   if(exact) ku=exact.ku.slice();
   else{
     const tl=terms(s.text); let best=null,bs=0;
-    items.forEach(i=>{let sc=0; tl.forEach(t=>{sc+=termScore(t,i.hay,null);}); if(sc>bs){bs=sc; best=i;}});
-    const titel=w.bau.filter(c=>tl.some(t=>!TSTOP.has(t)&&termScore(t,clean(c.n),null)>=3)).map(c=>c.n);
-    ku=[...new Set([...titel.slice(0,2),...(best?best.ku.slice(0,2):[w.bau[0].n])])];
+    /* Wortteile zählen mit: „Routineaufgaben“ trifft „Routine“ */
+    items.forEach(i=>{const toks=[...new Set(i.hay.split(" ").filter(x=>x.length>=5))];
+      let sc=0; tl.forEach(t=>{sc+=termScore(t,i.hay,toks);}); if(sc>bs){bs=sc; best=i;}});
+    /* Kurse, deren Titel oder Agenda-Module ein Stichwort enthalten — nach Trefferzahl */
+    const bk=best?best.ku:[];
+    /* Mehr Stichworttreffer zuerst; Kurse der passenden Kernkompetenz bekommen einen kleinen Bonus */
+    const treffer=w.bau.map(c=>{const ti=clean(c.n), ag=clean(((AGENDA[c.n]||[])[1]||[]).join(" "));
+        /* Treffer im Titel zählen doppelt, in der Agenda einfach */
+        const sc=tl.filter(t=>!TSTOP.has(t)).reduce((a,t)=>a+(termScore(t,ti,null)>=2?2:termScore(t,ag,null)>=2?1:0),0);
+        return {n:c.n,sc:sc?sc+(bk.indexOf(c.n)>-1?1.5:0):0};})
+      .filter(x=>x.sc).sort((a,b)=>b.sc-a.sc);
+    /* Starke Treffer (Titel oder Kernkompetenz) vor die Kernkompetenz-Kurse, schwache dahinter */
+    const stark=treffer.filter(x=>x.sc>=2).map(x=>x.n), schwach=treffer.filter(x=>x.sc<2).map(x=>x.n);
+    ku=[...new Set([...stark.slice(0,2),...bk,...schwach,...(bk.length||treffer.length?[]:[w.bau[0].n])])];
   }
-  return ku.filter(n=>!PFL.has(n)).slice(0,3);
+  return ku;
 }
 /* Nur neu vorschlagen, wenn sich Text oder Welt geändert haben. Vorschläge kommen
    ausgewählt (orange); ein Klick schaltet einen Kurs aus und wieder ein. */
+const KU_VER="2";
 function updateKu(s){
   if(!Array.isArray(s.ku)) s.ku=[]; if(!Array.isArray(s.kuNo)) s.kuNo=[];
   if(s.pflicht){s.ku=[]; return;}
-  const sig=(s.welt||"")+"|"+fold((s.text||"").trim());
+  /* KU_VER mit hochzählen, wenn sich die Zuordnung der Kurse ändert — dann werden
+     unberührte Vorschläge in bestehenden Karteien neu berechnet */
+  const sig=KU_VER+"|"+(s.welt||"")+"|"+fold((s.text||"").trim());
   if(s.kuSig===sig) return;
   s.kuSig=sig;
   /* Angeklickte Kurse bleiben (an oder aus), unberührte Vorschläge werden ersetzt */
@@ -1499,7 +1521,9 @@ function kuChips(s){
   if(!s.welt) return `<span class="sku-none">Kurse erscheinen, sobald eine Kompetenzwelt gewählt ist.</span>`;
   const w=WORLDS.find(x=>x.id===s.welt), have=new Set((s.ku||[]).map(k=>k.n));
   const opt=c=>`<option value="${esc(c.n)}">${esc(c.n)} · ${esc(c.t)}</option>`;
-  return (s.ku||[]).map(k=>`<button type="button" class="kc${k.on?" on":""}" data-ktog="${esc(k.n)}" aria-pressed="${!!k.on}"
+  const pk=pflichtKurs(), fix=quellKurse(s).some(n=>PFL.has(n))
+    ?`<span class="kc on fix" title="${esc(pk.n)} — gehört immer zum Angebot; Wahl am Workshop-Skill">${esc(kurz(pk.n))} · immer dabei</span>`:"";
+  return fix+(s.ku||[]).map(k=>`<button type="button" class="kc${k.on?" on":""}" data-ktog="${esc(k.n)}" aria-pressed="${!!k.on}"
       title="${esc(k.n)} — ${k.on?"dabei, klicken zum Abwählen":"klicken, um ihn dazuzunehmen"}">${esc(kurz(k.n))}</button>`).join("")
     +`<select class="kadd no-print" data-kadd aria-label="Kurs hinzufügen"><option value="">+ Kurs</option>
       <optgroup label="${esc(w.title)}">${w.bau.filter(c=>!have.has(c.n)).map(opt).join("")}</optgroup>
@@ -1514,7 +1538,7 @@ document.addEventListener("click",e=>{
   const box=e.target.closest("[data-sku]"); if(!box) return;
   const s=findSkill(box.dataset.sku); if(!s) return;
   const pw=e.target.closest("[data-pws]");
-  if(pw){profile.copilotOnly=pw.dataset.pws==="copilot"; kuChanged(); return;}
+  if(pw){profile.copilotOnly=pw.dataset.pws==="copilot"; kuChanged(); renderCatCards(); return;}
   const tg=e.target.closest("[data-ktog]"); if(!tg) return;
   const k=s.ku.find(k=>k.n===tg.dataset.ktog); if(!k) return;
   k.on=!k.on; k.auto=false;
@@ -1633,7 +1657,12 @@ function takeBtn(w,txt){
   return `<button type="button" class="cc-take${on?" on":""}" data-take-cat="${esc(w.id)}" data-take-txt="${esc(txt)}"${on?" disabled":""}>${on?"✓ übernommen":"+ übernehmen"}</button>`;
 }
 /* Kurse, die eine Kernkompetenz abdecken — als kurze Zeile unter der Beschreibung */
-const kuHTML=k=>(k.ku||[]).length?`<span class="ku">${k.ku.map(n=>`<i title="${esc(n)}">${esc(kurz(n))}</i>`).join("")}</span>`:"";
+const kuHTML=k=>{
+  const ku=k.ku||[], ws=ku.some(n=>PFL.has(n)), pk=pflichtKurs();
+  const tags=(ws?[`<i class="fix" title="${esc(pk.n)}">${esc(kurz(pk.n))} · immer dabei</i>`]:[])
+    .concat(ku.filter(n=>!PFL.has(n)).map(n=>`<i title="${esc(n)}">${esc(kurz(n))}</i>`));
+  return tags.length?`<span class="ku">${tags.join("")}</span>`:"";
+};
 const skillOf=t=>skills().find(s=>s.text.trim().toLowerCase()===String(t).trim().toLowerCase());
 /* Noch nicht übernommen: Kurse als Hinweis. Übernommen: wählbar wie in Schritt 1. */
 const catKu=k=>{const s=skillOf(k.n); return s?`<div class="sku" data-sku="${s.id}">${kuChips(s)}</div>`:kuHTML(k);};
