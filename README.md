@@ -473,9 +473,10 @@ Geplant als eigener Schritt.
 ## Landingpage Kompetenzmodell (`/kompetenzmodell/`)
 
 Öffentliche Seite für ppedv.de: erklärt das Modell (drei Ebenen, sechs Welten mit ihren
-Kernkompetenzen — Daten aus `WORLDS` der Matrix) und lässt Besucher selbst ein Modell bauen:
-eigene Themen (Welt optional) oder Ideen aus dem Modell, Anzahl Mitarbeitende, Teams,
-Kontakt. „Anfrage senden“ öffnet eine fertige E-Mail an kompetenz@ppedv.de; Fallback
+Kernkompetenzen — Daten aus `WORLDS` der Matrix) und lässt Besucher selbst ein Modell bauen —
+bewusst oberflächlich: nur die relevanten **Kompetenzwelten** antippen, optional Anzahl
+Mitarbeitende, Teams und „Was soll besser werden?“ in eigenen Worten, dazu Kontakt. Die
+Details erarbeitet ppedv anschließend gemeinsam mit dem Kunden in der Matrix. „Anfrage senden“ öffnet eine fertige E-Mail an kompetenz@ppedv.de; Fallback
 „Anfrage kopieren“. Ändern sich Welten oder Kernkompetenzen in der Matrix, die Daten in der
 Seite (`const WELTEN`) neu übernehmen.
 

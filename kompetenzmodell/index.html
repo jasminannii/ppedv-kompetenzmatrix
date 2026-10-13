@@ -92,32 +92,9 @@ h2{font-size:clamp(28px,3.8vw,40px);line-height:1.12;letter-spacing:-.02em;font-
 .schritt h3{font-size:20px;color:var(--navy-900);display:flex;align-items:center;gap:10px}
 .schritt h3 .num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--orange);color:#fff;font-size:15px;flex:none}
 .schritt .hint{color:var(--ink-2);font-size:14.5px;margin:6px 0 14px}
-.frei{background:var(--orange-50);border:1px solid rgba(234,143,19,.45);color:var(--orange-ink);border-radius:12px;padding:10px 14px;font-size:14px;font-weight:600;margin-bottom:14px}
-.row{display:flex;gap:8px;flex-wrap:wrap}
-.row input{flex:1;min-width:200px}
 input,select,textarea{font:inherit;font-size:15px;padding:11px 13px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);width:100%}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy-400);box-shadow:0 0 0 4px rgba(80,120,174,.18)}
 textarea{min-height:80px;resize:vertical}
-.wahl{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.wahl button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;color:var(--ink-2)}
-.wahl button[aria-pressed="true"]{background:var(--navy-700);border-color:var(--navy-700);color:#fff}
-.wahl-l{font-size:12.5px;font-weight:700;color:var(--ink-3);margin-top:12px}
-.themen{list-style:none;display:grid;gap:8px;margin-top:14px}
-.themen li{display:flex;align-items:center;gap:10px;background:var(--navy-50);border:1px solid var(--navy-100);border-radius:12px;padding:9px 12px;font-size:15px}
-.themen li .dot{flex:none;width:10px;height:10px;border-radius:50%;background:var(--wc,#BCC6D6)}
-.themen li span{flex:1}
-.themen li small{font-size:12px;color:var(--ink-3);white-space:nowrap}
-.themen li button{border:0;background:none;color:var(--ink-3);font-size:18px;line-height:1;padding:0 4px}
-.themen-leer{color:var(--ink-3);font-size:14px;margin-top:12px}
-details.ideen{margin-top:16px;border:1px dashed #BCC6D6;border-radius:12px;padding:10px 14px}
-details.ideen summary{cursor:pointer;font-weight:700;color:var(--navy-700);font-size:14.5px}
-.ideen-w{margin-top:12px}
-.ideen-w b{font-size:13px;color:var(--ink-3);display:flex;align-items:center;gap:6px}
-.ideen-w b::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--wc)}
-.ideen-w .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.ideen-w .chips button{border:1px solid #BCC6D6;background:#fff;border-radius:999px;padding:5px 11px;font-size:13px;color:var(--ink-2)}
-.ideen-w .chips button:hover{border-color:var(--orange)}
-.ideen-w .chips button[disabled]{background:var(--orange);border-color:var(--orange);color:#3D2402;cursor:default}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:600px){.grid2{grid-template-columns:1fr}}
 label.f{display:grid;gap:5px;font-size:13.5px;font-weight:700;color:var(--ink)}
@@ -126,6 +103,15 @@ label.f small{font-weight:500;color:var(--ink-3)}
 .check input{width:16px;height:16px;margin-top:3px;flex:none;accent-color:var(--orange)}
 .err{color:#B4471A;font-size:13.5px;font-weight:600;min-height:1.2em;margin-top:10px}
 .senden{margin-top:16px;width:100%}
+
+.kacheln{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.kacheln{grid-template-columns:1fr}}
+.kachel{text-align:left;background:#fff;border:1.5px solid var(--line);border-left:5px solid var(--wc);border-radius:12px;padding:14px 16px;color:var(--ink);transition:border-color .15s,background .15s}
+.kachel b{display:block;font-size:15px;color:var(--navy-900)}
+.kachel span{display:block;font-size:13px;color:var(--ink-3);margin-top:2px}
+.kachel:hover{border-color:var(--navy-400);border-left-color:var(--wc)}
+.kachel[aria-pressed="true"]{background:var(--orange-50);border-color:var(--orange);border-left-color:var(--orange)}
+.kachel[aria-pressed="true"] b::after{content:" ✓";color:var(--orange-600)}
 
 /* Vorschau */
 .vorschau{position:sticky;top:84px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:22px;color:#fff}
@@ -227,20 +213,9 @@ html.eingebettet .nav,html.eingebettet footer{display:none}
       <div class="panel" id="panel">
         <form id="form" novalidate>
           <div class="schritt">
-            <h3><span class="num">1</span>Was soll Ihr Team besser können?</h3>
-            <p class="frei">Schreiben Sie Ihre Themen in eigenen Worten — Sie müssen nichts aus dem Modell übernehmen.</p>
-            <div class="row">
-              <input id="thema" maxlength="120" placeholder="z. B. Angebote dauern zu lange">
-              <button type="button" class="btn btn-primary btn-sm" id="add">Hinzufügen</button>
-            </div>
-            <p class="wahl-l">Passt zu welcher Kompetenzwelt? <span style="font-weight:500">(optional)</span></p>
-            <div class="wahl" id="wahl"></div>
-            <ul class="themen" id="themen"></ul>
-            <p class="themen-leer" id="leer">Noch keine Themen.</p>
-            <details class="ideen">
-              <summary>Ideen aus dem ppedv-Modell</summary>
-              <div id="ideen"></div>
-            </details>
+            <h3><span class="num">1</span>Welche Kompetenzwelten sind für Sie wichtig?</h3>
+            <p class="hint">Einfach antippen — mehrere möglich.</p>
+            <div class="kacheln" id="kacheln"></div>
           </div>
 
           <div class="schritt">
@@ -261,7 +236,7 @@ html.eingebettet .nav,html.eingebettet footer{display:none}
               <label class="f">E-Mail<input id="mail" type="email" autocomplete="email"></label>
               <label class="f">Telefon <small>(optional)</small><input id="tel" type="tel" autocomplete="tel"></label>
             </div>
-            <label class="f" style="margin-top:10px">Nachricht <small>(optional)</small><textarea id="msg" placeholder="Was ist Ihnen besonders wichtig?"></textarea></label>
+            <label class="f" style="margin-top:10px">Was soll besser werden? <small>(optional, in Ihren Worten)</small><textarea id="msg" placeholder="z. B. Angebote dauern zu lange, jede Abteilung hat andere Zahlen …"></textarea></label>
             <label class="check"><input type="checkbox" id="dsgvo"><span>Ich bin einverstanden, dass ppedv meine Angaben zur Bearbeitung der Anfrage verwendet (<a href="https://ppedv.de" style="color:var(--navy-600)">Datenschutz</a>).</span></label>
             <p class="err" id="err" role="alert"></p>
             <button type="submit" class="btn btn-primary senden">Modell besprechen — Anfrage senden</button>
@@ -278,9 +253,9 @@ html.eingebettet .nav,html.eingebettet footer{display:none}
       <aside class="vorschau" aria-live="polite">
         <h4>Ihre Kompetenzwelt</h4>
         <svg id="ring" viewBox="0 0 400 400" role="img" aria-label="Vorschau Ihrer Kompetenzwelt"></svg>
-        <div class="v-zahlen"><div><b id="vThemen">0</b>Themen</div><div><b id="vWelten">0</b>Welten</div><div><b id="vMA">–</b>Personen</div></div>
+        <div class="v-zahlen"><div><b id="vWelten">0</b>Welten</div><div><b id="vMA">–</b>Personen</div></div>
         <ul class="v-list" id="vList"></ul>
-        <p class="v-note">Im Gespräch schärfen wir das Modell gemeinsam und leiten daraus den passenden Kursplan ab.</p>
+        <p class="v-note">Die Details erarbeiten wir gemeinsam im Gespräch — daraus entsteht Ihr Kursplan.</p>
       </aside>
     </div>
   </div>
@@ -328,7 +303,7 @@ const KURZ={ki:"KI",proz:"Prozesse",daten:"Daten",dev:"Entwicklung",cloud:"Cloud
 const MAILTO="kompetenz@ppedv.de";
 const $=s=>document.querySelector(s);
 const esc=t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-let themen=[], welt="";   /* themen: [{t, w}] */
+
 
 /* Welten-Karten */
 $("#welten").innerHTML=WELTEN.map((w,i)=>`<div class="welt" style="--wc:${w.c}"><div class="h"><small>KOMPETENZWELT ${i+1}</small><h3>${esc(w.t)}</h3></div>
@@ -341,51 +316,35 @@ function ring(svg,zaehler,labels){
   let out="";
   WELTEN.forEach((w,i)=>{
     const a0=i*360/n+gap, a1=(i+1)*360/n-gap, [x0,y0]=pt(a0,R),[x1,y1]=pt(a1,R),[x2,y2]=pt(a1,r),[x3,y3]=pt(a0,r);
-    const c=zaehler?zaehler[w.id]||0:1, op=zaehler?(c?Math.min(1,.45+c*.18):.12):1;
-    out+=`<path d="M${x0} ${y0} A${R} ${R} 0 0 1 ${x1} ${y1} L${x2} ${y2} A${r} ${r} 0 0 0 ${x3} ${y3}Z" fill="${w.c}" fill-opacity="${op}" stroke="${zaehler?"rgba(255,255,255,.25)":"none"}"/>`;
+    const c=zaehler?zaehler[w.id]||0:1, op=zaehler?(c?1:.14):1;
+    out+=`<path d="M${x0} ${y0} A${R} ${R} 0 0 1 ${x1} ${y1} L${x2} ${y2} A${r} ${r} 0 0 0 ${x3} ${y3}Z" fill="${zaehler&&c?"#EA8F13":w.c}" fill-opacity="${op}" stroke="${zaehler?"rgba(255,255,255,.25)":"none"}"/>`;
     const am=(a0+a1)/2, [lx,ly]=pt(am,(R+r)/2);
     /* Beschriftung entlang des Rings, in der unteren Hälfte gedreht, damit sie lesbar bleibt */
     const rot=(am>90&&am<270)?am+180:am;
     if(labels) out+=`<text x="${lx}" y="${ly}" transform="rotate(${rot} ${lx} ${ly})" text-anchor="middle" dominant-baseline="middle" fill="#fff" font-size="14" font-weight="700" font-family="Plus Jakarta Sans,sans-serif">${esc(KURZ[w.id])}</text>`;
-    else if(c) out+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" fill="#fff" font-size="22" font-weight="800" font-family="Plus Jakarta Sans,sans-serif">${c}</text>`;
+    else out+=`<text x="${lx}" y="${ly}" transform="rotate(${rot} ${lx} ${ly})" text-anchor="middle" dominant-baseline="middle" fill="${c?"#3D2402":"#fff"}" fill-opacity="${c?1:.55}" font-size="13" font-weight="700" font-family="Plus Jakarta Sans,sans-serif">${esc(KURZ[w.id])}</text>`;
   });
   out+=`<circle cx="200" cy="200" r="${r-10}" fill="${zaehler?"rgba(255,255,255,.06)":"rgba(255,255,255,.08)"}"/>`;
-  out+=zaehler?`<text x="200" y="192" text-anchor="middle" fill="#fff" font-size="44" font-weight="800" font-family="Plus Jakarta Sans,sans-serif">${themen.length}</text><text x="200" y="222" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="15" font-family="Plus Jakarta Sans,sans-serif">${themen.length===1?"Thema":"Themen"}</text>`
+  out+=zaehler?`<text x="200" y="192" text-anchor="middle" fill="#fff" font-size="44" font-weight="800" font-family="Plus Jakarta Sans,sans-serif">${gewaehlt.size}</text><text x="200" y="222" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="15" font-family="Plus Jakarta Sans,sans-serif">${gewaehlt.size===1?"Welt":"Welten"}</text>`
     :`<text x="200" y="196" text-anchor="middle" fill="#fff" font-size="26" font-weight="800" font-family="Plus Jakarta Sans,sans-serif">ppedv</text><text x="200" y="222" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="14" font-family="Plus Jakarta Sans,sans-serif">Kompetenzmodell</text>`;
   svg.innerHTML=out;
 }
 ring($("#heroRing"),null,true);
 
-/* Welt-Auswahl zum Thema */
-$("#wahl").innerHTML=WELTEN.map(w=>`<button type="button" data-w="${w.id}" aria-pressed="false">${esc(KURZ[w.id])}</button>`).join("")+`<button type="button" data-w="" aria-pressed="true">Weiß ich nicht</button>`;
-$("#wahl").addEventListener("click",e=>{const b=e.target.closest("[data-w]"); if(!b) return; welt=b.dataset.w;
-  $("#wahl").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));});
-
-/* Ideen aus dem Modell */
-$("#ideen").innerHTML=WELTEN.map(w=>`<div class="ideen-w" style="--wc:${w.c}"><b>${esc(w.t)}</b><div class="chips">${w.k.map(k=>`<button type="button" data-idee="${esc(k.n)}" data-w="${w.id}" title="${esc(k.d)}">+ ${esc(k.n)}</button>`).join("")}</div></div>`).join("");
-$("#ideen").addEventListener("click",e=>{const b=e.target.closest("[data-idee]"); if(!b||b.disabled) return; neu(b.dataset.idee,b.dataset.w);});
-
-function neu(t,w){
-  t=String(t||"").trim(); if(!t) return;
-  if(themen.some(x=>x.t.toLowerCase()===t.toLowerCase())) return;
-  themen.push({t,w:w||""}); zeichnen();
-}
-$("#add").addEventListener("click",()=>{neu($("#thema").value,welt); $("#thema").value=""; $("#thema").focus();});
-$("#thema").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault(); $("#add").click();}});
-$("#themen").addEventListener("click",e=>{const b=e.target.closest("[data-del]"); if(!b) return; themen.splice(+b.dataset.del,1); zeichnen();});
-["#anzahl"].forEach(s=>$(s).addEventListener("input",zeichnen));
+/* Auswahl der Welten — mehr braucht es zum Selbsterstellen nicht */
+let gewaehlt=new Set();
+$("#kacheln").innerHTML=WELTEN.map(w=>`<button type="button" class="kachel" style="--wc:${w.c}" data-w="${w.id}" aria-pressed="false"><b>${esc(w.t)}</b></button>`).join("");
+$("#kacheln").addEventListener("click",e=>{const b=e.target.closest("[data-w]"); if(!b) return;
+  const id=b.dataset.w; gewaehlt.has(id)?gewaehlt.delete(id):gewaehlt.add(id);
+  b.setAttribute("aria-pressed",gewaehlt.has(id)); zeichnen();});
+$("#anzahl").addEventListener("input",zeichnen);
 
 function zeichnen(){
-  const W=id=>WELTEN.find(w=>w.id===id);
-  $("#themen").innerHTML=themen.map((x,i)=>`<li style="--wc:${x.w?W(x.w).c:"#BCC6D6"}"><i class="dot"></i><span>${esc(x.t)}</span><small>${x.w?esc(KURZ[x.w]):"Welt offen"}</small><button type="button" data-del="${i}" aria-label="Entfernen">×</button></li>`).join("");
-  $("#leer").hidden=themen.length>0;
-  document.querySelectorAll("[data-idee]").forEach(b=>b.disabled=themen.some(x=>x.t===b.dataset.idee));
-  const z={}; themen.forEach(x=>{if(x.w) z[x.w]=(z[x.w]||0)+1;});
+  const z={}; gewaehlt.forEach(id=>z[id]=1);
   ring($("#ring"),z,false);
-  $("#vThemen").textContent=themen.length; $("#vWelten").textContent=Object.keys(z).length;
+  $("#vWelten").textContent=gewaehlt.size;
   $("#vMA").textContent=parseInt($("#anzahl").value,10)||"–";
-  $("#vList").innerHTML=WELTEN.filter(w=>z[w.id]).map(w=>`<li style="--wc:${w.c}"><i></i><div><b>${esc(w.t)}</b><br><span>${themen.filter(x=>x.w===w.id).map(x=>esc(x.t)).join(" · ")}</span></div></li>`).join("")
-    +(themen.some(x=>!x.w)?`<li style="--wc:#BCC6D6"><i></i><div><b>Welt offen</b><br><span>${themen.filter(x=>!x.w).map(x=>esc(x.t)).join(" · ")}</span></div></li>`:"");
+  $("#vList").innerHTML=WELTEN.filter(w=>gewaehlt.has(w.id)).map(w=>`<li style="--wc:#EA8F13"><i></i><div><b>${esc(w.t)}</b></div></li>`).join("");
   hoehe();
 }
 
@@ -394,19 +353,17 @@ let anfrageText="";
 $("#form").addEventListener("submit",e=>{
   e.preventDefault();
   const v=id=>$(id).value.trim(), err=$("#err");
-  if(!themen.length) return err.textContent="Bitte mindestens ein Thema aufschreiben.";
+  if(!gewaehlt.size) return err.textContent="Bitte mindestens eine Kompetenzwelt wählen.";
   if(!v("#name")||!v("#firma")) return err.textContent="Bitte Name und Unternehmen angeben.";
   if(!/^\S+@\S+\.\S+$/.test(v("#mail"))) return err.textContent="Bitte eine gültige E-Mail angeben.";
   if(!$("#dsgvo").checked) return err.textContent="Bitte den Datenschutzhinweis bestätigen.";
   err.textContent="";
-  const zeilen=[];
-  WELTEN.forEach(w=>{const t=themen.filter(x=>x.w===w.id); if(t.length) zeilen.push(w.t+":\n"+t.map(x=>"  - "+x.t).join("\n"));});
-  const offen=themen.filter(x=>!x.w); if(offen.length) zeilen.push("Welt noch offen:\n"+offen.map(x=>"  - "+x.t).join("\n"));
+  const zeilen=WELTEN.filter(w=>gewaehlt.has(w.id)).map(w=>"  - "+w.t);
   anfrageText=["Anfrage Kompetenzmodell","",
     "Unternehmen: "+v("#firma"),"Name: "+v("#name"),"E-Mail: "+v("#mail"),"Telefon: "+(v("#tel")||"–"),"",
     "Mitarbeitende: "+(v("#anzahl")||"–"),"Teams: "+(v("#teams")||"–"),"",
-    "THEMEN ("+themen.length+")",...zeilen,"",
-    "Nachricht: "+(v("#msg")||"–"),"",
+    "KOMPETENZWELTEN ("+zeilen.length+")",...zeilen,"",
+    "Was soll besser werden: "+(v("#msg")||"–"),"",
     "Bitte um ein Gespräch, um das Modell gemeinsam zu besprechen."].join("\n");
   location.href=`mailto:${MAILTO}?subject=${encodeURIComponent("Kompetenzmodell – "+v("#firma"))}&body=${encodeURIComponent(anfrageText)}`;
   $("#form").hidden=true; $("#danke").hidden=false; hoehe();
