@@ -537,6 +537,8 @@ body.kunde .stab[data-step="3"],body.kunde .stab[data-step="5"],body.kunde #s3,b
 body.kunde [data-go="3"],body.kunde #fbLink,body.kunde #fbNew,body.kunde #fbDel,body.kunde #fbKunde,
 body.kunde #logoClear,body.kunde #fields,body.kunde #logoSlot:not(.set){display:none!important}
 body.kunde #logoSlot{pointer-events:none;border-color:transparent!important}
+.kunde-only{display:none!important}
+body.kunde .kunde-only{display:inline-flex!important;text-decoration:none;align-items:center}
 body.kunde .cust{border-color:transparent!important;background:none!important;pointer-events:none}
 .ang-f{display:grid;grid-template-columns:110px 1fr;gap:6px 8px;margin-top:14px;align-items:center}
 .ang-f .lbl{grid-column:1/-1;margin-top:6px}
@@ -742,6 +744,7 @@ body.kunde .cust{border-color:transparent!important;background:none!important;po
       <div class="kartei no-print">
         <button class="btn" id="fbLink">Link kopieren</button>
         <button class="btn" id="fbKunde" title="Eigenen Zugang für den Kunden vergeben">Kundenzugang</button>
+        <a class="btn kunde-only" href="/anleitung/" target="_blank" rel="noopener">Anleitung</a>
         <button class="btn" id="fbNew">Neue Kartei</button>
         <button class="btn" id="fbDel">Löschen</button>
         <span class="fb-status" id="fbStatus"></span>
@@ -2395,7 +2398,7 @@ function zeigeSchleuse(){
     gateAlt.hidden=false; gateAlt.textContent="Zurück zur Übersicht";
   }else if(KUNDE){
     gateTitel.textContent="Ihre Kompetenzwelt";
-    gateText.textContent="Bitte geben Sie das Passwort ein, das Sie von ppedv erhalten haben.";
+    gateText.innerHTML='Bitte geben Sie das Passwort ein, das Sie von ppedv erhalten haben. <a href="/anleitung/" target="_blank" rel="noopener" style="color:var(--blue);font-weight:600">So funktioniert’s</a>';
     gateGo.textContent="Öffnen";
     gateAlt.hidden=true;
   }else{

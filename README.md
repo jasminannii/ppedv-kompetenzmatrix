@@ -323,6 +323,10 @@ eigenem Passwort, getrennt vom internen Zugang.
    Workshops. Keine Kartei-Knöpfe, keine Übersicht, Name und Logo nur zur Anzeige, keine
    Gesprächsnotizen, kein Ablauf, kein Abschluss, keine Preise.
 
+**Anleitung für Kunden:** `/anleitung/` — fünf Schritte im ppedv-Design, druckbar als PDF.
+Betont, dass eigene Themen genügen und das ppedv-Modell nur Anregung ist. Verlinkt auf der
+Kunden-Anmeldung („So funktioniert’s“) und in der Kundenansicht oben („Anleitung“).
+
 **Durchgesetzt wird das auf dem Server** (`api/kartei.js`), nicht nur in der Oberfläche:
 - Mit `rolle: "kunde"` prüft die Funktion das Kundenpasswort (`kundeSalt`/`kundeHash`),
   nie das interne. Das Kundenpasswort öffnet keine andere Kartei und nicht die interne

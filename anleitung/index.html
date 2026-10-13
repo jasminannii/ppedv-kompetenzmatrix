@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anleitung Kompetenzwelt | ppedv</title>
+<meta name="description" content="In fünf Schritten zur eigenen Kompetenzwelt — einfach erklärt.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-900:#0E1A30; --navy-700:#1F3358; --navy-600:#2E4879; --navy-50:#F3F6FB; --navy-100:#E6ECF5;
+  --orange:#EA8F13; --orange-600:#D27D08; --orange-50:#FDF1DD; --orange-ink:#8A5A08;
+  --ink:#141A24; --ink-2:#465268; --ink-3:#78849A; --line:#DDE3EC; --bg:#F7F9FC;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+@media(max-width:600px){.wrap{padding:0 16px}}
+
+header{background:#fff;border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+header img{height:30px;width:auto;display:block}
+.print{font:inherit;font-size:14px;font-weight:700;color:var(--navy-700);background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 16px;cursor:pointer}
+
+.hero{background:var(--navy-900);color:#fff;padding:52px 0 56px}
+.hero h1{font-size:clamp(30px,5vw,44px);line-height:1.1;letter-spacing:-.02em;font-weight:800}
+.hero h1 em{font-style:normal;color:var(--orange)}
+.hero p{font-size:18px;color:rgba(255,255,255,.8);margin-top:14px;max-width:560px}
+
+.frei{margin:-28px 0 0;position:relative}
+.frei .box{background:#fff;border:2px solid var(--orange);border-radius:18px;padding:22px 24px;box-shadow:0 12px 30px rgba(14,26,48,.10);display:flex;gap:16px;align-items:flex-start}
+.frei .ico{flex:none;width:42px;height:42px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-size:22px;font-weight:800}
+.frei b{display:block;font-size:18px;color:var(--navy-900)}
+.frei p{color:var(--ink-2);margin-top:4px}
+
+main{padding:40px 0 60px}
+.step{display:grid;grid-template-columns:48px 1fr;gap:16px;margin-bottom:30px}
+.num{width:48px;height:48px;border-radius:50%;background:var(--navy-700);color:#fff;display:grid;place-items:center;font-weight:800;font-size:20px}
+.step h2{font-size:21px;line-height:1.25;color:var(--navy-900);margin:10px 0 6px}
+.step p{color:var(--ink-2)}
+.step .opt{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line);border-radius:999px;padding:2px 9px;margin-left:6px;vertical-align:3px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:12px}
+.card ol,.card ul{padding-left:20px;display:grid;gap:6px;color:var(--ink)}
+.card li::marker{color:var(--orange-600);font-weight:800}
+
+/* Nachbildung der Bedienelemente */
+.ui{display:inline-flex;align-items:center;font-size:13.5px;font-weight:600;border-radius:999px;padding:3px 11px;white-space:nowrap;vertical-align:1px}
+.ui.btn{background:var(--navy-700);color:#fff;border-radius:6px}
+.ui.line{background:#fff;border:1px solid #BCC6D6;color:var(--ink-2);border-radius:6px}
+.ui.tab{background:none;border-bottom:3px solid var(--orange);border-radius:0;padding:2px 4px;color:var(--ink)}
+.ui.on{background:var(--orange);color:#3D2402}
+.ui.off{background:#fff;border:1px solid #BCC6D6;color:var(--ink-3)}
+.ui.field{background:var(--navy-50);border:1px solid #BCC6D6;border-radius:6px;color:var(--ink-3);font-weight:500}
+
+.bsp{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.bsp span{font-size:14px;background:var(--orange-50);color:var(--orange-ink);border-radius:8px;padding:6px 10px}
+
+.done{background:linear-gradient(135deg,var(--navy-700),var(--navy-600));color:#fff;border-radius:20px;padding:28px;margin-top:10px}
+.done h2{color:#fff;font-size:22px}
+.done p{color:rgba(255,255,255,.82);margin-top:6px}
+
+.faq{margin-top:40px}
+.faq h2{font-size:20px;color:var(--navy-900);margin-bottom:12px}
+details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:0 18px;margin-bottom:8px}
+summary{list-style:none;cursor:pointer;padding:15px 0;font-weight:700;color:var(--navy-900);display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--orange-600);font-size:20px;line-height:1}
+details[open] summary::after{content:"–"}
+details p{color:var(--ink-2);padding:0 0 15px}
+
+footer{border-top:1px solid var(--line);background:#fff;color:var(--ink-3);font-size:13.5px;padding:22px 0}
+footer a{color:var(--navy-600);font-weight:600}
+
+@media print{
+  header .print{display:none}
+  .hero{background:#fff;color:var(--ink);padding:10px 0 20px}
+  .hero p{color:var(--ink-2)}
+  .frei{margin:0}
+  .frei .box{box-shadow:none}
+  .step,.frei,.done{break-inside:avoid}
+  .done{background:#fff;color:var(--ink);border:2px solid var(--navy-700)}
+  .done h2{color:var(--navy-900)} .done p{color:var(--ink-2)}
+  details{border:0;padding:0} details p{display:block}
+  details:not([open]) > *:not(summary){display:block}
+  summary::after{content:""}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <img src="../ki-workshop/ppedv_Logo.png" alt="ppedv">
+    <button class="print" onclick="window.print()">Als PDF drucken</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Ihre Kompetenzwelt —<br><em>in 5 einfachen Schritten.</em></h1>
+    <p>Sie schreiben auf, wo Ihr Team besser werden will. Wir machen daraus gemeinsam einen Plan.</p>
+  </div>
+</section>
+
+<div class="wrap frei">
+  <div class="box">
+    <div class="ico">✎</div>
+    <div>
+      <b>Ihre eigenen Worte zählen.</b>
+      <p>Sie müssen nichts aus dem ppedv-Modell übernehmen. Schreiben Sie einfach Ihre eigenen Themen auf — so, wie Sie im Alltag darüber sprechen. Das ppedv-Modell ist nur eine Ideensammlung.</p>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <div class="step">
+    <div class="num">1</div>
+    <div>
+      <h2>Link öffnen und anmelden</h2>
+      <p>Öffnen Sie den Link, den Sie von ppedv bekommen haben. Geben Sie Ihr Passwort ein und klicken Sie auf <span class="ui btn">Öffnen</span>.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <div>
+      <h2>Ihre Themen aufschreiben</h2>
+      <p>Im Reiter <span class="ui tab">Bedarf &amp; Kontext</span> klicken Sie auf <span class="ui btn">+ Weiteren Skill erfassen</span> und schreiben ein Thema auf — in einem kurzen Satz, in Ihren Worten.</p>
+      <div class="bsp">
+        <span>„Angebote dauern zu lange“</span>
+        <span>„Jede Abteilung hat andere Zahlen“</span>
+        <span>„Neue Kollegen finden nichts“</span>
+        <span>„Wir wollen KI sicher nutzen“</span>
+      </div>
+      <div class="card">
+        <ul>
+          <li>Pro Thema ein Eintrag. Schreiben Sie so viele auf, wie Ihnen einfallen.</li>
+          <li>Die passende <b>Kompetenzwelt</b> wird automatisch vorgeschlagen. Passt sie nicht, klicken Sie eine andere an.</li>
+          <li>Unter <b>Teams</b> tragen Sie ein, wen es betrifft und wie viele Personen, z. B. <span class="ui field">Vertrieb</span> <span class="ui field">8</span>. Mit <span class="ui line">+ Team</span> kommen weitere Teams dazu.</li>
+          <li>Betrifft ein Thema alle? Oben die Größe des <b>gesamten Teams</b> eintragen und beim Thema auf <span class="ui line">Gesamtes Team</span> klicken.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <div>
+      <h2>Kurse ansehen <span class="opt">kurz prüfen</span></h2>
+      <p>Zu jedem Thema schlagen wir passende Kurse vor. <b>Orange</b> heißt: ist dabei.</p>
+      <div class="card">
+        <p style="color:var(--ink)"><span class="ui on">Power BI Days kompakt!</span> &nbsp;dabei &nbsp;&nbsp; <span class="ui off">SQL Grundlagen</span> &nbsp;nicht dabei</p>
+        <p style="margin-top:8px">Ein Klick schaltet einen Kurs an oder aus. Sie sind unsicher? Lassen Sie es einfach so — wir besprechen die Kurse gemeinsam.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">4</div>
+    <div>
+      <h2>Ideen holen im ppedv-Modell <span class="opt">optional</span></h2>
+      <p>Im Reiter <span class="ui tab">Das ppedv-Modell</span> finden Sie Anregungen. Gefällt Ihnen ein Punkt, klicken Sie auf <span class="ui line">+ übernehmen</span>. <b>Das ist kein Muss</b> — Ihre eigenen Themen aus Schritt 2 reichen völlig.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">5</div>
+    <div>
+      <h2>Ergebnis ansehen</h2>
+      <p>Im Reiter <span class="ui tab">Eure Kompetenzwelt</span> sehen Sie alle Themen auf einen Blick als Ring. Ein Klick auf einen Bereich zeigt die Details.</p>
+    </div>
+  </div>
+
+  <div class="done">
+    <h2>Fertig — alles ist gespeichert.</h2>
+    <p>Jede Änderung speichert sich automatisch. Sie können jederzeit wiederkommen und weiterarbeiten. Ablauf und Termine legen wir danach gemeinsam mit Ihnen fest.</p>
+  </div>
+
+  <section class="faq">
+    <h2>Häufige Fragen</h2>
+    <details><summary>Muss ich alles ausfüllen?</summary><p>Nein. Wichtig sind nur Ihre Themen. Teams, Anzahl und Kurse sind hilfreich, aber freiwillig.</p></details>
+    <details><summary>Muss ich etwas aus dem ppedv-Modell nehmen?</summary><p>Nein. Ihre eigenen Themen sind genau richtig. Das Modell ist nur eine Ideensammlung.</p></details>
+    <details><summary>Wie lösche ich ein Thema?</summary><p>Klicken Sie beim Thema rechts oben auf das ×.</p></details>
+    <details><summary>Was ist der Eintrag „immer dabei“?</summary><p>Ein Einstiegs-Workshop gehört immer dazu. Wählen Sie dort, ob er allgemein oder auf Microsoft Copilot ausgerichtet sein soll.</p></details>
+    <details><summary>Ich habe Fragen.</summary><p>Melden Sie sich gern: <a href="mailto:kompetenz@ppedv.de">kompetenz@ppedv.de</a> oder +49 8677 98890.</p></details>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">ppedv AG · Marktler Straße 15b · 84489 Burghausen · <a href="mailto:kompetenz@ppedv.de">kompetenz@ppedv.de</a></div>
+</footer>
+
+</body>
+</html>
