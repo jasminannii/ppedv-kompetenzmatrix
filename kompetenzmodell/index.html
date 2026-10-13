@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Das ppedv-Kompetenzmodell | ppedv</title>
+<meta name="description" content="Kompetenzen gezielt aufbauen: das ppedv-Kompetenzmodell mit sechs Kompetenzwelten. Eigenes Modell bauen und gemeinsam besprechen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-900:#0E1A30; --navy-800:#15264A; --navy-700:#1F3358; --navy-600:#2E4879; --navy-400:#5078AE; --navy-50:#F3F6FB; --navy-100:#E6ECF5;
+  --orange:#EA8F13; --orange-600:#D27D08; --orange-50:#FDF1DD; --orange-ink:#8A5A08;
+  --ink:#141A24; --ink-2:#465268; --ink-3:#78849A; --line:#DDE3EC; --bg:#F7F9FC; --ok:#1E8E5A;
+  --shadow:0 1px 2px rgba(14,26,48,.06),0 8px 24px rgba(14,26,48,.06);
+  --shadow-lg:0 2px 4px rgba(14,26,48,.06),0 24px 60px rgba(14,26,48,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+@media(max-width:600px){.wrap{padding:0 16px}}
+
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav img{height:30px;width:auto;display:block}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:13px 22px;font-weight:700;font-size:15px;text-decoration:none;transition:background .15s,transform .15s;white-space:nowrap}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--orange);color:#fff;box-shadow:0 6px 18px rgba(234,143,19,.35)}
+.btn-primary:hover{background:var(--orange-600)}
+.btn-line{background:#fff;color:var(--navy-700);border:1px solid var(--line)}
+.btn-sm{padding:9px 16px;font-size:14px}
+.btn[disabled]{opacity:.5;pointer-events:none;box-shadow:none}
+
+/* Hero */
+.hero{background:radial-gradient(900px 500px at 85% -20%,rgba(80,120,174,.5),transparent 60%),radial-gradient(700px 400px at 0% 120%,rgba(234,143,19,.18),transparent 60%),var(--navy-900);color:#fff;padding:72px 0 80px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero-ring{width:100%}
+.hero-ring svg{display:block;width:100%;height:auto}
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr}.hero-ring{max-width:340px;margin:0 auto}}
+.eyebrow{display:inline-block;font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#FFC877}
+.hero h1{font-size:clamp(34px,5.4vw,58px);line-height:1.05;letter-spacing:-.025em;font-weight:800;margin:14px 0 18px}
+.hero h1 em{font-style:normal;color:var(--orange)}
+.hero p{font-size:clamp(17px,1.8vw,20px);color:rgba(255,255,255,.8);max-width:540px}
+.facts{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 30px}
+.facts span{font-size:14px;font-weight:600;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16)}
+.facts b{color:var(--orange)}
+
+section{padding:84px 0}
+@media(max-width:700px){section{padding:56px 0}.hero{padding:52px 0 60px}}
+.sec-eyebrow{display:block;font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-600);text-align:center}
+h2{font-size:clamp(28px,3.8vw,40px);line-height:1.12;letter-spacing:-.02em;font-weight:800;color:var(--navy-900);margin:8px 0 14px;text-align:center;text-wrap:balance}
+.intro{text-align:center;color:var(--ink-2);font-size:17px;max-width:640px;margin:0 auto 40px}
+
+/* Ebenen */
+.ebenen{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:800px){.ebenen{grid-template-columns:1fr}}
+.ebene{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow)}
+.ebene .n{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--navy-700);color:#fff;font-weight:800;margin-bottom:12px}
+.ebene h3{font-size:18px;color:var(--navy-900)}
+.ebene p{color:var(--ink-2);font-size:15px;margin-top:6px}
+.ebene i{display:block;font-style:normal;font-size:14px;color:var(--orange-ink);background:var(--orange-50);border-radius:8px;padding:6px 10px;margin-top:12px}
+
+/* Welten */
+.welten{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:900px){.welten{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.welten{grid-template-columns:1fr}}
+.welt{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow)}
+.welt .h{background:var(--wc);color:#fff;padding:16px 18px}
+.welt .h small{font-size:11.5px;font-weight:800;letter-spacing:.1em;opacity:.75}
+.welt .h h3{font-size:18px;margin-top:2px}
+.welt .b{padding:16px 18px}
+.welt .b p{font-size:14px;color:var(--ink-2)}
+.welt ul{list-style:none;margin-top:12px;display:grid;gap:6px}
+.welt li{font-size:14px;font-weight:600;color:var(--navy-900);padding-left:14px;position:relative}
+.welt li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--orange)}
+
+/* Baukasten */
+.bau{background:var(--navy-900);color:#fff}
+.bau h2{color:#fff}
+.bau .intro{color:rgba(255,255,255,.75)}
+.bau .sec-eyebrow{color:#FFC877}
+.bk{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}
+@media(max-width:940px){.bk{grid-template-columns:1fr}}
+.panel{background:#fff;color:var(--ink);border-radius:22px;box-shadow:var(--shadow-lg);padding:26px}
+@media(max-width:600px){.panel{padding:18px}}
+.schritt+.schritt{margin-top:28px;padding-top:24px;border-top:1px solid var(--line)}
+.schritt h3{font-size:20px;color:var(--navy-900);display:flex;align-items:center;gap:10px}
+.schritt h3 .num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--orange);color:#fff;font-size:15px;flex:none}
+.schritt .hint{color:var(--ink-2);font-size:14.5px;margin:6px 0 14px}
+.frei{background:var(--orange-50);border:1px solid rgba(234,143,19,.45);color:var(--orange-ink);border-radius:12px;padding:10px 14px;font-size:14px;font-weight:600;margin-bottom:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row input{flex:1;min-width:200px}
+input,select,textarea{font:inherit;font-size:15px;padding:11px 13px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);width:100%}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy-400);box-shadow:0 0 0 4px rgba(80,120,174,.18)}
+textarea{min-height:80px;resize:vertical}
+.wahl{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.wahl button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.wahl button[aria-pressed="true"]{background:var(--navy-700);border-color:var(--navy-700);color:#fff}
+.wahl-l{font-size:12.5px;font-weight:700;color:var(--ink-3);margin-top:12px}
+.themen{list-style:none;display:grid;gap:8px;margin-top:14px}
+.themen li{display:flex;align-items:center;gap:10px;background:var(--navy-50);border:1px solid var(--navy-100);border-radius:12px;padding:9px 12px;font-size:15px}
+.themen li .dot{flex:none;width:10px;height:10px;border-radius:50%;background:var(--wc,#BCC6D6)}
+.themen li span{flex:1}
+.themen li small{font-size:12px;color:var(--ink-3);white-space:nowrap}
+.themen li button{border:0;background:none;color:var(--ink-3);font-size:18px;line-height:1;padding:0 4px}
+.themen-leer{color:var(--ink-3);font-size:14px;margin-top:12px}
+details.ideen{margin-top:16px;border:1px dashed #BCC6D6;border-radius:12px;padding:10px 14px}
+details.ideen summary{cursor:pointer;font-weight:700;color:var(--navy-700);font-size:14.5px}
+.ideen-w{margin-top:12px}
+.ideen-w b{font-size:13px;color:var(--ink-3);display:flex;align-items:center;gap:6px}
+.ideen-w b::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--wc)}
+.ideen-w .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.ideen-w .chips button{border:1px solid #BCC6D6;background:#fff;border-radius:999px;padding:5px 11px;font-size:13px;color:var(--ink-2)}
+.ideen-w .chips button:hover{border-color:var(--orange)}
+.ideen-w .chips button[disabled]{background:var(--orange);border-color:var(--orange);color:#3D2402;cursor:default}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.grid2{grid-template-columns:1fr}}
+label.f{display:grid;gap:5px;font-size:13.5px;font-weight:700;color:var(--ink)}
+label.f small{font-weight:500;color:var(--ink-3)}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink-2);margin-top:14px}
+.check input{width:16px;height:16px;margin-top:3px;flex:none;accent-color:var(--orange)}
+.err{color:#B4471A;font-size:13.5px;font-weight:600;min-height:1.2em;margin-top:10px}
+.senden{margin-top:16px;width:100%}
+
+/* Vorschau */
+.vorschau{position:sticky;top:84px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:22px;color:#fff}
+@media(max-width:940px){.vorschau{position:static}}
+.vorschau h4{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.vorschau svg{display:block;width:100%;max-width:260px;margin:12px auto 6px}
+.v-zahlen{display:flex;justify-content:center;gap:18px;font-size:13px;color:rgba(255,255,255,.7)}
+.v-zahlen b{display:block;font-size:22px;color:#fff;text-align:center}
+.v-list{list-style:none;margin-top:14px;display:grid;gap:6px;font-size:13.5px}
+.v-list li{display:flex;gap:8px;align-items:baseline}
+.v-list li i{flex:none;width:8px;height:8px;border-radius:50%;background:var(--wc);transform:translateY(-1px)}
+.v-list li b{font-weight:700}
+.v-list li span{color:rgba(255,255,255,.65)}
+.v-note{font-size:12.5px;color:rgba(255,255,255,.6);margin-top:14px;border-top:1px solid rgba(255,255,255,.14);padding-top:12px}
+
+.danke{text-align:center;padding:30px 10px}
+.danke .ok{width:58px;height:58px;border-radius:50%;background:#E3F5EC;color:var(--ok);display:grid;place-items:center;margin:0 auto 14px;font-size:28px;font-weight:800}
+.danke h3{font-size:22px;color:var(--navy-900)}
+.danke p{color:var(--ink-2);margin-top:6px}
+
+/* Ablauf */
+.ablauf{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;counter-reset:a}
+@media(max-width:860px){.ablauf{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.ablauf{grid-template-columns:1fr}}
+.ablauf div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
+.ablauf div::before{counter-increment:a;content:"0" counter(a);display:block;font-size:13px;font-weight:800;color:var(--orange-600);margin-bottom:6px}
+.ablauf h3{font-size:16.5px;color:var(--navy-900)}
+.ablauf p{font-size:14px;color:var(--ink-2);margin-top:4px}
+
+.faq{max-width:720px;margin:0 auto;display:grid;gap:10px}
+details.q{background:#fff;border:1px solid var(--line);border-radius:14px;padding:0 20px}
+details.q summary{list-style:none;cursor:pointer;padding:17px 0;font-weight:700;color:var(--navy-900);display:flex;justify-content:space-between;gap:16px}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary::after{content:"+";font-size:22px;color:var(--orange-600);line-height:1}
+details.q[open] summary::after{content:"–"}
+details.q p{color:var(--ink-2);padding:0 0 17px;font-size:15px}
+
+footer{background:var(--navy-900);color:rgba(255,255,255,.7);font-size:14px;padding:30px 0}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+footer b{color:#fff}
+footer a{text-decoration:none}footer a:hover{color:#fff}
+/* Eingebettet auf ppedv.de: eigene Kopf- und Fußzeile ausblenden — die Seite drumherum hat beides */
+html.eingebettet .nav,html.eingebettet footer{display:none}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="https://ppedv.de" aria-label="ppedv Startseite"><img src="../ki-workshop/ppedv_Logo.png" alt="ppedv"></a>
+    <a class="btn btn-primary btn-sm" href="#bauen">Eigenes Modell bauen</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Das ppedv-Kompetenzmodell</span>
+      <h1>Kompetenzen gezielt aufbauen — <em>statt Kurse zu sammeln.</em></h1>
+      <p>Erst klären, was Ihr Team wirklich können muss. Dann genau die Schulungen, die dorthin führen.</p>
+      <div class="facts"><span><b>6</b> Kompetenzwelten</span><span><b>18</b> Kernkompetenzen</span><span>Ihre Themen im Mittelpunkt</span></div>
+      <a class="btn btn-primary" href="#bauen">Jetzt eigenes Modell bauen →</a>
+    </div>
+    <div class="hero-ring" aria-hidden="true"><svg id="heroRing" viewBox="0 0 400 400"></svg></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="sec-eyebrow">So ist das Modell aufgebaut</span>
+    <h2>Drei Ebenen — einfach erklärt</h2>
+    <p class="intro">Vom großen Themenfeld bis zur einzelnen Abteilung.</p>
+    <div class="ebenen">
+      <div class="ebene"><span class="n">1</span><h3>Kompetenzwelt</h3><p>Sechs feste Themenfelder, in denen Ihr Team stärker werden kann.</p><i>z. B. Daten besser nutzen</i></div>
+      <div class="ebene"><span class="n">2</span><h3>Ihr Thema</h3><p>Was konkret besser werden soll — in Ihren eigenen Worten.</p><i>z. B. „Jede Abteilung hat andere Zahlen“</i></div>
+      <div class="ebene"><span class="n">3</span><h3>Team</h3><p>Wen es betrifft und wie viele Personen.</p><i>z. B. Controlling · 5 Personen</i></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <span class="sec-eyebrow">Die sechs Kompetenzwelten</span>
+    <h2>Worin Ihr Team stärker werden kann</h2>
+    <p class="intro">Je Welt drei Kernkompetenzen — als Orientierung, nicht als Pflicht.</p>
+    <div class="welten" id="welten"></div>
+  </div>
+</section>
+
+<section class="bau" id="bauen">
+  <div class="wrap">
+    <span class="sec-eyebrow">Ihr eigenes Modell</span>
+    <h2>In drei Schritten zu Ihrer Kompetenzwelt</h2>
+    <p class="intro">Wir besprechen Ihr Modell anschließend gemeinsam mit Ihnen — unverbindlich.</p>
+
+    <div class="bk">
+      <div class="panel" id="panel">
+        <form id="form" novalidate>
+          <div class="schritt">
+            <h3><span class="num">1</span>Was soll Ihr Team besser können?</h3>
+            <p class="frei">Schreiben Sie Ihre Themen in eigenen Worten — Sie müssen nichts aus dem Modell übernehmen.</p>
+            <div class="row">
+              <input id="thema" maxlength="120" placeholder="z. B. Angebote dauern zu lange">
+              <button type="button" class="btn btn-primary btn-sm" id="add">Hinzufügen</button>
+            </div>
+            <p class="wahl-l">Passt zu welcher Kompetenzwelt? <span style="font-weight:500">(optional)</span></p>
+            <div class="wahl" id="wahl"></div>
+            <ul class="themen" id="themen"></ul>
+            <p class="themen-leer" id="leer">Noch keine Themen.</p>
+            <details class="ideen">
+              <summary>Ideen aus dem ppedv-Modell</summary>
+              <div id="ideen"></div>
+            </details>
+          </div>
+
+          <div class="schritt">
+            <h3><span class="num">2</span>Wer soll lernen?</h3>
+            <p class="hint">Optional — hilft uns bei der Planung.</p>
+            <div class="grid2">
+              <label class="f">Mitarbeitende insgesamt<input id="anzahl" type="number" min="1" max="99999" placeholder="z. B. 40"></label>
+              <label class="f">Teams / Abteilungen<input id="teams" maxlength="200" placeholder="z. B. Vertrieb, Controlling, IT"></label>
+            </div>
+          </div>
+
+          <div class="schritt">
+            <h3><span class="num">3</span>Gemeinsam besprechen</h3>
+            <p class="hint">Wir melden uns für ein kurzes Gespräch zu Ihrem Modell.</p>
+            <div class="grid2">
+              <label class="f">Name<input id="name" autocomplete="name"></label>
+              <label class="f">Unternehmen<input id="firma" autocomplete="organization"></label>
+              <label class="f">E-Mail<input id="mail" type="email" autocomplete="email"></label>
+              <label class="f">Telefon <small>(optional)</small><input id="tel" type="tel" autocomplete="tel"></label>
+            </div>
+            <label class="f" style="margin-top:10px">Nachricht <small>(optional)</small><textarea id="msg" placeholder="Was ist Ihnen besonders wichtig?"></textarea></label>
+            <label class="check"><input type="checkbox" id="dsgvo"><span>Ich bin einverstanden, dass ppedv meine Angaben zur Bearbeitung der Anfrage verwendet (<a href="https://ppedv.de" style="color:var(--navy-600)">Datenschutz</a>).</span></label>
+            <p class="err" id="err" role="alert"></p>
+            <button type="submit" class="btn btn-primary senden">Modell besprechen — Anfrage senden</button>
+          </div>
+        </form>
+        <div class="danke" id="danke" hidden>
+          <div class="ok">✓</div>
+          <h3>Fast geschafft!</h3>
+          <p>Ihr E-Mail-Programm hat sich mit der fertigen Anfrage an kompetenz@ppedv.de geöffnet — bitte dort noch auf <b>Senden</b> klicken.</p>
+          <p style="margin-top:14px">Kein E-Mail-Programm? <button type="button" class="btn btn-line btn-sm" id="kopie">Anfrage kopieren</button><br><small style="color:var(--ink-3)">und an kompetenz@ppedv.de schicken.</small></p>
+        </div>
+      </div>
+
+      <aside class="vorschau" aria-live="polite">
+        <h4>Ihre Kompetenzwelt</h4>
+        <svg id="ring" viewBox="0 0 400 400" role="img" aria-label="Vorschau Ihrer Kompetenzwelt"></svg>
+        <div class="v-zahlen"><div><b id="vThemen">0</b>Themen</div><div><b id="vWelten">0</b>Welten</div><div><b id="vMA">–</b>Personen</div></div>
+        <ul class="v-list" id="vList"></ul>
+        <p class="v-note">Im Gespräch schärfen wir das Modell gemeinsam und leiten daraus den passenden Kursplan ab.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="sec-eyebrow">Nach Ihrer Anfrage</span>
+    <h2>So geht es weiter</h2>
+    <p class="intro"></p>
+    <div class="ablauf">
+      <div><h3>Gespräch</h3><p>Wir besprechen Ihre Themen und schärfen das Modell.</p></div>
+      <div><h3>Kompetenzwelt</h3><p>Sie können Ihre Themen online weiter ergänzen.</p></div>
+      <div><h3>Kursplan</h3><p>Passende Kurse — für welches Team, wann.</p></div>
+      <div><h3>Umsetzung</h3><p>Online, im Trainingscenter oder bei Ihnen vor Ort.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <span class="sec-eyebrow">FAQ</span>
+    <h2>Häufige Fragen</h2>
+    <div class="faq">
+      <details class="q"><summary>Muss ich mich an die Kompetenzwelten halten?</summary><p>Nein. Ihre eigenen Themen stehen im Mittelpunkt. Die Welten helfen nur beim Ordnen.</p></details>
+      <details class="q"><summary>Was passiert mit meiner Anfrage?</summary><p>Wir melden uns für ein kurzes Gespräch, besprechen Ihr Modell und schlagen passende Kurse vor. Unverbindlich.</p></details>
+      <details class="q"><summary>Für wen ist das Modell gedacht?</summary><p>Für Teams und Unternehmen, die Weiterbildung gezielt planen wollen — von der Fachabteilung bis zur IT.</p></details>
+      <details class="q"><summary>Wo finden die Schulungen statt?</summary><p>Online, in einem ppedv-Trainingscenter oder bei Ihnen vor Ort.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>ppedv AG</b> · Marktler Straße 15b · 84489 Burghausen</div>
+    <div><a href="mailto:kompetenz@ppedv.de">kompetenz@ppedv.de</a> · +49 8677 98890</div>
+  </div>
+</footer>
+
+<script>
+try{ if(window.self!==window.top) document.documentElement.classList.add("eingebettet"); }catch(e){ document.documentElement.classList.add("eingebettet"); }
+const WELTEN=[{"id":"ki","t":"KI produktiv einsetzen","l":"Copilot, Prompting und eigene KI-Abläufe sinnvoll in den Arbeitsalltag integrieren","c":"#1F3358","k":[{"n":"KI verstehen und rechtssicher einordnen","d":"Weiß, was ein Sprachmodell leisten kann und was nicht, kennt die Regeln des Hauses und die Pflichten aus dem EU AI Act."},{"n":"Wirksam prompten und Ergebnisse prüfen","d":"Formuliert Aufgabe, Kontext und Format so, dass ein brauchbares Ergebnis entsteht — und erkennt, wenn es falsch ist."},{"n":"Eigene Arbeitsabläufe mit KI umbauen","d":"Erkennt im eigenen Alltag, welche Schritte KI übernehmen kann, und macht daraus einen wiederholbaren Ablauf."}]},{"id":"proz","t":"Prozesse automatisieren","l":"Wiederkehrende Aufgaben mit Power Apps, Power Automate, Copilot Studio und Skripten automatisieren","c":"#27406B","k":[{"n":"Apps und Datenbasis selbst aufbauen","d":"Baut mit Power Apps und Dataverse eine kleine Anwendung samt sauberer Datenbasis, statt Listen per Mail herumzuschicken."},{"n":"Workflows und Agenten selbst bauen","d":"Setzt einen Ablauf mit Power Automate oder Copilot Studio um — samt Fehlerfällen, Test und Dokumentation."},{"n":"Administration per Skript automatisieren","d":"Erledigt wiederkehrende Admin-Aufgaben mit PowerShell oder Python reproduzierbar statt per Hand."}]},{"id":"daten","t":"Daten besser nutzen","l":"Daten analysieren, visualisieren und fundiert entscheiden – mit Excel, SQL, Power BI und Fabric","c":"#2E4879","k":[{"n":"Zahlen richtig lesen (Data Literacy)","d":"Erkennt, was eine Kennzahl aussagt, wo sie herkommt und wo sie in die Irre führt — bevor daraus eine Entscheidung wird."},{"n":"Analysen prüfbar aufbauen","d":"Modelliert Daten so, dass eine zweite Person dasselbe Ergebnis reproduzieren kann."},{"n":"Mit Daten entscheiden und begründen","d":"Führt von der Zahl zur Entscheidung — adressatengerecht dargestellt und nachvollziehbar begründet."}]},{"id":"dev","t":"Softwareentwicklung modernisieren","l":"Moderne Entwicklung mit C#, .NET, ASP.NET, GitHub Copilot und KI-Unterstützung","c":"#365A93","k":[{"n":"Anforderungen testbar formulieren","d":"Schneidet Anforderungen so, dass vor der ersten Zeile Code klar ist, woran „fertig“ gemessen wird."},{"n":"Mit KI entwickeln und Code verantworten","d":"Nutzt Copilot & Co produktiv und bleibt für Qualität, Lizenzlage und Sicherheit des Ergebnisses geradestehen."},{"n":"Automatisiert testen und sauber ausliefern","d":"Sichert Code mit automatisierten Tests ab, versioniert mit Git und stellt in Containern reproduzierbar bereit."}]},{"id":"cloud","t":"Cloud-Systeme sicher betreiben","l":"Azure, Microsoft 365, Windows Server und Endgeräte sicher verwalten und betreiben","c":"#3E6BA8","k":[{"n":"Identitäten und Berechtigungen beherrschen","d":"Weiß jederzeit, wer worauf zugreifen darf, und setzt es technisch durch statt per Zuruf."},{"n":"Angriffe erkennen und abwehren","d":"Erkennt auffälliges Verhalten, priorisiert Alarme und weiß, was im Ernstfall in welcher Reihenfolge zu tun ist."},{"n":"Cloud und Endgeräte zentral betreiben","d":"Verwaltet Azure-Ressourcen und Geräte zentral und nachvollziehbar — statt jede Umgebung von Hand einzurichten."}]},{"id":"zus","t":"Digitale Zusammenarbeit verbessern","l":"Microsoft Teams, SharePoint und Microsoft 365 einführen, nutzen und sicher betreiben","c":"#4A7DB8","k":[{"n":"Informationen auffindbar strukturieren","d":"Legt Information dort ab, wo andere sie ohne Nachfrage finden — Chat, Kanal, Dokument oder Wissensseite bewusst gewählt."},{"n":"Microsoft 365 strukturiert einführen","d":"Führt Teams, SharePoint und Microsoft 365 mit klaren Rollen und Richtlinien ein — statt Wildwuchs nach dem Start."},{"n":"Teams und Exchange sicher betreiben","d":"Hält Teams, Postfächer und Freigaben im Alltag sauber, sicher und für alle verlässlich verfügbar."}]}];
+const KURZ={ki:"KI",proz:"Prozesse",daten:"Daten",dev:"Entwicklung",cloud:"Cloud & Security",zus:"Zusammenarbeit"};
+const MAILTO="kompetenz@ppedv.de";
+const $=s=>document.querySelector(s);
+const esc=t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+let themen=[], welt="";   /* themen: [{t, w}] */
+
+/* Welten-Karten */
+$("#welten").innerHTML=WELTEN.map((w,i)=>`<div class="welt" style="--wc:${w.c}"><div class="h"><small>KOMPETENZWELT ${i+1}</small><h3>${esc(w.t)}</h3></div>
+  <div class="b"><p>${esc(w.l)}</p><ul>${w.k.map(k=>`<li title="${esc(k.d)}">${esc(k.n)}</li>`).join("")}</ul></div></div>`).join("");
+
+/* Ring: sechs Segmente, gefüllt je nach Anzahl Themen */
+function ring(svg,zaehler,labels){
+  const cx=200,cy=200,R=180,r=112,gap=2.2, n=WELTEN.length;
+  const pt=(a,rad)=>[cx+rad*Math.cos((a-90)*Math.PI/180),cy+rad*Math.sin((a-90)*Math.PI/180)];
+  let out="";
+  WELTEN.forEach((w,i)=>{
+    const a0=i*360/n+gap, a1=(i+1)*360/n-gap, [x0,y0]=pt(a0,R),[x1,y1]=pt(a1,R),[x2,y2]=pt(a1,r),[x3,y3]=pt(a0,r);
+    const c=zaehler?zaehler[w.id]||0:1, op=zaehler?(c?Math.min(1,.45+c*.18):.12):1;
+    out+=`<path d="M${x0} ${y0} A${R} ${R} 0 0 1 ${x1} ${y1} L${x2} ${y2} A${r} ${r} 0 0 0 ${x3} ${y3}Z" fill="${w.c}" fill-opacity="${op}" stroke="${zaehler?"rgba(255,255,255,.25)":"none"}"/>`;
+    const am=(a0+a1)/2, [lx,ly]=pt(am,(R+r)/2);
+    /* Beschriftung entlang des Rings, in der unteren Hälfte gedreht, damit sie lesbar bleibt */
+    const rot=(am>90&&am<270)?am+180:am;
+    if(labels) out+=`<text x="${lx}" y="${ly}" transform="rotate(${rot} ${lx} ${ly})" text-anchor="middle" dominant-baseline="middle" fill="#fff" font-size="14" font-weight="700" font-family="Plus Jakarta Sans,sans-serif">${esc(KURZ[w.id])}</text>`;
+    else if(c) out+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" fill="#fff" font-size="22" font-weight="800" font-family="Plus Jakarta Sans,sans-serif">${c}</text>`;
+  });
+  out+=`<circle cx="200" cy="200" r="${r-10}" fill="${zaehler?"rgba(255,255,255,.06)":"rgba(255,255,255,.08)"}"/>`;
+  out+=zaehler?`<text x="200" y="192" text-anchor="middle" fill="#fff" font-size="44" font-weight="800" font-family="Plus Jakarta Sans,sans-serif">${themen.length}</text><text x="200" y="222" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="15" font-family="Plus Jakarta Sans,sans-serif">${themen.length===1?"Thema":"Themen"}</text>`
+    :`<text x="200" y="196" text-anchor="middle" fill="#fff" font-size="26" font-weight="800" font-family="Plus Jakarta Sans,sans-serif">ppedv</text><text x="200" y="222" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="14" font-family="Plus Jakarta Sans,sans-serif">Kompetenzmodell</text>`;
+  svg.innerHTML=out;
+}
+ring($("#heroRing"),null,true);
+
+/* Welt-Auswahl zum Thema */
+$("#wahl").innerHTML=WELTEN.map(w=>`<button type="button" data-w="${w.id}" aria-pressed="false">${esc(KURZ[w.id])}</button>`).join("")+`<button type="button" data-w="" aria-pressed="true">Weiß ich nicht</button>`;
+$("#wahl").addEventListener("click",e=>{const b=e.target.closest("[data-w]"); if(!b) return; welt=b.dataset.w;
+  $("#wahl").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));});
+
+/* Ideen aus dem Modell */
+$("#ideen").innerHTML=WELTEN.map(w=>`<div class="ideen-w" style="--wc:${w.c}"><b>${esc(w.t)}</b><div class="chips">${w.k.map(k=>`<button type="button" data-idee="${esc(k.n)}" data-w="${w.id}" title="${esc(k.d)}">+ ${esc(k.n)}</button>`).join("")}</div></div>`).join("");
+$("#ideen").addEventListener("click",e=>{const b=e.target.closest("[data-idee]"); if(!b||b.disabled) return; neu(b.dataset.idee,b.dataset.w);});
+
+function neu(t,w){
+  t=String(t||"").trim(); if(!t) return;
+  if(themen.some(x=>x.t.toLowerCase()===t.toLowerCase())) return;
+  themen.push({t,w:w||""}); zeichnen();
+}
+$("#add").addEventListener("click",()=>{neu($("#thema").value,welt); $("#thema").value=""; $("#thema").focus();});
+$("#thema").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault(); $("#add").click();}});
+$("#themen").addEventListener("click",e=>{const b=e.target.closest("[data-del]"); if(!b) return; themen.splice(+b.dataset.del,1); zeichnen();});
+["#anzahl"].forEach(s=>$(s).addEventListener("input",zeichnen));
+
+function zeichnen(){
+  const W=id=>WELTEN.find(w=>w.id===id);
+  $("#themen").innerHTML=themen.map((x,i)=>`<li style="--wc:${x.w?W(x.w).c:"#BCC6D6"}"><i class="dot"></i><span>${esc(x.t)}</span><small>${x.w?esc(KURZ[x.w]):"Welt offen"}</small><button type="button" data-del="${i}" aria-label="Entfernen">×</button></li>`).join("");
+  $("#leer").hidden=themen.length>0;
+  document.querySelectorAll("[data-idee]").forEach(b=>b.disabled=themen.some(x=>x.t===b.dataset.idee));
+  const z={}; themen.forEach(x=>{if(x.w) z[x.w]=(z[x.w]||0)+1;});
+  ring($("#ring"),z,false);
+  $("#vThemen").textContent=themen.length; $("#vWelten").textContent=Object.keys(z).length;
+  $("#vMA").textContent=parseInt($("#anzahl").value,10)||"–";
+  $("#vList").innerHTML=WELTEN.filter(w=>z[w.id]).map(w=>`<li style="--wc:${w.c}"><i></i><div><b>${esc(w.t)}</b><br><span>${themen.filter(x=>x.w===w.id).map(x=>esc(x.t)).join(" · ")}</span></div></li>`).join("")
+    +(themen.some(x=>!x.w)?`<li style="--wc:#BCC6D6"><i></i><div><b>Welt offen</b><br><span>${themen.filter(x=>!x.w).map(x=>esc(x.t)).join(" · ")}</span></div></li>`:"");
+  hoehe();
+}
+
+/* Anfrage: fertige E-Mail an kompetenz@ppedv.de */
+let anfrageText="";
+$("#form").addEventListener("submit",e=>{
+  e.preventDefault();
+  const v=id=>$(id).value.trim(), err=$("#err");
+  if(!themen.length) return err.textContent="Bitte mindestens ein Thema aufschreiben.";
+  if(!v("#name")||!v("#firma")) return err.textContent="Bitte Name und Unternehmen angeben.";
+  if(!/^\S+@\S+\.\S+$/.test(v("#mail"))) return err.textContent="Bitte eine gültige E-Mail angeben.";
+  if(!$("#dsgvo").checked) return err.textContent="Bitte den Datenschutzhinweis bestätigen.";
+  err.textContent="";
+  const zeilen=[];
+  WELTEN.forEach(w=>{const t=themen.filter(x=>x.w===w.id); if(t.length) zeilen.push(w.t+":\n"+t.map(x=>"  - "+x.t).join("\n"));});
+  const offen=themen.filter(x=>!x.w); if(offen.length) zeilen.push("Welt noch offen:\n"+offen.map(x=>"  - "+x.t).join("\n"));
+  anfrageText=["Anfrage Kompetenzmodell","",
+    "Unternehmen: "+v("#firma"),"Name: "+v("#name"),"E-Mail: "+v("#mail"),"Telefon: "+(v("#tel")||"–"),"",
+    "Mitarbeitende: "+(v("#anzahl")||"–"),"Teams: "+(v("#teams")||"–"),"",
+    "THEMEN ("+themen.length+")",...zeilen,"",
+    "Nachricht: "+(v("#msg")||"–"),"",
+    "Bitte um ein Gespräch, um das Modell gemeinsam zu besprechen."].join("\n");
+  location.href=`mailto:${MAILTO}?subject=${encodeURIComponent("Kompetenzmodell – "+v("#firma"))}&body=${encodeURIComponent(anfrageText)}`;
+  $("#form").hidden=true; $("#danke").hidden=false; hoehe();
+});
+$("#kopie").addEventListener("click",async()=>{
+  try{ await navigator.clipboard.writeText(anfrageText); $("#kopie").textContent="Kopiert ✓"; }
+  catch(e){ prompt("Anfrage kopieren:",anfrageText); }
+});
+
+/* Eingebettet auf ppedv.de (iframe): Höhe an die Seite melden */
+function hoehe(){ try{ parent!==window&&parent.postMessage({ppedvKompetenzmodellHoehe:document.documentElement.scrollHeight},"*"); }catch(e){} }
+addEventListener("load",hoehe); addEventListener("resize",hoehe);
+zeichnen();
+</script>
+</body>
+</html>

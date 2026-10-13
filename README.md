@@ -469,3 +469,26 @@ erreichbar) — nicht teamübergreifend sichtbar. Das ist jetzt behoben.
 **Versionshistorie der Kartei** (Punkt 7 des Ablaufs). Heute überschreibt
 `Store.put()` den letzten Stand; frühere Fassungen sind nicht mehr abrufbar.
 Geplant als eigener Schritt.
+
+## Landingpage Kompetenzmodell (`/kompetenzmodell/`)
+
+Öffentliche Seite für ppedv.de: erklärt das Modell (drei Ebenen, sechs Welten mit ihren
+Kernkompetenzen — Daten aus `WORLDS` der Matrix) und lässt Besucher selbst ein Modell bauen:
+eigene Themen (Welt optional) oder Ideen aus dem Modell, Anzahl Mitarbeitende, Teams,
+Kontakt. „Anfrage senden“ öffnet eine fertige E-Mail an kompetenz@ppedv.de; Fallback
+„Anfrage kopieren“. Ändern sich Welten oder Kernkompetenzen in der Matrix, die Daten in der
+Seite (`const WELTEN`) neu übernehmen.
+
+Einbetten auf ppedv.de (Kopf- und Fußzeile blenden sich im iframe aus, die Höhe passt sich an):
+
+```html
+<iframe id="ppedv-km" src="https://ppedv-kompetenzmatrix.vercel.app/kompetenzmodell/"
+  title="ppedv Kompetenzmodell" style="width:100%;border:0;min-height:900px"></iframe>
+<script>
+addEventListener("message", e => {
+  if (e.origin === "https://ppedv-kompetenzmatrix.vercel.app" && e.data && e.data.ppedvKompetenzmodellHoehe)
+    document.getElementById("ppedv-km").style.height = e.data.ppedvKompetenzmodellHoehe + "px";
+});
+</script>
+```
+
