@@ -1692,8 +1692,11 @@ function renderCatCards(){
 catCards.addEventListener("click",e=>{
   const b=e.target.closest("[data-take-cat]"); if(!b||b.disabled) return;
   const txt=b.dataset.takeTxt;
-  addSkill(txt,b.dataset.takeCat,[{name:"",n:""}],false);
-  toast(`„${txt}“ übernommen — Kurse sind vorgeschlagen, Team in Schritt 1 ergänzen.`);
+  const sk=addSkill(txt,b.dataset.takeCat,[{name:"",n:""}],false);
+  /* Aus dem Modell übernommen: Kurse nur anzeigen (grau), dazugenommen wird von Hand */
+  updateKu(sk); (sk.ku||[]).forEach(k=>{k.on=false; k.auto=false;});
+  kuChanged(); renderCatCards();
+  toast(`„${txt}“ übernommen — passende Kurse per Klick dazunehmen.`);
 });
 /* Außenbeschriftung des Katalogrings auf die Bogenlänge einpassen */
 function fitCat(){

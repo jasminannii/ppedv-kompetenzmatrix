@@ -27,8 +27,8 @@ Die fünf Reiter folgen dem Termin. Jeder Schritt endet mit „Weiter: …“.
    wieder ein. „+ Kurs“ ergänzt weitere. Dazu kommen die Teams und die zentrale Größe des
    gesamten Teams. Ganz oben steht immer der Workshop-Skill (siehe „Kurse und Preise“).
 2. **Das ppedv-Modell.** Gemeinsam die sechs Welten durchgehen. „+ übernehmen“ legt
-   eine Kernkompetenz oder ein Gesprächsbeispiel als Skill an; deren Kurse erscheinen
-   sofort darunter, orange = dabei, Klick schaltet um. Die Karten zeigen je
+   eine Kernkompetenz als Skill an; deren Kurse erscheinen darunter **grau (nicht dabei)** —
+   Kurse werden hier bewusst von Hand per Klick dazugenommen (orange = dabei). Die Karten zeigen je
    Kernkompetenz nur Titel und Kurse; Beschreibung und volle Kurstitel beim Darüberfahren.
 3. **Eure Kompetenzwelt.** Ring und Panel gemeinsam sichten und anpassen, auch die
    Kurse je Skill.
