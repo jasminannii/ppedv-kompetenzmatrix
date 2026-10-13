@@ -480,15 +480,18 @@ Details erarbeitet ppedv anschließend gemeinsam mit dem Kunden in der Matrix. �
 „Anfrage kopieren“. Ändern sich Welten oder Kernkompetenzen in der Matrix, die Daten in der
 Seite (`const WELTEN`) neu übernehmen.
 
-Einbetten auf ppedv.de (Kopf- und Fußzeile blenden sich im iframe aus, die Höhe passt sich an):
+Einbetten auf ppedv.de (Kopf- und Fußzeile blenden sich im iframe aus, die Höhe passt sich an, „Eigenes Modell bauen“ scrollt die ppedv.de-Seite; `- 80` = Höhe einer festen Kopfzeile auf ppedv.de anpassen):
 
 ```html
 <iframe id="ppedv-km" src="https://ppedv-kompetenzmatrix.vercel.app/kompetenzmodell/"
   title="ppedv Kompetenzmodell" style="width:100%;border:0;min-height:900px"></iframe>
 <script>
 addEventListener("message", e => {
-  if (e.origin === "https://ppedv-kompetenzmatrix.vercel.app" && e.data && e.data.ppedvKompetenzmodellHoehe)
-    document.getElementById("ppedv-km").style.height = e.data.ppedvKompetenzmodellHoehe + "px";
+  if (e.origin !== "https://ppedv-kompetenzmatrix.vercel.app" || !e.data) return;
+  const f = document.getElementById("ppedv-km");
+  if (e.data.ppedvKompetenzmodellHoehe) f.style.height = e.data.ppedvKompetenzmodellHoehe + "px";
+  if (e.data.ppedvKompetenzmodellScroll != null)
+    scrollTo({ top: f.getBoundingClientRect().top + scrollY + e.data.ppedvKompetenzmodellScroll - 80, behavior: "smooth" });
 });
 </script>
 ```

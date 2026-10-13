@@ -376,6 +376,13 @@ $("#kopie").addEventListener("click",async()=>{
 /* Eingebettet auf ppedv.de (iframe): Höhe an die Seite melden */
 function hoehe(){ try{ parent!==window&&parent.postMessage({ppedvKompetenzmodellHoehe:document.documentElement.scrollHeight},"*"); }catch(e){} }
 addEventListener("load",hoehe); addEventListener("resize",hoehe);
+/* Eingebettet: Sprunglinks (#bauen) scrollen die ppedv.de-Seite, nicht das iframe */
+document.addEventListener("click",e=>{
+  const l=e.target.closest('a[href^="#"]'); if(!l||!document.documentElement.classList.contains("eingebettet")) return;
+  const z=document.querySelector(l.getAttribute("href")); if(!z) return;
+  e.preventDefault();
+  try{ parent.postMessage({ppedvKompetenzmodellScroll:z.getBoundingClientRect().top+scrollY},"*"); }catch(err){}
+});
 zeichnen();
 </script>
 </body>
