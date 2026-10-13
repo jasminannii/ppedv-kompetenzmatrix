@@ -29,27 +29,38 @@ header img{height:30px;width:auto;display:block}
 .hero h1 em{font-style:normal;color:var(--orange)}
 .hero p{font-size:18px;color:rgba(255,255,255,.8);margin-top:14px;max-width:560px}
 
-.frei{margin:-28px 0 0;position:relative}
-.frei .box{background:#fff;border:2px solid var(--orange);border-radius:18px;padding:22px 24px;box-shadow:0 12px 30px rgba(14,26,48,.10);display:flex;gap:16px;align-items:flex-start}
+.frei{margin-top:28px;margin-bottom:36px}
+.frei .box{background:#fff;border:2px solid var(--orange);border-radius:18px;padding:20px 22px;box-shadow:0 8px 24px rgba(14,26,48,.08);display:flex;gap:16px;align-items:flex-start}
 .frei .ico{flex:none;width:42px;height:42px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-size:22px;font-weight:800}
 .frei b{display:block;font-size:18px;color:var(--navy-900)}
 .frei p{color:var(--ink-2);margin-top:4px}
 
-main{padding:40px 0 60px}
+main.wrap{padding-bottom:60px}
 .step{display:grid;grid-template-columns:48px 1fr;gap:16px;margin-bottom:30px}
 .num{width:48px;height:48px;border-radius:50%;background:var(--navy-700);color:#fff;display:grid;place-items:center;font-weight:800;font-size:20px}
 .step h2{font-size:21px;line-height:1.25;color:var(--navy-900);margin:10px 0 6px}
-.step p{color:var(--ink-2)}
+.step p{color:var(--ink-2);line-height:1.85}
 .step .opt{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line);border-radius:999px;padding:2px 9px;margin-left:6px;vertical-align:3px}
 .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:12px}
 .card ol,.card ul{padding-left:20px;display:grid;gap:6px;color:var(--ink)}
 .card li::marker{color:var(--orange-600);font-weight:800}
+.card li{line-height:1.85}
+@media(max-width:600px){
+  .hero{padding:36px 0 40px}
+  .step{grid-template-columns:38px 1fr;gap:12px}
+  .num{width:38px;height:38px;font-size:17px}
+  .step h2{font-size:19px;margin-top:6px}
+  .frei .box{padding:16px;gap:12px}
+  .frei .ico{width:36px;height:36px;font-size:18px}
+  .card{padding:14px}
+}
 
 /* Nachbildung der Bedienelemente */
-.ui{display:inline-flex;align-items:center;font-size:13.5px;font-weight:600;border-radius:999px;padding:3px 11px;white-space:nowrap;vertical-align:1px}
+/* inline-block mit kleiner Innenhöhe: die Knöpfe sitzen in der Zeile, statt in die Nachbarzeilen zu ragen */
+.ui{display:inline-block;font-size:13px;font-weight:600;line-height:1.5;border-radius:999px;padding:1px 9px;margin:2px 1px;white-space:nowrap;vertical-align:baseline}
 .ui.btn{background:var(--navy-700);color:#fff;border-radius:6px}
 .ui.line{background:#fff;border:1px solid #BCC6D6;color:var(--ink-2);border-radius:6px}
-.ui.tab{background:none;border-bottom:3px solid var(--orange);border-radius:0;padding:2px 4px;color:var(--ink)}
+.ui.tab{background:none;border-bottom:2px solid var(--orange);border-radius:0;padding:0 3px;color:var(--ink)}
 .ui.on{background:var(--orange);color:#3D2402}
 .ui.off{background:#fff;border:1px solid #BCC6D6;color:var(--ink-3)}
 .ui.field{background:var(--navy-50);border:1px solid #BCC6D6;border-radius:6px;color:var(--ink-3);font-weight:500}
