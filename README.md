@@ -303,12 +303,11 @@ Kartei. Es enthält nur `id`, `titel` und `updatedAt` — keine Passwörter, kei
 Kundendaten. Schlägt die Nachführung fehl, ist die Kartei trotzdem gespeichert;
 der Fehler landet im Log, nicht beim Nutzer.
 
-> **Die Liste ist offen — bewusst so entschieden.** Wer die Adresse der
-> Anwendung kennt, sieht alle Kundennamen. Der *Inhalt* jeder Kartei bleibt
-> hinter ihrem Passwort. Da dieses voreingestellt der Unternehmensname ist und
-> in der Liste steht, ist das praktisch nur eine Hürde gegen Zufallsbesucher.
-> Wer mehr Schutz will: beim Anlegen ein eigenes Passwort vergeben, oder die
-> Prüfung des Team-Passworts wieder einbauen (war in Commit c2879e8).
+> **Die Liste ist offen — bewusst so entschieden (zuletzt bestätigt am 13.10.2026).**
+> Wer die Adresse der Anwendung kennt, sieht alle Kundennamen — auch Kunden mit
+> Kundenzugang. Der *Inhalt* jeder Kartei bleibt hinter ihrem Passwort (voreingestellt
+> Unternehmensname + Jahr) bzw. dem Kundenpasswort. Soll die Liste geschützt werden:
+> Team-Passwort wieder einbauen (Commit 48a81f2, Umgebungsvariable `UEBERSICHT_PASSWORT`).
 
 ### Kundenzugang
 
