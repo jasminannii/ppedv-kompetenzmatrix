@@ -317,7 +317,7 @@ eigenem Passwort, getrennt vom internen Zugang.
 1. Kartei intern öffnen (`/k/<id>`), oben **Kundenzugang** klicken, Passwort bestätigen
    (ein zufälliger Vorschlag ist vorbelegt, mind. 6 Zeichen). Der Link `/kunde/<id>` wird
    kopiert; Link und Passwort getrennt an den Kunden schicken. Ist ein Zugang aktiv, steht
-   „Kundenzugang ✓“. Erneut klicken vergibt ein neues Passwort; leer lassen entzieht ihn.
+   „Kundenzugang ✓“ und daneben dauerhaft der Kundenlink mit „Kopieren“. Erneut klicken vergibt ein neues Passwort; leer lassen entzieht ihn.
 2. Der Kunde sieht nur **Bedarf & Kontext**, **das ppedv-Modell** und **Eure
    Kompetenzwelt**: Themen, Teams, Kurse an den Themen, Größe des gesamten Teams, Wahl des
    Workshops. Keine Kartei-Knöpfe, keine Übersicht, Name und Logo nur zur Anzeige, keine

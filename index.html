@@ -537,6 +537,10 @@ body.kunde .stab[data-step="3"],body.kunde .stab[data-step="5"],body.kunde #s3,b
 body.kunde [data-go="3"],body.kunde #fbLink,body.kunde #fbNew,body.kunde #fbDel,body.kunde #fbKunde,
 body.kunde #logoClear,body.kunde #fields,body.kunde #logoSlot:not(.set){display:none!important}
 body.kunde #logoSlot{pointer-events:none;border-color:transparent!important}
+.kl-box{display:inline-flex;align-items:center;gap:6px}
+.kl-box[hidden]{display:none}
+.kl-box input{font:inherit;font-size:12.5px;width:250px;max-width:46vw;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line-2);border-radius:5px;padding:7px 8px}
+body.kunde .kl-box{display:none!important}
 .kunde-only{display:none!important}
 body.kunde .kunde-only{display:inline-flex!important;text-decoration:none;align-items:center}
 body.kunde .cust{border-color:transparent!important;background:none!important;pointer-events:none}
@@ -742,8 +746,9 @@ body.kunde .cust{border-color:transparent!important;background:none!important;po
       <input class="cust" id="custName" placeholder="Unternehmen eintragen">
       <input type="file" id="logoFile" accept="image/*" hidden>
       <div class="kartei no-print">
-        <button class="btn" id="fbLink">Link kopieren</button>
+        <button class="btn" id="fbLink" title="Link zu dieser Kartei für das ppedv-Team kopieren">Interner Link</button>
         <button class="btn" id="fbKunde" title="Eigenen Zugang für den Kunden vergeben">Kundenzugang</button>
+        <span class="kl-box" id="kundeLinkBox" hidden><input id="kundeLink" readonly aria-label="Kundenlink"><button type="button" class="btn" id="kundeLinkCopy">Kopieren</button></span>
         <a class="btn kunde-only" href="/anleitung/" target="_blank" rel="noopener">Anleitung</a>
         <button class="btn" id="fbNew">Neue Kartei</button>
         <button class="btn" id="fbDel">Löschen</button>
@@ -2509,7 +2514,16 @@ document.getElementById("fbDel").addEventListener("click",async()=>{
    speichern darf, begrenzt der Server — die Ansicht hier ist nur die Oberfläche. */
 function zeigeKundenzugang(an){
   const b=document.getElementById("fbKunde"); if(b) b.textContent=an?"Kundenzugang ✓":"Kundenzugang";
+  /* Ist der Zugang aktiv, steht der Kundenlink zum Kopieren daneben */
+  const box=document.getElementById("kundeLinkBox"), inp=document.getElementById("kundeLink");
+  if(box){ box.hidden=!an||KUNDE; if(an) inp.value=location.origin+"/kunde/"+karteiId; }
 }
+document.getElementById("kundeLinkCopy").addEventListener("click",async()=>{
+  const inp=document.getElementById("kundeLink");
+  try{ await navigator.clipboard.writeText(inp.value); st("Kundenlink kopiert","ok"); }
+  catch(e){ inp.focus(); inp.select(); st("Link markiert — mit Cmd+C kopieren","ok"); }
+});
+document.getElementById("kundeLink").addEventListener("focus",e=>e.target.select());
 document.getElementById("fbKunde").addEventListener("click",async()=>{
   if(!offen||!karteiId){ st("Erst die Kartei öffnen.","err"); return; }
   const vorschlag=Array.from(crypto.getRandomValues(new Uint8Array(6)),b=>"abcdefghjkmnpqrstuvwxyz23456789"[b%31]).join("");
@@ -2521,7 +2535,7 @@ document.getElementById("fbKunde").addEventListener("click",async()=>{
     if(!j.kundenzugang){ st("Kundenzugang entzogen","ok"); return; }
     const u=location.origin+"/kunde/"+karteiId;
     try{ await navigator.clipboard.writeText(u); st("Kundenzugang aktiv · Link kopiert","ok"); }
-    catch(e){ prompt("Link für den Kunden:",u); st("Kundenzugang aktiv","ok"); }
+    catch(e){ st("Kundenzugang aktiv · Link steht daneben zum Kopieren","ok"); }
   }catch(e){ st("Kundenzugang nicht gesetzt — "+e.message,"err"); }
 });
 /* ppedv-Logo = zurück zur Übersicht; offene Änderungen vorher speichern. Kunden haben keine Übersicht. */
