@@ -2471,7 +2471,8 @@ gateForm.addEventListener("submit",async e=>{
       uebernehmen(j.data);
       if(!((profile.name||"").trim()) && j.titel){ profile.name=j.titel; renderCust(); }
       if(KUNDE) kundenAnsicht(); else zeigeKundenzugang(j.kundenzugang);
-      st("Geöffnet · zuletzt "+(j.updatedAt?new Date(j.updatedAt).toLocaleString("de-AT",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}):"—"));
+      if(KUNDE) st("Ihre Änderungen werden automatisch gespeichert.","ok");
+      else st("Geöffnet · zuletzt "+(j.updatedAt?new Date(j.updatedAt).toLocaleString("de-AT",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}):"—"));
     }
     gateP.value=""; gateU.value="";
   }catch(err){
