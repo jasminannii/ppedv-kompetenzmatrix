@@ -78,3 +78,10 @@ Kurszuordnung ändert).
 - Statisch: `python3 -m http.server 8766` im Repo (ohne API → Hinweis statt Übersicht).
 - Mit API: `api/kartei.js` mit einem Fake für `@vercel/blob` (put/get/del im Speicher) in
   einem kleinen Node-Server laufen lassen; `/k/:id` und `/kunde/:id` auf `index.html` umleiten.
+
+## Datenschutz
+
+- **Keine externen CDNs/Google Fonts.** Schriften und Bibliotheken liegen in `vendor/`
+  (siehe `vendor/README.md`); neue Abhängigkeiten ebenfalls dort ablegen.
+- Offen: Hosting in der EU (Vercel = US-Anbieter), Datenschutzhinweis/Impressum,
+  Zugriffsschutz der Kartei-Übersicht — Entscheidung mit IT/Datenschutzbeauftragtem.

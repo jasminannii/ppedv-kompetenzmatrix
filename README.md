@@ -383,7 +383,7 @@ Speicher-Attrappe laufen lassen, da es außer `@vercel/blob` nichts importiert.
 ## Drucken und PDF
 
 Das PDF wird **clientseitig selbst gebaut**, kein Druckdialog nötig. Grundlage
-ist **jsPDF** von cdnjs.
+ist **jsPDF**, lokal unter `vendor/` (kein externes CDN).
 
 **Verlaufsnotiz (nicht mehr relevant, aber als Warnung stehen gelassen):** Auf
 dem alten Claude-Artifact-Link scheiterte sowohl `window.print()` (Sandkasten
