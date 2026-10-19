@@ -51,8 +51,10 @@ Doku steht in `README.md` — dies hier ist der Überblick und die Arbeitsweise.
 4. **Ablauf** — Durchführung (Inhouse/Hybrid/Online), Kursplan (Priorität ↑↓, Team, Woche,
    Ort), Timeline mit ziehbaren Balken, 4 Phasen (Vorbereitung, Schulungen, Praxistransfer,
    Abschluss), danach Jahrespartnerschaft. **Keine Preise.**
-5. **Abschluss** — Kundendokument als PDF (2 Seiten, ohne Preise) und **Angebot als Word**
-   aus `angebot-vorlage.docx` (eine Tabelle je Kurs, Agenda von ppedv.de, Pauschalpreis).
+5. **Abschluss** — Kundendokument als PDF (2 Seiten, ohne Preise) und **Angebot**: Hauptweg ist
+   „Angebot erstellen“ → Angebotsgenerator (Kunden-Nr. = Angebots-Nr., Kontakt bei ppedv,
+   Preise als Netto/USt./Brutto wie im Generator, Dateiname `ANG-<Kunden-Nr.>_<Firma>`);
+   „Als Word“ baut weiterhin das alte Angebot aus `angebot-vorlage.docx`.
 
 Daten im Code: `WORLDS` (6 Kompetenzwelten × 3 Kernkompetenzen mit `ku` = Kurse,
 `felder` = Gesprächsbeispiele, `bau` = 91 Kurse aus der ppedv-Kursübersicht), `AGENDA`

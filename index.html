@@ -550,6 +550,10 @@ body.kunde .cust{border-color:transparent!important;background:none!important;po
 .ang-f [data-ang="person"],.ang-f [data-ang="strasse"],.ang-f [data-ang="plzort"]{grid-column:2/3}
 .ang-f [data-ang="strasse"],.ang-f [data-ang="plzort"]{grid-column:1/-1}
 .ang-f [data-bea]{grid-column:1/-1}
+.ang-f [data-ang="kundennr"]{grid-column:1/-1;font-weight:600}
+.ang-file{margin:10px 0 0;font-size:12.5px;color:var(--ink-3)}
+.ang-file b{color:var(--ink);font-weight:600}
+.ang-file .warn-t{color:var(--accent-ink)}
 .gt-box{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:10px 0 14px;padding:10px 14px;border:1px dashed var(--line-2);border-radius:8px;font-size:13.5px}
 .gt-box label{display:flex;align-items:center;gap:8px}
 .gt-box input{font:inherit;font-size:13.5px;width:90px;background:var(--surface-2);color:var(--ink);border:1px solid var(--line-2);border-radius:5px;padding:5px 8px}
@@ -870,20 +874,23 @@ body.kunde .cust{border-color:transparent!important;background:none!important;po
       <div class="fin-c" id="finAngebot">
         <span class="lbl">2 · Separat</span>
         <h3>Angebot</h3>
-        <p class="sub">Aus der ppedv-Vorlage, als Word-Datei — vor dem Versand noch anpassbar.</p>
+        <p class="sub">Im Angebotsgenerator — Kursplan, Phasen und Preise als PDF.</p>
         <div id="angebot"></div>
         <div class="ang-f" id="angForm">
-          <span class="lbl">Empfänger</span>
+          <span class="lbl">Kunde</span>
+          <input data-ang="kundennr" placeholder="Kunden-Nr. (= Angebots-Nr.)" autocomplete="off">
           <select data-ang="anrede" aria-label="Anrede"><option value="">Anrede</option><option>Herr</option><option>Frau</option></select>
           <input data-ang="person" placeholder="Vor- und Nachname">
           <input data-ang="strasse" placeholder="Straße und Hausnummer">
           <input data-ang="plzort" placeholder="PLZ und Ort">
-          <span class="lbl">Ihr Name im Angebot</span>
-          <input data-bea="name" placeholder="z. B. i.V. Max Muster">
+          <span class="lbl">Ihr Kontakt bei ppedv</span>
+          <input data-bea="name" placeholder="Name, z. B. i.V. Max Muster">
           <input data-bea="funktion" placeholder="Funktion">
           <input data-bea="tel" placeholder="Durchwahl, z. B. +49 (0)8677-9889-0">
+          <input data-bea="email" placeholder="E-Mail">
         </div>
-        <div class="actions"><button class="btn go" id="btnAngebot">Angebot als Word</button><button class="btn" id="btnGenerator" title="Öffnet den Angebotsgenerator mit Kunde, Kursplan und Preisen — der Link wird zusätzlich kopiert">Angebot im Angebotsgenerator</button></div>
+        <p class="ang-file" id="angFile"></p>
+        <div class="actions"><button class="btn go" id="btnGenerator" title="Öffnet den Angebotsgenerator mit Kunde, Kursplan und Preisen — der Link wird zusätzlich kopiert">Angebot erstellen</button><button class="btn" id="btnAngebot" title="Altes Word-Angebot aus der ppedv-Vorlage">Als Word</button></div>
       </div>
     </div>
     <div id="needOut"></div>
@@ -1217,7 +1224,7 @@ function normProfile(){
   profile.gesamtN=profile.gesamtN===0||profile.gesamtN?profile.gesamtN:"";
   profile.anreise=profile.anreise||"";
   const a=(profile.ang&&typeof profile.ang==="object")?profile.ang:{};
-  profile.ang={anrede:String(a.anrede||""),person:String(a.person||""),strasse:String(a.strasse||""),plzort:String(a.plzort||"")};
+  profile.ang={kundennr:String(a.kundennr||""),anrede:String(a.anrede||""),person:String(a.person||""),strasse:String(a.strasse||""),plzort:String(a.plzort||"")};
 }
 normProfile();
 
@@ -2081,8 +2088,20 @@ function renderAngebot(){
       ${liste.map(c=>`<div class="ksum ang"><span>${c.prio}. ${esc(c.n)}${c.pflicht?" <em>immer dabei</em>":""}<small>${esc(c.t)} · ${c.ort}</small></span><span>${profile.bestand?`<s>${euro(PREIS)}</s> `:""}${euro(p)}</span></div>`).join("")}
       <div class="ksum"><span>${liste.length} ${liste.length===1?"Kurs":"Kurse"} × ${euro(p)}${profile.bestand?" (Bestandskundenpreis)":""}</span><span>${euro(liste.length*p)}</span></div>
       ${an?`<div class="ksum"><span>${esc(an)}</span><span>${anreiseBetrag()?euro(vorOrt(liste)*anreiseBetrag()):"—"}</span></div>`:""}
-      <div class="ksum tot"><span>Gesamt${an&&!anreiseBetrag()?" · zzgl. Anreise":""}</span><span>${euro(summe(liste))}</span></div>
+      <div class="ksum tot"><span>Netto${an&&!anreiseBetrag()?" · zzgl. Anreise":""}</span><span>${euro2(summe(liste))}</span></div>
+      <div class="ksum"><span>zzgl. ${mwstSatz()} % USt.</span><span>${euro2(summe(liste)*mwstSatz()/100)}</span></div>
+      <div class="ksum"><span>Gesamt brutto</span><span>${euro2(summe(liste)*(1+mwstSatz()/100))}</span></div>
     </div>`;
+  angDatei();
+}
+/* Wie im Angebotsgenerator: Netto + USt., Dateiname „ANG-<Kunden-Nr.>_<Unternehmen>“ */
+function mwstSatz(){return 19;}   /* wie im Angebotsgenerator */
+function euro2(n){return n.toLocaleString("de-DE",{minimumFractionDigits:2,maximumFractionDigits:2})+" €";}
+function angDatei(){
+  const f=document.getElementById("angFile"); if(!f) return;
+  const nr=String((profile.ang||{}).kundennr||"").trim().replace(/^ANG-?/i,"");
+  f.innerHTML=nr?`Datei: <b>${esc(("ANG-"+nr+"_"+((profile.name||"").trim()||"Kunde")).replace(/[\\/:*?"<>|]+/g,"-"))}.pdf</b>`
+    :`<span class="warn-t">Kunden-Nr. fehlt — sie ist die Angebotsnummer.</span>`;
 }
 const kursBox=document.getElementById("kurse"), angBox=document.getElementById("angebot");
 /* Bearbeiter (wer das Angebot schreibt) bleibt im Browser — er gehört zur Person, nicht zur Kartei */
@@ -2095,7 +2114,7 @@ function syncAngForm(){
 }
 angForm.addEventListener("input",e=>{
   const a=e.target.closest("[data-ang]");
-  if(a){(profile.ang||(profile.ang={}))[a.dataset.ang]=a.value; save(); return;}
+  if(a){(profile.ang||(profile.ang={}))[a.dataset.ang]=a.value; save(); angDatei(); return;}
   const b=e.target.closest("[data-bea]");
   if(b){const v=bearbeiter(); v[b.dataset.bea]=b.value; try{localStorage.setItem(BEA_KEY,JSON.stringify(v));}catch(err){}}
 });
@@ -2962,7 +2981,8 @@ function matrixFuerAngebot(){
   const liste=kursListe(), a=profile.ang||{};
   return {typ:"ppedv-kompetenzmatrix",v:1,
     kartei:/^\/k\//.test(location.pathname)?location.origin+location.pathname:"",
-    kunde:{firma:(profile.name||"").trim(),anrede:a.anrede||"",person:(a.person||"").trim(),strasse:(a.strasse||"").trim(),plzort:(a.plzort||"").trim()},
+    kunde:{firma:(profile.name||"").trim(),kundennr:(a.kundennr||"").trim(),anrede:a.anrede||"",person:(a.person||"").trim(),strasse:(a.strasse||"").trim(),plzort:(a.plzort||"").trim()},
+    absender:(()=>{const b=bearbeiter(); return {name:(b.name||"").trim(),rolle:(b.funktion||"").trim(),tel:(b.tel||"").trim(),email:(b.email||"").trim()};})(),
     format:profile.format||"inhouse",bestand:!!profile.bestand,preis:kursPreis(),anreise:anreiseBetrag(),
     wochen:TLMAX(),mitarbeitende:Math.max(headcount()||0,parseInt(profile.gesamtN,10)||0)||"",
     kurse:liste.map(c=>{const n=teilnehmerZahl(c); return {n:c.n,t:c.t,ort:c.ort,woche:c.woche,team:c.team||"",tn:n?n+" Pers.":"",pflicht:!!c.pflicht};}),
