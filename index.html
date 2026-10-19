@@ -1108,14 +1108,20 @@ function kursListe(){
       ort:fm==="online"?"online":fm==="hybrid"?(pl.ort==="online"?"online":"vor Ort"):"vor Ort",
       woche:(w>=1&&w<=TLMAX())?w:Math.min(auto,TLMAX()),auto:!(w>=1&&w<=TLMAX())});});
 }
-const vorOrt=l=>l.filter(c=>c.ort==="vor Ort").length;
+/* Mehr als 10 Teilnehmer: Kurs wird mehrfach gebucht, jeder weitere Durchgang −20 %
+   (gleiche Regel wie im Angebotsgenerator). Jeder Vor-Ort-Durchgang ist ein eigener Termin. */
+const MAX_TN=10, WIEDERHOL_RABATT=0.2;
+const durchgaenge=c=>Math.max(1,Math.ceil(teilnehmerZahl(c)/MAX_TN));
+const weitere=l=>l.reduce((x,c)=>x+durchgaenge(c)-1,0);
+const preisWeitere=()=>Math.round(kursPreis()*(1-WIEDERHOL_RABATT));
+const vorOrt=l=>l.filter(c=>c.ort==="vor Ort").reduce((x,c)=>x+durchgaenge(c),0);
 const anreiseBetrag=()=>{const v=parseInt(profile.anreise,10); return v>0?v:0;};
 function anreiseText(l){
   const n=vorOrt(l); if(!n) return "";
   const a=anreiseBetrag(), t=n+" Vor-Ort-"+(n===1?"Termin":"Termine");
   return a?`Anreise: ${t} × ${euro(a)}`:`zzgl. Anreise für ${t} (nach Aufwand)`;
 }
-const summe=l=>l.length*kursPreis()+vorOrt(l)*anreiseBetrag();
+const summe=l=>l.length*kursPreis()+weitere(l)*preisWeitere()+vorOrt(l)*anreiseBetrag();
 /* Kurztitel für Chips: Teil vor dem Bindestrich — außer er ist mehrdeutig
    („Microsoft Teams“, „SQL Server“), dann mit dem unterscheidenden Teil */
 const PREFIX_N={}; ALLE_KURSE.forEach(c=>{const x=c.n.split(/ [–-] /)[0]; PREFIX_N[x]=(PREFIX_N[x]||0)+1;});
@@ -2083,8 +2089,9 @@ function renderAngebot(){
       ${fm!=="online"?`<label>Anreise je Vor-Ort-Termin <input type="number" min="0" step="50" data-anreise value="${esc(profile.anreise)}" placeholder="nach Aufwand" class="tl-num" style="width:110px"> €</label>`:""}
     </div>
     <div class="ktab">
-      ${liste.map(c=>`<div class="ksum ang"><span>${c.prio}. ${esc(c.n)}${c.pflicht?" <em>immer dabei</em>":""}<small>${esc(c.t)} · ${c.ort}</small></span><span>${profile.bestand?`<s>${euro(PREIS)}</s> `:""}${euro(p)}</span></div>`).join("")}
+      ${liste.map(c=>`<div class="ksum ang"><span>${c.prio}. ${esc(c.n)}${c.pflicht?" <em>immer dabei</em>":""}<small>${esc(c.t)} · ${c.ort}${durchgaenge(c)>1?` · ${teilnehmerZahl(c)} Pers. = ${durchgaenge(c)} Durchgänge`:""}</small></span><span>${profile.bestand?`<s>${euro(PREIS)}</s> `:""}${euro(p)}</span></div>`).join("")}
       <div class="ksum"><span>${liste.length} ${liste.length===1?"Kurs":"Kurse"} × ${euro(p)}${profile.bestand?" (Bestandskundenpreis)":""}</span><span>${euro(liste.length*p)}</span></div>
+      ${weitere(liste)?`<div class="ksum"><span>${weitere(liste)} weitere ${weitere(liste)===1?"Durchgang":"Durchgänge"} × ${euro(preisWeitere())} (−20 %, ab 11 Teilnehmern)</span><span>${euro(weitere(liste)*preisWeitere())}</span></div>`:""}
       ${an?`<div class="ksum"><span>${esc(an)}</span><span>${anreiseBetrag()?euro(vorOrt(liste)*anreiseBetrag()):"—"}</span></div>`:""}
       <div class="ksum tot"><span>Netto${an&&!anreiseBetrag()?" · zzgl. Anreise":""}</span><span>${euro2(summe(liste))}</span></div>
       <div class="ksum"><span>zzgl. ${mwstSatz()} % USt.</span><span>${euro2(summe(liste)*mwstSatz()/100)}</span></div>
@@ -2814,7 +2821,7 @@ async function buildAngebotDocx(){
       AGENDA:agendaText(c,th),
       DAUER:c.t+(/Tag/.test(c.t)?" (Einschließlich einer einstündigen Mittagspause von 12:30-13:30 und jeweils 10-15 Minuten Pause am Vor- und Nachmittag)":""),
       TERMIN:"Woche "+c.woche+" ab Zusage — genauer Termin nach Absprache",
-      TEILNEHMER:(c.team?c.team+(n?" ("+n+" Personen)":""):"Teilnehmer nach Absprache")+"\nBis maximal 10 Teilnehmer im Preis inkludiert (pro Schulung maximal 15 Teilnehmer)",
+      TEILNEHMER:(c.team?c.team+(n?" ("+n+" Personen)":""):"Teilnehmer nach Absprache")+"\nBis zu 10 Teilnehmer je Durchgang im Preis enthalten"+(durchgaenge(c)>1?"\n"+durchgaenge(c)+" Durchgänge – jeder weitere Durchgang 20 % günstiger":"\nAb 11 Teilnehmern wird der Kurs mehrfach gebucht, jeder weitere Durchgang 20 % günstiger"),
       ORT:c.ort==="online"?"Virtual Classroom":"Inhouse bei Ihnen vor Ort"+(a.plzort?", "+a.plzort:""),
       HARDWARE:c.ort==="online"?HW_ONLINE:HW_VORORT,
       PREIS_LABEL:"Preis",
@@ -2827,6 +2834,7 @@ async function buildAngebotDocx(){
   const P=(t,bold)=>`<w:p><w:pPr><w:spacing w:after="40"/><w:ind w:left="-567"/></w:pPr><w:r>${bold?"<w:rPr><w:b/></w:rPr>":""}<w:t xml:space="preserve">${X(t)}</w:t></w:r></w:p>`;
   const zs=[P(""),P("Zusammenfassung",true),
     P(liste.length+(liste.length===1?" Kurs":" Kurse")+" × "+euroW(p)+(profile.bestand?" (Bestandskundenpreis)":"")+" = "+euroW(liste.length*p))];
+  if(weitere(liste)) zs.push(P(weitere(liste)+" weitere Durchgänge (ab 11 Teilnehmern, je −20 %) × "+euroW(preisWeitere())+" = "+euroW(weitere(liste)*preisWeitere())));
   if(an) zs.push(P(anreiseBetrag()?"Reisekosten: "+vorOrt(liste)+" Vor-Ort-Termine × "+euroW(anreiseBetrag())+" = "+euroW(vorOrt(liste)*anreiseBetrag())
                                    :"Reisekosten für "+vorOrt(liste)+" Vor-Ort-Termine nach Aufwand (zuzüglich)"));
   zs.push(P("Gesamt: "+euroW(summe(liste))+(an&&!anreiseBetrag()?" zzgl. Reisekosten":""),true));

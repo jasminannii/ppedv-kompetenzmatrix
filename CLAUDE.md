@@ -65,6 +65,8 @@ Kurszuordnung ändert).
 
 - **Nicht gendern**, generisch schreiben („Mitarbeiter“, „Teilnehmer“) — gilt für alle Seiten und Dokumente.
 - Preise: jeder Kurs **3.500 €**, Bestandskunden **2.800 €**; Anreise je Vor-Ort-Termin.
+- **Mehr als 10 Teilnehmer je Kurs:** Kurs wird mehrfach gebucht, jeder weitere Durchgang **−20 %**;
+  jeder Vor-Ort-Durchgang ist ein eigener Anreise-Termin (gleich im Angebotsgenerator).
 - Einer der beiden KI-Workshops ist **immer** dabei (als Skill, Wahl allgemein/Copilot).
 - Kartei-Passwort vorbelegt: Unternehmensname in Großbuchstaben + Jahr (z. B. `PPEDV2026`).
 - **Kartei-Übersicht bleibt offen** (kein Team-Passwort).
