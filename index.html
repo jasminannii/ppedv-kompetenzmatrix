@@ -883,7 +883,7 @@ body.kunde .cust{border-color:transparent!important;background:none!important;po
           <input data-bea="funktion" placeholder="Funktion">
           <input data-bea="tel" placeholder="Durchwahl, z. B. +49 (0)8677-9889-0">
         </div>
-        <div class="actions"><button class="btn go" id="btnAngebot">Angebot als Word</button></div>
+        <div class="actions"><button class="btn go" id="btnAngebot">Angebot als Word</button><button class="btn" id="btnGenerator" title="Öffnet den Angebotsgenerator mit Kunde, Kursplan und Preisen — der Link wird zusätzlich kopiert">Angebot im Angebotsgenerator</button></div>
       </div>
     </div>
     <div id="needOut"></div>
@@ -2952,6 +2952,35 @@ function doPrint(scope){
 }
 document.getElementById("btnPrint").addEventListener("click",()=>doPrint("full"));
 document.getElementById("btnAngebot").addEventListener("click",()=>doPrint("angebot"));
+
+/* ---------- Übergabe an den Angebotsgenerator (Kategorie 3 · Kompetenzmodell) ----------
+   Kunde, Kursplan, Phasen und Preise wandern als JSON in einen Link
+   <Angebotsgenerator>#matrix=<base64url>. Alles steht hinter dem „#“ und wird
+   daher an keinen Server geschickt. Der Generator erstellt daraus direkt das Angebot. */
+const ANGEBOT_URL="/angebot/";
+function matrixFuerAngebot(){
+  const liste=kursListe(), a=profile.ang||{};
+  return {typ:"ppedv-kompetenzmatrix",v:1,
+    kartei:/^\/k\//.test(location.pathname)?location.origin+location.pathname:"",
+    kunde:{firma:(profile.name||"").trim(),anrede:a.anrede||"",person:(a.person||"").trim(),strasse:(a.strasse||"").trim(),plzort:(a.plzort||"").trim()},
+    format:profile.format||"inhouse",bestand:!!profile.bestand,preis:kursPreis(),anreise:anreiseBetrag(),
+    wochen:TLMAX(),mitarbeitende:Math.max(headcount()||0,parseInt(profile.gesamtN,10)||0)||"",
+    kurse:liste.map(c=>{const n=teilnehmerZahl(c); return {n:c.n,t:c.t,ort:c.ort,woche:c.woche,team:c.team||"",tn:n?n+" Pers.":"",pflicht:!!c.pflicht};}),
+    phasen:PHASES.map((p,i)=>{const r=tlRange(i); return {t:phTitle(i),von:r[0],bis:r[1],ziel:p.goal};})};
+}
+function angebotLink(){
+  const bytes=new TextEncoder().encode(JSON.stringify(matrixFuerAngebot()));
+  let bin=""; bytes.forEach(b=>bin+=String.fromCharCode(b));
+  const code=btoa(bin).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+  return new URL(ANGEBOT_URL,location.href).href+"#matrix="+code;
+}
+document.getElementById("btnGenerator").addEventListener("click",async()=>{
+  if(!named().length){toast("Noch nichts erfasst."); return;}
+  const link=angebotLink();
+  try{await navigator.clipboard.writeText(link);}catch(e){}
+  window.open(link,"_blank","noopener");
+  toast("Angebotsgenerator geöffnet — Link ist kopiert.");
+});
 document.getElementById("btnCopy").addEventListener("click",async()=>{
   const ls=named();
   if(!ls.length){toast("Noch nichts erfasst."); return;}

@@ -35,6 +35,7 @@ Doku steht in `README.md` — dies hier ist der Überblick und die Arbeitsweise.
 | `/anleitung/` | Schritt-für-Schritt-Anleitung für Kunden (Sie-Form) |
 | `/kompetenzmodell/` | **Landingpage für ppedv.de**: Modell erklärt + Selbsterstellung + Anfrage per Mail an kompetenz@ppedv.de; einbettbar per iframe |
 | `/ki-workshop/` | Landingpage Skill-Building-Workshop mit Konfigurator |
+| `/angebot/` | **Angebotsgenerator** (3 Kategorien: öffentliche Schulung, Inhouse A/B, Kompetenzmodell) — Kategorie 3 kommt per Link aus der Matrix (Abschluss → „Angebot im Angebotsgenerator“) |
 | `angebot-vorlage.docx` | bereinigte ppedv-Inhouse-Angebotsvorlage mit `{{Platzhaltern}}` |
 | `api/kartei.js` | Vercel-Funktion: anlegen/oeffnen/sichern/loeschen/uebersicht/kundenzugang |
 

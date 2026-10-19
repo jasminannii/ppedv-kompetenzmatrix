@@ -470,6 +470,22 @@ erreichbar) — nicht teamübergreifend sichtbar. Das ist jetzt behoben.
 `Store.put()` den letzten Stand; frühere Fassungen sind nicht mehr abrufbar.
 Geplant als eigener Schritt.
 
+## Angebotsgenerator (`/angebot/`)
+
+Eigenständige Seite (eine HTML-Datei, kein Build) für PDF-Angebote in drei Kategorien:
+öffentliche Schulung (Tagespauschale), Inhouse-Workshop A/B und Kompetenzmodell.
+Dateiname beim Speichern: `ANG-<Kundennummer>_<Unternehmen>`. Eingaben bleiben im Browser
+(`localStorage`), Ablage pro Kunde über „Speichern (.json)“.
+
+**Übergabe aus der Matrix.** Im Abschluss öffnet „Angebot im Angebotsgenerator“ die Seite
+`/angebot/#matrix=<Daten>` in einem neuen Tab und kopiert den Link zusätzlich. Der Generator
+erstellt daraus sofort ein Angebot der Kategorie 3: Kunde, Kursplan (Kurs, Dauer, Woche, Ort,
+Team), vier Phasen mit Wochen, Preis je Kurs (Bestandskunde 2.800 €) und Anreise je
+Vor-Ort-Termin. Die Daten stehen hinter dem `#` und gehen deshalb an keinen Server. Den Link
+kann man auch in einen lokal gespeicherten Generator einfügen (Schritt 4 → „Übernehmen“).
+Erzeugt wird der Link in `matrixFuerAngebot()` / `angebotLink()` (`index.html`), gelesen in
+`leseMatrix()` / `angebotAusMatrix()` (`angebot/index.html`).
+
 ## Landingpage Kompetenzmodell (`/kompetenzmodell/`)
 
 Öffentliche Seite für ppedv.de: Kopfbereich ohne Modell, danach drei Ebenen und das
