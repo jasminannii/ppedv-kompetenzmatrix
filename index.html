@@ -2976,7 +2976,7 @@ document.getElementById("btnAngebot").addEventListener("click",()=>doPrint("ange
    Kunde, Kursplan, Phasen und Preise wandern als JSON in einen Link
    <Angebotsgenerator>#matrix=<base64url>. Alles steht hinter dem „#“ und wird
    daher an keinen Server geschickt. Der Generator erstellt daraus direkt das Angebot. */
-const ANGEBOT_URL="/angebot/";
+const ANGEBOT_URL="https://ppedv-angebotsgenerator.vercel.app/";   /* eigenes Repo: jasminannii/ppedv-angebotsgenerator */
 function matrixFuerAngebot(){
   const liste=kursListe(), a=profile.ang||{};
   return {typ:"ppedv-kompetenzmatrix",v:1,

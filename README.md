@@ -470,22 +470,22 @@ erreichbar) — nicht teamübergreifend sichtbar. Das ist jetzt behoben.
 `Store.put()` den letzten Stand; frühere Fassungen sind nicht mehr abrufbar.
 Geplant als eigener Schritt.
 
-## Angebotsgenerator (`/angebot/`)
+## Angebotsgenerator (eigenes Projekt)
 
-Eigenständige Seite (eine HTML-Datei, kein Build) für PDF-Angebote in drei Kategorien:
-öffentliche Schulung (Tagespauschale), Inhouse-Workshop A/B und Kompetenzmodell.
-Dateiname beim Speichern: `ANG-<Kundennummer>_<Unternehmen>`. Eingaben bleiben im Browser
-(`localStorage`), Ablage pro Kunde über „Speichern (.json)“.
+Der Angebotsgenerator ist ein **eigenes Projekt**: Repo `jasminannii/ppedv-angebotsgenerator`
+(privat), live unter https://ppedv-angebotsgenerator.vercel.app. Drei Kategorien (öffentliche
+Schulung, Inhouse-Workshop A/B, Kompetenzmodell), Dateiname `ANG-<Kundennummer>_<Unternehmen>`.
+Die Matrix kennt nur seine Adresse (`ANGEBOT_URL` in `index.html`).
 
 **Übergabe aus der Matrix.** Im Abschluss öffnet „Angebot erstellen“ die Seite
-`/angebot/#matrix=<Daten>` in einem neuen Tab und kopiert den Link zusätzlich. Der Generator
+`<ANGEBOT_URL>#matrix=<Daten>` in einem neuen Tab und kopiert den Link zusätzlich. Der Generator
 erstellt daraus sofort ein Angebot der Kategorie 3: Kunde mit Kunden-Nr. (= Angebots-Nr.),
 Ansprechpartner bei ppedv („i.V.“ im Namen wird erkannt), Kursplan (Kurs, Dauer, Woche, Ort,
 Team), vier Phasen mit Wochen, Preis je Kurs (Bestandskunde 2.800 €) und Anreise je
 Vor-Ort-Termin. Die Daten stehen hinter dem `#` und gehen deshalb an keinen Server. Den Link
 kann man auch in einen lokal gespeicherten Generator einfügen (Schritt 4 → „Übernehmen“).
 Erzeugt wird der Link in `matrixFuerAngebot()` / `angebotLink()` (`index.html`), gelesen in
-`leseMatrix()` / `angebotAusMatrix()` (`angebot/index.html`).
+`leseMatrix()` / `angebotAusMatrix()` (im Generator-Repo).
 
 ## Landingpage Kompetenzmodell (`/kompetenzmodell/`)
 

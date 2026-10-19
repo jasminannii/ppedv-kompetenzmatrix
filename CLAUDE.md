@@ -35,7 +35,7 @@ Doku steht in `README.md` — dies hier ist der Überblick und die Arbeitsweise.
 | `/anleitung/` | Schritt-für-Schritt-Anleitung für Kunden (Sie-Form) |
 | `/kompetenzmodell/` | **Landingpage für ppedv.de**: Modell erklärt + Selbsterstellung + Anfrage per Mail an kompetenz@ppedv.de; einbettbar per iframe |
 | `/ki-workshop/` | Landingpage Skill-Building-Workshop mit Konfigurator |
-| `/angebot/` | **Angebotsgenerator** (3 Kategorien: öffentliche Schulung, Inhouse A/B, Kompetenzmodell) — Kategorie 3 kommt per Link aus der Matrix (Abschluss → „Angebot im Angebotsgenerator“) |
+| — | **Angebotsgenerator** ist ein **eigenes Projekt**: Repo `jasminannii/ppedv-angebotsgenerator` (privat), live https://ppedv-angebotsgenerator.vercel.app. Die Matrix verlinkt nur dorthin (`ANGEBOT_URL`); Kategorie 3 kommt per Link (Abschluss → „Angebot erstellen“). Änderungen am Generator im eigenen Repo, nicht hier. |
 | `angebot-vorlage.docx` | bereinigte ppedv-Inhouse-Angebotsvorlage mit `{{Platzhaltern}}` |
 | `api/kartei.js` | Vercel-Funktion: anlegen/oeffnen/sichern/loeschen/uebersicht/kundenzugang |
 
