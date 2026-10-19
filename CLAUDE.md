@@ -63,6 +63,7 @@ Kurszuordnung ändert).
 
 ## Feste Entscheidungen (von Jasmin bestätigt)
 
+- **Nicht gendern**, generisch schreiben („Mitarbeiter“, „Teilnehmer“) — gilt für alle Seiten und Dokumente.
 - Preise: jeder Kurs **3.500 €**, Bestandskunden **2.800 €**; Anreise je Vor-Ort-Termin.
 - Einer der beiden KI-Workshops ist **immer** dabei (als Skill, Wahl allgemein/Copilot).
 - Kartei-Passwort vorbelegt: Unternehmensname in Großbuchstaben + Jahr (z. B. `PPEDV2026`).

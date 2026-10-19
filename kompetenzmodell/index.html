@@ -231,7 +231,7 @@ html.eingebettet .nav,html.eingebettet footer{display:none}
             <h3><span class="num">2</span>Wer soll lernen?</h3>
             <p class="hint">Optional — hilft uns bei der Planung.</p>
             <div class="grid2">
-              <label class="f">Mitarbeitende insgesamt<input id="anzahl" type="number" min="1" max="99999" placeholder="z. B. 40"></label>
+              <label class="f">Mitarbeiter insgesamt<input id="anzahl" type="number" min="1" max="99999" placeholder="z. B. 40"></label>
               <label class="f">Teams / Abteilungen<input id="teams" maxlength="200" placeholder="z. B. Vertrieb, Controlling, IT"></label>
             </div>
           </div>
@@ -405,7 +405,7 @@ $("#form").addEventListener("submit",e=>{
   const zeilen=WELTEN.filter(w=>gewaehlt.has(w.id)).map(w=>"  - "+w.t);
   anfrageText=["Anfrage Kompetenzmodell","",
     "Unternehmen: "+v("#firma"),"Name: "+v("#name"),"E-Mail: "+v("#mail"),"Telefon: "+(v("#tel")||"–"),"",
-    "Mitarbeitende: "+(v("#anzahl")||"–"),"Teams: "+(v("#teams")||"–"),"",
+    "Mitarbeiter: "+(v("#anzahl")||"–"),"Teams: "+(v("#teams")||"–"),"",
     "KOMPETENZWELTEN ("+zeilen.length+")",...zeilen,"",
     "Was soll besser werden: "+(v("#msg")||"–"),"",
     "Bitte um ein Gespräch, um das Modell gemeinsam zu besprechen."].join("\n");

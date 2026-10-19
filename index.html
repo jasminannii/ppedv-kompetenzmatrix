@@ -851,7 +851,7 @@ body.kunde .cust{border-color:transparent!important;background:none!important;po
         <div class="qs">
           <div class="q"><b>Quartal 1</b><h4>Auffrischung und Praxis-Check</h4><p>Was ist hängengeblieben, was eingeschlafen? Offene Fragen aus dem Betrieb.</p></div>
           <div class="q"><b>Quartal 2</b><h4>Neue Funktionen und Updates</h4><p>Was hat sich bei Microsoft und in der KI geändert &mdash; und was davon zählt für Sie?</p></div>
-          <div class="q"><b>Quartal 3</b><h4>Neue Mitarbeitende und Vertiefung</h4><p>Wer dazugekommen ist, kommt auf Stand. Für alle anderen: Fortgeschrittenenthemen.</p></div>
+          <div class="q"><b>Quartal 3</b><h4>Neue Mitarbeiter und Vertiefung</h4><p>Wer dazugekommen ist, kommt auf Stand. Für alle anderen: Fortgeschrittenenthemen.</p></div>
           <div class="q"><b>Quartal 4</b><h4>Kompetenz-Check und Jahresplanung</h4><p>Kurzes Re-Assessment, Bericht an die Leitung, Schwerpunkte fürs Folgejahr.</p></div>
         </div>
         <div class="terms"><div><b>12</b>Monate Laufzeit</div><div><b>4</b>Termine vor Ort</div><div><b>1</b>Pauschalpreis</div></div>
@@ -982,7 +982,7 @@ const WORLDS=[
   /* ziel: Vorschlaege fuer die offene „Fuer wen“-Eingabe.
      bau: Kurse der Welt aus der ppedv-Kursuebersicht (ppedv.de/Schulung/MicrosoftTraining),
      n = Kurstitel, t = Dauer. Erscheinen im Katalog, in der Kursauswahl (Schritt 3) und im Matcher. */
-  ziel:["Mitarbeitende","Fachbereiche","Führungskräfte","IT & AI Enabler"],
+  ziel:["Mitarbeiter","Fachbereiche","Führungskräfte","IT & AI Enabler"],
   bau:[{n:"Copilot - KI in Word, Excel, Outlook & Co.",t:"1 Tag"},{n:"Copilot für IT, Power-User und AI Champions",t:"2 Tage"},{n:"Prompt like a pro - KI-Anweisungen für komplexe Aufgaben optimieren",t:"210 Min."},{n:"Conversational AI",t:"1 Tag"},{n:"KI im Marketing - Content, Kampagnen & Workflows",t:"3 Std."},{n:"EU AI Act und Umsetzung in Unternehmen",t:"90 Min."}]},
 
  {id:"proz",kw:"KW 2",c:"var(--k2)",title:"Prozesse automatisieren",
@@ -1052,7 +1052,7 @@ const WORLDS=[
     {n:"Dokumente gemeinsam nutzen",ku:["SharePoint Online für Anwender", "Power-Days: SharePoint Online & Designer für Anwender", "Microsoft 365 (Office 365) - Jump Start Administration"],s:"„Angebot_final_v7_neu.docx.“",z:"Eine gültige Fassung, an der alle gemeinsam arbeiten.",k:"version dokument datei ablage sharepoint dateiversionen gemeinsam bearbeiten anhang durcheinander"},
     {n:"Wissen auffindbar machen",ku:["SharePoint Online für Anwender", "Power-Days: SharePoint Online & Designer für Anwender"],s:"„Das weiß nur die Kollegin — und die ist im Urlaub.“",z:"Wissen liegt dort, wo andere es ohne Nachfragen finden.",k:"wissen suchen finden dokumentation urlaub krank wissenstransfer intranet wiki nachfragen kopf"},
     {n:"Aufgaben klar übergeben",ku:["Power-Woche: Microsoft Teams und Microsoft 365 (Office 365)", "Microsoft Teams - Grundlagen Administration", "Power Apps und Power Automate Einstieg - Apps, Workflows und Automatisierung"],s:"„Ich dachte, das macht der andere.“",z:"Jede Aufgabe hat einen Namen, ein Datum und einen Status.",k:"aufgabe zustaendigkeit verantwortung todo planner nachverfolgen vergessen uebergabe wer macht"}],
-  ziel:["Mitarbeitende & Fachbereiche","Teamleitungen","Multiplikatoren & Champions","M365-Verantwortliche"],
+  ziel:["Mitarbeiter & Fachbereiche","Teamleitungen","Multiplikatoren & Champions","M365-Verantwortliche"],
   bau:[{n:"Microsoft 365 (Office 365) - Jump Start Administration",t:"3 Tage"},{n:"Power-Woche: Microsoft Teams und Microsoft 365 (Office 365)",t:"5 Tage"},{n:"Microsoft Teams - Grundlagen Administration",t:"2 Tage"},{n:"Microsoft Teams - Fortgeschrittene Administration",t:"1 Tag"},{n:"Power-Days: Microsoft Teams Administration",t:"3 Tage"},{n:"Exchange Online - Microsoft 365 Administration",t:"2 Tage"},{n:"SharePoint Online für Anwender",t:"2 Tage"},{n:"Power-Days: SharePoint Online & Designer für Anwender",t:"3 Tage"},{n:"SharePoint Online - Grundkurs Administration",t:"3 Tage"}]}
 ];
 
@@ -1090,7 +1090,7 @@ function autoTeam(c){
   return ns.indexOf(GT)>-1?GT:ns.join(", ");
 }
 
-/* Ein Team, das alle Mitarbeitenden umfasst. Die Kopfzahl wird einmal zentral
+/* Ein Team, das alle Mitarbeiter umfasst. Die Kopfzahl wird einmal zentral
    eingetragen (profile.gesamtN) und gilt für jeden Skill, dem es zugeordnet ist. */
 const GT="Gesamtes Team";
 
@@ -1134,7 +1134,7 @@ const PFIELDS=[
 const LEGACY_PF=["teilnehmende","rollen"];
 
 const PHASES=[
- {n:"Phase 1",t:"Vorbereitung",sync:"lern",goal:"Termine, Teilnehmende und Praxisfälle stehen — die Schulungen können starten.",steps:["Abstimmungstermin (60 Minuten): Ziele, Ansprechpartner, Rahmen", "Termine je Kurs und Team festlegen", "Praxisfälle aus dem Arbeitsalltag auswählen", "Raum und Technik vor Ort bzw. Zugänge für online klären"],pp:"Plant die Termine, stimmt Trainer und Praxisfälle ab, verschickt Einladungen und Unterlagen.",ku:"Benennt Ansprechpartner und Teilnehmende, liefert Praxisfälle und stellt bei Inhouse-Terminen Raum und Technik.",out:["Terminplan", "Teilnehmerliste", "Praxisfälle"],ms:"M1 — Start freigegeben"},
+ {n:"Phase 1",t:"Vorbereitung",sync:"lern",goal:"Termine, Teilnehmer und Praxisfälle stehen — die Schulungen können starten.",steps:["Abstimmungstermin (60 Minuten): Ziele, Ansprechpartner, Rahmen", "Termine je Kurs und Team festlegen", "Praxisfälle aus dem Arbeitsalltag auswählen", "Raum und Technik vor Ort bzw. Zugänge für online klären"],pp:"Plant die Termine, stimmt Trainer und Praxisfälle ab, verschickt Einladungen und Unterlagen.",ku:"Benennt Ansprechpartner und Teilnehmer, liefert Praxisfälle und stellt bei Inhouse-Terminen Raum und Technik.",out:["Terminplan", "Teilnehmerliste", "Praxisfälle"],ms:"M1 — Start freigegeben"},
  {n:"Phase 2",t:"Schulungen",sync:"ziel",goal:"Die Kurse laufen nach Priorität — mit Beispielen aus dem eigenen Arbeitsalltag.",steps:["Kurse laut Kursplan, vor Ort oder online", "Übungen an den vorab gewählten Praxisfällen", "Kurzes Feedback nach jedem Kurs", "Bei Bedarf nachsteuern: Reihenfolge, Tempo, Schwerpunkte"],pp:"Führt die Kurse durch und passt die Beispiele an das Unternehmen an.",ku:"Hält die Lernzeit im Kalender frei.",out:["Durchgeführte Kurse", "Teilnahmebestätigungen"],ms:"M2 — Kurse abgeschlossen"},
  {n:"Phase 3",t:"Praxistransfer",sync:"felder",goal:"Das Gelernte wird im Alltag angewendet — mit einem Ansprechpartner für Rückfragen.",steps:["Gelerntes an eigenen Aufgaben anwenden", "Termin für Rückfragen (online)", "Spielregeln festhalten: Datenschutz, Freigaben, Zuständigkeit", "Interne Ansprechpartner benennen"],pp:"Beantwortet Rückfragen und liefert Vorlagen für die Spielregeln.",ku:"Gibt Zeit für die Anwendung und benennt interne Ansprechpartner.",out:["Angewendete Beispiele", "Spielregeln"],ms:"M3 — Im Alltag angekommen"},
  {n:"Phase 4",t:"Abschluss",sync:"erfolg",goal:"Ergebnis festhalten und die nächsten Schritte vereinbaren.",steps:["Abschlussgespräch mit der Leitung (60 Minuten)", "Rückblick: was wurde geschult, was wird genutzt", "Empfehlung für die nächsten Schritte"],pp:"Bereitet das Abschlussgespräch vor und schreibt die Empfehlung.",ku:"Nimmt mit der Leitung teil und entscheidet über die Folgeschritte.",out:["Abschlussgespräch", "Empfehlung"],ms:"M4 — Abschluss"}
@@ -1375,7 +1375,7 @@ requestAnimationFrame(fitLabels);
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitLabels).catch(()=>{});
 window.addEventListener("resize",()=>{clearTimeout(window._ft); window._ft=setTimeout(fitLabels,150);});
 
-/* Marke außen am Ring: wie viele Mitarbeitende die Welt betrifft */
+/* Marke außen am Ring: wie viele Mitarbeiter die Welt betrifft */
 function renderNeedRing(){
   if(!gNeed) return;
   gNeed.innerHTML="";
@@ -1389,7 +1389,7 @@ function renderNeedRing(){
     g.appendChild(t);
     g.appendChild(el("title")).textContent=
       w.title+" — "+ts.map(v=>v.name+(v.n?" ("+v.n+")":"")).join(", ")
-      +(h?" · zusammen "+h+" Mitarbeitende":" · noch ohne Anzahl");
+      +(h?" · zusammen "+h+" Mitarbeiter":" · noch ohne Anzahl");
     gNeed.appendChild(g);
   });
 }
@@ -1749,7 +1749,7 @@ function teamChips(s,i){
     ${(s.teams||[]).map((t,j)=>t.all?`<span class="tpair gt"><span class="gt-l">${GT}<b class="gt-n">${parseInt(profile.gesamtN,10)||"?"}</b></span>
       <button type="button" class="tp-x" data-tdel="${j}" title="Team entfernen">&times;</button></span>`:`<span class="tpair">
       <input class="tp-n" list="teamsug" value="${esc(t.name||"")}" placeholder="Team oder Abteilung" data-tf="name" data-ti="${j}" maxlength="60">
-      <input class="tp-c" type="number" min="0" max="9999" value="${esc(t.n===0||t.n?t.n:"")}" placeholder="MA" title="Wie viele Mitarbeitende betrifft es?" data-tf="n" data-ti="${j}">
+      <input class="tp-c" type="number" min="0" max="9999" value="${esc(t.n===0||t.n?t.n:"")}" placeholder="MA" title="Wie viele Mitarbeiter betrifft es?" data-tf="n" data-ti="${j}">
       <button type="button" class="tp-x" data-tdel="${j}" title="Team entfernen">&times;</button></span>`).join("")}
     <button type="button" class="tp-add" data-tadd="1">+ Team</button>
     ${(s.teams||[]).some(t=>t.all)?"":`<button type="button" class="tp-add tp-gt" data-tall="1">${GT}</button>`}
@@ -1778,7 +1778,7 @@ const needEl=document.getElementById("need");
 function needSummary(){
   const n=named().length; if(!n) return "noch nichts erfasst";
   const ws=WORLDS.filter(w=>skillsFor(w.id).length).length, h=headcount();
-  return nSkill(n)+(h?" · "+h+" Mitarbeitende":"")+(ws?" · "+ws+" von 6 Kompetenzwelten":"");
+  return nSkill(n)+(h?" · "+h+" Mitarbeiter":"")+(ws?" · "+ws+" von 6 Kompetenzwelten":"");
 }
 function needSum(){const n=needEl.querySelector(".need-sum"); if(n) n.textContent=needSummary();}
 function renderNeed(){
@@ -1787,7 +1787,7 @@ function renderNeed(){
     <div class="need-h"><h3>Was fehlt — und wem?</h3>
       <span class="need-sum">${esc(needSummary())}</span></div>
     <div class="gt-box no-print"><label for="gesamtN"><b>${GT}</b>
-      <input id="gesamtN" type="number" min="0" max="99999" value="${esc(profile.gesamtN)}" placeholder="Anzahl"> Mitarbeitende</label></div>
+      <input id="gesamtN" type="number" min="0" max="99999" value="${esc(profile.gesamtN)}" placeholder="Anzahl"> Mitarbeiter</label></div>
     ${ls.length?ls.map(skillRow).join("")
       :`<div class="t-empty">Noch nichts erfasst.</div>`}
     <button type="button" class="btn go need-add no-print" id="sAdd">+ Weiteren Skill erfassen</button>`;
@@ -1924,7 +1924,7 @@ function setCoreTeam(wid){
   const ts=teamsFor(wid);
   if(!ts.length){coreTeamEl.textContent=""; return;}
   const full=ts.map(v=>v.name+(v.n?" · "+v.n:"")).join("   ");
-  const kurz=nTeam(ts.length)+" · "+(headFor(wid)||"?")+" Mitarbeitende";
+  const kurz=nTeam(ts.length)+" · "+(headFor(wid)||"?")+" Mitarbeiter";
   /* Der Innenkreis ist an dieser Höhe rund 280 px breit — was nicht passt, wird zur Kurzform. */
   coreTeamEl.textContent=full.length>34?kurz:full;
   try{ if(coreTeamEl.getComputedTextLength()>276) coreTeamEl.textContent=kurz; }catch(e){}
@@ -1975,7 +1975,7 @@ function renderNeedbar(){
       const ts=teamsFor(x.w.id);
       return `<button type="button" class="nb" style="--wc:${x.w.c}" data-nb="${x.w.id}">
       <b>${esc(x.w.title)}</b>
-      <span>${nSkill(x.l.length)}${headFor(x.w.id)?" · "+headFor(x.w.id)+" Mitarbeitende":""}</span>
+      <span>${nSkill(x.l.length)}${headFor(x.w.id)?" · "+headFor(x.w.id)+" Mitarbeiter":""}</span>
       ${ts.length?`<i>${ts.map(t=>esc(t.name)+(t.n?" ("+t.n+")":"")).join(" · ")}</i>`:""}
       ${x.l.map(s=>`<em>„${esc(s.text)}“</em>`).join("")}</button>`;}).join("")}</div>`;
 }
@@ -2010,7 +2010,7 @@ function renderNeedOut(){
         <span class="nt-w">${w?`<i style="--wc:${w.c}">${esc(w.title)}</i>`:"—"}</span>
         <span class="nt-p2">${sTeams(s).length?sTeams(s).map(t=>esc((t.name||"").trim()||"Team?")+(tNum(t)?" · "+tNum(t):"")).join("<br>"):"—"}</span>
         <span class="nt-t">${esc(s.note.trim())||"—"}</span></div>`;}).join("")}
-      <div class="nt-r nt-sum"><span>Summe</span><span>${nSkill(ls.length)}</span><span class="nt-p2">${headcount()} Mitarbeitende</span><span></span></div>
+      <div class="nt-r nt-sum"><span>Summe</span><span>${nSkill(ls.length)}</span><span class="nt-p2">${headcount()} Mitarbeiter</span><span></span></div>
     </div>`;
 }
 
@@ -2156,7 +2156,7 @@ function syncHTML(kind){
     li.push(`<li>Durchführung: <strong>${FORMATE[profile.format||"inhouse"]}</strong></li>`);}
   if(kind==="ziel"){   /* Schulungen */
     li.push(`<li>Kurse nach Priorität: ${kl.map(c=>`<strong>${c.prio}.</strong> ${esc(kurz(c.n))} (W ${c.woche}, ${c.ort})`).join(" · ")}</li>`);
-    if(headcount()) li.push(`<li>Für <strong>${headcount()} Mitarbeitende</strong></li>`);}
+    if(headcount()) li.push(`<li>Für <strong>${headcount()} Mitarbeiter</strong></li>`);}
   if(kind==="felder"){ /* Praxistransfer */
     if(ls.length) li.push(`<li>Anwenden an Ihren Themen: ${ls.map(s=>esc(s.text)).join(" · ")}</li>`);}
   if(kind==="erfolg"){ /* Abschluss */
@@ -2650,7 +2650,7 @@ function pdfBuilder(){
 
 function kennzahl(){
   const n=named().length, h=headcount(), ws=WORLDS.filter(w=>skillsFor(w.id).length).length;
-  return nSkill(n)+(h?"  ·  "+h+" Mitarbeitende":"")+(ws?"  ·  "+ws+" von 6 Kompetenzwelten":"");
+  return nSkill(n)+(h?"  ·  "+h+" Mitarbeiter":"")+(ws?"  ·  "+ws+" von 6 Kompetenzwelten":"");
 }
 
 async function buildPDF(scope){
@@ -2674,7 +2674,7 @@ async function buildPDF(scope){
     d.addImage(png,"PNG",(W-gr)/2,B.y,gr,gr,undefined,"FAST");
     B.y+=gr+2;
     B.setF(7.5,"normal",PDFC.ink3);
-    d.text("Außen: Kompetenzwelten · Innen: Ihre Themen · Zahl: Mitarbeitende",W/2,B.y,{align:"center"});
+    d.text("Außen: Kompetenzwelten · Innen: Ihre Themen · Zahl: Mitarbeiter",W/2,B.y,{align:"center"});
     B.y+=7;
   }catch(e){ B.fliess("Der Kompetenzring konnte nicht eingebettet werden.",9,PDFC.ink3); }
 
@@ -2816,7 +2816,7 @@ async function buildAngebotDocx(){
       AGENDA:agendaText(c,th),
       DAUER:c.t+(/Tag/.test(c.t)?" (Einschließlich einer einstündigen Mittagspause von 12:30-13:30 und jeweils 10-15 Minuten Pause am Vor- und Nachmittag)":""),
       TERMIN:"Woche "+c.woche+" ab Zusage — genauer Termin nach Absprache",
-      TEILNEHMER:(c.team?c.team+(n?" ("+n+" Personen)":""):"Teilnehmende nach Absprache")+"\nBis maximal 10 Teilnehmer im Preis inkludiert (pro Schulung maximal 15 Teilnehmer)",
+      TEILNEHMER:(c.team?c.team+(n?" ("+n+" Personen)":""):"Teilnehmer nach Absprache")+"\nBis maximal 10 Teilnehmer im Preis inkludiert (pro Schulung maximal 15 Teilnehmer)",
       ORT:c.ort==="online"?"Virtual Classroom":"Inhouse bei Ihnen vor Ort"+(a.plzort?", "+a.plzort:""),
       HARDWARE:c.ort==="online"?HW_ONLINE:HW_VORORT,
       PREIS_LABEL:"Preis",
