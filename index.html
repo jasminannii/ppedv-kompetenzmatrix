@@ -487,10 +487,6 @@ details.more .in{padding-top:11px}
 .kp-p s{color:var(--ink-3);font-weight:400;margin-right:4px}
 .kp.pflicht{background:var(--accent-soft)}
 .kp.pflicht em{font-style:normal;font-size:11px;font-weight:700;color:var(--accent-ink);border:1px solid currentColor;border-radius:20px;padding:1px 7px;margin-left:6px;white-space:nowrap}
-.ksum{display:flex;justify-content:space-between;gap:12px;padding:8px 14px;border-top:1px solid var(--line);font-size:13.5px;color:var(--ink-2);background:var(--surface-2)}
-.ksum span:last-child{font-weight:600;color:var(--ink);white-space:nowrap}
-.ksum.tot{font-weight:700;color:var(--ink);font-size:15px}
-.ksum.tot span:last-child{font-size:16px}
 .kurs-fuss{font-size:12.5px;color:var(--ink-3);margin-top:8px}
 .kp-x button{border:0;background:none;color:var(--ink-3);font-size:18px;line-height:1;cursor:pointer;padding:0 4px}
 .kp-x button:hover{color:#B3261E}
@@ -515,13 +511,6 @@ details.more .in{padding-top:11px}
 .fin-c{border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:18px 20px}
 .fin-c h3{font-size:19px;margin:4px 0 2px}
 .fin-c .actions{margin:14px 0 0}
-.ang-opt{display:flex;flex-direction:column;gap:8px;margin:12px 0;font-size:13.5px;color:var(--ink-2)}
-.ang-opt label{display:flex;align-items:center;gap:8px}
-.ang-opt input[type=checkbox]{width:16px;height:16px;accent-color:var(--orange)}
-.ksum.ang small{display:block;font-size:12px;color:var(--ink-3)}
-.ksum.ang em{font-style:normal;font-size:11px;font-weight:700;color:var(--accent-ink)}
-.ksum.ang{background:var(--surface);color:var(--ink)}
-.ksum s{color:var(--ink-3);font-weight:400}
 .nextbar{display:flex;justify-content:flex-end;margin-top:26px}
 .mark-link{display:inline-flex;flex:0 0 auto;cursor:pointer;border-radius:4px}
 .mark-link:hover{opacity:.8}
@@ -542,16 +531,6 @@ body.kunde .kl-box{display:none!important}
 .kunde-only{display:none!important}
 body.kunde .kunde-only{display:inline-flex!important;text-decoration:none;align-items:center}
 body.kunde .cust{border-color:transparent!important;background:none!important;pointer-events:none}
-.ang-f{display:grid;grid-template-columns:110px 1fr;gap:6px 8px;margin-top:14px;align-items:center}
-.ang-f .lbl{grid-column:1/-1;margin-top:6px}
-.ang-f input,.ang-f select{font:inherit;font-size:13.5px;background:var(--surface-2);color:var(--ink);border:1px solid var(--line-2);border-radius:5px;padding:6px 8px;min-width:0}
-.ang-f [data-ang="person"],.ang-f [data-ang="strasse"],.ang-f [data-ang="plzort"]{grid-column:2/3}
-.ang-f [data-ang="strasse"],.ang-f [data-ang="plzort"]{grid-column:1/-1}
-.ang-f [data-bea]{grid-column:1/-1}
-.ang-f [data-ang="kundennr"]{grid-column:1/-1;font-weight:600}
-.ang-file{margin:10px 0 0;font-size:12.5px;color:var(--ink-3)}
-.ang-file b{color:var(--ink);font-weight:600}
-.ang-file .warn-t{color:var(--accent-ink)}
 .gt-box{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:10px 0 14px;padding:10px 14px;border:1px dashed var(--line-2);border-radius:8px;font-size:13.5px}
 .gt-box label{display:flex;align-items:center;gap:8px}
 .gt-box input{font:inherit;font-size:13.5px;width:90px;background:var(--surface-2);color:var(--ink);border:1px solid var(--line-2);border-radius:5px;padding:5px 8px}
@@ -872,23 +851,8 @@ body.kunde .cust{border-color:transparent!important;background:none!important;po
       <div class="fin-c" id="finAngebot">
         <span class="lbl">2 · Separat</span>
         <h3>Angebot</h3>
-        <p class="sub">Im Angebotsgenerator — Kursplan, Phasen und Preise als PDF.</p>
-        <div id="angebot"></div>
-        <div class="ang-f" id="angForm">
-          <span class="lbl">Kunde</span>
-          <input data-ang="kundennr" placeholder="Kunden-Nr. (= Angebots-Nr.)" autocomplete="off">
-          <select data-ang="anrede" aria-label="Anrede"><option value="">Anrede</option><option>Herr</option><option>Frau</option></select>
-          <input data-ang="person" placeholder="Vor- und Nachname">
-          <input data-ang="strasse" placeholder="Straße und Hausnummer">
-          <input data-ang="plzort" placeholder="PLZ und Ort">
-          <span class="lbl">Ihr Kontakt bei ppedv</span>
-          <input data-bea="name" placeholder="Name, z. B. i.V. Max Muster">
-          <input data-bea="funktion" placeholder="Funktion">
-          <input data-bea="tel" placeholder="Durchwahl, z. B. +49 (0)8677-9889-0">
-          <input data-bea="email" placeholder="E-Mail">
-        </div>
-        <p class="ang-file" id="angFile"></p>
-        <div class="actions"><button class="btn go" id="btnGenerator" title="Öffnet den Angebotsgenerator mit Kunde, Kursplan und Preisen — der Link wird zusätzlich kopiert">Angebot erstellen</button><button class="btn" id="btnAngebot" title="Altes Word-Angebot aus der ppedv-Vorlage">Als Word</button></div>
+        <p class="sub">Im Angebotsgenerator — Kunde, Kursplan und Ablauf werden übernommen.</p>
+        <div class="actions"><button class="btn go" id="btnGenerator" title="Kopiert den Link und öffnet den Angebotsgenerator">Link für Angebotsgenerator</button></div>
       </div>
     </div>
     <div id="needOut"></div>
@@ -957,7 +921,6 @@ body.kunde .cust{border-color:transparent!important;background:none!important;po
   </div>
 </div>
 <script src="/vendor/jspdf.umd.min.js"></script>
-<script src="/vendor/jszip.min.js"></script>
 <datalist id="skillsug"></datalist>
 <datalist id="teamsug"></datalist>
 <div class="toast" id="toast"></div>
@@ -1054,17 +1017,14 @@ const WORLDS=[
   bau:[{n:"Microsoft 365 (Office 365) - Jump Start Administration",t:"3 Tage"},{n:"Power-Woche: Microsoft Teams und Microsoft 365 (Office 365)",t:"5 Tage"},{n:"Microsoft Teams - Grundlagen Administration",t:"2 Tage"},{n:"Microsoft Teams - Fortgeschrittene Administration",t:"1 Tag"},{n:"Power-Days: Microsoft Teams Administration",t:"3 Tage"},{n:"Exchange Online - Microsoft 365 Administration",t:"2 Tage"},{n:"SharePoint Online für Anwender",t:"2 Tage"},{n:"Power-Days: SharePoint Online & Designer für Anwender",t:"3 Tage"},{n:"SharePoint Online - Grundkurs Administration",t:"3 Tage"}]}
 ];
 
-/* ---------- Kurse und Preise ----------
-   Jeder Kurs kostet gleich viel; Bestandskunden erhalten den reduzierten Preis.
+/* ---------- Kurse ----------
    Ein Kurs ist IMMER im Angebot: der Skill-Building-Workshop — oder, wenn das
    Unternehmen bei KI ausschließlich Microsoft Copilot einsetzt, der Copilot-Praxistag. */
-const PREIS=3500, PREIS_BESTAND=2800;
 const KURS_SKILL={n:"Skill-Building-Workshop – KI-Abläufe, die funktionieren",t:"1 Tag",
   url:"https://jasminannii.github.io/ppedv-kompetenzmatrix/ki-workshop/"};
 const KURS_COPILOT={n:"Microsoft Copilot Ökosystem – Wiederkehrende Prozesse mit Copilot automatisieren",t:"1 Tag",
   url:"https://ppedv.de/schulung/kurse/microsoft-copilot-oekosystem"};
 const pflichtKurs=()=>profile.copilotOnly?KURS_COPILOT:KURS_SKILL;
-const kursPreis=()=>profile.bestand?PREIS_BESTAND:PREIS;
 const euro=n=>n.toLocaleString("de-DE")+" €";
 const ALLE_KURSE=WORLDS.flatMap(w=>w.bau.map(c=>Object.assign({welt:w.id},c)));
 /* Agenda je Kurs: Modultitel von den Kursseiten auf ppedv.de (Stand 12.10.2026), [Pfad, Module] */
@@ -1113,15 +1073,7 @@ function kursListe(){
 const MAX_TN=10, WIEDERHOL_RABATT=0.2;
 const durchgaenge=c=>Math.max(1,Math.ceil(teilnehmerZahl(c)/MAX_TN));
 const weitere=l=>l.reduce((x,c)=>x+durchgaenge(c)-1,0);
-const preisWeitere=()=>Math.round(kursPreis()*(1-WIEDERHOL_RABATT));
 const vorOrt=l=>l.filter(c=>c.ort==="vor Ort").reduce((x,c)=>x+durchgaenge(c),0);
-const anreiseBetrag=()=>{const v=parseInt(profile.anreise,10); return v>0?v:0;};
-function anreiseText(l){
-  const n=vorOrt(l); if(!n) return "";
-  const a=anreiseBetrag(), t=n+" Vor-Ort-"+(n===1?"Termin":"Termine");
-  return a?`Anreise: ${t} × ${euro(a)}`:`zzgl. Anreise für ${t} (nach Aufwand)`;
-}
-const summe=l=>l.length*kursPreis()+weitere(l)*preisWeitere()+vorOrt(l)*anreiseBetrag();
 /* Kurztitel für Chips: Teil vor dem Bindestrich — außer er ist mehrdeutig
    („Microsoft Teams“, „SQL Server“), dann mit dem unterscheidenden Teil */
 const PREFIX_N={}; ALLE_KURSE.forEach(c=>{const x=c.n.split(/ [–-] /)[0]; PREFIX_N[x]=(PREFIX_N[x]||0)+1;});
@@ -2077,52 +2029,8 @@ function renderKurse(){
     </div>
     ${liste.length===1?`<p class="kurs-fuss">Noch keine weiteren Kurse — in Schritt 1 oder 2 Kompetenzen erfassen, dann kommen Vorschläge.</p>`:""}`;
   if(typeof renderTimeline==="function"&&document.getElementById("tl")) renderTimeline();
-  renderAngebot();
 }
-function renderAngebot(){
-  const g=document.getElementById("angebot"); if(!g) return;
-  try{syncAngForm();}catch(e){}   /* beim ersten Zeichnen ist das Formular noch nicht verdrahtet */
-  const liste=kursListe(), p=kursPreis(), an=anreiseText(liste), fm=profile.format||"inhouse";
-  g.innerHTML=`
-    <div class="ang-opt">
-      <label><input type="checkbox" data-kopt="bestand"${profile.bestand?" checked":""}> <b>Bestandskunde</b> — ${euro(PREIS_BESTAND)} statt ${euro(PREIS)} je Kurs</label>
-      ${fm!=="online"?`<label>Anreise je Vor-Ort-Termin <input type="number" min="0" step="50" data-anreise value="${esc(profile.anreise)}" placeholder="nach Aufwand" class="tl-num" style="width:110px"> €</label>`:""}
-    </div>
-    <div class="ktab">
-      ${liste.map(c=>`<div class="ksum ang"><span>${c.prio}. ${esc(c.n)}${c.pflicht?" <em>immer dabei</em>":""}<small>${esc(c.t)} · ${c.ort}${durchgaenge(c)>1?` · ${teilnehmerZahl(c)} Pers. = ${durchgaenge(c)} Durchgänge`:""}</small></span><span>${profile.bestand?`<s>${euro(PREIS)}</s> `:""}${euro(p)}</span></div>`).join("")}
-      <div class="ksum"><span>${liste.length} ${liste.length===1?"Kurs":"Kurse"} × ${euro(p)}${profile.bestand?" (Bestandskundenpreis)":""}</span><span>${euro(liste.length*p)}</span></div>
-      ${weitere(liste)?`<div class="ksum"><span>${weitere(liste)} weitere ${weitere(liste)===1?"Durchgang":"Durchgänge"} × ${euro(preisWeitere())} (−20 %, ab 11 Teilnehmern)</span><span>${euro(weitere(liste)*preisWeitere())}</span></div>`:""}
-      ${an?`<div class="ksum"><span>${esc(an)}</span><span>${anreiseBetrag()?euro(vorOrt(liste)*anreiseBetrag()):"—"}</span></div>`:""}
-      <div class="ksum tot"><span>Netto${an&&!anreiseBetrag()?" · zzgl. Anreise":""}</span><span>${euro2(summe(liste))}</span></div>
-      <div class="ksum"><span>zzgl. ${mwstSatz()} % USt.</span><span>${euro2(summe(liste)*mwstSatz()/100)}</span></div>
-      <div class="ksum"><span>Gesamt brutto</span><span>${euro2(summe(liste)*(1+mwstSatz()/100))}</span></div>
-    </div>`;
-  angDatei();
-}
-/* Wie im Angebotsgenerator: Netto + USt., Dateiname „ANG-<Kunden-Nr.>_<Unternehmen>“ */
-function mwstSatz(){return 19;}   /* wie im Angebotsgenerator */
-function euro2(n){return n.toLocaleString("de-DE",{minimumFractionDigits:2,maximumFractionDigits:2})+" €";}
-function angDatei(){
-  const f=document.getElementById("angFile"); if(!f) return;
-  const nr=String((profile.ang||{}).kundennr||"").trim().replace(/^ANG-?/i,"");
-  f.innerHTML=nr?`Datei: <b>${esc(("ANG-"+nr+"_"+((profile.name||"").trim()||"Kunde")).replace(/[\\/:*?"<>|]+/g,"-"))}.pdf</b>`
-    :`<span class="warn-t">Kunden-Nr. fehlt — sie ist die Angebotsnummer.</span>`;
-}
-const kursBox=document.getElementById("kurse"), angBox=document.getElementById("angebot");
-/* Bearbeiter (wer das Angebot schreibt) bleibt im Browser — er gehört zur Person, nicht zur Kartei */
-const BEA_KEY="ppedv.bearbeiter";
-const bearbeiter=()=>{try{return JSON.parse(localStorage.getItem(BEA_KEY)||"{}")||{};}catch(e){return {};}};
-const angForm=document.getElementById("angForm");
-function syncAngForm(){
-  angForm.querySelectorAll("[data-ang]").forEach(f=>{if(document.activeElement!==f) f.value=(profile.ang||{})[f.dataset.ang]||"";});
-  const b=bearbeiter(); angForm.querySelectorAll("[data-bea]").forEach(f=>{if(document.activeElement!==f) f.value=b[f.dataset.bea]||"";});
-}
-angForm.addEventListener("input",e=>{
-  const a=e.target.closest("[data-ang]");
-  if(a){(profile.ang||(profile.ang={}))[a.dataset.ang]=a.value; save(); angDatei(); return;}
-  const b=e.target.closest("[data-bea]");
-  if(b){const v=bearbeiter(); v[b.dataset.bea]=b.value; try{localStorage.setItem(BEA_KEY,JSON.stringify(v));}catch(err){}}
-});
+const kursBox=document.getElementById("kurse");
 const planOf=k=>(profile.plan||(profile.plan={}))[k]||(profile.plan[k]={});
 const kursNeu=()=>{save(); renderKurse(); renderSync();};
 kursBox.addEventListener("click",e=>{
@@ -2143,12 +2051,6 @@ kursBox.addEventListener("change",e=>{
   if(f==="woche"){const v=parseInt(pl.value,10); o.woche=(v>=1&&v<=TLMAX())?v:"";}
   else o[f]=pl.value;
   kursNeu();
-});
-angBox.addEventListener("change",e=>{
-  const c=e.target.closest("[data-kopt]");
-  if(c){profile[c.dataset.kopt]=c.checked; save(); renderAngebot(); return;}
-  const a=e.target.closest("[data-anreise]");
-  if(a){profile.anreise=a.value===""?"":Math.max(0,parseInt(a.value,10)||0); save(); renderAngebot();}
 });
 
 function syncHTML(kind){
@@ -2776,84 +2678,12 @@ async function buildPDF(scope){
   return d;
 }
 
-/* Angebot: die ppedv-Vorlage (angebot-vorlage.docx) wird gefüllt — eine Kurstabelle je Kurs.
-   Platzhalter {{…}} stehen in der Vorlage jeweils in einem einzigen Textlauf. */
-const euroW=n=>n.toLocaleString("de-DE")+",- €";
-const HW_ONLINE="Technische Voraussetzungen bei Virtual Classroom\n• Eigener PC oder Notebook mit Browser oder Microsoft Teams\n• Stabiler Internetzugang mit Remote Desktop Verbindung\n• 2 Bildschirme (jeweils für Videopräsentation und praktische Übungen)\n• Aktiviertes Headset zur Audio Aus- und Wiedergabe\nDiese können Sie in einem kostenlosen Check Up vorab testen";
-const HW_VORORT="Schulung bei Ihnen vor Ort\n• Schulungsraum mit Beamer oder großem Bildschirm\n• Je Teilnehmer ein PC oder Notebook mit Internetzugang\nDetails stimmen wir in der Vorbereitung mit Ihnen ab";
 function teilnehmerZahl(c){
   if(!c.team) return 0;
   if(c.team===GT) return parseInt(profile.gesamtN,10)||0;
   const m=teamMap(named());
   return c.team.split(", ").reduce((a,t)=>a+(m[t]||0),0);
 }
-function themenFuer(c){
-  if(c.pflicht) return named().filter(s=>s.pflicht).map(s=>s.text);
-  return named().filter(s=>(s.ku||[]).some(k=>k.on&&k.n===c.n)).map(s=>s.text);
-}
-/* Agenda im Angebot: Module der Kursseite, darunter der Bezug zu den Themen des Kunden */
-function agendaText(c,th){
-  const ag=AGENDA[c.n], mods=ag?ag[1]:[], url=ag?(/^https?:/.test(ag[0])?ag[0]:"https://ppedv.de"+ag[0]):"";
-  const teile=[];
-  teile.push(mods.length?mods.map(m=>"• "+m).join("\n"):"Inhalte laut Kursbeschreibung auf ppedv.de");
-  if(th.length) teile.push("Schwerpunkt auf Ihre Themen: "+th.join(" · "));
-  if(url) teile.push("Details: "+url);
-  return teile.join("\n");
-}
-async function buildAngebotDocx(){
-  if(!window.JSZip) throw new Error("Word-Baukasten nicht geladen — Seite neu laden.");
-  const url=location.pathname.startsWith("/k/")?"/angebot-vorlage.docx":"angebot-vorlage.docx";
-  const r=await fetch(url); if(!r.ok) throw new Error("Vorlage nicht gefunden ("+r.status+")");
-  const zip=await JSZip.loadAsync(await r.arrayBuffer());
-  let x=await zip.file("word/document.xml").async("string");
-  const X=v=>String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-  const ML=v=>X(v).split("\n").join('</w:t><w:br/><w:t xml:space="preserve">');
-  const fill=(str,map)=>str.replace(/\{\{([A-Z_]+)\}\}/g,(m,k)=>k in map?ML(map[k]):m);
-  const liste=kursListe(), p=kursPreis(), an=anreiseText(liste), a=profile.ang||{}, b=bearbeiter();
-
-  /* Eine Kurstabelle je Kurs */
-  const ti=x.indexOf("<w:tbl>"), te=x.indexOf("</w:tbl>")+8, tbl=x.slice(ti,te);
-  const tabellen=liste.map(c=>{
-    const th=themenFuer(c), n=teilnehmerZahl(c);
-    return fill(tbl,{
-      ART:c.ort==="online"?"Online-Schulung":"Inhouse-Schulung",
-      KURS:c.n+(c.pflicht?" (immer dabei)":""),
-      AGENDA:agendaText(c,th),
-      DAUER:c.t+(/Tag/.test(c.t)?" (Einschließlich einer einstündigen Mittagspause von 12:30-13:30 und jeweils 10-15 Minuten Pause am Vor- und Nachmittag)":""),
-      TERMIN:"Woche "+c.woche+" ab Zusage — genauer Termin nach Absprache",
-      TEILNEHMER:(c.team?c.team+(n?" ("+n+" Personen)":""):"Teilnehmer nach Absprache")+"\nBis zu 10 Teilnehmer je Durchgang im Preis enthalten"+(durchgaenge(c)>1?"\n"+durchgaenge(c)+" Durchgänge – jeder weitere Durchgang 20 % günstiger":"\nAb 11 Teilnehmern wird der Kurs mehrfach gebucht, jeder weitere Durchgang 20 % günstiger"),
-      ORT:c.ort==="online"?"Virtual Classroom":"Inhouse bei Ihnen vor Ort"+(a.plzort?", "+a.plzort:""),
-      HARDWARE:c.ort==="online"?HW_ONLINE:HW_VORORT,
-      PREIS_LABEL:"Preis",
-      PREIS_INFO:"Pauschal für bis zu 10 Teilnehmer"+(profile.bestand?"\nBestandskundenpreis (statt "+euroW(PREIS)+")":""),
-      PREIS:euroW(p)});
-  }).join("<w:p/>");
-  x=x.slice(0,ti)+tabellen+x.slice(te);
-
-  /* Zusammenfassung unter den Tabellen */
-  const P=(t,bold)=>`<w:p><w:pPr><w:spacing w:after="40"/><w:ind w:left="-567"/></w:pPr><w:r>${bold?"<w:rPr><w:b/></w:rPr>":""}<w:t xml:space="preserve">${X(t)}</w:t></w:r></w:p>`;
-  const zs=[P(""),P("Zusammenfassung",true),
-    P(liste.length+(liste.length===1?" Kurs":" Kurse")+" × "+euroW(p)+(profile.bestand?" (Bestandskundenpreis)":"")+" = "+euroW(liste.length*p))];
-  if(weitere(liste)) zs.push(P(weitere(liste)+" weitere Durchgänge (ab 11 Teilnehmern, je −20 %) × "+euroW(preisWeitere())+" = "+euroW(weitere(liste)*preisWeitere())));
-  if(an) zs.push(P(anreiseBetrag()?"Reisekosten: "+vorOrt(liste)+" Vor-Ort-Termine × "+euroW(anreiseBetrag())+" = "+euroW(vorOrt(liste)*anreiseBetrag())
-                                   :"Reisekosten für "+vorOrt(liste)+" Vor-Ort-Termine nach Aufwand (zuzüglich)"));
-  zs.push(P("Gesamt: "+euroW(summe(liste))+(an&&!anreiseBetrag()?" zzgl. Reisekosten":""),true));
-  const si=x.indexOf("{{SUMME}}"), ps=x.lastIndexOf("<w:p>",si), pe=x.indexOf("</w:p>",si)+6;
-  x=x.slice(0,ps)+zs.join("")+x.slice(pe);
-
-  /* Briefkopf, Anrede, Unterschrift */
-  const nach=(a.person||"").trim().split(/\s+/).pop()||"";
-  const d=new Date(), pad=v=>String(v).padStart(2,"0");
-  x=fill(x,{
-    FIRMA:(profile.name||"").trim(), PERSON:(a.person||"").trim(), STRASSE:(a.strasse||"").trim(), PLZORT:(a.plzort||"").trim(),
-    DATUM:pad(d.getDate())+"."+pad(d.getMonth()+1)+"."+String(d.getFullYear()).slice(2),
-    ANREDE:a.anrede==="Herr"&&nach?"Sehr geehrter Herr "+nach+",":a.anrede==="Frau"&&nach?"Sehr geehrte Frau "+nach+",":"Sehr geehrte Damen und Herren,",
-    TELEFON:(b.tel||"").trim()||"+49 (0)8677-9889-0",
-    BEARBEITER:((b.name||"").trim()||"ppedv AG")+((b.funktion||"").trim()?"\n"+b.funktion.trim():"")});
-  zip.file("word/document.xml",x);
-  return zip.generateAsync({type:"blob",compression:"DEFLATE",mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"});
-}
-
 /* ---------- Ausgabe ---------- */
 const toast=m=>{const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show");
   clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),2200);};
@@ -2893,7 +2723,7 @@ ${clone.innerHTML}
 function dateiname(scope,ext){
   const d=new Date(), p=n=>String(n).padStart(2,"0");
   const kunde=((profile.name||"").trim()||"Kunde").replace(/[^\wÄÖÜäöüß -]/g,"").replace(/\s+/g,"-");
-  return `${scope==="angebot"?"Angebot":"Kompetenzmatrix"}-${kunde}-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.${ext}`;
+  return `Kompetenzmatrix-${kunde}-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.${ext}`;
 }
 /* Standard-Downloadmechanismus des Web: ein unsichtbarer <a download>-Link,
    programmatisch angeklickt. Funktioniert in jedem Browser ohne Plugin-
@@ -2927,23 +2757,21 @@ function zeigePDF(blob,name){
 }
 async function saveDoc(scope){
   if(!named().length){ toast("Noch nichts erfasst."); return; }
-  const btn=document.getElementById(scope==="angebot"?"btnAngebot":"btnPrint");
+  const btn=document.getElementById("btnPrint");
   const label=btn?btn.textContent:"";
-  if(btn){btn.disabled=true; btn.textContent=scope==="angebot"?"Angebot wird gebaut …":"PDF wird gebaut …";}
+  if(btn){btn.disabled=true; btn.textContent="PDF wird gebaut …";}
   try{
-    const docx=scope==="angebot", name=dateiname(scope,docx?"docx":"pdf");
-    const blob=docx?await buildAngebotDocx():(await buildPDF(scope)).output("blob");
-    const art=docx?"Angebot":"PDF";
-    if(DL){ await DL.save({filename:name,data:blob}); toast(art+" gesichert."); }
+    const name=dateiname(scope,"pdf"), blob=(await buildPDF(scope)).output("blob");
+    if(DL){ await DL.save({filename:name,data:blob}); toast("PDF gesichert."); }
     else{
-      try{ downloadBlob(blob,name); toast(art+" heruntergeladen."); }
-      catch(e2){ console.error(e2); if(docx) throw e2; zeigePDF(blob,name); }
+      try{ downloadBlob(blob,name); toast("PDF heruntergeladen."); }
+      catch(e2){ console.error(e2); zeigePDF(blob,name); }
     }
   }catch(e){
     const c=e&&e.code;
     if(c==="declined"){ /* still */ }
     else if(c==="rate_limited") toast("Ein Dialog ist noch offen — kurz warten.");
-    else { console.error(e); toast(scope==="angebot"?"Angebot fehlgeschlagen: "+e.message:"PDF fehlgeschlagen — „Als Text kopieren“ geht weiterhin."); }
+    else { console.error(e); toast("PDF fehlgeschlagen — „Als Text kopieren“ geht weiterhin."); }
   }finally{ if(btn){btn.disabled=false; btn.textContent=label;} }
 }
 function showPrintHelp(){
@@ -2961,7 +2789,7 @@ function doPrint(scope){
   phelp.hidden=true;
   /* Das gesetzte PDF ist immer der bessere Weg — der Druckdialog nur der
      Notnagel, falls jsPDF nicht geladen werden konnte. */
-  if(scope==="angebot"||(window.jspdf&&window.jspdf.jsPDF)){ saveDoc(scope); return; }
+  if(window.jspdf&&window.jspdf.jsPDF){ saveDoc(scope); return; }
   document.body.classList.toggle("pm-model",scope==="model");
   document.querySelectorAll("#phases details, .bg details, .ctx").forEach(d=>d.open=true);
   let fired=false;
@@ -2976,20 +2804,18 @@ function doPrint(scope){
   },700);
 }
 document.getElementById("btnPrint").addEventListener("click",()=>doPrint("full"));
-document.getElementById("btnAngebot").addEventListener("click",()=>doPrint("angebot"));
 
 /* ---------- Übergabe an den Angebotsgenerator (Kategorie 3 · Kompetenzmodell) ----------
-   Kunde, Kursplan, Phasen und Preise wandern als JSON in einen Link
+   Kunde, Kursplan und Phasen wandern als JSON in einen Link
    <Angebotsgenerator>#matrix=<base64url>. Alles steht hinter dem „#“ und wird
-   daher an keinen Server geschickt. Der Generator erstellt daraus direkt das Angebot. */
+   daher an keinen Server geschickt. Preise, Adresse und Absender kommen erst im Generator dazu. */
 const ANGEBOT_URL="https://ppedv-angebotsgenerator.vercel.app/";   /* eigenes Repo: jasminannii/ppedv-angebotsgenerator */
 function matrixFuerAngebot(){
-  const liste=kursListe(), a=profile.ang||{};
+  const liste=kursListe();
   return {typ:"ppedv-kompetenzmatrix",v:1,
     kartei:/^\/k\//.test(location.pathname)?location.origin+location.pathname:"",
-    kunde:{firma:(profile.name||"").trim(),kundennr:(a.kundennr||"").trim(),anrede:a.anrede||"",person:(a.person||"").trim(),strasse:(a.strasse||"").trim(),plzort:(a.plzort||"").trim()},
-    absender:(()=>{const b=bearbeiter(); return {name:(b.name||"").trim(),rolle:(b.funktion||"").trim(),tel:(b.tel||"").trim(),email:(b.email||"").trim()};})(),
-    format:profile.format||"inhouse",bestand:!!profile.bestand,preis:kursPreis(),anreise:anreiseBetrag(),
+    kunde:{firma:(profile.name||"").trim()},
+    format:profile.format||"inhouse",
     wochen:TLMAX(),mitarbeitende:Math.max(headcount()||0,parseInt(profile.gesamtN,10)||0)||"",
     /* je Kurs auch die Agenda (Module von ppedv.de) und der Link zur Kursseite */
     kurse:liste.map(c=>{const n=teilnehmerZahl(c), ag=AGENDA[c.n]; return {n:c.n,t:c.t,ort:c.ort,woche:c.woche,team:c.team||"",tn:n?n+" Pers.":"",pflicht:!!c.pflicht,
@@ -3007,7 +2833,7 @@ document.getElementById("btnGenerator").addEventListener("click",async()=>{
   const link=angebotLink();
   try{await navigator.clipboard.writeText(link);}catch(e){}
   window.open(link,"_blank","noopener");
-  toast("Angebotsgenerator geöffnet — Link ist kopiert.");
+  toast("Link kopiert — Angebotsgenerator geöffnet.");
 });
 document.getElementById("btnCopy").addEventListener("click",async()=>{
   const ls=named();

@@ -35,8 +35,8 @@ Die fünf Reiter folgen dem Termin. Jeder Schritt endet mit „Weiter: …“.
 4. **Ablauf.** Durchführung (Inhouse, Hybrid, Online), Kursplan mit Priorität, Team,
    Woche und Ort, Timeline und Phasen. **Hier stehen keine Preise.**
 5. **Abschluss.** Das **Kundendokument** als PDF (Kompetenzmodell, Kursplan,
-   Ablauf, ohne Preise) und **separat das Angebot** als PDF (Preise, Bestandskunde,
-   Anreise, Summe).
+   Ablauf, ohne Preise) und **„Link für Angebotsgenerator“**: Firma, Kursplan und
+   Phasen gehen per Link in den Angebotsgenerator; dort entsteht das Angebot.
 
 Die Kartei speichert alles; sie lässt sich später nachbearbeiten.
 
@@ -114,10 +114,9 @@ Der Kursplan in Schritt 4 ist die Vereinigung aller Skill-Kurse plus Pflichtkurs
 Das Team eines Kurses ergibt sich aus den Skills, die ihn tragen, und lässt sich
 überschreiben. „×“ im Kursplan schaltet einen Kurs in allen Skills aus.
 
-Preise erscheinen nur im Abschluss (Schritt 5) und im Angebots-PDF.
+In der Matrix stehen keine Preise; sie kommen erst im Angebotsgenerator dazu.
 
-- **Preis:** jeder Kurs 3.500 €, für Bestandskunden 2.800 € (Häkchen „Bestandskunde“).
-  Festgelegt in `PREIS` und `PREIS_BESTAND`.
+- **Preis** (im Angebotsgenerator): jeder Kurs 3.500 €, für Bestandskunden 2.800 €.
 - **Ein Workshop ist immer dabei — als Skill.** Jede Kartei beginnt mit dem Skill
   „Eigene Arbeitsabläufe mit KI umbauen“ (KI produktiv einsetzen). Er lässt sich nicht
   löschen; an ihm wird gewählt: der allgemeine, KI-unabhängige
@@ -125,15 +124,14 @@ Preise erscheinen nur im Abschluss (Schritt 5) und im Angebots-PDF.
   oder der [Copilot-Praxistag](https://ppedv.de/schulung/kurse/microsoft-copilot-oekosystem).
   Festgelegt in `PFLICHT_TEXT`, `ensurePflicht()`, `KURS_SKILL`, `KURS_COPILOT`.
 
-Auswahl, Bestandskunde und Copilot-Häkchen werden mit der Kartei gespeichert.
+Auswahl und Copilot-Häkchen werden mit der Kartei gespeichert.
 
 **Durchführung und Anreise.** Im Ablauf (Schritt 4) wird die Durchführung gewählt:
 - *Inhouse – vor Ort* (Standard): Alle Kurse finden beim Kunden statt, und jeder Kurs ist ein Vor-Ort-Termin mit Anreise.
 - *Hybrid – vor Ort und online*: Je Kurs wird gewählt, ob er vor Ort oder online läuft. Nur die Vor-Ort-Termine kosten Anreise.
 - *Online*: keine Anreise.
 
-Der Betrag „Anreise je Vor-Ort-Termin“ wird im Abschluss beim Angebot eingetragen und geht in die Summe ein. Bleibt er leer, steht
-„zzgl. Anreise (nach Aufwand)“ da.
+Anreise und Bestandskunde werden im Angebotsgenerator eingetragen.
 
 **Kursplan: welcher Kurs, für welches Team, wann.** Die Reihenfolge der Tabelle ist
 die Priorität, verschoben wird mit ↑ ↓. Je Kurs werden Team (aus den erfassten Teams),
@@ -169,37 +167,13 @@ Erfolgsbild, „Ihre Themen“ je Welt mit Team) und **2 · Kursplan und Ablauf*
 Phasen und Kursen, Kursliste mit Team, Woche, Ort, Dauer und Agenda, Phasen in je einer
 Zeile, Jahrespartnerschaft). Keine Preise — die stehen im Angebot.
 
-## Angebot (Word aus der ppedv-Vorlage)
+## Agenda je Kurs
 
 **Agenda-Daten.** `AGENDA` in `index.html` enthält je Kurs den Pfad der Kursseite und die
 Modultitel des Abschnitts „Agenda“ (bzw. „Kursinhalt“) von ppedv.de, Stand 12.10.2026.
-Für die beiden Workshops stehen die vier Schritte der Landingpages. Die Agenda steht im Word-Angebot und als kompakte Zeile je Kurs im Kundendokument (PDF) und in der Textkopie. Ändern sich Kurse auf
+Für die beiden Workshops stehen die vier Schritte der Landingpages. Die Agenda geht mit dem Link in den Angebotsgenerator und steht als kompakte Zeile je Kurs im Kundendokument (PDF) und in der Textkopie. Ändern sich Kurse auf
 ppedv.de, die Liste neu auslesen; ein Kurs ohne Agenda-Abschnitt (derzeit „Power Apps und
 Power Automate Fortgeschrittene“) erscheint mit dem Verweis auf die Kursbeschreibung.
-
-
-„Angebot als Word“ in Schritt 5 füllt `angebot-vorlage.docx` und lädt eine .docx herunter,
-die vor dem Versand in Word angepasst werden kann. Die Vorlage ist die bereinigte
-ppedv-Inhouse-Vorlage: Briefkopf, Fußzeile und Schlusstext wie im Original, ohne Kunden-
-und Mitarbeiterdaten, mit Platzhaltern `{{…}}` (je Platzhalter genau ein Textlauf).
-
-- **Empfänger** (Anrede, Name, Straße, PLZ/Ort) wird im Abschluss eingetragen und mit der
-  Kartei gespeichert; die Firma kommt aus dem Kundennamen.
-- **Unterzeichner** (Name, Funktion, Durchwahl) bleibt im Browser der Person, die das
-  Angebot schreibt (`localStorage`), nicht in der Kartei.
-- **Je Kurs eine Tabelle** wie in der Vorlage: Kurs, Agenda (die Module der Kursseite
-  auf ppedv.de, darunter „Schwerpunkt auf Ihre Themen“ und der Link zur Kursseite), Dauer, Termin (Woche ab Zusage), Teilnehmer (Team und Kopfzahl),
-  Ort (Inhouse oder Virtual Classroom), Hardwarebereitstellung, Preis pauschal
-  (3.500 € bzw. 2.800 € Bestandskunden). Die Zusatzposten der Vorlage (Vorbereitungszeit,
-  zusätzliche Teilnehmer, virtuelle Maschinen) bleiben als „zuzüglich“ stehen.
-- Darunter die **Zusammenfassung**: Kurse × Preis, Reisekosten, Gesamt.
-
-Die Original-Vorlage (`*.docx`) ist per `.gitignore` vom Repo ausgeschlossen — das Repo
-ist öffentlich. Nur `angebot-vorlage.docx` ist freigegeben. Ändert ppedv die Vorlage, in der neuen
-Fassung dieselben Platzhalter setzen: `{{FIRMA}} {{PERSON}} {{STRASSE}} {{PLZORT}} {{DATUM}}
-{{ANREDE}} {{TELEFON}} {{BEARBEITER}}`, in der (einzigen) Kurstabelle `{{ART}} {{KURS}}
-{{AGENDA}} {{DAUER}} {{TERMIN}} {{TEILNEHMER}} {{ORT}} {{HARDWARE}} {{PREIS_LABEL}}
-{{PREIS_INFO}} {{PREIS}}` und direkt unter der Tabelle ein Absatz `{{SUMME}}`.
 
 ## Anpassbarkeit (pro Kundengespräch, nicht global)
 
@@ -477,12 +451,11 @@ Der Angebotsgenerator ist ein **eigenes Projekt**: Repo `jasminannii/ppedv-angeb
 Schulung, Inhouse-Workshop A/B, Kompetenzmodell), Dateiname `ANG-<Kundennummer>_<Unternehmen>`.
 Die Matrix kennt nur seine Adresse (`ANGEBOT_URL` in `index.html`).
 
-**Übergabe aus der Matrix.** Im Abschluss öffnet „Angebot erstellen“ die Seite
-`<ANGEBOT_URL>#matrix=<Daten>` in einem neuen Tab und kopiert den Link zusätzlich. Der Generator
-erstellt daraus sofort ein Angebot der Kategorie 3: Kunde mit Kunden-Nr. (= Angebots-Nr.),
-Ansprechpartner bei ppedv („i.V.“ im Namen wird erkannt), Kursplan (Kurs, Dauer, Woche, Ort,
-Team), vier Phasen mit Wochen, Preis je Kurs (Bestandskunde 2.800 €) und Anreise je
-Vor-Ort-Termin. Die Daten stehen hinter dem `#` und gehen deshalb an keinen Server. Den Link
+**Übergabe aus der Matrix.** Im Abschluss kopiert „Link für Angebotsgenerator“ den Link
+`<ANGEBOT_URL>#matrix=<Daten>` und öffnet ihn in einem neuen Tab. Der Generator erstellt daraus
+sofort ein Angebot der Kategorie 3 mit Firma, Kursplan (Kurs, Dauer, Woche, Ort, Team,
+Teilnehmer, Agenda, Kurslink), Durchführung und vier Phasen mit Wochen. Kunden-Nr., Adresse,
+Ansprechpartner, Bestandskunde und Anreise werden im Generator eingetragen. Die Daten stehen hinter dem `#` und gehen deshalb an keinen Server. Den Link
 kann man auch in einen lokal gespeicherten Generator einfügen (Schritt 4 → „Übernehmen“).
 Erzeugt wird der Link in `matrixFuerAngebot()` / `angebotLink()` (`index.html`), gelesen in
 `leseMatrix()` / `angebotAusMatrix()` (im Generator-Repo).

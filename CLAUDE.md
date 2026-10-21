@@ -35,8 +35,7 @@ Doku steht in `README.md` — dies hier ist der Überblick und die Arbeitsweise.
 | `/anleitung/` | Schritt-für-Schritt-Anleitung für Kunden (Sie-Form) |
 | `/kompetenzmodell/` | **Landingpage für ppedv.de**: Modell erklärt + Selbsterstellung + Anfrage per Mail an kompetenz@ppedv.de; einbettbar per iframe |
 | `/ki-workshop/` | Landingpage Skill-Building-Workshop mit Konfigurator |
-| — | **Angebotsgenerator** ist ein **eigenes Projekt**: Repo `jasminannii/ppedv-angebotsgenerator` (privat), live https://ppedv-angebotsgenerator.vercel.app. Die Matrix verlinkt nur dorthin (`ANGEBOT_URL`); Kategorie 3 kommt per Link (Abschluss → „Angebot erstellen“). Änderungen am Generator im eigenen Repo, nicht hier. |
-| `angebot-vorlage.docx` | bereinigte ppedv-Inhouse-Angebotsvorlage mit `{{Platzhaltern}}` |
+| — | **Angebotsgenerator** ist ein **eigenes Projekt**: Repo `jasminannii/ppedv-angebotsgenerator` (privat), live https://ppedv-angebotsgenerator.vercel.app. Die Matrix verlinkt nur dorthin (`ANGEBOT_URL`); Kategorie 3 kommt per Link (Abschluss → „Link für Angebotsgenerator“). Änderungen am Generator im eigenen Repo, nicht hier. |
 | `api/kartei.js` | Vercel-Funktion: anlegen/oeffnen/sichern/loeschen/uebersicht/kundenzugang |
 
 ## Die Matrix in Kürze (Gesprächsablauf = 5 Reiter)
@@ -51,10 +50,10 @@ Doku steht in `README.md` — dies hier ist der Überblick und die Arbeitsweise.
 4. **Ablauf** — Durchführung (Inhouse/Hybrid/Online), Kursplan (Priorität ↑↓, Team, Woche,
    Ort), Timeline mit ziehbaren Balken, 4 Phasen (Vorbereitung, Schulungen, Praxistransfer,
    Abschluss), danach Jahrespartnerschaft. **Keine Preise.**
-5. **Abschluss** — Kundendokument als PDF (2 Seiten, ohne Preise) und **Angebot**: Hauptweg ist
-   „Angebot erstellen“ → Angebotsgenerator (Kunden-Nr. = Angebots-Nr., Kontakt bei ppedv,
-   Preise als Netto/USt./Brutto wie im Generator, Dateiname `ANG-<Kunden-Nr.>_<Firma>`);
-   „Als Word“ baut weiterhin das alte Angebot aus `angebot-vorlage.docx`.
+5. **Abschluss** — Kundendokument als PDF (2 Seiten, ohne Preise) und „Link für Angebotsgenerator“:
+   kopiert den Link und öffnet den Generator mit Firma, Kursplan und Phasen. **Das Angebot entsteht
+   nur im Generator** (Kunden-Nr., Adresse, Kontakt, Bestandskunde, Anreise, Preise) — die Matrix
+   hat keinen Angebotsteil und kein Word-Angebot mehr.
 
 Daten im Code: `WORLDS` (6 Kompetenzwelten × 3 Kernkompetenzen mit `ku` = Kurse,
 `felder` = Gesprächsbeispiele, `bau` = 91 Kurse aus der ppedv-Kursübersicht), `AGENDA`

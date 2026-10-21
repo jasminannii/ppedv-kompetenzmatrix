@@ -8,6 +8,5 @@ und Bibliotheken hier im Repo statt auf externen CDNs. Eingebunden mit absoluten
 |---|---|---|
 | `fonts.css`, `fonts/*.woff2` | Google Fonts: Archivo, IBM Plex Mono, Source Serif 4, Plus Jakarta Sans (nur Latin/Latin-Ext) | SIL Open Font License 1.1 |
 | `jspdf.umd.min.js` | jsPDF 2.5.1 | MIT |
-| `jszip.min.js` | JSZip 3.10.1 | MIT (bzw. GPLv3, wahlweise) |
 
 Neue Schriften oder Versionen nie wieder per Google-/CDN-Link einbinden, sondern hier ablegen.

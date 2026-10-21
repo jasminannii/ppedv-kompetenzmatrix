@@ -5,5 +5,4 @@ node_modules/
 # Interne Vorlagen und echte Angebote — nie ins öffentliche Repo
 *.docx
 vorlagen/
-!angebot-vorlage.docx
 uebergabe/
