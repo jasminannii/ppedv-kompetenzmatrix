@@ -2991,7 +2991,9 @@ function matrixFuerAngebot(){
     absender:(()=>{const b=bearbeiter(); return {name:(b.name||"").trim(),rolle:(b.funktion||"").trim(),tel:(b.tel||"").trim(),email:(b.email||"").trim()};})(),
     format:profile.format||"inhouse",bestand:!!profile.bestand,preis:kursPreis(),anreise:anreiseBetrag(),
     wochen:TLMAX(),mitarbeitende:Math.max(headcount()||0,parseInt(profile.gesamtN,10)||0)||"",
-    kurse:liste.map(c=>{const n=teilnehmerZahl(c); return {n:c.n,t:c.t,ort:c.ort,woche:c.woche,team:c.team||"",tn:n?n+" Pers.":"",pflicht:!!c.pflicht};}),
+    /* je Kurs auch die Agenda (Module von ppedv.de) und der Link zur Kursseite */
+    kurse:liste.map(c=>{const n=teilnehmerZahl(c), ag=AGENDA[c.n]; return {n:c.n,t:c.t,ort:c.ort,woche:c.woche,team:c.team||"",tn:n?n+" Pers.":"",pflicht:!!c.pflicht,
+      ag:ag?ag[1]:[], url:ag?(/^https?:/.test(ag[0])?ag[0]:"https://ppedv.de"+ag[0]):(c.url||"")};}),
     phasen:PHASES.map((p,i)=>{const r=tlRange(i); return {t:phTitle(i),von:r[0],bis:r[1],ziel:p.goal};})};
 }
 function angebotLink(){
