@@ -864,7 +864,7 @@ body.kunde .cust{border-color:transparent!important;background:none!important;po
 <section class="step" id="s4">
   <div class="wrap">
     <p class="lead">Sechs Kompetenzwelten. <b>+ übernehmen</b> holt einen Punkt in die Matrix des Kunden.</p>
-    <p class="kurs-hinweis">Mit <b>+ übernehmen</b> kommen die passenden Kurse gleich mit — bestätigen, entfernen oder ergänzen. Immer dabei:
+    <p class="kurs-hinweis">Mit <b>+ übernehmen</b> kommen die passenden Kurse gleich mit — bestätigen, entfernen oder ergänzen. Als Vorschlag dabei (entfernbar):
       der <a href="https://jasminannii.github.io/ppedv-kompetenzmatrix/ki-workshop/" target="_blank" rel="noopener">Skill-Building-Workshop</a>,
       bei reinem Copilot-Einsatz der <a href="https://ppedv.de/schulung/kurse/microsoft-copilot-oekosystem" target="_blank" rel="noopener">Copilot-Praxistag</a>.</p>
 
@@ -1059,7 +1059,7 @@ const kKey=c=>c.pflicht?"PFLICHT":c.n;
 /* Kursplan in Prioritätsreihenfolge, je Kurs mit Team, Woche und Ort.
    Ohne festgelegte Woche verteilen sich die Kurse über die Phase „Schulungen“. */
 function kursListe(){
-  const all=[Object.assign({pflicht:true},pflichtKurs()),...gewaehlteKurse()];
+  const all=(skills().some(s=>s.pflicht)?[Object.assign({pflicht:true},pflichtKurs())]:[]).concat(gewaehlteKurse());
   const r=profile.reihe||[], pos=c=>{const i=r.indexOf(kKey(c)); return i<0?1000+all.indexOf(c):i;};
   const sorted=all.slice().sort((a,b)=>pos(a)-pos(b)), n=sorted.length, [a,b]=tlRange(PH_KURSE), fm=profile.format||"inhouse";
   return sorted.map((c,i)=>{
@@ -1138,11 +1138,14 @@ function skillsFromV4(st,pf){
     .forEach(t=>out.push(mkSkill(t.note,"",[{name:(t.name||"").trim()||"Ohne Namen",n:t.n||""}])));
   return out;
 }
-/* Der Workshop ist immer dabei — und steht als Skill in der Matrix, nicht nur im Angebot.
+/* Der KI-Workshop ist als Vorschlag dabei (entfernbar) — und steht als Skill in der Matrix.
    Am Skill wird gewählt: allgemein (Skill-Building-Workshop) oder Copilot (Praxistag). */
 const WSHORT={ki:"KI",proz:"Prozesse",daten:"Daten",dev:"Entwicklung",cloud:"Cloud & Security",zus:"Zusammenarbeit"};
 const PFLICHT_TEXT="Eigene Arbeitsabläufe mit KI umbauen";
+/* Der KI-Workshop ist ein Vorschlag, keine Pflicht: neue Karteien starten mit ihm,
+   er lässt sich löschen (profile.ohneWorkshop) und über „+ KI-Workshop“ wieder holen */
 function ensurePflicht(){
+  if(profile.ohneWorkshop) return;
   const ls=Array.isArray(profile.skills)?profile.skills:(profile.skills=[]);
   if(ls.some(s=>s.pflicht)) return;
   const ex=ls.find(s=>String(s.text||"").trim().toLowerCase()===PFLICHT_TEXT.toLowerCase());
@@ -1173,7 +1176,7 @@ function normProfile(){
   profile.kurse=[];
   ensurePflicht();
   profile.kurse=(Array.isArray(profile.kurse)?profile.kurse:[]).filter(n=>ALLE_KURSE.some(c=>c.n===n));
-  profile.bestand=!!profile.bestand; profile.copilotOnly=!!profile.copilotOnly;
+  profile.bestand=!!profile.bestand; profile.copilotOnly=!!profile.copilotOnly; profile.ohneWorkshop=!!profile.ohneWorkshop;
   if(!FORMATE[profile.format]) profile.format="inhouse";
   if(!profile.plan||typeof profile.plan!=="object"||Array.isArray(profile.plan)) profile.plan={};
   profile.reihe=Array.isArray(profile.reihe)?profile.reihe.map(String):[];
@@ -1489,7 +1492,7 @@ function updateKu(s){
   s.ku=keep.concat(kursVorschlag(s).filter(n=>!have.has(n)).map(n=>({n,on:true,auto:true})));
 }
 function kuChips(s){
-  if(s.pflicht) return `<span class="pws-l">Immer dabei — welcher Workshop?</span>
+  if(s.pflicht) return `<span class="pws-l">KI-Workshop — welcher?</span>
     <span class="pws" role="radiogroup">
       <button type="button" data-pws="skill" aria-pressed="${!profile.copilotOnly}">Skill-Building-Workshop<small>allgemein, KI-unabhängig</small></button>
       <button type="button" data-pws="copilot" aria-pressed="${!!profile.copilotOnly}">Copilot-Praxistag<small>für Copilot-Umgebungen</small></button></span>`;
@@ -1497,7 +1500,7 @@ function kuChips(s){
   const w=WORLDS.find(x=>x.id===s.welt), have=new Set((s.ku||[]).map(k=>k.n));
   const opt=c=>`<option value="${esc(c.n)}">${esc(c.n)} · ${esc(c.t)}</option>`;
   const pk=pflichtKurs(), fix=quellKurse(s).some(n=>PFL.has(n))
-    ?`<span class="kc on fix" title="${esc(pk.n)} — gehört immer zum Angebot; Wahl am Workshop-Skill">${esc(kurz(pk.n))} · immer dabei</span>`:"";
+    ?`<span class="kc on fix" title="${esc(pk.n)} — KI-Workshop; Wahl am Workshop-Skill">${esc(kurz(pk.n))} · KI-Workshop</span>`:"";
   return fix+(s.ku||[]).map(k=>`<button type="button" class="kc${k.on?" on":""}" data-ktog="${esc(k.n)}" aria-pressed="${!!k.on}"
       title="${esc(k.n)} — ${k.on?"dabei, klicken zum Abwählen":"klicken, um ihn dazuzunehmen"}">${esc(kurz(k.n))}</button>`).join("")
     +`<select class="kadd no-print" data-kadd aria-label="Kurs hinzufügen"><option value="">+ Kurs</option>
@@ -1634,7 +1637,7 @@ function takeBtn(w,txt){
 /* Kurse, die eine Kernkompetenz abdecken — als kurze Zeile unter der Beschreibung */
 const kuHTML=k=>{
   const ku=k.ku||[], ws=ku.some(n=>PFL.has(n)), pk=pflichtKurs();
-  const tags=(ws?[`<i class="fix" title="${esc(pk.n)}">${esc(kurz(pk.n))} · immer dabei</i>`]:[])
+  const tags=(ws?[`<i class="fix" title="${esc(pk.n)}">${esc(kurz(pk.n))} · KI-Workshop</i>`]:[])
     .concat(ku.filter(n=>!PFL.has(n)).map(n=>`<i title="${esc(n)}">${esc(kurz(n))}</i>`));
   return tags.length?`<span class="ku">${tags.join("")}</span>`:"";
 };
@@ -1690,7 +1693,7 @@ function addSkill(text,welt,teams,focus){
 }
 const findSkill=id=>skills().find(s=>s.id===id);
 function delSkill(id){
-  if((findSkill(id)||{}).pflicht) return;
+  if((findSkill(id)||{}).pflicht) profile.ohneWorkshop=true;   /* KI-Workshop bewusst entfernt */
   const i=skills().findIndex(s=>s.id===id); if(i<0) return;
   skills().splice(i,1); save(); redrawAll();
 }
@@ -1719,7 +1722,7 @@ function skillRow(s,i){
       <span class="srow-i">${i+1}</span>
       <input class="s-text" list="skillsug" value="${esc(s.text)}" data-sf="text" maxlength="120"
         placeholder="z. B. „Angebote dauern zu lange“">
-      ${s.pflicht?`<span class="s-pfl" title="Gehört immer zum Angebot">immer dabei</span>`:`<button type="button" class="t-del no-print" data-sdel="${s.id}" title="Skill entfernen">&times;</button>`}
+      ${s.pflicht?`<span class="s-pfl" title="Vorschlag – kann entfernt werden">KI-Workshop</span>`:""}<button type="button" class="t-del no-print" data-sdel="${s.id}" title="${s.pflicht?"KI-Workshop entfernen":"Skill entfernen"}">&times;</button>
     </div>
     <span class="s-lbl">Kompetenzwelt${sug?` <i>· ${esc(sug.title)}?</i>`:""}</span>
     <div class="wsel">${WORLDS.map(w=>`<button type="button" class="wchip" style="--wc:${w.c}" data-sw="${w.id}" aria-pressed="${s.welt===w.id}">${esc(WSHORT[w.id])}</button>`).join("")}</div>
@@ -1746,7 +1749,7 @@ function renderNeed(){
       <input id="gesamtN" type="number" min="0" max="99999" value="${esc(profile.gesamtN)}" placeholder="Anzahl"> Mitarbeiter</label></div>
     ${ls.length?ls.map(skillRow).join("")
       :`<div class="t-empty">Noch nichts erfasst.</div>`}
-    <button type="button" class="btn go need-add no-print" id="sAdd">+ Weiteren Skill erfassen</button>`;
+    <button type="button" class="btn go need-add no-print" id="sAdd">+ Weiteren Skill erfassen</button>${profile.ohneWorkshop&&!skills().some(s=>s.pflicht)?`<button type="button" class="btn need-add no-print" id="wsAdd">+ KI-Workshop</button>`:""}`;
 }
 function refreshSug(){
   const d=document.getElementById("teamsug");
@@ -1797,6 +1800,7 @@ needEl.addEventListener("input",e=>{
 });
 needEl.addEventListener("click",e=>{
   if(e.target.closest("#sAdd")){ addSkill("","",[{name:"",n:""}]); return; }
+  if(e.target.closest("#wsAdd")){ profile.ohneWorkshop=false; ensurePflicht(); save(); redrawAll(); return; }
   const row=e.target.closest("[data-sid]");
   const del=e.target.closest("[data-sdel]");
   if(del){ delSkill(del.dataset.sdel); return; }
@@ -2011,7 +2015,7 @@ function renderKurse(){
     <span class="kp-prio"><b>${c.prio}</b><span class="no-print">
       <button type="button" data-mv="-1" data-k="${esc(c.key)}" title="Priorität höher"${c.prio===1?" disabled":""}>&uarr;</button>
       <button type="button" data-mv="1" data-k="${esc(c.key)}" title="Priorität niedriger"${c.prio===liste.length?" disabled":""}>&darr;</button></span></span>
-    <span class="kp-n">${esc(c.n)}${c.pflicht?` <em>immer dabei</em>`:""}<small>${esc(c.t)}</small></span>
+    <span class="kp-n">${esc(c.n)}${c.pflicht?` <em>KI-Workshop</em>`:""}<small>${esc(c.t)}</small></span>
     <span class="kp-team"><span class="lbl">Team</span>${teamSel(c)}</span>
     <span class="kp-w"><span class="lbl">Woche</span><input type="number" min="1" max="${TLMAX()}" data-plan="woche" data-k="${esc(c.key)}" value="${c.woche}"
       class="tl-num${c.auto?" auto":""}" title="${c.auto?"automatisch über die Schulungsphase verteilt":"festgelegt"}"></span>
@@ -2860,7 +2864,7 @@ document.getElementById("btnCopy").addEventListener("click",async()=>{
   if(notes.trim()) t+=`NOTIZEN\n${notes.trim()}\n\n`;
   const kl=kursListe();
   t+=`KURSPLAN · ${FORMATE[profile.format||"inhouse"].toUpperCase()}\n`
-   +kl.map(c=>`  ${c.prio}. ${c.n} (${c.t})${c.pflicht?" — immer dabei":""}\n     ${c.team||"Team offen"} · Woche ${c.woche} · ${c.ort}${((AGENDA[c.n]||[])[1]||[]).length?`\n     Agenda: ${AGENDA[c.n][1].join(" · ")}`:""}`).join("\n")+`\n\n`;
+   +kl.map(c=>`  ${c.prio}. ${c.n} (${c.t})${c.pflicht?" — KI-Workshop":""}\n     ${c.team||"Team offen"} · Woche ${c.woche} · ${c.ort}${((AGENDA[c.n]||[])[1]||[]).length?`\n     Agenda: ${AGENDA[c.n][1].join(" · ")}`:""}`).join("\n")+`\n\n`;
   t+=`UMSETZUNG — PHASE 1 STARTET MIT DER ZUSAGE · ${TLMAX()} WOCHEN\n`
    +PHASES.map((p,i)=>{const[a,b]=tlRange(i); return `  ${p.n} (Woche ${a}–${b}): ${phTitle(i)} → ${p.ms}`;}).join("\n")
    +`\n\nDANACH — JAHRESPARTNERSCHAFT\n  4 Termine vor Ort, 12 Monate Laufzeit, Pauschalpreis\n`;

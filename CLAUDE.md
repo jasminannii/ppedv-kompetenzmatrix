@@ -43,7 +43,7 @@ Doku steht in `README.md` — dies hier ist der Überblick und die Arbeitsweise.
 1. **Bedarf & Kontext** — Themen („Skills“) des Kunden in seinen Worten; Kompetenzwelt und
    Kursvorschläge kommen automatisch (orange = Kurs dabei, Klick schaltet um).
    Oben „Gesamtes Team“ (zentrale Kopfzahl). Ganz oben immer der Workshop-Skill
-   „Eigene Arbeitsabläufe mit KI umbauen“ mit Wahl Skill-Building-Workshop oder Copilot-Praxistag.
+   „Eigene Arbeitsabläufe mit KI umbauen“ (Vorschlag, entfernbar) mit Wahl Skill-Building-Workshop oder Copilot-Praxistag.
 2. **Das ppedv-Modell** — Ring + Karten; „+ übernehmen“ legt eine Kernkompetenz als Skill an,
    deren Kurse kommen **grau** (von Hand dazunehmen).
 3. **Eure Kompetenzwelt** — Ring/Panel gemeinsam sichten.
@@ -63,10 +63,10 @@ Kurszuordnung ändert).
 ## Feste Entscheidungen (von Jasmin bestätigt)
 
 - **Nicht gendern**, generisch schreiben („Mitarbeiter“, „Teilnehmer“) — gilt für alle Seiten und Dokumente.
-- Preise: jeder Kurs **3.500 €**, Bestandskunden **2.800 €**; Anreise je Vor-Ort-Termin.
+- Preise (im Angebotsgenerator): **je Schulungstag 3.500 €**, Bestandskunden **2.800 €**, Kurse bis 4 Std. = ½ Tag; Anreise je Vor-Ort-Termin.
 - **Mehr als 10 Teilnehmer je Kurs:** Kurs wird mehrfach gebucht, jeder weitere Durchgang **−20 %**;
   jeder Vor-Ort-Durchgang ist ein eigener Anreise-Termin (gleich im Angebotsgenerator).
-- Einer der beiden KI-Workshops ist **immer** dabei (als Skill, Wahl allgemein/Copilot).
+- KI-Workshop (Skill-Building oder Copilot) ist **Vorschlag, keine Pflicht**: neue Karteien starten mit ihm, „×“ entfernt ihn (`profile.ohneWorkshop`), „+ KI-Workshop“ holt ihn zurück.
 - Kartei-Passwort vorbelegt: Unternehmensname in Großbuchstaben + Jahr (z. B. `PPEDV2026`).
 - **Kartei-Übersicht bleibt offen** (kein Team-Passwort).
 - Kundenzugang: Kunde sieht/ändert nur Themen, Teams, Kurse, Teamgröße, Workshop-Wahl —
